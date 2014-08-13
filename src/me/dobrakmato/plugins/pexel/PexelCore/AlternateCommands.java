@@ -16,9 +16,10 @@ public class AlternateCommands implements Listener
 	private void onPrepocessCommand(final PlayerCommandPreprocessEvent event)
 	{
 		String command = event.getMessage().toLowerCase();
-		if(command.contains("getcock"))
+		if (command.contains("getcock"))
 		{
-			event.getPlayer().getInventory().addItem()
+			event.getPlayer().getInventory().addItem(
+					Pexel.getMagicClock().getClock());
 		}
 	}
 }
