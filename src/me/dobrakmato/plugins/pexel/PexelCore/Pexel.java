@@ -12,7 +12,7 @@ import org.bukkit.Bukkit;
  */
 public final class Pexel
 {
-	//Pexel.
+	//Pexel plugin.
 	private static PexelCore	plugin;
 	//Instance of random.
 	private static Random		random	= new Random();
