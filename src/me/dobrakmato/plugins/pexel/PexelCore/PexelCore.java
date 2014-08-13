@@ -1,0 +1,55 @@
+package me.dobrakmato.plugins.pexel.PexelCore;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+/**
+ * Hlavna trieda Pexel.
+ * 
+ * @author Mato Kormuth
+ * 
+ */
+public class PexelCore extends JavaPlugin
+{
+	/**
+	 * Pexel matchmaking.
+	 */
+	public Matchmaking		matchmaking;
+	/**
+	 * Pexel TCP server.
+	 */
+	public PexelServer		server;
+	/**
+	 * Player freezer.
+	 */
+	public PlayerFreezer	freezer;
+	/**
+	 * Eent processor.
+	 */
+	public EventProcessor	eventProcessor;
+	
+	@Override
+	public void onDisable()
+	{
+		Log.partDisable("Core");
+	}
+	
+	@Override
+	public void onEnable()
+	{
+		Log.partEnable("Core");
+		
+		Pexel.initialize(this);
+		
+		this.freezer = new PlayerFreezer();
+		
+		this.server = new PexelServer();
+		this.server.listen();
+		
+		this.matchmaking = new Matchmaking();
+		this.matchmaking.updateStart(this);
+		
+		this.eventProcessor = new EventProcessor();
+		
+		StorageEngine.initialize(this);
+	}
+}

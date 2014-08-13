@@ -1,0 +1,24 @@
+author: dobrakmato
+database: false
+main: me.dobrakmato.plugins.pexel.PexelCore
+name: pexel-core
+startup: postworld
+version: 1.0
+
+commands:
+   area:
+     description: Pouziva sa na pracu s arenami.
+     aliases: [arena, protect]
+     usage: /arena <name> <action> [param1] [param2]
+   qj:
+     description: Pouziva sa na quick-join.
+     aliases: [quickjoin, join]
+     usage: /qj [game]
+   friend:
+     description: Pouziva sa na pracu s priatelmi.
+     aliases: [friends, f]
+     usage: /friend <action> <playerName>
+   settings:
+     description: Pouziva sa na pracu s nastaveniami.
+     aliases: [options, option, setting]
+     usage: /settings <setting> <true/false>
