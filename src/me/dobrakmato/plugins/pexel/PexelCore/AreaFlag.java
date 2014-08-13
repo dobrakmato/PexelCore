@@ -8,7 +8,13 @@ package me.dobrakmato.plugins.pexel.PexelCore;
  */
 public enum AreaFlag
 {
+	/**
+	 * Block break event.
+	 */
 	BLOCK_BREAK,
+	/**
+	 * Block place event.
+	 */
 	BLOCK_PLACE,
 	PLAYER_DODAMAGE,
 	PLAYER_DROPITEM,
