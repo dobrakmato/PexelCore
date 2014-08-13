@@ -49,24 +49,25 @@ public class MagicClock implements Listener
 							{
 								for (Player onlinePlayer : Bukkit.getOnlinePlayers())
 								{
-									if (StorageEngine.getProfile(
-											((Player) args[0]).getUniqueId()).isFriend(
-											onlinePlayer.getUniqueId()))
-										((Player) args[0]).showPlayer(onlinePlayer);
-									else
-										((Player) args[0]).hidePlayer(onlinePlayer);
+									//if (StorageEngine.getProfile(
+									//		((Player) args[0]).getUniqueId()).isFriend(
+									//		onlinePlayer.getUniqueId()))
+									//	((Player) args[0]).showPlayer(onlinePlayer);
+									//else
+									((Player) args[0]).hidePlayer(onlinePlayer);
 								}
 							}
 						}), 1);
 		
 		InventoryMenuItem kickItem = new InventoryMenuItem(
 				InventoryMenuHelper.itemStack(Material.APPLE, "Kick me", null),
-				new KickInventoryMenuAction(), 1);
+				new KickInventoryMenuAction(), 2);
 		
 		InventoryMenuItem teleportItem = new InventoryMenuItem(
-				InventoryMenuHelper.itemStack(Material.ENDER_PEARL, "Nobody",
-						null), new TeleportInventoryMenuAction(new Location(
-						Bukkit.getWorld("world"), 0, 255, 0)), 1);
+				InventoryMenuHelper.itemStack(Material.BED,
+						"Teleport to 0 255 0", null),
+				new TeleportInventoryMenuAction(new Location(
+						Bukkit.getWorld("world"), 0, 255, 0)), 3);
 		
 		this.im = new InventoryMenu(
 				InventoryType.CHEST,
