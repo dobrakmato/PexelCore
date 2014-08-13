@@ -1,17 +1,11 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -29,39 +23,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class EventProcessor implements Listener
 {
-	private final Map<String, List<ParametrizedRunnable>>	callbacks	= new HashMap<String, List<ParametrizedRunnable>>();
-	
 	public EventProcessor()
 	{
 		Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
-	}
-	
-	public void addCallback(final String eventType,
-			final ParametrizedRunnable callback)
-	{
-		if (this.callbacks.containsKey(eventType))
-			this.callbacks.get(eventType).add(callback);
-		else
-		{
-			List<ParametrizedRunnable> list = new ArrayList<ParametrizedRunnable>();
-			list.add(callback);
-			this.callbacks.put(eventType, list);
-		}
-	}
-	
-	public void removeCallback(final Class<Event> eventType,
-			final Runnable callback)
-	{
-		if (this.callbacks.containsKey(eventType))
-			this.callbacks.get(eventType).remove(callback);
-	}
-	
-	@EventHandler
-	private void onEvent(final Event event)
-	{
-		if (this.callbacks.containsKey(event.getEventName()))
-			for (ParametrizedRunnable callback : this.callbacks.get(event.getEventName()))
-				callback.run(event);
 	}
 	
 	@EventHandler

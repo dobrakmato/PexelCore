@@ -17,7 +17,7 @@ public class PartyCommand implements CommandExecutor
 			final String arg2, final String[] args)
 	{
 		sender.sendMessage("Prikaz je nedostupny.");
-		return false;
+		return true;
 	}
 	
 }
