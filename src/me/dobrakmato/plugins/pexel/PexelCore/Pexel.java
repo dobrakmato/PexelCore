@@ -53,4 +53,9 @@ public final class Pexel
 	{
 		return Pexel.plugin.eventProcessor;
 	}
+	
+	public static MagicClock getMagicClock()
+	{
+		return Pexel.plugin.magicClock;
+	}
 }

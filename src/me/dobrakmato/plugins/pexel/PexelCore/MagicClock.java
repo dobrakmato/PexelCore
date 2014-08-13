@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,14 +59,33 @@ public class MagicClock implements Listener
 							}
 						}), 1);
 		
-		this.im = new InventoryMenu(InventoryType.CHEST, "Player visibility",
-				Arrays.asList(everybodyItem, nobodyItem));
+		InventoryMenuItem kickItem = new InventoryMenuItem(
+				InventoryMenuHelper.itemStack(Material.APPLE, "Kick me", null),
+				new KickInventoryMenuAction(), 1);
+		
+		InventoryMenuItem teleportItem = new InventoryMenuItem(
+				InventoryMenuHelper.itemStack(Material.ENDER_PEARL, "Nobody",
+						null), new TeleportInventoryMenuAction(new Location(
+						Bukkit.getWorld("world"), 0, 255, 0)), 1);
+		
+		this.im = new InventoryMenu(
+				InventoryType.CHEST,
+				"Player visibility",
+				Arrays.asList(everybodyItem, nobodyItem, kickItem, teleportItem));
+	}
+	
+	public MagicClock()
+	{
+		Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
+		this.buildInventoryMenu();
 	}
 	
 	@EventHandler
 	private void onPlayerInteract(final PlayerInteractEvent event)
 	{
-		this.im.showTo(event.getPlayer());
+		if (event.getPlayer().getItemInHand() != null)
+			if (event.getPlayer().getItemInHand().getType() == Material.WATCH)
+				this.im.showTo(event.getPlayer());
 		
 		/*
 		 * if (event.getPlayer().getItemInHand() != null) if (event.getPlayer().getItemInHand().getType() ==

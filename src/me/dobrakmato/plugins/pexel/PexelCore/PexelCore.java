@@ -26,6 +26,10 @@ public class PexelCore extends JavaPlugin
 	 * Eent processor.
 	 */
 	public EventProcessor	eventProcessor;
+	/**
+	 * Magic clock instance.
+	 */
+	public MagicClock		magicClock;
 	
 	@Override
 	public void onDisable()
@@ -47,6 +51,8 @@ public class PexelCore extends JavaPlugin
 		
 		this.matchmaking = new Matchmaking();
 		this.matchmaking.updateStart(this);
+		
+		this.magicClock = new MagicClock();
 		
 		this.eventProcessor = new EventProcessor();
 		

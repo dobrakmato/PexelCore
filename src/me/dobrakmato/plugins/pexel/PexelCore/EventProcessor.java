@@ -55,30 +55,33 @@ public class EventProcessor implements Listener
 	@EventHandler
 	private void onPlayerInteract(final PlayerInteractEvent event)
 	{
-		if (event.getClickedBlock().getType() == Material.SIGN
-				|| event.getClickedBlock().getType() == Material.SIGN_POST)
+		if (event.getClickedBlock() != null)
 		{
-			Sign sign = (Sign) event.getClickedBlock();
-			String[] lines = sign.getLines();
-			if (lines.length > 1)
+			if (event.getClickedBlock().getType() == Material.SIGN
+					|| event.getClickedBlock().getType() == Material.SIGN_POST)
 			{
-				String command = lines[0];
-				if (command.equalsIgnoreCase("[Server]"))
+				Sign sign = (Sign) event.getClickedBlock();
+				String[] lines = sign.getLines();
+				if (lines.length > 1)
 				{
-					event.getPlayer().performCommand("/server " + lines[1]);
-				}
-				else if (command.equalsIgnoreCase("[Warp]"))
-				{
-					event.getPlayer().performCommand("/warp " + lines[1]);
-				}
-				else if (command.equalsIgnoreCase("[World]"))
-				{
-					World w = Bukkit.getWorld(lines[1]);
-					if (w == null)
-						event.getPlayer().sendMessage(
-								ChatFormat.error(Lang.getTranslation("worldnotfound")));
-					else
-						event.getPlayer().teleport(w.getSpawnLocation());
+					String command = lines[0];
+					if (command.equalsIgnoreCase("[Server]"))
+					{
+						event.getPlayer().performCommand("/server " + lines[1]);
+					}
+					else if (command.equalsIgnoreCase("[Warp]"))
+					{
+						event.getPlayer().performCommand("/warp " + lines[1]);
+					}
+					else if (command.equalsIgnoreCase("[World]"))
+					{
+						World w = Bukkit.getWorld(lines[1]);
+						if (w == null)
+							event.getPlayer().sendMessage(
+									ChatFormat.error(Lang.getTranslation("worldnotfound")));
+						else
+							event.getPlayer().teleport(w.getSpawnLocation());
+					}
 				}
 			}
 		}
@@ -88,10 +91,10 @@ public class EventProcessor implements Listener
 	private void onChat(final AsyncPlayerChatEvent event)
 	{
 		if (event.getPlayer().isOp())
-			event.setMessage(ChatFormat.chatPlayerOp(event.getMessage(),
+			event.setFormat(ChatFormat.chatPlayerOp(event.getMessage(),
 					event.getPlayer()));
 		else
-			event.setMessage(ChatFormat.chatPlayer(event.getMessage(),
+			event.setFormat(ChatFormat.chatPlayer(event.getMessage(),
 					event.getPlayer()));
 	}
 	
