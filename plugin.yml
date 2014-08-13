@@ -18,6 +18,10 @@ commands:
      description: Pouziva sa na pracu s priatelmi.
      aliases: [friends, f]
      usage: /friend <action> <playerName>
+   party:
+     description: Pouziva sa na pracu s priatelmi.
+     aliases: [p]
+     usage: /party <action> <playerName>
    settings:
      description: Pouziva sa na pracu s nastaveniami.
      aliases: [options, option, setting]

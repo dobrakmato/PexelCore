@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -117,6 +118,17 @@ public class EventProcessor implements Listener
 				}
 			}
 		}
+	}
+	
+	@EventHandler
+	private void onChat(final AsyncPlayerChatEvent event)
+	{
+		if (event.getPlayer().isOp())
+			event.setMessage(ChatFormat.chatPlayerOp(event.getMessage(),
+					event.getPlayer()));
+		else
+			event.setMessage(ChatFormat.chatPlayer(event.getMessage(),
+					event.getPlayer()));
 	}
 	
 	@EventHandler
