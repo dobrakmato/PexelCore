@@ -19,22 +19,44 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 		super("lobby_" + name);
 	}
 	
+	/**
+	 * Location of lobby spawn.
+	 */
 	private Location	lobbySpawn;
 	private int			taskId			= 0;
 	
+	/**
+	 * How often should lobby check for players.
+	 */
 	private final long	checkInterval	= 40;	//40 ticks = 2 second.
+	/**
+	 * The minimal Y coordinate value, after the lobby will teleport players to its spawn.
+	 */
 	private final int	thresholdY		= 30;
 	
+	/**
+	 * Returns lobby spawn.
+	 * 
+	 * @return spawn
+	 */
 	public Location getSpawn()
 	{
 		return this.lobbySpawn;
 	}
 	
+	/**
+	 * Sets lobby spawn.
+	 * 
+	 * @param location
+	 */
 	public void setSpawn(final Location location)
 	{
 		this.lobbySpawn = location;
 	}
 	
+	/**
+	 * Updates players. Adds potion effects and teleports them if needed.
+	 */
 	private void updatePlayers()
 	{
 		for (Player player : this.getRegion().getPlayers())

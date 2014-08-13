@@ -3,6 +3,8 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 import org.bukkit.entity.Player;
 
 /**
+ * Menu action that will execute specified code, when triggered.
+ * 
  * @author Mato Kormuth
  * 
  */

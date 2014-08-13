@@ -11,8 +11,17 @@ import org.bukkit.inventory.ItemStack;
  */
 public class InventoryMenuItem
 {
+	/**
+	 * ItemStack of item.
+	 */
 	private final ItemStack				item;
+	/**
+	 * Action to execute when item is clicked.
+	 */
 	private final InventoryMenuAction	action;
+	/**
+	 * Slot of inventory.
+	 */
 	private final int					slot;
 	
 	public InventoryMenuItem(final ItemStack item,
@@ -23,16 +32,31 @@ public class InventoryMenuItem
 		this.slot = slot;
 	}
 	
+	/**
+	 * Executes action with specified player(sender).
+	 * 
+	 * @param player
+	 */
 	public void execute(final Player player)
 	{
 		this.action.execute(player);
 	}
 	
+	/**
+	 * Returns bukkit compactibile ItemStack of this menu item.
+	 * 
+	 * @return
+	 */
 	public ItemStack getItemStack()
 	{
 		return this.item;
 	}
 	
+	/**
+	 * Returns slot in minecraft inventory.
+	 * 
+	 * @return
+	 */
 	public int getSlot()
 	{
 		return this.slot;

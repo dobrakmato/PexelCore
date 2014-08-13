@@ -2,8 +2,6 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.util.Collection;
 
-import me.dobrakmato.plugins.pexel.TntTag.TntTagArena;
-
 import org.bukkit.Location;
 
 /**
@@ -14,13 +12,40 @@ import org.bukkit.Location;
  */
 public interface Minigame
 {
+	/**
+	 * Returns display name of minigame.
+	 * 
+	 * @return
+	 */
 	public String getDisplayName();
 	
+	/**
+	 * Returns code safe name of minigame.
+	 * 
+	 * @return
+	 */
 	public String getName();
 	
+	/**
+	 * Returns arena by name.
+	 * 
+	 * @param name
+	 *            arena's name
+	 * @return
+	 */
 	public MinigameArena getArena(String name);
 	
-	public Collection<TntTagArena> getArenas();
+	/**
+	 * Returns all arenas of this minigame.
+	 * 
+	 * @return
+	 */
+	public Collection<MinigameArena> getArenas();
 	
+	/**
+	 * Returns the minigame lobby location.
+	 * 
+	 * @return
+	 */
 	public Location getLobby();
 }

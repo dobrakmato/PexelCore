@@ -22,12 +22,20 @@ public class AutoMessage implements UpdatedPart
 	private static int					taskId		= 0;
 	private static boolean				enabled		= false;
 	
+	/**
+	 * Boradcast random message to chat.
+	 */
 	public static void pushMessage()
 	{
 		Bukkit.broadcastMessage(AutoMessage.prefix
 				+ AutoMessage.strings.get(AutoMessage.random.nextInt(AutoMessage.strings.size())));
 	}
 	
+	/**
+	 * Returns if is AutoMessage enabled.
+	 * 
+	 * @return
+	 */
 	public static boolean isEnabled()
 	{
 		return AutoMessage.enabled;

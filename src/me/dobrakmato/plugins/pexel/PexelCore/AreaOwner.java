@@ -8,5 +8,10 @@ package me.dobrakmato.plugins.pexel.PexelCore;
  */
 public interface AreaOwner
 {
+	/**
+	 * Returns name of owner.
+	 * 
+	 * @return
+	 */
 	public String getName();
 }

@@ -19,10 +19,22 @@ import org.bukkit.inventory.ItemStack;
  */
 public class InventoryMenu implements InventoryHolder
 {
+	/**
+	 * Inventory of this menu.
+	 */
 	private Inventory								inventory;
 	
+	/**
+	 * Type of the inventory.
+	 */
 	private final InventoryType						type;
+	/**
+	 * Title of the inventory.
+	 */
 	private final String							title;
+	/**
+	 * Items in inventory.
+	 */
 	private final Map<ItemStack, InventoryMenuItem>	items	= new HashMap<ItemStack, InventoryMenuItem>();
 	
 	public InventoryMenu(final InventoryType type, final String title,
@@ -37,6 +49,9 @@ public class InventoryMenu implements InventoryHolder
 		this.build();
 	}
 	
+	/**
+	 * Builds inventory from data.
+	 */
 	private void build()
 	{
 		this.inventory = Bukkit.createInventory(this, this.type, this.title);
@@ -44,6 +59,12 @@ public class InventoryMenu implements InventoryHolder
 			this.inventory.setItem(item.getSlot(), item.getItemStack());
 	}
 	
+	/**
+	 * Opens this inventory menu to specified player.
+	 * 
+	 * @param player
+	 *            player to show menu to
+	 */
 	public void showTo(final Player player)
 	{
 		player.openInventory(this.getInventory());
@@ -55,6 +76,12 @@ public class InventoryMenu implements InventoryHolder
 		return this.inventory;
 	}
 	
+	/**
+	 * Called when somebody clicks item in this inventory.
+	 * 
+	 * @param player
+	 * @param item
+	 */
 	protected void inventoryClick(final Player player, final ItemStack item)
 	{
 		this.items.get(item).execute(player);

@@ -8,7 +8,6 @@ import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.MinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
-import net.minecraft.util.com.google.common.collect.ImmutableList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -63,9 +62,9 @@ public class TntTagMinigame implements Minigame
 	}
 	
 	@Override
-	public Collection<TntTagArena> getArenas()
+	public Collection<MinigameArena> getArenas()
 	{
-		return ImmutableList.copyOf(this.arenas.values());
+		return null;
 	}
 	
 	@Override

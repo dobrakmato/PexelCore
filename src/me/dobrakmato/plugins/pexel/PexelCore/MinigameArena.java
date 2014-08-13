@@ -13,10 +13,25 @@ import org.bukkit.entity.Player;
  */
 public class MinigameArena extends ProtectedArea implements MatchmakingGame
 {
+	/**
+	 * Number of slots.
+	 */
 	protected final int				slots;
+	/**
+	 * The actual state of the arena.
+	 */
 	protected GameState				state			= GameState.WAITING_PLAYERS;
+	/**
+	 * List of active players in arena.
+	 */
 	protected final List<Player>	players			= new ArrayList<Player>();
+	/**
+	 * Reference to minigame.
+	 */
 	protected final Minigame		minigame;
+	/**
+	 * Server location.
+	 */
 	protected ServerLocation		serverLocation	= new ServerLocation(
 															"Arena: "
 																	+ this.areaName,
@@ -30,6 +45,11 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 		this.slots = slots;
 	}
 	
+	/**
+	 * Sends a chat message to all player in arena.
+	 * 
+	 * @param msg
+	 */
 	public void chatAll(final String msg)
 	{
 		for (Player p : this.players)
@@ -92,11 +112,21 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 		this.players.remove(player);
 	}
 	
+	/**
+	 * Returns whatever is arena empty.
+	 * 
+	 * @return
+	 */
 	public boolean empty()
 	{
 		return this.players.size() == 0;
 	}
 	
+	/**
+	 * Return minigame running in this arena.
+	 * 
+	 * @return
+	 */
 	public Minigame getMinigame()
 	{
 		return this.minigame;

@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
+ * Class that contains many useful functions for working with InventoryMenus.
+ * 
  * @author Mato Kormuth
  * 
  */

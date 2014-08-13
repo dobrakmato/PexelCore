@@ -10,6 +10,12 @@ import org.bukkit.Location;
  */
 public class Areas
 {
+	/**
+	 * Returns area by location.
+	 * 
+	 * @param location
+	 * @return
+	 */
 	public static final ProtectedArea findArea(final Location location)
 	{
 		for (ProtectedArea area : StorageEngine.getAreas().values())
@@ -20,6 +26,12 @@ public class Areas
 		return null;
 	}
 	
+	/**
+	 * Returns area by name.
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public static final ProtectedArea getArea(final String name)
 	{
 		return StorageEngine.getAreas().get(name);

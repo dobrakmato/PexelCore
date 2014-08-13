@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.dobrakmato.plugins.pexel.TntTag.TntTagArena;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -18,24 +16,53 @@ import org.bukkit.entity.Player;
  */
 public class Matchmaking implements UpdatedPart
 {
+	/**
+	 * List of registered minigames.
+	 */
 	private final Map<String, Minigame>					minigames			= new HashMap<String, Minigame>();
+	/**
+	 * List of registered arenas.
+	 */
 	private final Map<Minigame, List<MinigameArena>>	arenas				= new HashMap<Minigame, List<MinigameArena>>();
 	private int											taskId				= 0;
+	/**
+	 * Matchmaking server location.
+	 */
 	public static final ServerLocation					QUICKJOIN_LOCATION	= new ServerLocation(
 																					"QuickJoin",
 																					ServerLocationType.QUICKJOIN);
-	
+	/**
+	 * How often should server try to find match.
+	 */
 	private final long									matchMakingInterval	= 40L;											//40 ticks = 2 second
+	/**
+	 * Pending matchmaking request.
+	 */
 	private final List<MatchmakingRequest>				requests			= new ArrayList<MatchmakingRequest>();
+	/**
+	 * List of request being removed in this iteration.
+	 */
 	private final List<MatchmakingRequest>				removing			= new ArrayList<MatchmakingRequest>();
 	
+	/**
+	 * Registers minigame to Pexel matchmaking.
+	 * 
+	 * @param minigame
+	 *            minigame
+	 */
 	public void registerMinigame(final Minigame minigame)
 	{
 		Log.info("Matchmaking found a new minigame: " + minigame.getName());
 		this.minigames.put(minigame.getName(), minigame);
 	}
 	
-	public void registerArena(final TntTagArena arena)
+	/**
+	 * Registers arena to Pexel matchmaking.
+	 * 
+	 * @param arena
+	 *            minigame arena
+	 */
+	public void registerArena(final MinigameArena arena)
 	{
 		if (this.minigames.containsValue(arena.getMinigame()))
 		{
@@ -57,6 +84,11 @@ public class Matchmaking implements UpdatedPart
 		}
 	}
 	
+	/**
+	 * Registers new matchmaking request.
+	 * 
+	 * @param request
+	 */
 	public void registerRequest(final MatchmakingRequest request)
 	{
 		this.requests.add(request);
@@ -64,6 +96,9 @@ public class Matchmaking implements UpdatedPart
 		
 	}
 	
+	/**
+	 * Tries to find ideal matches for requests.
+	 */
 	public void makeMatches()
 	{
 		this.removing.clear();

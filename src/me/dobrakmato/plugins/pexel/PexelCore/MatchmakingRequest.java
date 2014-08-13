@@ -13,8 +13,17 @@ import org.bukkit.entity.Player;
  */
 public class MatchmakingRequest
 {
+	/**
+	 * List of player in request.
+	 */
 	private final List<Player>		players;
+	/**
+	 * The minigame that the players want to play.
+	 */
 	private final Minigame			minigame;
+	/**
+	 * Arena that players want to play.
+	 */
 	private final MatchmakingGame	game;
 	
 	public MatchmakingRequest(final List<Player> players,
@@ -25,28 +34,61 @@ public class MatchmakingRequest
 		this.game = game;
 	}
 	
+	/**
+	 * Creates new request with random game and arena.
+	 * 
+	 * @param player
+	 *            player
+	 * @return
+	 */
 	public static MatchmakingRequest create(final Player player)
 	{
 		return new MatchmakingRequest(Arrays.asList(player), null, null);
 	}
 	
+	/**
+	 * Creates new request with random game and arena.
+	 * 
+	 * @param player
+	 *            players
+	 * @return
+	 */
 	public static MatchmakingRequest create(final Player... player)
 	{
 		return new MatchmakingRequest(Arrays.asList(player), null, null);
 	}
 	
+	/**
+	 * Creates new request with specified game and random arena.
+	 * 
+	 * @param player
+	 *            player
+	 * @return
+	 */
 	public static MatchmakingRequest create(final Player player,
 			final Minigame minigame)
 	{
 		return new MatchmakingRequest(Arrays.asList(player), minigame, null);
 	}
 	
+	/**
+	 * Creates new request with specified game and random arena.
+	 * 
+	 * @param player
+	 *            players
+	 * @return
+	 */
 	public static MatchmakingRequest create(final Minigame minigame,
 			final Player... player)
 	{
 		return new MatchmakingRequest(Arrays.asList(player), minigame, null);
 	}
 	
+	/**
+	 * Updates server location of players in request.
+	 * 
+	 * @param location
+	 */
 	public void updateLocation(final ServerLocation location)
 	{
 		for (Player p : this.players)
@@ -54,21 +96,41 @@ public class MatchmakingRequest
 					location);
 	}
 	
+	/**
+	 * Returns list of players in this request.
+	 * 
+	 * @return
+	 */
 	public List<Player> getPlayers()
 	{
 		return this.players;
 	}
 	
+	/**
+	 * Returns minigame of this request.
+	 * 
+	 * @return
+	 */
 	public Minigame getMinigame()
 	{
 		return this.minigame;
 	}
 	
+	/**
+	 * Returns arena of this request.
+	 * 
+	 * @return
+	 */
 	public MatchmakingGame getGame()
 	{
 		return this.game;
 	}
 	
+	/**
+	 * Returns player count in this request.
+	 * 
+	 * @return
+	 */
 	public int playerCount()
 	{
 		return this.players.size();

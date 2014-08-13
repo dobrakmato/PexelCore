@@ -1,7 +1,7 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
 /**
- * 
+ * Parametrized runnable. Well, i don't know if this works properly...
  * 
  * @author Mato Kormuth
  * 
