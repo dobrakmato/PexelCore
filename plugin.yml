@@ -1,6 +1,6 @@
 author: dobrakmato
 database: false
-main: me.dobrakmato.plugins.pexel.PexelCore
+main: me.dobrakmato.plugins.pexel.PexelCore.PexelCore
 name: pexel-core
 startup: postworld
 version: 1.0
