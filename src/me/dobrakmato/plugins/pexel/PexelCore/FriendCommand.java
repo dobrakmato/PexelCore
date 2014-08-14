@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class FriendsCommand implements CommandExecutor
+public class FriendCommand implements CommandExecutor
 {
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command,

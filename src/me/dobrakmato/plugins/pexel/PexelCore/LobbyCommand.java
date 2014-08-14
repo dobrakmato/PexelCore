@@ -26,7 +26,7 @@ public class LobbyCommand implements CommandExecutor
 	public boolean onCommand(final CommandSender sender, final Command command,
 			final String label, final String[] args)
 	{
-		if (command.getName().equalsIgnoreCase("lobby"))
+		if (command.getName().equalsIgnoreCase("lobbyarena"))
 		{
 			if (sender instanceof Player)
 			{

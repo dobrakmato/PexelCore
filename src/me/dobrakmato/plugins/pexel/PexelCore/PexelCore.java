@@ -56,6 +56,12 @@ public class PexelCore extends JavaPlugin
 		
 		this.eventProcessor = new EventProcessor();
 		
+		this.getCommand("arena").setExecutor(new ArenaCommand());
+		this.getCommand("friend").setExecutor(new FriendCommand());
+		this.getCommand("settings").setExecutor(new SettingsCommand());
+		this.getCommand("party").setExecutor(new PartyCommand());
+		this.getCommand("lobbyarena").setExecutor(new LobbyCommand());
+		
 		StorageEngine.initialize(this);
 	}
 }
