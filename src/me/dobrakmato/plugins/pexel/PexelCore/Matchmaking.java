@@ -157,6 +157,7 @@ public class Matchmaking implements UpdatedPart
 	public void updateStart(final PexelCore plugin)
 	{
 		Log.partEnable("Matchmaking");
+		UpdatedParts.registerPart(this);
 		this.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					@Override

@@ -45,6 +45,7 @@ public class LobbyCommand implements CommandExecutor
 			}
 			return true;
 		}
+		sender.sendMessage(ChatFormat.error("Wrong use!"));
 		return true;
 	}
 	
@@ -55,7 +56,7 @@ public class LobbyCommand implements CommandExecutor
 	
 	private void processOpCommand(final Player sender, final String[] args)
 	{
-		if (args.length > 1)
+		if (args.length > 2)
 		{
 			String actionName = args[0];
 			String lobbyName = args[1];
@@ -73,13 +74,18 @@ public class LobbyCommand implements CommandExecutor
 			else if (actionName.equalsIgnoreCase("setspawn"))
 			{
 				StorageEngine.getLobby(lobbyName).setSpawn(sender.getLocation());
-				sender.sendMessage("Spawn of lobby '" + lobbyName
-						+ "' has been set to your position.");
+				sender.sendMessage(ChatFormat.success("Spawn of lobby '"
+						+ lobbyName + "' has been set to your position."));
 			}
 			else
 			{
 				sender.sendMessage(ChatFormat.error("Invalid action!"));
 			}
+		}
+		else
+		{
+			sender.sendMessage(ChatFormat.error("/lobby create <name>"));
+			sender.sendMessage(ChatFormat.error("/lobby setspawn <name>"));
 		}
 	}
 	

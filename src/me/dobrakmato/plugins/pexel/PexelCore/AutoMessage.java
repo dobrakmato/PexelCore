@@ -45,6 +45,7 @@ public class AutoMessage implements UpdatedPart
 	public void updateStart(final PexelCore plugin)
 	{
 		Log.partEnable("Automessage");
+		UpdatedParts.registerPart(this);
 		AutoMessage.enabled = true;
 		AutoMessage.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 				plugin, new Runnable() {

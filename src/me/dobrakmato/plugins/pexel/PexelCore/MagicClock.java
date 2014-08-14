@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -72,10 +73,36 @@ public class MagicClock implements Listener
 				new TeleportInventoryMenuAction(new Location(
 						Bukkit.getWorld("world"), 0, 255, 0)), 3, true);
 		
-		this.im = new InventoryMenu(
-				InventoryType.CHEST,
-				"Player visibility",
-				Arrays.asList(everybodyItem, nobodyItem, kickItem, teleportItem));
+		InventoryMenuItem commandItem = new InventoryMenuItem(
+				InventoryMenuHelper.getNamedItemStack(Material.BEACON,
+						"Suprise", null), new CommandInventoryMenuAction(
+						"/me je gay"), 4, false);
+		
+		InventoryMenuItem soundItem = new InventoryMenuItem(
+				InventoryMenuHelper.getNamedItemStack(Material.NOTE_BLOCK,
+						"Sound", null), new JavaInventoryMenuAction(
+						new ParametrizedRunnable() {
+							@Override
+							public void run(final Object... args)
+							{
+								((Player) args[0]).playSound(
+										((Player) args[0]).getLocation(),
+										Sound.ZOMBIE_REMEDY, 1, 1);
+								((Player) args[0]).playSound(
+										((Player) args[0]).getLocation(),
+										Sound.AMBIENCE_CAVE, 1, 1);
+								((Player) args[0]).playSound(
+										((Player) args[0]).getLocation(),
+										Sound.ZOMBIE_METAL, 1, 1);
+								((Player) args[0]).playSound(
+										((Player) args[0]).getLocation(),
+										Sound.BURP, 1, 1);
+							}
+						}), 5, false);
+		
+		this.im = new InventoryMenu(InventoryType.CHEST, "Player visibility",
+				Arrays.asList(everybodyItem, nobodyItem, kickItem,
+						teleportItem, commandItem, soundItem));
 	}
 	
 	public MagicClock()

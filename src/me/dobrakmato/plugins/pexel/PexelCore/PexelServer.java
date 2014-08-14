@@ -46,6 +46,13 @@ public class PexelServer implements Runnable
 	public void close()
 	{
 		Log.partDisable("Server");
+		try
+		{
+			this.server.close();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 		this.isEnabled = false;
 	}
 	

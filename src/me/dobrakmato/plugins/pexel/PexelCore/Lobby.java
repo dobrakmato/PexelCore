@@ -16,7 +16,9 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 {
 	public Lobby(final String name, final Region region)
 	{
-		super("lobby_" + name, region);
+		super(name, region);
+		//Wierd call, isn't it?
+		this.updateStart(Pexel.getCore());
 	}
 	
 	/**
@@ -76,6 +78,7 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	@Override
 	public void updateStart(final PexelCore plugin)
 	{
+		UpdatedParts.registerPart(this);
 		this.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
 				new Runnable() {
 					@Override

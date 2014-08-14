@@ -31,9 +31,16 @@ public class PexelCore extends JavaPlugin
 	 */
 	public MagicClock		magicClock;
 	
+	public AutoMessage		message;
+	
 	@Override
 	public void onDisable()
 	{
+		//Shutdown all updated parts.
+		UpdatedParts.shutdown();
+		
+		this.server.close();
+		
 		Log.partDisable("Core");
 	}
 	
@@ -48,6 +55,9 @@ public class PexelCore extends JavaPlugin
 		
 		this.server = new PexelServer();
 		this.server.listen();
+		
+		this.message = new AutoMessage();
+		this.message.updateStart(this);
 		
 		this.matchmaking = new Matchmaking();
 		this.matchmaking.updateStart(this);
