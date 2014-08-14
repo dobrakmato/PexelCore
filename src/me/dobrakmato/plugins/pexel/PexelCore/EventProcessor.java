@@ -106,8 +106,12 @@ public class EventProcessor implements Listener
 			if (event.getWhoClicked() instanceof Player)
 			{
 				((InventoryMenu) event.getInventory().getHolder()).inventoryClick(
-						(Player) event.getWhoClicked(), event.getCurrentItem());
+						(Player) event.getWhoClicked(), event.getSlot());
 				event.setCancelled(true);
+				if (((InventoryMenu) event.getInventory().getHolder()).shouldClose(event.getSlot()))
+				{
+					event.getView().close();
+				}
 			}
 		}
 	}

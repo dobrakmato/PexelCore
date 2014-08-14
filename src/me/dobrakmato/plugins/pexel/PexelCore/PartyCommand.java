@@ -16,8 +16,6 @@ public class PartyCommand implements CommandExecutor
 	public boolean onCommand(final CommandSender sender, final Command command,
 			final String arg2, final String[] args)
 	{
-		sender.sendMessage("Prikaz je nedostupny.");
 		return true;
 	}
-	
 }

@@ -13,7 +13,6 @@ public class KickInventoryMenuAction implements InventoryMenuAction
 	@Override
 	public void load(final String string)
 	{
-		
 	}
 	
 	@Override

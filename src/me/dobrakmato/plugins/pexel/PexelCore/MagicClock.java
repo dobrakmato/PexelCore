@@ -27,7 +27,7 @@ public class MagicClock implements Listener
 	public void buildInventoryMenu()
 	{
 		InventoryMenuItem everybodyItem = new InventoryMenuItem(
-				InventoryMenuHelper.itemStack(Material.EYE_OF_ENDER,
+				InventoryMenuHelper.getNamedItemStack(Material.EYE_OF_ENDER,
 						"Everybody", null), new JavaInventoryMenuAction(
 						new ParametrizedRunnable() {
 							@Override
@@ -37,12 +37,13 @@ public class MagicClock implements Listener
 								{
 									((Player) args[0]).showPlayer(onlinePlayer);
 								}
+								((Player) args[0]).sendMessage(ChatFormat.success("Now you can see everybody!"));
 							}
-						}), 0);
+						}), 0, true);
 		
 		InventoryMenuItem nobodyItem = new InventoryMenuItem(
-				InventoryMenuHelper.itemStack(Material.ENDER_PEARL, "Nobody",
-						null), new JavaInventoryMenuAction(
+				InventoryMenuHelper.getNamedItemStack(Material.ENDER_PEARL,
+						"Nobody", null), new JavaInventoryMenuAction(
 						new ParametrizedRunnable() {
 							@Override
 							public void run(final Object... args)
@@ -56,18 +57,20 @@ public class MagicClock implements Listener
 									//else
 									((Player) args[0]).hidePlayer(onlinePlayer);
 								}
+								((Player) args[0]).sendMessage(ChatFormat.success("All players have been vanished!"));
 							}
-						}), 1);
+						}), 1, true);
 		
 		InventoryMenuItem kickItem = new InventoryMenuItem(
-				InventoryMenuHelper.itemStack(Material.APPLE, "Kick me", null),
-				new KickInventoryMenuAction(), 2);
+				InventoryMenuHelper.getNamedItemStack(Material.APPLE,
+						"Kick me", null), new KickInventoryMenuAction(), 2,
+				true);
 		
 		InventoryMenuItem teleportItem = new InventoryMenuItem(
-				InventoryMenuHelper.itemStack(Material.BED,
+				InventoryMenuHelper.getNamedItemStack(Material.BED,
 						"Teleport to 0 255 0", null),
 				new TeleportInventoryMenuAction(new Location(
-						Bukkit.getWorld("world"), 0, 255, 0)), 3);
+						Bukkit.getWorld("world"), 0, 255, 0)), 3, true);
 		
 		this.im = new InventoryMenu(
 				InventoryType.CHEST,

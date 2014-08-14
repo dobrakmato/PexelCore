@@ -23,13 +23,19 @@ public class InventoryMenuItem
 	 * Slot of inventory.
 	 */
 	private final int					slot;
+	/**
+	 * Specifies if the InventoryMenu have to close, after click.
+	 */
+	private final boolean				closeAfterClick;
 	
 	public InventoryMenuItem(final ItemStack item,
-			final InventoryMenuAction action, final int slot)
+			final InventoryMenuAction action, final int slot,
+			final boolean closeAfterClick)
 	{
 		this.item = item;
 		this.action = action;
 		this.slot = slot;
+		this.closeAfterClick = closeAfterClick;
 	}
 	
 	/**
@@ -60,5 +66,15 @@ public class InventoryMenuItem
 	public int getSlot()
 	{
 		return this.slot;
+	}
+	
+	/**
+	 * Returns if the menu should close after click.
+	 * 
+	 * @return
+	 */
+	public boolean isCloseAfterClick()
+	{
+		return this.closeAfterClick;
 	}
 }

@@ -42,7 +42,7 @@ public class InventoryMenuHelper
 		return is;
 	}
 	
-	public static ItemStack itemStack(final Material material,
+	public static ItemStack getNamedItemStack(final Material material,
 			final String displayName, final List<String> lore)
 	{
 		ItemStack is = new ItemStack(material);

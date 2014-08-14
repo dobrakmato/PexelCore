@@ -54,6 +54,7 @@ public class Matchmaking implements UpdatedPart
 	{
 		Log.info("Matchmaking found a new minigame: " + minigame.getName());
 		this.minigames.put(minigame.getName(), minigame);
+		StorageEngine.addMinigame(minigame);
 	}
 	
 	/**
@@ -76,6 +77,7 @@ public class Matchmaking implements UpdatedPart
 				list.add(arena);
 				this.arenas.put(arena.getMinigame(), list);
 			}
+			StorageEngine.addArena(arena);
 		}
 		else
 		{

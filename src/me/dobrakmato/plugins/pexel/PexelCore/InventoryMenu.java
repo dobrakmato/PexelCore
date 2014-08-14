@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Class used for Inventory Menu.
@@ -35,7 +34,7 @@ public class InventoryMenu implements InventoryHolder
 	/**
 	 * Items in inventory.
 	 */
-	private final Map<ItemStack, InventoryMenuItem>	items	= new HashMap<ItemStack, InventoryMenuItem>();
+	private final Map<Integer, InventoryMenuItem>	items	= new HashMap<Integer, InventoryMenuItem>();
 	
 	public InventoryMenu(final InventoryType type, final String title,
 			final List<InventoryMenuItem> items)
@@ -44,7 +43,18 @@ public class InventoryMenu implements InventoryHolder
 		this.title = title;
 		
 		for (InventoryMenuItem item : items)
-			this.items.put(item.getItemStack(), item);
+			if (!this.items.containsKey(item.getSlot()))
+				this.items.put(item.getSlot(), item);
+			else
+				throw new RuntimeException(
+						"Can't put "
+								+ item.getItemStack().toString()
+								+ " to slot "
+								+ item.getSlot()
+								+ "! Slot "
+								+ item.getSlot()
+								+ " is alredy occupied by "
+								+ this.items.get(item.getSlot()).getItemStack().toString());
 		
 		this.build();
 	}
@@ -76,14 +86,19 @@ public class InventoryMenu implements InventoryHolder
 		return this.inventory;
 	}
 	
+	public boolean shouldClose(final int slot)
+	{
+		return this.items.get(slot).isCloseAfterClick();
+	}
+	
 	/**
 	 * Called when somebody clicks item in this inventory.
 	 * 
 	 * @param player
 	 * @param item
 	 */
-	protected void inventoryClick(final Player player, final ItemStack item)
+	protected void inventoryClick(final Player player, final int slot)
 	{
-		this.items.get(item).execute(player);
+		this.items.get(slot).execute(player);
 	}
 }
