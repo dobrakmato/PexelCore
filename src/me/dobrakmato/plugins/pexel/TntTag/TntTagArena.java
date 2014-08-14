@@ -43,8 +43,7 @@ public class TntTagArena extends MinigameArena implements Listener
 	public TntTagArena(final Region region, final Minigame minigame,
 			final String name)
 	{
-		super(minigame, name, 12);
-		this.region = region;
+		super(minigame, name, region, 12);
 		
 		//Allow player hitting each other.
 		this.setGlobalFlag(AreaFlag.PLAYER_DODAMAGE, true);

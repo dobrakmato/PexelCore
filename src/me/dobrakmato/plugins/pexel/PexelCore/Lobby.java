@@ -14,9 +14,9 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class Lobby extends ProtectedArea implements UpdatedPart
 {
-	public Lobby(final String name)
+	public Lobby(final String name, final Region region)
 	{
-		super("lobby_" + name);
+		super("lobby_" + name, region);
 	}
 	
 	/**

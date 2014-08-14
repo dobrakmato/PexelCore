@@ -12,11 +12,11 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
  * @author Mato Kormuth
  * 
  */
-public class AreaCommand implements CommandExecutor
+public class LobbyCommand implements CommandExecutor
 {
 	private final WorldEditPlugin	we;
 	
-	public AreaCommand()
+	public LobbyCommand()
 	{
 		this.we = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin(
 				"WorldEdit");
@@ -24,9 +24,9 @@ public class AreaCommand implements CommandExecutor
 	
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command,
-			final String paramString, final String[] args)
+			final String label, final String[] args)
 	{
-		if (command.getName().equalsIgnoreCase("area"))
+		if (command.getName().equalsIgnoreCase("lobby"))
 		{
 			if (sender instanceof Player)
 			{
@@ -45,7 +45,7 @@ public class AreaCommand implements CommandExecutor
 			}
 			return true;
 		}
-		return false;
+		return true;
 	}
 	
 	private void processCommand(final Player sender, final String[] args)
@@ -57,20 +57,29 @@ public class AreaCommand implements CommandExecutor
 	{
 		if (args.length > 1)
 		{
-			//String areaName = args[0];
-			String actionName = args[1].toLowerCase();
+			String actionName = args[0];
+			String lobbyName = args[1];
 			
 			if (actionName.equalsIgnoreCase("create"))
 			{
 				if (this.checkSelection(sender))
 				{
-					//Region region = new Region(this.we.getSelection(sender));
+					Region region = new Region(this.we.getSelection(sender));
+					StorageEngine.addLobby(new Lobby(lobbyName, region));
+					sender.sendMessage(ChatFormat.success("Lobby '" + lobbyName
+							+ "' has been created!"));
 				}
 			}
-		}
-		else
-		{
-			sender.sendMessage(ChatFormat.error("/area <areaName> <action> [param1] [params...]"));
+			else if (actionName.equalsIgnoreCase("setspawn"))
+			{
+				StorageEngine.getLobby(lobbyName).setSpawn(sender.getLocation());
+				sender.sendMessage("Spawn of lobby '" + lobbyName
+						+ "' has been set to your position.");
+			}
+			else
+			{
+				sender.sendMessage(ChatFormat.error("Invalid action!"));
+			}
 		}
 	}
 	

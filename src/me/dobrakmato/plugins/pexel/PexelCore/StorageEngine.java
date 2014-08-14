@@ -19,6 +19,9 @@ public class StorageEngine
 	private static final Map<String, Minigame>		minigames	= new HashMap<String, Minigame>();
 	private static final Map<String, ProtectedArea>	areas		= new HashMap<String, ProtectedArea>();
 	private static final Map<String, MinigameArena>	arenas		= new HashMap<String, MinigameArena>();
+	@SuppressWarnings("rawtypes")
+	private static final Map<String, Class>			aliases		= new HashMap<String, Class>();
+	private static final Map<String, Lobby>			lobbies		= new HashMap<String, Lobby>();
 	private static boolean							initialized	= false;
 	
 	public static void initialize(final PexelCore core)
@@ -92,5 +95,34 @@ public class StorageEngine
 	public static MinigameArena getArena(final String arenaName)
 	{
 		return StorageEngine.arenas.get(arenaName);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static void registerArenaAlias(final Class arenaClass,
+			final String alias)
+	{
+		StorageEngine.aliases.put(alias, arenaClass);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static Class getByAlias(final String alias)
+	{
+		return StorageEngine.aliases.get(alias);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	protected static Map<String, Class> getAliases()
+	{
+		return StorageEngine.aliases;
+	}
+	
+	public static void addLobby(final Lobby lobby)
+	{
+		StorageEngine.lobbies.put(lobby.getName(), lobby);
+	}
+	
+	public static Lobby getLobby(final String lobbyName)
+	{
+		return StorageEngine.lobbies.get(lobbyName);
 	}
 }

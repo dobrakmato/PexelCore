@@ -58,9 +58,10 @@ public class ProtectedArea
 	 * 
 	 * @param name
 	 */
-	public ProtectedArea(final String name)
+	public ProtectedArea(final String name, final Region region)
 	{
 		this.areaName = name;
+		this.region = region;
 	}
 	
 	/**

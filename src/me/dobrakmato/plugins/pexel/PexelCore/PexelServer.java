@@ -88,7 +88,7 @@ public class PexelServer implements Runnable
 				client.getOutputStream());
 		
 		//Spracuj prihlasenie.
-		byte loginType = in.readByte(); //1 = administration, 2 = another minigame server
+		@SuppressWarnings("unused") byte loginType = in.readByte(); //1 = administration, 2 = another minigame server
 		String password = in.readUTF();
 		
 		if (password.equalsIgnoreCase("f3ce472eacf26847650a1b2af032df7a"))

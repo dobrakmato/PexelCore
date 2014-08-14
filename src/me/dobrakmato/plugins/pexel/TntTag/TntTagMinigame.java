@@ -8,6 +8,7 @@ import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.MinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
+import me.dobrakmato.plugins.pexel.PexelCore.StorageEngine;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -29,7 +30,7 @@ public class TntTagMinigame implements Minigame
 	public TntTagMinigame()
 	{
 		Pexel.getMatchmaking().registerMinigame(this);
-		
+		StorageEngine.registerArenaAlias(TntTagArena.class, "TntTagArena");
 		this.makeArenas();
 	}
 	

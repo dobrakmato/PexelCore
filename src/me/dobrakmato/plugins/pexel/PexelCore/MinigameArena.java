@@ -16,7 +16,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	/**
 	 * Number of slots.
 	 */
-	protected final int				slots;
+	protected int					slots;
 	/**
 	 * The actual state of the arena.
 	 */
@@ -38,9 +38,9 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 															ServerLocationType.MINIGAME);
 	
 	public MinigameArena(final Minigame minigame, final String arenaName,
-			final int slots)
+			final Region region, final int slots)
 	{
-		super(minigame.getName() + "_" + arenaName);
+		super(minigame.getName() + "_" + arenaName, region);
 		this.minigame = minigame;
 		this.slots = slots;
 	}
@@ -136,5 +136,10 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	public ServerLocation getServerLocation()
 	{
 		return this.serverLocation;
+	}
+	
+	public void setSlots(final int slots)
+	{
+		this.slots = slots;
 	}
 }

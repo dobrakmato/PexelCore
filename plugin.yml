@@ -6,10 +6,13 @@ startup: postworld
 version: 1.0
 
 commands:
-   area:
+   arena:
      description: Pouziva sa na pracu s arenami.
-     aliases: [arena, protect]
-     usage: /arena <name> <action> [param1] [param2]
+     aliases: [minigamearena, marena]
+     usage: /arena <mode> <name> <action> [param1] [param2]
+   lobby:
+     description: Pouziva sa na pracu s lobbynami.
+     usage: /lobby <action> <name> [param1] [param2]   
    qj:
      description: Pouziva sa na quick-join.
      aliases: [quickjoin, join]
