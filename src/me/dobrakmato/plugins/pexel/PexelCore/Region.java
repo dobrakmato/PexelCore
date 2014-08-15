@@ -90,8 +90,8 @@ public class Region
 	 */
 	public Region(final Selection selection)
 	{
-		this.v1 = selection.getMaximumPoint().toVector();
-		this.v2 = selection.getMinimumPoint().toVector();
+		this.v1 = selection.getMinimumPoint().toVector();
+		this.v2 = selection.getMaximumPoint().toVector();
 		this.w = selection.getWorld();
 	}
 	
@@ -104,7 +104,7 @@ public class Region
 	 */
 	public boolean intersects(final Location loc)
 	{
-		if (this.w == loc.getWorld())
+		if (this.w.getName() == loc.getWorld().getName())
 			return this.intersects(loc.toVector());
 		else
 			return false;

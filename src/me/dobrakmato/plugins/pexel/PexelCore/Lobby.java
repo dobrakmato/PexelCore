@@ -61,8 +61,10 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	 */
 	private void updatePlayers()
 	{
+		System.out.println("Lobby::updatePlayers()");
 		for (Player player : this.getRegion().getPlayers())
 		{
+			System.out.println(" Processing player: " + player.getName());
 			//Lobby potion enhantsments.
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
 					20 * 5, 2));
