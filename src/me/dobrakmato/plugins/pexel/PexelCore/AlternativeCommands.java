@@ -2,6 +2,8 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.util.Arrays;
 
+import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -44,8 +46,10 @@ public class AlternativeCommands implements Listener
 		{
 			sender.sendMessage("Pexel.getMatchmaking().registerRequest(new MatchmakingRequest(Arrays.asList(event.getPlayer()),StorageEngine.getMinigame(\"tnttag\"), null));");
 			Pexel.getMatchmaking().registerRequest(
-					new MatchmakingRequest(Arrays.asList(event.getPlayer()),
-							StorageEngine.getMinigame("tnttag"), null));
+					new MatchmakingRequest(
+							Arrays.asList(event.getPlayer()),
+							StorageEngine.getMinigame("tnttag"),
+							((TntTagMinigame) StorageEngine.getMinigame("tnttag")).trrtrtr()));
 		}
 	}
 }

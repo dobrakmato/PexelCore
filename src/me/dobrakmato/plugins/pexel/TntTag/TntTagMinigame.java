@@ -27,6 +27,8 @@ public class TntTagMinigame implements Minigame
 																	Bukkit.getWorld("world"),
 																	0, 0, 0);
 	
+	private TntTagArena						are;
+	
 	public TntTagMinigame()
 	{
 		Pexel.getMatchmaking().registerMinigame(this);
@@ -46,7 +48,14 @@ public class TntTagMinigame implements Minigame
 				138.5, -1997));
 		arena1.reset();
 		
+		this.are = arena1;
+		
 		Pexel.getMatchmaking().registerArena(arena1);
+	}
+	
+	public TntTagArena trrtrtr()
+	{
+		return this.are;
 	}
 	
 	@Override
