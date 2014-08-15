@@ -40,8 +40,9 @@ public class AlternativeCommands implements Listener
 						+ StorageEngine.getByAlias(key).getName());
 			}
 		}
-		else if (command.equalsIgnoreCase("tnttest"))
+		else if (command.contains("tnttest"))
 		{
+			sender.sendMessage("Pexel.getMatchmaking().registerRequest(new MatchmakingRequest(Arrays.asList(event.getPlayer()),StorageEngine.getMinigame(\"tnttag\"), null));");
 			Pexel.getMatchmaking().registerRequest(
 					new MatchmakingRequest(Arrays.asList(event.getPlayer()),
 							StorageEngine.getMinigame("tnttag"), null));

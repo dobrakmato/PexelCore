@@ -1,5 +1,7 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -74,8 +76,11 @@ public class PexelCore extends JavaPlugin
 		this.getCommand("party").setExecutor(new PartyCommand());
 		this.getCommand("lobbyarena").setExecutor(new LobbyCommand());
 		
+		StorageEngine.initialize(this);
+		
 		new AlternativeCommands();
 		
-		StorageEngine.initialize(this);
+		//Initialize minigame
+		new TntTagMinigame();
 	}
 }
