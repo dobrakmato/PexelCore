@@ -1,7 +1,5 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
-import java.util.Arrays;
-
 import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
 
 import org.bukkit.Bukkit;
@@ -44,12 +42,10 @@ public class AlternativeCommands implements Listener
 		}
 		else if (command.contains("tnttest"))
 		{
-			sender.sendMessage("Pexel.getMatchmaking().registerRequest(new MatchmakingRequest(Arrays.asList(event.getPlayer()),StorageEngine.getMinigame(\"tnttag\"), null));");
-			Pexel.getMatchmaking().registerRequest(
-					new MatchmakingRequest(
-							Arrays.asList(event.getPlayer()),
-							StorageEngine.getMinigame("tnttag"),
-							((TntTagMinigame) StorageEngine.getMinigame("tnttag")).trrtrtr()));
+			sender.sendMessage(ChatColor.RED
+					+ "Pexel.getMatchmaking().registerRequest(new MatchmakingRequest(Arrays.asList(event.getPlayer()),StorageEngine.getMinigame(\"tnttag\"), null));");
+			((TntTagMinigame) StorageEngine.getMinigame("tnttag")).trrtrtr().onPlayerJoin(
+					event.getPlayer());
 		}
 	}
 }
