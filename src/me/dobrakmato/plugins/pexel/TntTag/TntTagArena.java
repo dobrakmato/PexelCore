@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -184,7 +185,7 @@ public class TntTagArena extends MinigameArena implements Listener
 		for (Player p : this.activePlayers)
 		{
 			//Be sure that players has survival.
-			p.setGameMode(GameMode.SURVIVAL);
+			p.setGameMode(GameMode.ADVENTURE);
 			//Add speed potion.
 			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
 					Integer.MAX_VALUE, 2));
@@ -216,7 +217,7 @@ public class TntTagArena extends MinigameArena implements Listener
 		{
 			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
 					Integer.MAX_VALUE, 4));
-			p.getInventory().getHelmet().setType(Material.TNT);
+			p.getInventory().setHelmet(new ItemStack(Material.TNT));
 			
 			this.chatAll(ChatFormat.minigame(this.getMinigame(), ChatColor.GOLD
 					+ "Player " + p.getName() + " is 'it' now!"));
