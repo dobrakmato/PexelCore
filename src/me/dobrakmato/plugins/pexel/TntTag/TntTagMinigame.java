@@ -44,7 +44,7 @@ public class TntTagMinigame implements Minigame
 						-2089), Bukkit.getWorld("world")), this, "arena1");
 		arena1.setGameSpawn(new Location(Bukkit.getWorld("world"), -2010,
 				122.5, -1997));
-		arena1.setGameSpawn(new Location(Bukkit.getWorld("world"), -2010,
+		arena1.setLobbySpawn(new Location(Bukkit.getWorld("world"), -2010,
 				138.5, -1997));
 		arena1.reset();
 		
