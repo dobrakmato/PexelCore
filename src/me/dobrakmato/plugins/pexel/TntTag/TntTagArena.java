@@ -18,6 +18,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,7 +42,7 @@ public class TntTagArena extends MinigameArena implements Listener
 	private Location	gameSpawn;
 	private int			taskId			= 0;
 	private boolean		gameRunning		= false;
-	private final int	round			= 0;
+	private int			round			= 0;
 	
 	public TntTagArena(final Region region, final Minigame minigame,
 			final String name)
@@ -140,8 +141,9 @@ public class TntTagArena extends MinigameArena implements Listener
 						{
 							//Kill them.
 							p.damage(20000D);
-							p.getWorld().createExplosion(p.getLocation(), 1,
+							p.getWorld().createExplosion(p.getLocation(), 0,
 									false);
+							p.sendMessage("You lost the game.");
 							//Add him to dead people.
 							deads.add(p);
 						}
@@ -167,7 +169,7 @@ public class TntTagArena extends MinigameArena implements Listener
 						this.gameTimeLeft = 60;
 					}
 				}
-				this.gameTimeLeft--;
+				this.gameTimeLeft -= 1;
 			}
 			
 			//If is game empty, cleanup and make space for other players.
@@ -186,6 +188,7 @@ public class TntTagArena extends MinigameArena implements Listener
 	
 	private void newRound()
 	{
+		this.round++;
 		this.chatAll(ChatColor.YELLOW + "Round " + this.round
 				+ "! 60 seconds to explode!");
 		//Teleport all players to gamespawn and give them potion effect.
@@ -228,6 +231,9 @@ public class TntTagArena extends MinigameArena implements Listener
 			
 			this.chatAll(ChatFormat.minigame(this.getMinigame(), ChatColor.GOLD
 					+ "Player " + p.getName() + " is 'it' now!"));
+			
+			this.arenaLobby.getWorld().playSound(p.getLocation(), Sound.FUSE,
+					1, 1);
 		}
 		else
 		{
@@ -246,17 +252,24 @@ public class TntTagArena extends MinigameArena implements Listener
 	@Override
 	public void onPlayerJoin(final Player player)
 	{
-		super.onPlayerJoin(player);
-		
-		player.teleport(this.arenaLobby);
-		player.getInventory().clear();
-		
-		player.setGameMode(GameMode.ADVENTURE);
-		
-		this.chatAll(ChatFormat.minigame(this.getMinigame(), "Player '"
-				+ player.getDisplayName() + "' has joined game!"));
-		
-		this.tryToStart();
+		if (this.canJoin())
+		{
+			super.onPlayerJoin(player);
+			
+			player.teleport(this.arenaLobby);
+			player.getInventory().clear();
+			
+			player.setGameMode(GameMode.ADVENTURE);
+			
+			this.chatAll(ChatFormat.minigame(this.getMinigame(), "Player '"
+					+ player.getDisplayName() + "' has joined game!"));
+			
+			this.tryToStart();
+		}
+		else
+		{
+			player.sendMessage("You can't join at this time!");
+		}
 	}
 	
 	@Override
