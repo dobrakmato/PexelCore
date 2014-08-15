@@ -23,7 +23,7 @@ public class Log
 	 */
 	public final static void info(final String msg)
 	{
-		Log.log.info(msg);
+		Log.log.info("[PEXEL] " + msg);
 	}
 	
 	/**
@@ -34,7 +34,7 @@ public class Log
 	 */
 	public final static void warn(final String msg)
 	{
-		Log.log.warning(msg);
+		Log.log.warning("[PEXEL] " + msg);
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class Log
 	 */
 	public final static void severe(final String msg)
 	{
-		Log.log.severe(msg);
+		Log.log.severe("[PEXEL] " + msg);
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class Log
 	 */
 	public final static void partEnable(final String partName)
 	{
-		Log.log.info("Enabling Pexel-" + partName + "...");
+		Log.log.info("[PEXEL] " + "Enabling Pexel-" + partName + "...");
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class Log
 	 */
 	public final static void partDisable(final String partName)
 	{
-		Log.log.info("Disabling Pexel-" + partName + "...");
+		Log.log.info("[PEXEL] " + "Disabling Pexel-" + partName + "...");
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class Log
 	 */
 	public final static void gameEnable(final String gameName)
 	{
-		Log.log.info("Enabling Minigame-" + gameName + "...");
+		Log.log.info("[PEXEL] " + "Enabling Minigame-" + gameName + "...");
 	}
 	
 	/**
@@ -89,6 +89,6 @@ public class Log
 	 */
 	public final static void gameDisable(final String gameName)
 	{
-		Log.log.info("Disabling Minigame-" + gameName + "...");
+		Log.log.info("[PEXEL] " + "Disabling Minigame-" + gameName + "...");
 	}
 }

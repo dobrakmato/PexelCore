@@ -3,7 +3,12 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  * Minigame arena.
@@ -20,11 +25,19 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	/**
 	 * The actual state of the arena.
 	 */
-	protected GameState				state			= GameState.WAITING_PLAYERS;
+	protected GameState				state				= GameState.WAITING_PLAYERS;
+	/**
+	 * The game mode that players should get, when they join the game.
+	 */
+	protected GameMode				defaultGameMode		= GameMode.ADVENTURE;
 	/**
 	 * List of active players in arena.
 	 */
-	protected final List<Player>	players			= new ArrayList<Player>();
+	protected final List<Player>	activePlayers		= new ArrayList<Player>();
+	/**
+	 * List of spectating players in arena.
+	 */
+	protected final List<Player>	spectatingPlayers	= new ArrayList<Player>();
 	/**
 	 * Reference to minigame.
 	 */
@@ -32,10 +45,10 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	/**
 	 * Server location.
 	 */
-	protected ServerLocation		serverLocation	= new ServerLocation(
-															"Arena: "
-																	+ this.areaName,
-															ServerLocationType.MINIGAME);
+	protected ServerLocation		serverLocation		= new ServerLocation(
+																"Arena: "
+																		+ this.areaName,
+																ServerLocationType.MINIGAME);
 	
 	public MinigameArena(final Minigame minigame, final String arenaName,
 			final Region region, final int slots)
@@ -52,14 +65,14 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	 */
 	public void chatAll(final String msg)
 	{
-		for (Player p : this.players)
+		for (Player p : this.activePlayers)
 			p.chat(msg);
 	}
 	
 	@Override
 	public int getFreeSlots()
 	{
-		return this.slots - this.players.size();
+		return this.slots - this.activePlayers.size();
 	}
 	
 	@Override
@@ -77,13 +90,13 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	@Override
 	public List<Player> getPlayers()
 	{
-		return this.players;
+		return this.activePlayers;
 	}
 	
 	@Override
 	public int playerCount()
 	{
-		return this.players.size();
+		return this.activePlayers.size();
 	}
 	
 	@Override
@@ -103,13 +116,80 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	@Override
 	public void onPlayerJoin(final Player player)
 	{
-		this.players.add(player);
+		this.activePlayers.add(player);
+		player.setGameMode(this.defaultGameMode);
 	}
 	
 	@Override
 	public void onPlayerLeft(final Player player)
 	{
-		this.players.remove(player);
+		this.activePlayers.remove(player);
+		this.setSpectating(player, false);
+	}
+	
+	/**
+	 * Sets spectating mode for player in this arena.
+	 * 
+	 * @param player
+	 *            player
+	 * @param spectating
+	 *            the value if the player should be spectating or not.
+	 */
+	public void setSpectating(final Player player, final boolean spectating)
+	{
+		if (spectating)
+		{
+			if (!StorageEngine.getProfile(player.getUniqueId()).isSpectating())
+			{
+				player.sendMessage(ChatFormat.success("You are now spectating!"));
+				StorageEngine.getProfile(player.getUniqueId()).setSpectating(
+						true);
+				player.getInventory().clear();
+				player.getInventory().addItem(
+						ItemUtils.getNamedItemStack(Material.COMPASS,
+								ChatColor.YELLOW + "Spectating", null));
+				player.setGameMode(GameMode.ADVENTURE);
+				player.addPotionEffect(new PotionEffect(
+						PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0));
+				player.addPotionEffect(new PotionEffect(
+						PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0));
+				player.setAllowFlight(true);
+				player.setFlying(true);
+				this.spectatingPlayers.add(player);
+			}
+			else
+			{
+				//Player is already spectating.
+				Log.warn("Player '" + player.getName()
+						+ "' can't be moved to spectating mode by game '"
+						+ this.getMinigame().getName()
+						+ "': Player is already in spectating mode!");
+			}
+		}
+		else
+		{
+			if (StorageEngine.getProfile(player.getUniqueId()).isSpectating())
+			{
+				player.sendMessage(ChatFormat.success("You are no longer spectating!"));
+				StorageEngine.getProfile(player.getUniqueId()).setSpectating(
+						false);
+				player.getInventory().clear();
+				player.setGameMode(this.defaultGameMode);
+				player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+				player.removePotionEffect(PotionEffectType.INVISIBILITY);
+				player.setAllowFlight(false);
+				player.setFlying(false);
+				this.spectatingPlayers.remove(player);
+			}
+			else
+			{
+				//Player is not spectating.
+				Log.warn("Player '" + player.getName()
+						+ "' can't be moved from spectating mode by game '"
+						+ this.getMinigame().getName()
+						+ "': Player is not in spectating mode!");
+			}
+		}
 	}
 	
 	/**
@@ -119,7 +199,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	 */
 	public boolean empty()
 	{
-		return this.players.size() == 0;
+		return this.activePlayers.size() == 0;
 	}
 	
 	/**

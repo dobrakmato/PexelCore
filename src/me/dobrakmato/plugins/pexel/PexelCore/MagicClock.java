@@ -28,7 +28,7 @@ public class MagicClock implements Listener
 	public void buildInventoryMenu()
 	{
 		InventoryMenuItem everybodyItem = new InventoryMenuItem(
-				InventoryMenuHelper.getNamedItemStack(Material.EYE_OF_ENDER,
+				ItemUtils.getNamedItemStack(Material.EYE_OF_ENDER,
 						"Everybody", null), new JavaInventoryMenuAction(
 						new ParametrizedRunnable() {
 							@Override
@@ -43,7 +43,7 @@ public class MagicClock implements Listener
 						}), 0, true);
 		
 		InventoryMenuItem nobodyItem = new InventoryMenuItem(
-				InventoryMenuHelper.getNamedItemStack(Material.ENDER_PEARL,
+				ItemUtils.getNamedItemStack(Material.ENDER_PEARL,
 						"Nobody", null), new JavaInventoryMenuAction(
 						new ParametrizedRunnable() {
 							@Override
@@ -63,23 +63,23 @@ public class MagicClock implements Listener
 						}), 1, true);
 		
 		InventoryMenuItem kickItem = new InventoryMenuItem(
-				InventoryMenuHelper.getNamedItemStack(Material.APPLE,
+				ItemUtils.getNamedItemStack(Material.APPLE,
 						"Kick me", null), new KickInventoryMenuAction(), 2,
 				true);
 		
 		InventoryMenuItem teleportItem = new InventoryMenuItem(
-				InventoryMenuHelper.getNamedItemStack(Material.BED,
+				ItemUtils.getNamedItemStack(Material.BED,
 						"Teleport to 0 255 0", null),
 				new TeleportInventoryMenuAction(new Location(
 						Bukkit.getWorld("world"), 0, 255, 0)), 3, true);
 		
 		InventoryMenuItem commandItem = new InventoryMenuItem(
-				InventoryMenuHelper.getNamedItemStack(Material.BEACON,
+				ItemUtils.getNamedItemStack(Material.BEACON,
 						"Suprise", null), new CommandInventoryMenuAction(
 						"/me je gay"), 4, false);
 		
 		InventoryMenuItem soundItem = new InventoryMenuItem(
-				InventoryMenuHelper.getNamedItemStack(Material.NOTE_BLOCK,
+				ItemUtils.getNamedItemStack(Material.NOTE_BLOCK,
 						"Sound", null), new JavaInventoryMenuAction(
 						new ParametrizedRunnable() {
 							@Override

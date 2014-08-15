@@ -70,7 +70,7 @@ public class TntTagArena extends MinigameArena implements Listener
 	{
 		this.state = GameState.WAITING_PLAYERS;
 		//If we have enough players.
-		if (this.players.size() >= 6)
+		if (this.activePlayers.size() >= 6)
 		{
 			//Start game count down!
 			this.startCountDown();
@@ -79,7 +79,7 @@ public class TntTagArena extends MinigameArena implements Listener
 		{
 			//Spam everyone's chat with info that there is still not enough players.
 			this.chatAll(ChatFormat.minigame(this.getMinigame(),
-					"Can't start right now! " + (6 - this.players.size())
+					"Can't start right now! " + (6 - this.activePlayers.size())
 							+ " players have to join!"));
 		}
 	}
@@ -124,7 +124,7 @@ public class TntTagArena extends MinigameArena implements Listener
 				if (this.gameTimeLeft == 1)
 				{
 					List<Player> deads = new ArrayList<Player>();
-					for (Player p : this.players)
+					for (Player p : this.activePlayers)
 					{
 						//Find TNT players.
 						if (this.isTnt(p))
@@ -142,9 +142,9 @@ public class TntTagArena extends MinigameArena implements Listener
 						this.onPlayerLeft(p);
 					
 					//Check for winner.
-					if (this.players.size() == 1)
+					if (this.activePlayers.size() == 1)
 					{
-						Player winner = this.players.get(0);
+						Player winner = this.activePlayers.get(0);
 						winner.sendMessage(ChatFormat.minigame(
 								this.getMinigame(),
 								ChatColor.GREEN
@@ -162,7 +162,7 @@ public class TntTagArena extends MinigameArena implements Listener
 			}
 			
 			//If is game empty, cleanup and make space for other players.
-			if (this.players.size() == 0)
+			if (this.activePlayers.size() == 0)
 				this.reset();
 		}
 	}
@@ -178,7 +178,7 @@ public class TntTagArena extends MinigameArena implements Listener
 	private void newRound()
 	{
 		//Teleport all players to gamespawn and give them potion effect.
-		for (Player p : this.players)
+		for (Player p : this.activePlayers)
 		{
 			//Be sure that players has survival.
 			p.setGameMode(GameMode.SURVIVAL);
@@ -190,11 +190,11 @@ public class TntTagArena extends MinigameArena implements Listener
 		}
 		
 		//Select some TNT players (5%).
-		for (int i = 0; i < (this.players.size() / 100 * 20 + 1); i++)
+		for (int i = 0; i < (this.activePlayers.size() / 100 * 20 + 1); i++)
 		{
 			//Get random player and set him to TNT.
 			this.setTnt(
-					this.players.get(Pexel.getRandom().nextInt(
+					this.activePlayers.get(Pexel.getRandom().nextInt(
 							this.playerCount())), true);
 		}
 	}
@@ -256,8 +256,8 @@ public class TntTagArena extends MinigameArena implements Listener
 			Player damager = (Player) event.getDamager();
 			Player damaged = (Player) event.getEntity();
 			//And damager is this lobby player.
-			if (this.players.contains(damager)
-					&& this.players.contains(damaged))
+			if (this.activePlayers.contains(damager)
+					&& this.activePlayers.contains(damaged))
 			{
 				if (this.isTnt(damager))
 				{

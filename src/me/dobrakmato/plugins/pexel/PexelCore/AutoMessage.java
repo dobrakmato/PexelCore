@@ -16,11 +16,16 @@ public class AutoMessage implements UpdatedPart
 {
 	private static final List<String>	strings		= new ArrayList<String>();
 	private static final String			prefix		= "";
-	private static final long			interval	= 20000 / 20;				//each 10 seconds.
+	private static final long			interval	= 60000 / 20;				//each 60 seconds.
 																				
 	private static final Random			random		= new Random();
 	private static int					taskId		= 0;
 	private static boolean				enabled		= false;
+	
+	static
+	{
+		AutoMessage.strings.add("Tento server je super!");
+	}
 	
 	/**
 	 * Boradcast random message to chat.

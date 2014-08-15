@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  * @author Mato Kormuth
  * 
  */
-public class InventoryMenuHelper
+public class ItemUtils
 {
 	public static ItemStack itemStack(final Material material,
 			final int amount, final byte data, final short damage,
