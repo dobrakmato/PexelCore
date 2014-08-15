@@ -40,9 +40,11 @@ public class EventProcessor implements Listener
 			{
 				for (double i = 0; i < 1.5; i += 0.20D)
 				{
+					Location diff = event.getTo().subtract(event.getFrom()).multiply(
+							1.2F);
 					ParticleEffect.DRIP_LAVA.display(
-							event.getFrom().clone().add(0, i, 0), 0.50F, 0.20F,
-							0.50F, 1, 7);
+							event.getFrom().subtract(diff).clone().add(0, i, 0),
+							0.50F, 0.20F, 0.50F, 1, 7);
 				}
 			}
 		}
