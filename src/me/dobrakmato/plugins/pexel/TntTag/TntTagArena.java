@@ -49,6 +49,7 @@ public class TntTagArena extends MinigameArena implements Listener
 		//Allow player hitting each other.
 		this.setGlobalFlag(AreaFlag.PLAYER_DODAMAGE, true);
 		this.setGlobalFlag(AreaFlag.PLAYER_GETDAMAGE, true);
+		this.setGlobalFlag(AreaFlag.BLOCK_BREAK, false);
 		
 		this.serverLocation = new ServerLocation("Simple Minigame",
 				ServerLocationType.MINIGAME);
@@ -203,7 +204,10 @@ public class TntTagArena extends MinigameArena implements Listener
 	
 	private boolean isTnt(final Player p)
 	{
-		return p.getInventory().getHelmet().getType() == Material.TNT;
+		if (p.getInventory().getHelmet().getType() == null)
+			return false;
+		else
+			return p.getInventory().getHelmet().getType() == Material.TNT;
 	}
 	
 	private void setTnt(final Player p, final boolean value)
@@ -214,8 +218,8 @@ public class TntTagArena extends MinigameArena implements Listener
 					Integer.MAX_VALUE, 4));
 			p.getInventory().getHelmet().setType(Material.TNT);
 			
-			this.chatAll(ChatFormat.minigame(this.getMinigame(),
-					"Player " + p.getName() + " is 'it' now!"));
+			this.chatAll(ChatFormat.minigame(this.getMinigame(), ChatColor.GOLD
+					+ "Player " + p.getName() + " is 'it' now!"));
 		}
 		else
 		{
@@ -230,6 +234,9 @@ public class TntTagArena extends MinigameArena implements Listener
 		super.onPlayerJoin(player);
 		
 		player.teleport(this.arenaLobby);
+		player.getInventory().clear();
+		
+		player.setGameMode(GameMode.ADVENTURE);
 		
 		this.chatAll(ChatFormat.minigame(this.getMinigame(), "Player '"
 				+ player.getDisplayName() + "' has joined game!"));

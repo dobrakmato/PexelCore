@@ -66,7 +66,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	public void chatAll(final String msg)
 	{
 		for (Player p : this.activePlayers)
-			p.chat(msg);
+			p.sendMessage(msg);
 	}
 	
 	@Override
