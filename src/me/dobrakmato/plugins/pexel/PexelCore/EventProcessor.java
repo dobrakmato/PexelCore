@@ -38,10 +38,11 @@ public class EventProcessor implements Listener
 		{
 			if (event.getPlayer().isSprinting())
 			{
-				for (double i = 0; i < 1; i += 0.20D)
+				for (double i = 0; i < 1.5; i += 0.20D)
 				{
-					ParticleEffect.DRIP_LAVA.display(event.getFrom(), 0.50F,
-							0.20F, 0.50F, 1, 5);
+					ParticleEffect.DRIP_LAVA.display(
+							event.getFrom().clone().add(0, i, 0), 0.50F, 0.20F,
+							0.50F, 1, 7);
 				}
 			}
 		}
