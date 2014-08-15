@@ -44,7 +44,12 @@ public class EventProcessor implements Listener
 							1.2F);
 					ParticleEffect.DRIP_LAVA.display(
 							event.getFrom().subtract(diff).clone().add(0, i, 0),
-							0.50F, 0.20F, 0.50F, 1, 7);
+							0.50F,
+							0.20F,
+							0.50F,
+							1,
+							(int) Math.floor(7 * event.getTo().distance(
+									event.getFrom())));
 				}
 			}
 		}
