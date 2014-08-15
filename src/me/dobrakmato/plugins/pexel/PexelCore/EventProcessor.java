@@ -14,6 +14,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  * Event processor for pexel.
@@ -114,6 +116,20 @@ public class EventProcessor implements Listener
 				}
 			}
 		}
+	}
+	
+	@EventHandler
+	private void onPlayerJoin(final PlayerJoinEvent event)
+	{
+		//Load profile to memory or create empty profile.
+		StorageEngine.loadProfile(event.getPlayer().getUniqueId());
+	}
+	
+	@EventHandler
+	private void onPlayerLeave(final PlayerQuitEvent event)
+	{
+		//Force save of player's profile.
+		StorageEngine.saveProfile(event.getPlayer().getUniqueId());
 	}
 	
 	private boolean hasPermission(final Location location, final Player player,

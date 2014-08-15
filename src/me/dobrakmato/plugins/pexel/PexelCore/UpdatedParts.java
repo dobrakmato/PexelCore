@@ -22,6 +22,8 @@ public class UpdatedParts
 	
 	public static void registerPart(final UpdatedPart part)
 	{
+		Log.info("[UpdatedParts] Registering: "
+				+ part.getClass().getSimpleName());
 		UpdatedParts.parts.add(part);
 	}
 }

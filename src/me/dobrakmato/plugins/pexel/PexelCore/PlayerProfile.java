@@ -1,11 +1,14 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.google.common.collect.ImmutableList;
@@ -21,30 +24,30 @@ public class PlayerProfile
 	/**
 	 * Player's UUID.
 	 */
-	private final UUID					player;
+	protected final UUID					player;
 	/**
 	 * Player's friends.
 	 */
-	private final List<UUID>			friends			= new ArrayList<UUID>();
+	protected final List<UUID>				friends			= new ArrayList<UUID>();
 	/**
 	 * Player's foes.
 	 */
-	private final List<UUID>			foes			= new ArrayList<UUID>();
+	protected final List<UUID>				foes			= new ArrayList<UUID>();
 	/**
 	 * Player's settings.
 	 */
-	private final Map<Setting, Boolean>	settings		= new HashMap<Setting, Boolean>();
+	protected final Map<Setting, Boolean>	settings		= new HashMap<Setting, Boolean>();
 	
 	/**
 	 * Spectating status.
 	 */
-	private boolean						spectating		= false;
+	protected boolean						spectating		= false;
 	/**
 	 * Player's location.
 	 */
-	private ServerLocation				serverLocation	= new ServerLocation(
-																"Main Lobby",
-																ServerLocationType.LOBBY);
+	protected ServerLocation				serverLocation	= new ServerLocation(
+																	"Main Lobby",
+																	ServerLocationType.LOBBY);
 	
 	/**
 	 * Creates player profile from Player object.
@@ -194,5 +197,49 @@ public class PlayerProfile
 	public void setSpectating(final boolean spectating)
 	{
 		this.spectating = spectating;
+	}
+	
+	/**
+	 * @param playerProfile
+	 */
+	public void save(final String path)
+	{
+		YamlConfiguration yaml = new YamlConfiguration();
+		
+		yaml.set("player.uuid", this.player.toString());
+		yaml.set("player.friends", this.friends);
+		yaml.set("player.foes", this.foes);
+		
+		try
+		{
+			yaml.save(new File(path));
+		} catch (IOException e)
+		{
+			Log.addProblem("Can't save player profile: " + e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @param playerProfile
+	 * @return
+	 */
+	public static PlayerProfile load(final String path)
+	{
+		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(new File(
+				path));
+		UUID uuid = UUID.fromString(yaml.getString("player.uuid"));
+		
+		PlayerProfile profile = new PlayerProfile(uuid);
+		
+		List<?> friends = yaml.getList("player.friends");
+		List<?> foes = yaml.getList("player.foes");
+		
+		for (Object obj : friends)
+			profile.addFriend(UUID.fromString(obj.toString()));
+		for (Object obj : foes)
+			profile.addFoe(UUID.fromString(obj.toString()));
+		
+		return profile;
 	}
 }

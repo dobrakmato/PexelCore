@@ -1,5 +1,7 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -11,9 +13,14 @@ import java.util.logging.Logger;
 public class Log
 {
 	/**
+	 * List of problems, that should admins able to view.
+	 */
+	private final static List<String>	problems	= new ArrayList<String>();
+	
+	/**
 	 * Internal logger.
 	 */
-	private final static Logger	log	= Logger.getLogger("PexelCore");
+	private final static Logger			log			= Logger.getLogger("PexelCore");
 	
 	/**
 	 * Logs 'info' message.
@@ -90,5 +97,25 @@ public class Log
 	public final static void gameDisable(final String gameName)
 	{
 		Log.log.info("[PEXEL] " + "Disabling Minigame-" + gameName + "...");
+	}
+	
+	/**
+	 * Adds problem to list.
+	 * 
+	 * @param message
+	 */
+	protected final static void addProblem(final String message)
+	{
+		Log.problems.add(message);
+	}
+	
+	/**
+	 * Returns list of all problems.
+	 * 
+	 * @return
+	 */
+	protected final static List<String> getProblems()
+	{
+		return Log.problems;
 	}
 }

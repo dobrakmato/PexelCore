@@ -1,5 +1,6 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,5 +125,37 @@ public class StorageEngine
 	public static Lobby getLobby(final String lobbyName)
 	{
 		return StorageEngine.lobbies.get(lobbyName);
+	}
+	
+	/**
+	 * Saves player's profile to file.
+	 * 
+	 * @param uniqueId
+	 */
+	public static void saveProfile(final UUID uniqueId)
+	{
+		Log.info("Saving profile for " + uniqueId.toString() + " to disk...");
+		StorageEngine.profiles.get(uniqueId).save(Paths.playerProfile(uniqueId));
+	}
+	
+	/**
+	 * Loads player profile from disk or creates an empty one.
+	 * 
+	 * @param uniqueId
+	 */
+	public static void loadProfile(final UUID uniqueId)
+	{
+		File f = new File(Paths.playerProfile(uniqueId));
+		if (f.exists())
+		{
+			Log.info("Load profile for " + uniqueId + "...");
+			StorageEngine.profiles.put(uniqueId,
+					PlayerProfile.load(Paths.playerProfile(uniqueId)));
+		}
+		else
+		{
+			Log.info("Creating new profile for " + uniqueId.toString());
+			StorageEngine.profiles.put(uniqueId, new PlayerProfile(uniqueId));
+		}
 	}
 }
