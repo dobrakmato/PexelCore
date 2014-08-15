@@ -135,16 +135,18 @@ public class TntTagArena extends MinigameArena implements Listener
 				
 				for (Player p : this.activePlayers)
 					if (this.isTnt(p))
-						p.playSound(p.getLocation(), Sound.NOTE_STICKS, 1, 1);
+						p.playSound(p.getLocation(), Sound.NOTE_STICKS, 0.5F,
+								1F);
 				
-				if (this.gameTimeLeft >= 10)
+				if (this.gameTimeLeft <= 10)
 				{
 					//Play end round music...
 					
 					//Play cing
 					for (Player p : this.activePlayers)
 						if (this.isTnt(p))
-							p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 1);
+							p.playSound(p.getLocation(), Sound.NOTE_PIANO,
+									0.5F, 1F);
 				}
 				
 				//If the round ended.
@@ -157,6 +159,7 @@ public class TntTagArena extends MinigameArena implements Listener
 						if (this.isTnt(p))
 						{
 							//Kill them.
+							p.getInventory().clear();
 							p.damage(20000D);
 							p.getWorld().createExplosion(p.getLocation(), 0,
 									false);
@@ -224,8 +227,6 @@ public class TntTagArena extends MinigameArena implements Listener
 			p.teleport(this.gameSpawn);
 		}
 		
-		this.gameSpawn.getWorld().playSound(this.gameSpawn, Sound.FIZZ, 1, 1);
-		
 		//Select some TNT players (5%).
 		for (int i = 0; i < (this.activePlayers.size() / 100 * 20 + 1); i++)
 		{
@@ -246,6 +247,7 @@ public class TntTagArena extends MinigameArena implements Listener
 	
 	private void setTnt(final Player p, final boolean value)
 	{
+		p.removePotionEffect(PotionEffectType.SPEED);
 		if (value)
 		{
 			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
@@ -255,13 +257,19 @@ public class TntTagArena extends MinigameArena implements Listener
 			this.chatAll(ChatFormat.minigame(this.getMinigame(), ChatColor.GOLD
 					+ "Player " + p.getName() + " is 'it' now!"));
 			
-			this.arenaLobby.getWorld().playSound(p.getLocation(), Sound.FUSE,
+			this.arenaLobby.getWorld().playSound(p.getLocation(),
+					Sound.VILLAGER_NO, 1, 1);
+			this.arenaLobby.getWorld().playSound(p.getLocation(), Sound.FIZZ,
 					1, 1);
 		}
 		else
 		{
 			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
 					Integer.MAX_VALUE, 2));
+			
+			this.arenaLobby.getWorld().playSound(p.getLocation(),
+					Sound.VILLAGER_YES, 1, 1);
+			
 			try
 			{
 				p.getInventory().setHelmet(new ItemStack(Material.AIR));
@@ -301,6 +309,7 @@ public class TntTagArena extends MinigameArena implements Listener
 		super.onPlayerLeft(player);
 		
 		player.teleport(this.getMinigame().getLobby());
+		player.removePotionEffect(PotionEffectType.SPEED);
 		
 		this.chatAll(ChatFormat.minigame(this.getMinigame(), "Player '"
 				+ player.getDisplayName() + "' has left game!"));

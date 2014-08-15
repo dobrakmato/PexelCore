@@ -25,7 +25,9 @@ public class TntTagMinigame implements Minigame
 	private final Map<String, TntTagArena>	arenas			= new HashMap<String, TntTagArena>();
 	private final Location					minigameLobby	= new Location(
 																	Bukkit.getWorld("world"),
-																	0, 0, 0);
+																	-2034,
+																	147.5,
+																	-1931);
 	
 	private TntTagArena						are;
 	

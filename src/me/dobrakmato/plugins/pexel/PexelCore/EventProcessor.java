@@ -15,6 +15,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
@@ -28,6 +29,26 @@ public class EventProcessor implements Listener
 	public EventProcessor()
 	{
 		Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
+	}
+	
+	@EventHandler
+	private void onPlayerMove(final PlayerMoveEvent event)
+	{
+		if (event.getPlayer().getName().equalsIgnoreCase("dobrakmato"))
+		{
+			if (event.getPlayer().isSprinting())
+			{
+				for (double i = 0; i < 2; i += 0.20D)
+				{
+					ParticleEffect.FLAME.display(event.getFrom(), 0, 0, 0, 1,
+							10);
+					ParticleEffect.DRIP_LAVA.display(event.getFrom(), 0, 0.20F,
+							0, 1, 10);
+					ParticleEffect.RED_DUST.display(event.getFrom(), 0, 0.10F,
+							0, 1, 10);
+				}
+			}
+		}
 	}
 	
 	@EventHandler

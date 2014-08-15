@@ -126,7 +126,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	public void onPlayerLeft(final Player player)
 	{
 		this.activePlayers.remove(player);
-		this.setSpectating(player, false);
+		//this.setSpectating(player, false);
 	}
 	
 	/**
