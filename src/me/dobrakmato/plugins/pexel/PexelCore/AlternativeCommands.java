@@ -15,9 +15,9 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
  * @author Mato Kormuth
  * 
  */
-public class AlternateCommands implements Listener
+public class AlternativeCommands implements Listener
 {
-	public AlternateCommands()
+	public AlternativeCommands()
 	{
 		Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
 	}
