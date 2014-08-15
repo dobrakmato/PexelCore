@@ -40,10 +40,8 @@ public class EventProcessor implements Listener
 			{
 				for (double i = 0; i < 1; i += 0.20D)
 				{
-					ParticleEffect.FLAME.display(event.getFrom().add(0, i, 0),
-							0, 0, 0, 1, 1);
-					ParticleEffect.DRIP_LAVA.display(event.getFrom(), 0, 0.20F,
-							0, 1, 10);
+					ParticleEffect.DRIP_LAVA.display(event.getFrom(), 0.50F,
+							0.20F, 0.50F, 1, 5);
 				}
 			}
 		}
