@@ -41,6 +41,7 @@ public class TntTagArena extends MinigameArena implements Listener
 	private Location	gameSpawn;
 	private int			taskId			= 0;
 	private boolean		gameRunning		= false;
+	private final int	round			= 0;
 	
 	public TntTagArena(final Region region, final Minigame minigame,
 			final String name)
@@ -124,6 +125,10 @@ public class TntTagArena extends MinigameArena implements Listener
 			//Count down game time.
 			if (this.gameTimeLeft > 0)
 			{
+				if ((this.gameTimeLeft % 10) == 0)
+					this.chatAll(ChatColor.YELLOW + "" + this.gameTimeLeft
+							+ " seconds to explode!");
+				
 				//If the round ended.
 				if (this.gameTimeLeft == 1)
 				{
@@ -181,6 +186,8 @@ public class TntTagArena extends MinigameArena implements Listener
 	
 	private void newRound()
 	{
+		this.chatAll(ChatColor.YELLOW + "Round " + this.round
+				+ "! 60 seconds to explode!");
 		//Teleport all players to gamespawn and give them potion effect.
 		for (Player p : this.activePlayers)
 		{
@@ -205,7 +212,7 @@ public class TntTagArena extends MinigameArena implements Listener
 	
 	private boolean isTnt(final Player p)
 	{
-		if (p.getInventory().getHelmet().getType() == null)
+		if (p.getInventory().getHelmet() == null)
 			return false;
 		else
 			return p.getInventory().getHelmet().getType() == Material.TNT;
@@ -226,6 +233,13 @@ public class TntTagArena extends MinigameArena implements Listener
 		{
 			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
 					Integer.MAX_VALUE, 2));
+			try
+			{
+				p.getInventory().setHelmet(new ItemStack(Material.AIR));
+			} catch (Exception ex)
+			{
+				ex.printStackTrace();
+			}
 		}
 	}
 	
@@ -263,6 +277,7 @@ public class TntTagArena extends MinigameArena implements Listener
 		if (event.getDamager() instanceof Player
 				&& event.getEntity() instanceof Player)
 		{
+			event.setDamage(0D);
 			Player damager = (Player) event.getDamager();
 			Player damaged = (Player) event.getEntity();
 			//And damager is this lobby player.
