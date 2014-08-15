@@ -138,17 +138,17 @@ public class Region
 		return players;
 	}
 	
-	public void serialize(final YamlConfiguration yaml)
+	public void serialize(final YamlConfiguration yaml, final String string)
 	{
-		yaml.set("track.region.v1.x", this.v1.getBlockX());
-		yaml.set("track.region.v1.y", this.v1.getBlockY());
-		yaml.set("track.region.v1.z", this.v1.getBlockZ());
+		yaml.set(".v1.x", this.v1.getBlockX());
+		yaml.set(".v1.y", this.v1.getBlockY());
+		yaml.set(".v1.z", this.v1.getBlockZ());
 		
-		yaml.set("track.region.v2.x", this.v2.getBlockX());
-		yaml.set("track.region.v2.y", this.v2.getBlockY());
-		yaml.set("track.region.v2.z", this.v2.getBlockZ());
+		yaml.set(".v2.x", this.v2.getBlockX());
+		yaml.set(".v2.y", this.v2.getBlockY());
+		yaml.set(".v2.z", this.v2.getBlockZ());
 		
-		yaml.set("track.region.world", this.w.getName());
+		yaml.set(".world", this.w.getName());
 	}
 	
 	private final static boolean range(final double min, final double max,

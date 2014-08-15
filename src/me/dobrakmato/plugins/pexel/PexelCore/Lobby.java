@@ -30,11 +30,11 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	/**
 	 * How often should lobby check for players.
 	 */
-	private final long	checkInterval	= 40;	//40 ticks = 2 second.
+	private final long	checkInterval	= 20;	//40 ticks = 2 second.
 	/**
 	 * The minimal Y coordinate value, after the lobby will teleport players to its spawn.
 	 */
-	private final int	thresholdY		= 30;
+	private final int	thresholdY		= 50;
 	
 	/**
 	 * Returns lobby spawn.
@@ -61,15 +61,13 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	 */
 	private void updatePlayers()
 	{
-		System.out.println("Lobby::updatePlayers()");
 		for (Player player : this.getRegion().getPlayers())
 		{
-			System.out.println(" Processing player: " + player.getName());
 			//Lobby potion enhantsments.
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
-					20 * 5, 2));
+					20 * 10, 2));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,
-					20 * 5, 2));
+					20 * 10, 1));
 			
 			//In-void lobby teleport.
 			if (player.getLocation().getY() < this.thresholdY)
@@ -95,5 +93,21 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	public void updateStop()
 	{
 		Bukkit.getScheduler().cancelTask(this.taskId);
+	}
+	
+	/**
+	 * @return the thresholdY
+	 */
+	public int getThresholdY()
+	{
+		return this.thresholdY;
+	}
+	
+	/**
+	 * @return the checkInterval
+	 */
+	public long getCheckInterval()
+	{
+		return this.checkInterval;
 	}
 }

@@ -1,11 +1,13 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 /**
@@ -156,6 +158,56 @@ public class StorageEngine
 		{
 			Log.info("Creating new profile for " + uniqueId.toString());
 			StorageEngine.profiles.put(uniqueId, new PlayerProfile(uniqueId));
+		}
+	}
+	
+	public static void saveData()
+	{
+		//Save lobbies.
+		YamlConfiguration yaml_lobbies = new YamlConfiguration();
+		int i_lobbies = 0;
+		for (Lobby l : StorageEngine.lobbies.values())
+		{
+			yaml_lobbies.set("lobbies.lobby" + i_lobbies + ".name", l.getName());
+			yaml_lobbies.set("lobbies.lobby" + i_lobbies + ".checkinterval",
+					l.getCheckInterval());
+			yaml_lobbies.set("lobbies.lobby" + i_lobbies + ".thresholdY",
+					l.getThresholdY());
+			l.getRegion().serialize(yaml_lobbies,
+					"lobbies.lobby" + i_lobbies + ".region");
+			i_lobbies++;
+		}
+		try
+		{
+			yaml_lobbies.save(new File(Paths.lobbiesPath()));
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		//Save arenas
+		YamlConfiguration yaml_arenas = new YamlConfiguration();
+		int i_arenas = 0;
+		for (MinigameArena a : StorageEngine.arenas.values())
+		{
+			yaml_arenas.set("arenas.arena" + i_arenas + ".name", a.getName());
+			yaml_arenas.set("arenas.arena" + i_arenas + ".type",
+					a.getClass().getSimpleName());
+			yaml_arenas.set("arenas.arena" + i_arenas + ".minigame",
+					a.getMinigame().getName());
+			yaml_arenas.set("arenas.arena" + i_arenas + ".slots",
+					a.getMaximumSlots());
+			yaml_arenas.set("arenas.arena" + i_arenas + ".owner", a.getOwner());
+			a.getRegion().serialize(yaml_arenas,
+					"arenas.arena" + i_arenas + ".region");
+			i_arenas++;
+		}
+		try
+		{
+			yaml_arenas.save(new File(Paths.arenasPath()));
+		} catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }

@@ -41,6 +41,8 @@ public class PexelCore extends JavaPlugin
 		
 		this.server.close();
 		
+		StorageEngine.saveData();
+		
 		Log.partDisable("Core");
 	}
 	

@@ -35,6 +35,7 @@ public class TntTagArena extends MinigameArena implements Listener
 {
 	private long		gameTimeLeft	= 60;
 	private long		lobbyTimeLeft	= 10;
+	private final int	minimumPlayers	= 2;
 	private Location	arenaLobby;
 	private Location	gameSpawn;
 	private int			taskId			= 0;
@@ -70,7 +71,7 @@ public class TntTagArena extends MinigameArena implements Listener
 	{
 		this.state = GameState.WAITING_PLAYERS;
 		//If we have enough players.
-		if (this.activePlayers.size() >= 6)
+		if (this.activePlayers.size() >= this.minimumPlayers)
 		{
 			//Start game count down!
 			this.startCountDown();
@@ -79,7 +80,8 @@ public class TntTagArena extends MinigameArena implements Listener
 		{
 			//Spam everyone's chat with info that there is still not enough players.
 			this.chatAll(ChatFormat.minigame(this.getMinigame(),
-					"Can't start right now! " + (6 - this.activePlayers.size())
+					"Can't start right now! "
+							+ (this.minimumPlayers - this.activePlayers.size())
 							+ " players have to join!"));
 		}
 	}
@@ -266,5 +268,15 @@ public class TntTagArena extends MinigameArena implements Listener
 				}
 			}
 		}
+	}
+	
+	public void setGameSpawn(final Location location)
+	{
+		this.gameSpawn = location;
+	}
+	
+	public void setLobbySpawn(final Location location)
+	{
+		this.arenaLobby = location;
 	}
 }

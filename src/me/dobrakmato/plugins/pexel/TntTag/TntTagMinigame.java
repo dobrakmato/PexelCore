@@ -30,15 +30,20 @@ public class TntTagMinigame implements Minigame
 	public TntTagMinigame()
 	{
 		Pexel.getMatchmaking().registerMinigame(this);
+		StorageEngine.addMinigame(this);
 		StorageEngine.registerArenaAlias(TntTagArena.class, "TntTagArena");
 		this.makeArenas();
 	}
 	
 	public void makeArenas()
 	{
-		TntTagArena arena1 = new TntTagArena(new Region(new Vector(0, 0, 0),
-				new Vector(128, 128, 128), Bukkit.getWorld("world")), this,
-				"arena1");
+		TntTagArena arena1 = new TntTagArena(
+				new Region(new Vector(-1953, 0, -1946), new Vector(-2089, 255,
+						-2089), Bukkit.getWorld("world")), this, "arena1");
+		arena1.setGameSpawn(new Location(Bukkit.getWorld("world"), -2010,
+				122.5, -1997));
+		arena1.setGameSpawn(new Location(Bukkit.getWorld("world"), -2010,
+				138.5, -1997));
 		arena1.reset();
 		
 		Pexel.getMatchmaking().registerArena(arena1);

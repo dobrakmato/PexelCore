@@ -1,5 +1,8 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import java.util.Arrays;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +17,11 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
  */
 public class AlternateCommands implements Listener
 {
+	public AlternateCommands()
+	{
+		Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
+	}
+	
 	@EventHandler
 	private void onPrepocessCommand(final PlayerCommandPreprocessEvent event)
 	{
@@ -31,6 +39,12 @@ public class AlternateCommands implements Listener
 						+ " = " + ChatColor.GREEN
 						+ StorageEngine.getByAlias(key).getName());
 			}
+		}
+		else if (command.equalsIgnoreCase("tnttest"))
+		{
+			Pexel.getMatchmaking().registerRequest(
+					new MatchmakingRequest(Arrays.asList(event.getPlayer()),
+							StorageEngine.getMinigame("tnttag"), null));
 		}
 	}
 }

@@ -15,4 +15,16 @@ public class Paths
 		return Pexel.getCore().getDataFolder().getAbsolutePath() + "/profiles/"
 				+ uuid.toString() + ".yml";
 	}
+	
+	public static String lobbiesPath()
+	{
+		return Pexel.getCore().getDataFolder().getAbsolutePath()
+				+ "/lobbies.yml";
+	}
+	
+	public static String arenasPath()
+	{
+		return Pexel.getCore().getDataFolder().getAbsolutePath()
+				+ "/arenas.yml";
+	}
 }
