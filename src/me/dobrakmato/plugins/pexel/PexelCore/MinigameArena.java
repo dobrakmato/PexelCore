@@ -103,14 +103,16 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	public boolean canJoin()
 	{
 		return this.getFreeSlots() >= 1
-				&& (this.state == GameState.WAITING_PLAYERS || this.state == GameState.PLAYING_CANJOIN);
+				&& (this.state == GameState.WAITING_PLAYERS
+						|| this.state == GameState.WAITING_EMPTY || this.state == GameState.PLAYING_CANJOIN);
 	}
 	
 	@Override
 	public boolean canJoin(final int count)
 	{
 		return this.getFreeSlots() >= count
-				&& (this.state == GameState.WAITING_PLAYERS || this.state == GameState.PLAYING_CANJOIN);
+				&& (this.state == GameState.WAITING_PLAYERS
+						|| this.state == GameState.WAITING_EMPTY || this.state == GameState.PLAYING_CANJOIN);
 	}
 	
 	@Override
