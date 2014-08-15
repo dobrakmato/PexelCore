@@ -6,6 +6,7 @@ import java.util.List;
 import me.dobrakmato.plugins.pexel.PexelCore.AreaFlag;
 import me.dobrakmato.plugins.pexel.PexelCore.ChatFormat;
 import me.dobrakmato.plugins.pexel.PexelCore.GameState;
+import me.dobrakmato.plugins.pexel.PexelCore.Log;
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.MinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
@@ -62,6 +63,8 @@ public class TntTagArena extends MinigameArena implements Listener
 	
 	public void reset()
 	{
+		Log.info("Reseting arena '" + this.getName() + "'...");
+		
 		this.state = GameState.RESETING;
 		//Prepeare arena for new players.
 		Bukkit.getScheduler().cancelTask(this.taskId);
@@ -130,6 +133,20 @@ public class TntTagArena extends MinigameArena implements Listener
 					this.chatAll(ChatColor.YELLOW + "" + this.gameTimeLeft
 							+ " seconds to explode!");
 				
+				for (Player p : this.activePlayers)
+					if (this.isTnt(p))
+						p.playSound(p.getLocation(), Sound.NOTE_STICKS, 1, 1);
+				
+				if (this.gameTimeLeft >= 10)
+				{
+					//Play end round music...
+					
+					//Play cing
+					for (Player p : this.activePlayers)
+						if (this.isTnt(p))
+							p.playSound(p.getLocation(), Sound.NOTE_PIANO, 1, 1);
+				}
+				
 				//If the round ended.
 				if (this.gameTimeLeft == 1)
 				{
@@ -143,7 +160,7 @@ public class TntTagArena extends MinigameArena implements Listener
 							p.damage(20000D);
 							p.getWorld().createExplosion(p.getLocation(), 0,
 									false);
-							p.sendMessage("You lost the game.");
+							p.sendMessage("You lose the game.");
 							//Add him to dead people.
 							deads.add(p);
 						}
@@ -188,9 +205,13 @@ public class TntTagArena extends MinigameArena implements Listener
 	
 	private void newRound()
 	{
+		if (this.playerCount() == 0)
+			this.reset();
+		
 		this.round++;
-		this.chatAll(ChatColor.YELLOW + "Round " + this.round
-				+ "! 60 seconds to explode!");
+		this.chatAll(ChatColor.YELLOW + "Round #" + this.round
+				+ "! 60 seconds to explode! " + ChatColor.DARK_AQUA
+				+ this.playerCount() + " players left!");
 		//Teleport all players to gamespawn and give them potion effect.
 		for (Player p : this.activePlayers)
 		{
@@ -202,6 +223,8 @@ public class TntTagArena extends MinigameArena implements Listener
 			//Teleport him to game start.
 			p.teleport(this.gameSpawn);
 		}
+		
+		this.gameSpawn.getWorld().playSound(this.gameSpawn, Sound.FIZZ, 1, 1);
 		
 		//Select some TNT players (5%).
 		for (int i = 0; i < (this.activePlayers.size() / 100 * 20 + 1); i++)
@@ -290,13 +313,13 @@ public class TntTagArena extends MinigameArena implements Listener
 		if (event.getDamager() instanceof Player
 				&& event.getEntity() instanceof Player)
 		{
-			event.setDamage(0D);
 			Player damager = (Player) event.getDamager();
 			Player damaged = (Player) event.getEntity();
 			//And damager is this lobby player.
 			if (this.activePlayers.contains(damager)
 					&& this.activePlayers.contains(damaged))
 			{
+				event.setDamage(0D);
 				if (this.isTnt(damager))
 				{
 					this.setTnt(damager, false);
