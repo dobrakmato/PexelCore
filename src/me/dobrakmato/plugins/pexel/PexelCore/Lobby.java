@@ -61,13 +61,13 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	 */
 	private void updatePlayers()
 	{
-		for (Player player : this.getRegion().getPlayers())
+		for (Player player : this.getRegion().getPlayersXZ())
 		{
 			//Lobby potion enhantsments.
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
-					20 * 10, 2));
+					20 * 30, 2));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,
-					20 * 10, 1));
+					20 * 30, 1));
 			
 			//In-void lobby teleport.
 			if (player.getLocation().getY() < this.thresholdY)

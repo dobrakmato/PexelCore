@@ -27,4 +27,9 @@ public class Paths
 		return Pexel.getCore().getDataFolder().getAbsolutePath()
 				+ "/arenas.yml";
 	}
+	
+	public static String gatesPath()
+	{
+		return Pexel.getCore().getDataFolder().getAbsolutePath() + "/gates.yml";
+	}
 }

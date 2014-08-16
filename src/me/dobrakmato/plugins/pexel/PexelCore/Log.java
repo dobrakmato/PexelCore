@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
 /**
  * Logger for pexel.
  * 
@@ -107,6 +111,10 @@ public class Log
 	protected final static void addProblem(final String message)
 	{
 		Log.problems.add(message);
+		
+		for (Player p : Bukkit.getOnlinePlayers())
+			if (p.isOp())
+				p.sendMessage(ChatColor.RED + "[Problem]" + message);
 	}
 	
 	/**

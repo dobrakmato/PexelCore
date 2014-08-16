@@ -25,6 +25,7 @@ public class StorageEngine
 	@SuppressWarnings("rawtypes")
 	private static final Map<String, Class>			aliases		= new HashMap<String, Class>();
 	private static final Map<String, Lobby>			lobbies		= new HashMap<String, Lobby>();
+	private static final Map<String, TeleportGate>	gates		= new HashMap<String, TeleportGate>();
 	private static boolean							initialized	= false;
 	
 	public static void initialize(final PexelCore core)
@@ -98,6 +99,21 @@ public class StorageEngine
 	public static MinigameArena getArena(final String arenaName)
 	{
 		return StorageEngine.arenas.get(arenaName);
+	}
+	
+	public static void addGate(final String name, final TeleportGate gate)
+	{
+		StorageEngine.gates.put(name, gate);
+	}
+	
+	public static TeleportGate getGate(final String name)
+	{
+		return StorageEngine.gates.get(name);
+	}
+	
+	public static void removeGate(final String name)
+	{
+		StorageEngine.gates.remove(name);
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -205,6 +221,27 @@ public class StorageEngine
 		try
 		{
 			yaml_arenas.save(new File(Paths.arenasPath()));
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		//Save gates
+		YamlConfiguration yaml_gates = new YamlConfiguration();
+		int i_gates = 0;
+		for (String key : StorageEngine.gates.keySet())
+		{
+			TeleportGate tg = StorageEngine.gates.get(key);
+			yaml_gates.set("gates.gate" + i_gates + ".name", key);
+			yaml_gates.set("gates.gate" + i_gates + ".type", tg.getType());
+			yaml_gates.set("gates.gate" + i_gates + ".content", tg.getContent());
+			tg.getRegion().serialize(yaml_gates,
+					"gates.gate" + i_gates + ".region");
+			i_gates++;
+		}
+		try
+		{
+			yaml_gates.save(new File(Paths.gatesPath()));
 		} catch (IOException e)
 		{
 			e.printStackTrace();

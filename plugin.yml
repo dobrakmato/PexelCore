@@ -25,6 +25,10 @@ commands:
      description: Pouziva sa na pracu s priatelmi.
      aliases: [p]
      usage: /party <action> <playerName>
+   gate:
+     description: Pouziva sa na pracu s gates.
+     aliases: [gates]
+     usage: /gate <action> <actionType> <actionContent>
    settings:
      description: Pouziva sa na pracu s nastaveniami.
      aliases: [options, option, setting]

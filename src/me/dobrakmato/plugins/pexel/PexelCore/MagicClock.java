@@ -28,8 +28,8 @@ public class MagicClock implements Listener
 	public void buildInventoryMenu()
 	{
 		InventoryMenuItem everybodyItem = new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.EYE_OF_ENDER,
-						"Everybody", null), new JavaInventoryMenuAction(
+				ItemUtils.getNamedItemStack(Material.EYE_OF_ENDER, "Everybody",
+						null), new JavaInventoryMenuAction(
 						new ParametrizedRunnable() {
 							@Override
 							public void run(final Object... args)
@@ -43,8 +43,8 @@ public class MagicClock implements Listener
 						}), 0, true);
 		
 		InventoryMenuItem nobodyItem = new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.ENDER_PEARL,
-						"Nobody", null), new JavaInventoryMenuAction(
+				ItemUtils.getNamedItemStack(Material.ENDER_PEARL, "Nobody",
+						null), new JavaInventoryMenuAction(
 						new ParametrizedRunnable() {
 							@Override
 							public void run(final Object... args)
@@ -63,9 +63,8 @@ public class MagicClock implements Listener
 						}), 1, true);
 		
 		InventoryMenuItem kickItem = new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.APPLE,
-						"Kick me", null), new KickInventoryMenuAction(), 2,
-				true);
+				ItemUtils.getNamedItemStack(Material.APPLE, "Kick me", null),
+				new KickInventoryMenuAction(), 2, true);
 		
 		InventoryMenuItem teleportItem = new InventoryMenuItem(
 				ItemUtils.getNamedItemStack(Material.BED,
@@ -74,31 +73,29 @@ public class MagicClock implements Listener
 						Bukkit.getWorld("world"), 0, 255, 0)), 3, true);
 		
 		InventoryMenuItem commandItem = new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.BEACON,
-						"Suprise", null), new CommandInventoryMenuAction(
-						"/me je gay"), 4, false);
+				ItemUtils.getNamedItemStack(Material.BEACON, "Suprise", null),
+				new CommandInventoryMenuAction("me je gay"), 4, false);
 		
 		InventoryMenuItem soundItem = new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.NOTE_BLOCK,
-						"Sound", null), new JavaInventoryMenuAction(
-						new ParametrizedRunnable() {
-							@Override
-							public void run(final Object... args)
-							{
-								((Player) args[0]).playSound(
-										((Player) args[0]).getLocation(),
-										Sound.ZOMBIE_REMEDY, 1, 1);
-								((Player) args[0]).playSound(
-										((Player) args[0]).getLocation(),
-										Sound.AMBIENCE_CAVE, 1, 1);
-								((Player) args[0]).playSound(
-										((Player) args[0]).getLocation(),
-										Sound.ZOMBIE_METAL, 1, 1);
-								((Player) args[0]).playSound(
-										((Player) args[0]).getLocation(),
-										Sound.BURP, 1, 1);
-							}
-						}), 5, false);
+				ItemUtils.getNamedItemStack(Material.NOTE_BLOCK, "Sound", null),
+				new JavaInventoryMenuAction(new ParametrizedRunnable() {
+					@Override
+					public void run(final Object... args)
+					{
+						((Player) args[0]).playSound(
+								((Player) args[0]).getLocation(),
+								Sound.ZOMBIE_REMEDY, 1, 1);
+						((Player) args[0]).playSound(
+								((Player) args[0]).getLocation(),
+								Sound.AMBIENCE_CAVE, 1, 1);
+						((Player) args[0]).playSound(
+								((Player) args[0]).getLocation(),
+								Sound.ZOMBIE_METAL, 1, 1);
+						((Player) args[0]).playSound(
+								((Player) args[0]).getLocation(), Sound.BURP,
+								1, 1);
+					}
+				}), 5, false);
 		
 		this.im = new InventoryMenu(InventoryType.CHEST, "Player visibility",
 				Arrays.asList(everybodyItem, nobodyItem, kickItem,

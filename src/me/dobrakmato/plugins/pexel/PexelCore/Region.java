@@ -110,6 +110,14 @@ public class Region
 			return false;
 	}
 	
+	public boolean intersectsXZ(final Location loc)
+	{
+		if (this.w.getName() == loc.getWorld().getName())
+			return this.intersectsXZ(loc.toVector());
+		else
+			return false;
+	}
+	
 	/**
 	 * Returns whatever vector intersects the region.
 	 * 
@@ -124,12 +132,18 @@ public class Region
 				&& Region.range(this.v1.getZ(), this.v2.getZ(), v.getZ());
 	}
 	
+	public boolean intersectsXZ(final Vector v)
+	{
+		return Region.range(this.v1.getX(), this.v2.getX(), v.getX())
+				&& Region.range(this.v1.getZ(), this.v2.getZ(), v.getZ());
+	}
+	
 	/**
 	 * Returns players in region.
 	 * 
 	 * @return list of players
 	 */
-	public List<Player> getPlayers()
+	public List<Player> getPlayersXYZ()
 	{
 		List<Player> players = new ArrayList<Player>();
 		for (Player player : Bukkit.getOnlinePlayers())
@@ -140,20 +154,38 @@ public class Region
 	
 	public void serialize(final YamlConfiguration yaml, final String string)
 	{
-		yaml.set(".v1.x", this.v1.getBlockX());
-		yaml.set(".v1.y", this.v1.getBlockY());
-		yaml.set(".v1.z", this.v1.getBlockZ());
+		yaml.set(string + ".v1.x", this.v1.getBlockX());
+		yaml.set(string + ".v1.y", this.v1.getBlockY());
+		yaml.set(string + ".v1.z", this.v1.getBlockZ());
 		
-		yaml.set(".v2.x", this.v2.getBlockX());
-		yaml.set(".v2.y", this.v2.getBlockY());
-		yaml.set(".v2.z", this.v2.getBlockZ());
+		yaml.set(string + ".v2.x", this.v2.getBlockX());
+		yaml.set(string + ".v2.y", this.v2.getBlockY());
+		yaml.set(string + ".v2.z", this.v2.getBlockZ());
 		
-		yaml.set(".world", this.w.getName());
+		yaml.set(string + ".world", this.w.getName());
 	}
 	
 	private final static boolean range(final double min, final double max,
 			final double value)
 	{
 		return (value <= max ? (value >= min ? true : false) : false);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Region{x1:" + this.v1.getBlockX() + ",y1:"
+				+ this.v1.getBlockY() + ",z1:" + this.v1.getBlockZ() + ",x2:"
+				+ this.v2.getBlockX() + ",y2:" + this.v2.getBlockY() + ",z2:"
+				+ this.v2.getBlockZ() + ",world:" + this.w.getName() + "}";
+	}
+	
+	public List<Player> getPlayersXZ()
+	{
+		List<Player> players = new ArrayList<Player>();
+		for (Player player : Bukkit.getOnlinePlayers())
+			if (this.intersectsXZ(player.getLocation()))
+				players.add(player);
+		return players;
 	}
 }

@@ -95,7 +95,6 @@ public class Matchmaking implements UpdatedPart
 	{
 		this.requests.add(request);
 		request.updateLocation(Matchmaking.QUICKJOIN_LOCATION);
-		
 	}
 	
 	/**
