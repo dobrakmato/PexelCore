@@ -48,8 +48,8 @@ public class EventProcessor implements Listener
 							0.20F,
 							0.50F,
 							1,
-							(int) Math.floor(0.010 * event.getTo().distance(
-									event.getFrom())));
+							(int) Math.floor(0.005 * Math.pow(
+									event.getTo().distance(event.getFrom()), 2)));
 				}
 			}
 		}
