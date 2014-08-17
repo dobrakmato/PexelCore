@@ -249,11 +249,11 @@ public class StorageEngine
 		}
 	}
 	
-	public static void gateEnter(final Player player, final Location findPortal)
+	public static void gateEnter(final Player player, final Location location)
 	{
 		//Find the right gate
 		for (TeleportGate gate : StorageEngine.gates.values())
-			if (gate.getRegion().intersects(findPortal))
+			if (gate.getRegion().intersects(location))
 				gate.execute(player);
 	}
 }
