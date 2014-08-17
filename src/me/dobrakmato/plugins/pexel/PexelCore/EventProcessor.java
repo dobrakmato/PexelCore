@@ -119,8 +119,7 @@ public class EventProcessor implements Listener
 	private void onPlayerPortal(final PlayerPortalEvent event)
 	{
 		//Pass the event further...
-		StorageEngine.gateEnter(event.getPlayer(),
-				event.getPortalTravelAgent().findPortal(event.getTo()));
+		StorageEngine.gateEnter(event.getPlayer(), event.getTo());
 	}
 	
 	@EventHandler
