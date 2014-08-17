@@ -39,7 +39,7 @@ public class AlternativeCommands implements Listener
 		ParticleEffect[] values = ParticleEffect.values();
 		for (int i = 0; i < values.length; i++)
 		{
-			ParticleEffect effect = values[i];
+			final ParticleEffect effect = values[i];
 			particleTypesMenuItems.add(new InventoryMenuItem(
 					ItemUtils.getNamedItemStack(Material.NETHER_STAR,
 							effect.toString(), null),
@@ -47,8 +47,9 @@ public class AlternativeCommands implements Listener
 						@Override
 						public void run(final Object... args)
 						{
-							// TODO Auto-generated method stub
-							
+							StorageEngine.getProfile(
+									(((Player) args[0]).getUniqueId())).setParticleType(
+									effect);
 						}
 					}), i, true));
 		}

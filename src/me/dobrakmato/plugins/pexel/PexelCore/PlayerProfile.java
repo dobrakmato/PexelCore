@@ -48,6 +48,7 @@ public class PlayerProfile
 	protected ServerLocation				serverLocation	= new ServerLocation(
 																	"Main Lobby",
 																	ServerLocationType.LOBBY);
+	private ParticleEffect					particleType;
 	
 	/**
 	 * Creates player profile from Player object.
@@ -241,5 +242,15 @@ public class PlayerProfile
 			profile.addFoe(UUID.fromString(obj.toString()));
 		
 		return profile;
+	}
+	
+	public void setParticleType(final ParticleEffect effect)
+	{
+		this.particleType = effect;
+	}
+	
+	public ParticleEffect getParticleType()
+	{
+		return this.particleType;
 	}
 }

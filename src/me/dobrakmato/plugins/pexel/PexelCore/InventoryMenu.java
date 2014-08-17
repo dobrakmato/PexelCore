@@ -107,6 +107,15 @@ public class InventoryMenu implements InventoryHolder
 	 */
 	protected void inventoryClick(final Player player, final int slot)
 	{
-		this.items.get(slot).execute(player);
+		if (this.items.containsKey(slot))
+		{
+			this.items.get(slot).execute(player);
+		}
+		else
+		{
+			Log.warn("Player '" + player
+					+ "' clicked on invalid item at slot '" + slot
+					+ "' in inventoryMenu!");
+		}
 	}
 }
