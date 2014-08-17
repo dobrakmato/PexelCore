@@ -85,11 +85,11 @@ public class MatchmakingRequest
 	}
 	
 	/**
-	 * Updates server location of players in request.
+	 * Updates server server location ({@link ServerLocation}) of players in request. Does not teleport players.
 	 * 
 	 * @param location
 	 */
-	public void updateLocation(final ServerLocation location)
+	public void updateServerLocation(final ServerLocation location)
 	{
 		for (Player p : this.players)
 			StorageEngine.getProfile(p.getUniqueId()).setServerLocation(

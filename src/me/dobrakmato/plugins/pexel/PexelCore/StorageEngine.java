@@ -35,11 +35,23 @@ public class StorageEngine
 			StorageEngine.initialized = true;
 	}
 	
+	/**
+	 * Returns UUIDs of player's friends.
+	 * 
+	 * @param player
+	 * @return
+	 */
 	public static List<UUID> getFriends(final Player player)
 	{
 		return StorageEngine.profiles.get(player.getUniqueId()).getFriends();
 	}
 	
+	/**
+	 * Returns UUIDs of player's foes.
+	 * 
+	 * @param player
+	 * @return
+	 */
 	public static List<UUID> getFoes(final Player player)
 	{
 		return StorageEngine.profiles.get(player.getUniqueId()).getFoes();

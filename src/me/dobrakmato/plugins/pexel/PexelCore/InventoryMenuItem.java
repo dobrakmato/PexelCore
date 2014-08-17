@@ -28,6 +28,18 @@ public class InventoryMenuItem
 	 */
 	private final boolean				closeAfterClick;
 	
+	/**
+	 * Creates new Inventory menu item from specified params.
+	 * 
+	 * @param item
+	 *            itemstack to use as icon.
+	 * @param action
+	 *            action to execute when player clicks icon.
+	 * @param slot
+	 *            slot in inventory, where the itemstack should be.
+	 * @param closeAfterClick
+	 *            boolean, that specify, if the menu should close after click on this item.
+	 */
 	public InventoryMenuItem(final ItemStack item,
 			final InventoryMenuAction action, final int slot,
 			final boolean closeAfterClick)

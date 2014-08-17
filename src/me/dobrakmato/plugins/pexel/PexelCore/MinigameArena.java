@@ -148,7 +148,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 						true);
 				player.getInventory().clear();
 				player.getInventory().addItem(
-						ItemUtils.getNamedItemStack(Material.COMPASS,
+						ItemUtils.namedItemStack(Material.COMPASS,
 								ChatColor.YELLOW + "Spectating", null));
 				player.setGameMode(GameMode.ADVENTURE);
 				player.addPotionEffect(new PotionEffect(

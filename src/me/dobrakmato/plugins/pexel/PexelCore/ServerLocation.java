@@ -3,7 +3,7 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 import org.apache.commons.lang.Validate;
 
 /**
- * Location on server.
+ * Location on server. Used for unknown pruposes.
  * 
  * @author Mato Kormuth
  * 

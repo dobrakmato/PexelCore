@@ -15,6 +15,11 @@ public abstract class ParametrizedRunnable implements Runnable
 		this.args = args;
 	}
 	
+	/**
+	 * In {@link JavaInventoryMenuAction} <code>args[0]</code> is player, who executed the action.
+	 * 
+	 * @param args
+	 */
 	public abstract void run(final Object... args);
 	
 	@Override

@@ -12,6 +12,12 @@ public class OpenInventoryMenuAction implements InventoryMenuAction
 {
 	private final InventoryMenu	im;
 	
+	/**
+	 * Creates new action that opens specified inventory menu when player clicks icon.
+	 * 
+	 * @param im
+	 *            another InventoryMenu
+	 */
 	public OpenInventoryMenuAction(final InventoryMenu im)
 	{
 		this.im = im;

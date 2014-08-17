@@ -41,7 +41,7 @@ public class AlternativeCommands implements Listener
 		{
 			final ParticleEffect effect = values[i];
 			particleTypesMenuItems.add(new InventoryMenuItem(
-					ItemUtils.getNamedItemStack(Material.NETHER_STAR,
+					ItemUtils.namedItemStack(Material.NETHER_STAR,
 							effect.toString(), null),
 					new JavaInventoryMenuAction(new ParametrizedRunnable() {
 						@Override
@@ -58,7 +58,7 @@ public class AlternativeCommands implements Listener
 				particleTypesMenuItems);
 		
 		particleAmountMenuItems.add(new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.BOOK, "Few particles",
+				ItemUtils.namedItemStack(Material.BOOK, "Few particles",
 						null), new JavaInventoryMenuAction(
 						new ParametrizedRunnable() {
 							@Override
@@ -70,7 +70,7 @@ public class AlternativeCommands implements Listener
 						}), 0, true));
 		
 		particleAmountMenuItems.add(new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.BOOK, "The right amount",
+				ItemUtils.namedItemStack(Material.BOOK, "The right amount",
 						null), new JavaInventoryMenuAction(
 						new ParametrizedRunnable() {
 							@Override
@@ -82,7 +82,7 @@ public class AlternativeCommands implements Listener
 						}), 1, true));
 		
 		particleAmountMenuItems.add(new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.BOOK, "Many particles",
+				ItemUtils.namedItemStack(Material.BOOK, "Many particles",
 						null), new JavaInventoryMenuAction(
 						new ParametrizedRunnable() {
 							@Override
@@ -100,15 +100,15 @@ public class AlternativeCommands implements Listener
 				"Particle animation", particleAnimationMenuItems);
 		
 		particleEffectMenuItems.add(new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.NETHER_STAR,
+				ItemUtils.namedItemStack(Material.NETHER_STAR,
 						"Particle types", null), new OpenInventoryMenuAction(
 						this.particleTypesMenu), 0, false));
 		particleEffectMenuItems.add(new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.BOOK, "Particle amount",
+				ItemUtils.namedItemStack(Material.BOOK, "Particle amount",
 						null), new OpenInventoryMenuAction(
 						this.particleAmountMenu), 1, false));
 		particleEffectMenuItems.add(new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.FIRE,
+				ItemUtils.namedItemStack(Material.FIRE,
 						"Particle animation", null),
 				new OpenInventoryMenuAction(this.particleAnimationMenu), 2,
 				false));

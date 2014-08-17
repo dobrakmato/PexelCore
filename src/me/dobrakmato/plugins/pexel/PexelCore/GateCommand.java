@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 /**
+ * Class used for /gate commands.
+ * 
  * @author Mato Kormuth
  * 
  */

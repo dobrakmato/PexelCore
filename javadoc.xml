@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="libs/WorldEdit.jar;libs/craftbukkit-1.7.9-R0.2.jar" destdir="doc" doctitle="Pexel-Core javadocs" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="me.dobrakmato.plugins.pexel.PexelCore" source="1.7" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>

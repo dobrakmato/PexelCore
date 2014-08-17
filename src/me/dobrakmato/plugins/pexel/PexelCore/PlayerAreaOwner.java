@@ -3,6 +3,8 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 import org.bukkit.entity.Player;
 
 /**
+ * Player area owner.
+ * 
  * @author Mato Kormuth
  * 
  */

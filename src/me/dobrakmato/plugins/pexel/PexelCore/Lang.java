@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Class used for translations.
  * 
+ * @see Lang#getTranslation(String);
  * 
  * @author Mato Kormuth
  * 

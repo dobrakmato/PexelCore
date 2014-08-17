@@ -42,7 +42,26 @@ public class ItemUtils
 		return is;
 	}
 	
-	public static ItemStack getNamedItemStack(final Material material,
+	/**
+	 * Just a utility, that returns names item stack with amount of 1.
+	 * 
+	 * <code><br><br>
+	 * ItemStack is = new ItemStack(material);<br>
+	 * 	ItemMeta im = is.getItemMeta();<br>
+	 * 	if (im != null)<br>
+	 * 		im.setDisplayName(displayName);<br>
+	 * 	if (lore != null)<br>
+	 * 		im.setLore(lore);<br>
+	 * 	is.setItemMeta(im);<br>
+	 * 	return is;<br>
+	 * </code>
+	 * 
+	 * @param material
+	 * @param displayName
+	 * @param lore
+	 * @return
+	 */
+	public static ItemStack namedItemStack(final Material material,
 			final String displayName, final List<String> lore)
 	{
 		ItemStack is = new ItemStack(material);

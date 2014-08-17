@@ -27,6 +27,20 @@ public class InventoryMenu implements InventoryHolder
 	 */
 	private final Map<Integer, InventoryMenuItem>	items	= new HashMap<Integer, InventoryMenuItem>();
 	
+	/**
+	 * Creates new Inventory menu object with specified type of inventory, title and list of items.
+	 * 
+	 * @see InventoryMenuItem
+	 * @see InventoryMenuAction
+	 * @see ItemUtils
+	 * 
+	 * @param type
+	 *            type of inventory
+	 * @param title
+	 *            title of inventory
+	 * @param items
+	 *            items
+	 */
 	public InventoryMenu(final InventoryType type, final String title,
 			final List<InventoryMenuItem> items)
 	{
@@ -50,9 +64,15 @@ public class InventoryMenu implements InventoryHolder
 	}
 	
 	/**
-	 * @param i
-	 * @param title2
-	 * @param particleTypesMenuItems
+	 * 
+	 * Creates new Inventory menu object with specified size of inventory, title and list of items.
+	 * 
+	 * @param size
+	 *            size of inventory
+	 * @param title
+	 *            inventory title
+	 * @param items
+	 *            items
 	 */
 	public InventoryMenu(final int size, final String title,
 			final List<InventoryMenuItem> items)
@@ -84,6 +104,19 @@ public class InventoryMenu implements InventoryHolder
 	 *            player to show menu to
 	 */
 	public void showTo(final Player player)
+	{
+		player.openInventory(this.getInventory());
+	}
+	
+	/**
+	 * Same as calling {@link InventoryMenu#showTo(Player)}.
+	 * 
+	 * @see InventoryMenu#showTo(Player)
+	 * 
+	 * @param player
+	 *            player to show menu to
+	 */
+	public void openInventory(final Player player)
 	{
 		player.openInventory(this.getInventory());
 	}

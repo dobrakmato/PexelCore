@@ -8,6 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * Class that is here for /qj command.
+ * 
  * @author Mato Kormuth
  * 
  */

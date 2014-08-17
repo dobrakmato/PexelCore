@@ -94,7 +94,7 @@ public class Matchmaking implements UpdatedPart
 	public void registerRequest(final MatchmakingRequest request)
 	{
 		this.requests.add(request);
-		request.updateLocation(Matchmaking.QUICKJOIN_LOCATION);
+		request.updateServerLocation(Matchmaking.QUICKJOIN_LOCATION);
 	}
 	
 	/**

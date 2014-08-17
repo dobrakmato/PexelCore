@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 /**
+ * Class used for evaulating /lobby commands.
+ * 
  * @author Mato Kormuth
  * 
  */

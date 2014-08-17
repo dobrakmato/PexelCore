@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Enum specificating <i>pexel protocol</i>.
+ * 
  * @author Mato Kormuth
  * 
  */

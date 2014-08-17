@@ -1,6 +1,8 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
 /**
+ * Area owner for minigames.
+ * 
  * @author Mato Kormuth
  * 
  */

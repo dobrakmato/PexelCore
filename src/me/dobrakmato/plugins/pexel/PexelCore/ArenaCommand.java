@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 /**
+ * Class used for /arena command.
+ * 
  * @author Mato Kormuth
  * 
  */
