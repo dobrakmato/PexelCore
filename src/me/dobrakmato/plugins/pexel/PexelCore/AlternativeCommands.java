@@ -34,23 +34,6 @@ public class AlternativeCommands implements Listener
 		List<InventoryMenuItem> particleAmountMenuItems = new ArrayList<InventoryMenuItem>();
 		List<InventoryMenuItem> particleAnimationMenuItems = new ArrayList<InventoryMenuItem>();
 		
-		particleEffectMenuItems.add(new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.NETHER_STAR,
-						"Particle types", null), new OpenInventoryMenuAction(
-						this.particleTypesMenu), 0, false));
-		particleEffectMenuItems.add(new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.BOOK, "Particle amount",
-						null), new OpenInventoryMenuAction(
-						this.particleAmountMenu), 1, false));
-		particleEffectMenuItems.add(new InventoryMenuItem(
-				ItemUtils.getNamedItemStack(Material.FIRE,
-						"Particle animation", null),
-				new OpenInventoryMenuAction(this.particleAnimationMenu), 2,
-				false));
-		
-		this.particleEffectMenu = new InventoryMenu(InventoryType.CHEST,
-				"Particle effects", particleEffectMenuItems);
-		
 		ParticleEffect[] values = ParticleEffect.values();
 		for (int i = 0; i < values.length; i++)
 		{
@@ -112,6 +95,23 @@ public class AlternativeCommands implements Listener
 		
 		this.particleAnimationMenu = new InventoryMenu(InventoryType.CHEST,
 				"Particle animation", particleAnimationMenuItems);
+		
+		particleEffectMenuItems.add(new InventoryMenuItem(
+				ItemUtils.getNamedItemStack(Material.NETHER_STAR,
+						"Particle types", null), new OpenInventoryMenuAction(
+						this.particleTypesMenu), 0, false));
+		particleEffectMenuItems.add(new InventoryMenuItem(
+				ItemUtils.getNamedItemStack(Material.BOOK, "Particle amount",
+						null), new OpenInventoryMenuAction(
+						this.particleAmountMenu), 1, false));
+		particleEffectMenuItems.add(new InventoryMenuItem(
+				ItemUtils.getNamedItemStack(Material.FIRE,
+						"Particle animation", null),
+				new OpenInventoryMenuAction(this.particleAnimationMenu), 2,
+				false));
+		
+		this.particleEffectMenu = new InventoryMenu(InventoryType.CHEST,
+				"Particle effects", particleEffectMenuItems);
 	}
 	
 	@EventHandler
