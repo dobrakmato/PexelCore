@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -246,5 +247,13 @@ public class StorageEngine
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public static void gateEnter(final Player player, final Location findPortal)
+	{
+		//Find the right gate
+		for (TeleportGate gate : StorageEngine.gates.values())
+			if (gate.getRegion().intersects(findPortal))
+				gate.execute(player);
 	}
 }

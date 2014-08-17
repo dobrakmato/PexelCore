@@ -118,9 +118,9 @@ public class EventProcessor implements Listener
 	@EventHandler
 	private void onPlayerPortal(final PlayerPortalEvent event)
 	{
-		Bukkit.broadcastMessage("PlayerPortal: "
-				+ event.getPlayer().getDisplayName() + ", "
-				+ event.getFrom().toString());
+		//Pass the event further...
+		StorageEngine.gateEnter(event.getPlayer(),
+				event.getPortalTravelAgent().findPortal(event.getTo()));
 	}
 	
 	@EventHandler

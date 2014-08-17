@@ -23,6 +23,8 @@ public class ChatFormat
 	private static final String	successFormat		= ChatColor.GREEN + "%msg%";
 	private static final String	chatDefaultFormat	= ChatColor.GRAY
 															+ "%player% > %msg%";
+	private static final String	chatOpFormat		= ChatColor.GOLD
+															+ "[OP] %player% > %msg%";
 	
 	public static final String error(final String msg)
 	{
@@ -43,9 +45,8 @@ public class ChatFormat
 	public static final String chatPlayerOp(final String msg,
 			final Player player)
 	{
-		return ChatColor.GOLD
-				+ ChatFormat.chatDefaultFormat.replace("%player%",
-						player.getDisplayName()).replace("%msg%", msg);
+		return ChatFormat.chatOpFormat.replace("%player%",
+				player.getDisplayName()).replace("%msg%", msg);
 	}
 	
 	public static final String chatPlayerFriend(final String msg,

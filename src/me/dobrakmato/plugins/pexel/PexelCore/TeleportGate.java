@@ -10,10 +10,9 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class TeleportGate implements UpdatedPart
+public class TeleportGate
 {
 	private final Region	region;
-	private int				taskId;
 	private String			actionType;
 	private String			actionContent;
 	
@@ -23,9 +22,6 @@ public class TeleportGate implements UpdatedPart
 		this.region = region;
 		this.actionContent = actionContent;
 		this.actionType = actionType;
-		
-		this.updateStart(Pexel.getCore());
-		UpdatedParts.registerPart(this);
 	}
 	
 	public Region getRegion()
@@ -33,25 +29,7 @@ public class TeleportGate implements UpdatedPart
 		return this.region;
 	}
 	
-	@Override
-	public void updateStart(final PexelCore plugin)
-	{
-		this.taskId = Pexel.schedule(new Runnable() {
-			@Override
-			public void run()
-			{
-				TeleportGate.this.update();
-			}
-		}, 0L, 20L);
-	}
-	
-	protected void update()
-	{
-		for (Player player : this.region.getPlayersXYZ())
-			this.execute(player);
-	}
-	
-	private void execute(final Player player)
+	protected void execute(final Player player)
 	{
 		if (this.actionType.equalsIgnoreCase("teleport"))
 		{
@@ -85,12 +63,6 @@ public class TeleportGate implements UpdatedPart
 			Log.addProblem("Invalid action at gate (" + this.region.toString()
 					+ "): " + this.actionType + " >> " + this.actionContent);
 		}
-	}
-	
-	@Override
-	public void updateStop()
-	{
-		Bukkit.getScheduler().cancelTask(this.taskId);
 	}
 	
 	public String getType()
