@@ -47,7 +47,6 @@ public class TeleportGate implements UpdatedPart
 	
 	protected void update()
 	{
-		System.out.println("tg-updating");
 		for (Player player : this.region.getPlayersXYZ())
 			this.execute(player);
 	}

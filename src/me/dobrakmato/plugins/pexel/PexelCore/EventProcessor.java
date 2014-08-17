@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
@@ -48,7 +49,7 @@ public class EventProcessor implements Listener
 							0.20F,
 							0.50F,
 							1,
-							(int) Math.floor(0.00001 * Math.pow(
+							(int) Math.floor(0.000005 * Math.pow(
 									event.getTo().distance(event.getFrom()), 2)));
 				}
 			}
@@ -112,6 +113,14 @@ public class EventProcessor implements Listener
 				}
 			}
 		}
+	}
+	
+	@EventHandler
+	private void onPlayerPortal(final PlayerPortalEvent event)
+	{
+		Bukkit.broadcastMessage("PlayerPortal: "
+				+ event.getPlayer().getDisplayName() + ", "
+				+ event.getFrom().toString());
 	}
 	
 	@EventHandler
