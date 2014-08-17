@@ -22,8 +22,10 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
  */
 public class AlternativeCommands implements Listener
 {
-	InventoryMenu	particleEffectMenu, particleTypesMenu, particleAmountMenu,
-			particleAnimationMenu;
+	InventoryMenu	particleEffectMenu;
+	InventoryMenu	particleTypesMenu;
+	InventoryMenu	particleAmountMenu;
+	InventoryMenu	particleAnimationMenu;
 	
 	public AlternativeCommands()
 	{
