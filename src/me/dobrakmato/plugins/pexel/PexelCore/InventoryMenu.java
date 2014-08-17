@@ -21,16 +21,7 @@ public class InventoryMenu implements InventoryHolder
 	/**
 	 * Inventory of this menu.
 	 */
-	private Inventory								inventory;
-	
-	/**
-	 * Type of the inventory.
-	 */
-	private final InventoryType						type;
-	/**
-	 * Title of the inventory.
-	 */
-	private final String							title;
+	private final Inventory							inventory;
 	/**
 	 * Items in inventory.
 	 */
@@ -39,8 +30,33 @@ public class InventoryMenu implements InventoryHolder
 	public InventoryMenu(final InventoryType type, final String title,
 			final List<InventoryMenuItem> items)
 	{
-		this.type = type;
-		this.title = title;
+		for (InventoryMenuItem item : items)
+			if (!this.items.containsKey(item.getSlot()))
+				this.items.put(item.getSlot(), item);
+			else
+				throw new RuntimeException(
+						"Can't put "
+								+ item.getItemStack().toString()
+								+ " to slot "
+								+ item.getSlot()
+								+ "! Slot "
+								+ item.getSlot()
+								+ " is alredy occupied by "
+								+ this.items.get(item.getSlot()).getItemStack().toString());
+		
+		this.inventory = Bukkit.createInventory(this, type, title);
+		for (InventoryMenuItem item : this.items.values())
+			this.inventory.setItem(item.getSlot(), item.getItemStack());
+	}
+	
+	/**
+	 * @param i
+	 * @param title2
+	 * @param particleTypesMenuItems
+	 */
+	public InventoryMenu(final int size, final String title,
+			final List<InventoryMenuItem> items)
+	{
 		
 		for (InventoryMenuItem item : items)
 			if (!this.items.containsKey(item.getSlot()))
@@ -56,15 +72,7 @@ public class InventoryMenu implements InventoryHolder
 								+ " is alredy occupied by "
 								+ this.items.get(item.getSlot()).getItemStack().toString());
 		
-		this.build();
-	}
-	
-	/**
-	 * Builds inventory from data.
-	 */
-	private void build()
-	{
-		this.inventory = Bukkit.createInventory(this, this.type, this.title);
+		this.inventory = Bukkit.createInventory(this, size, title);
 		for (InventoryMenuItem item : this.items.values())
 			this.inventory.setItem(item.getSlot(), item.getItemStack());
 	}

@@ -53,8 +53,8 @@ public class AlternativeCommands implements Listener
 					}), i, true));
 		}
 		
-		this.particleTypesMenu = new InventoryMenu(InventoryType.CHEST,
-				"Particle type", particleTypesMenuItems);
+		this.particleTypesMenu = new InventoryMenu(54, "Particle type",
+				particleTypesMenuItems);
 		
 		particleAmountMenuItems.add(new InventoryMenuItem(
 				ItemUtils.getNamedItemStack(Material.BOOK, "Few particles",
