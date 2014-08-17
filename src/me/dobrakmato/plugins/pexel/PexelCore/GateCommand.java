@@ -64,6 +64,14 @@ public class GateCommand implements CommandExecutor
 				{
 					String actionType = args[2];
 					String actionContent = args[3];
+					
+					if (actionType.equalsIgnoreCase("command"))
+					{
+						actionContent = "";
+						for (int i = 3; i < args.length; i++)
+							actionContent += args[i] + " ";
+					}
+					
 					if (this.checkSelection(sender))
 					{
 						if (StorageEngine.getGate(name) == null)
@@ -93,7 +101,7 @@ public class GateCommand implements CommandExecutor
 					String actionType = args[2];
 					String actionContent = args[3];
 					
-					if (StorageEngine.getGate(name) == null)
+					if (StorageEngine.getGate(name) != null)
 					{
 						StorageEngine.getGate(name).setType(actionType);
 						StorageEngine.getGate(name).setContent(actionContent);
@@ -103,7 +111,7 @@ public class GateCommand implements CommandExecutor
 					else
 					{
 						sender.sendMessage(ChatFormat.error("Gate with name '"
-								+ name + "' already exists!"));
+								+ name + "' does not exists!"));
 					}
 				}
 				else
