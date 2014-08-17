@@ -47,8 +47,8 @@ public class GateCommand implements CommandExecutor
 			}
 			return true;
 		}
-		sender.sendMessage(ChatFormat.error("Wrong use!"));
-		return false;
+		//sender.sendMessage(ChatFormat.error("Wrong use!"));
+		return true;
 	}
 	
 	private void processOpCommand(final Player sender, final String[] args)
