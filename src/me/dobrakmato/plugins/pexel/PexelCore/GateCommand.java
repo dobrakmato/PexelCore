@@ -165,7 +165,7 @@ public class GateCommand implements CommandExecutor
 		else
 		{
 			sender.sendMessage(ChatFormat.error("Make a WorldEdit selection first!"));
-			return false;
+			return true;
 		}
 	}
 }

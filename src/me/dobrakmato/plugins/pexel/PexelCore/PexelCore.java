@@ -75,6 +75,8 @@ public class PexelCore extends JavaPlugin
 		this.getCommand("settings").setExecutor(new SettingsCommand());
 		this.getCommand("party").setExecutor(new PartyCommand());
 		this.getCommand("lobbyarena").setExecutor(new LobbyCommand());
+		this.getCommand("qj").setExecutor(new QJCommand());
+		this.getCommand("gate").setExecutor(new GateCommand());
 		
 		StorageEngine.initialize(this);
 		
