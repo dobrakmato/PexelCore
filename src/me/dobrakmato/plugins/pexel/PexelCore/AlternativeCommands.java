@@ -7,7 +7,11 @@ import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -58,16 +62,15 @@ public class AlternativeCommands implements Listener
 				particleTypesMenuItems);
 		
 		particleAmountMenuItems.add(new InventoryMenuItem(
-				ItemUtils.namedItemStack(Material.BOOK, "Few particles",
-						null), new JavaInventoryMenuAction(
-						new ParametrizedRunnable() {
-							@Override
-							public void run(final Object... args)
-							{
-								// TODO Auto-generated method stub
-								
-							}
-						}), 0, true));
+				ItemUtils.namedItemStack(Material.BOOK, "Few particles", null),
+				new JavaInventoryMenuAction(new ParametrizedRunnable() {
+					@Override
+					public void run(final Object... args)
+					{
+						// TODO Auto-generated method stub
+						
+					}
+				}), 0, true));
 		
 		particleAmountMenuItems.add(new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.BOOK, "The right amount",
@@ -82,16 +85,15 @@ public class AlternativeCommands implements Listener
 						}), 1, true));
 		
 		particleAmountMenuItems.add(new InventoryMenuItem(
-				ItemUtils.namedItemStack(Material.BOOK, "Many particles",
-						null), new JavaInventoryMenuAction(
-						new ParametrizedRunnable() {
-							@Override
-							public void run(final Object... args)
-							{
-								// TODO Auto-generated method stub
-								
-							}
-						}), 2, true));
+				ItemUtils.namedItemStack(Material.BOOK, "Many particles", null),
+				new JavaInventoryMenuAction(new ParametrizedRunnable() {
+					@Override
+					public void run(final Object... args)
+					{
+						// TODO Auto-generated method stub
+						
+					}
+				}), 2, true));
 		
 		this.particleAmountMenu = new InventoryMenu(InventoryType.CHEST,
 				"Particle amount", particleAmountMenuItems);
@@ -104,25 +106,31 @@ public class AlternativeCommands implements Listener
 						"Particle types", null), new OpenInventoryMenuAction(
 						this.particleTypesMenu), 0, false));
 		particleEffectMenuItems.add(new InventoryMenuItem(
-				ItemUtils.namedItemStack(Material.BOOK, "Particle amount",
-						null), new OpenInventoryMenuAction(
-						this.particleAmountMenu), 1, false));
+				ItemUtils.namedItemStack(Material.BOOK, "Particle amount", null),
+				new OpenInventoryMenuAction(this.particleAmountMenu), 1, false));
 		particleEffectMenuItems.add(new InventoryMenuItem(
-				ItemUtils.namedItemStack(Material.FIRE,
-						"Particle animation", null),
-				new OpenInventoryMenuAction(this.particleAnimationMenu), 2,
-				false));
+				ItemUtils.namedItemStack(Material.FIRE, "Particle animation",
+						null), new OpenInventoryMenuAction(
+						this.particleAnimationMenu), 2, false));
 		
 		this.particleEffectMenu = new InventoryMenu(InventoryType.CHEST,
 				"Particle effects", particleEffectMenuItems);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	private void onPrepocessCommand(final PlayerCommandPreprocessEvent event)
 	{
-		String command = event.getMessage().toLowerCase().replace("/", "");
+		List<String> args = new ArrayList<String>();
+		String[] d = event.getMessage().split(" ");
+		for (int i = 1; i < d.length; i++)
+		{
+			args.add(d[i]);
+		}
 		Player sender = event.getPlayer();
-		if (command.equalsIgnoreCase("getcock"))
+		String command = d[0];
+		
+		if (command.equalsIgnoreCase("/getcock"))
 		{
 			sender.getInventory().addItem(Pexel.getMagicClock().getClock());
 		}
@@ -135,16 +143,193 @@ public class AlternativeCommands implements Listener
 						+ StorageEngine.getByAlias(key).getName());
 			}
 		}
-		else if (command.contains("tnttest"))
+		else if (command.equalsIgnoreCase("/tnttest"))
 		{
 			sender.sendMessage(ChatColor.RED
 					+ "Pexel.getMatchmaking().registerRequest(new MatchmakingRequest(Arrays.asList(event.getPlayer()),StorageEngine.getMinigame(\"tnttag\"), null));");
 			((TntTagMinigame) StorageEngine.getMinigame("tnttag")).trrtrtr().onPlayerJoin(
 					event.getPlayer());
 		}
-		else if (command.contains("secretparticles"))
+		else if (command.contains("/secretparticles"))
 		{
 			this.particleEffectMenu.showTo(sender);
+		}
+		else if (command.equalsIgnoreCase("/grassgen"))
+		{
+			int i = 3;
+			boolean remove = false;
+			boolean flowers = false;
+			boolean longgrass = false;
+			
+			World w = sender.getWorld();
+			
+			Location pLoc = sender.getLocation();
+			
+			sender.sendMessage(ChatColor.GREEN
+					+ "/grassgen <radius> <flowers?> <longgrass?>");
+			sender.sendMessage(ChatColor.YELLOW
+					+ "Specify negative radius for remove, positive for generation.");
+			
+			if (args.size() > 0)
+			{
+				i = Integer.parseInt(args.get(0));
+				if (i < 0)
+				{
+					remove = true;
+					i = -i;
+				}
+			}
+			
+			if (args.size() == 3)
+			{
+				flowers = Boolean.parseBoolean(args.get(1));
+				longgrass = Boolean.parseBoolean(args.get(2));
+			}
+			
+			if (!remove)
+			{
+				sender.sendMessage(ChatColor.YELLOW + "Generating..");
+				for (int x = -i; x <= i; x++)
+				{
+					for (int z = -i; z <= i; z++)
+					{
+						double cX = pLoc.getX() + (x);
+						double cZ = pLoc.getZ() + (z);
+						double cY = sender.getWorld().getHighestBlockYAt(
+								(int) cX, (int) cZ);
+						
+						Block b = w.getBlockAt((int) cX, (int) cY, (int) cZ);
+						
+						//Generate grass and flowers.
+						switch (Pexel.getRandom().nextInt(6))
+						{
+							case 0:
+								//Air
+								break;
+							case 1:
+								b.setType(Material.LONG_GRASS);
+								b.setData((byte) 1);
+								break;
+							case 2:
+								if (longgrass)
+								{
+									if (Pexel.getRandom().nextBoolean())
+									{
+										b.setType(Material.DOUBLE_PLANT);
+										b.setData((byte) 2);
+										b.getRelative(BlockFace.UP).setType(
+												Material.DOUBLE_PLANT);
+										b.getRelative(BlockFace.UP).setData(
+												(byte) 8);
+									}
+									else
+									{
+										b.setType(Material.DOUBLE_PLANT);
+										b.setData((byte) 3);
+										b.getRelative(BlockFace.UP).setType(
+												Material.DOUBLE_PLANT);
+										b.getRelative(BlockFace.UP).setData(
+												(byte) 8);
+									}
+								}
+								else
+								{
+									b.setType(Material.LONG_GRASS);
+									b.setData((byte) 1);
+								}
+								break;
+							case 3:
+								b.setType(Material.LONG_GRASS);
+								b.setData((byte) 1);
+								break;
+							case 4:
+								b.setType(Material.LONG_GRASS);
+								b.setData((byte) 1);
+								break;
+							case 5:
+								if (flowers)
+								{
+									switch (Pexel.getRandom().nextInt(9))
+									{
+										case 0:
+											b.setType(Material.RED_ROSE);
+											break;
+										case 1:
+											b.setType(Material.YELLOW_FLOWER);
+											break;
+										case 2:
+											b.setType(Material.RED_ROSE);
+											b.setData((byte) 1);
+											break;
+										case 3:
+											b.setType(Material.RED_ROSE);
+											b.setData((byte) 2);
+											break;
+										case 4:
+											b.setType(Material.RED_ROSE);
+											b.setData((byte) 3);
+											break;
+										case 5:
+											b.setType(Material.RED_ROSE);
+											b.setData((byte) 4);
+											break;
+										case 6:
+											b.setType(Material.RED_ROSE);
+											b.setData((byte) 5);
+											break;
+										case 7:
+											b.setType(Material.RED_ROSE);
+											b.setData((byte) 6);
+											break;
+										case 8:
+											b.setType(Material.RED_ROSE);
+											b.setData((byte) 7);
+											break;
+										case 9:
+											b.setType(Material.RED_ROSE);
+											b.setData((byte) 8);
+											break;
+									}
+								}
+								else
+								{
+									b.setType(Material.LONG_GRASS);
+									b.setData((byte) 2);
+								}
+								break;
+							case 6:
+								//Air
+								break;
+						}
+					}
+				}
+			}
+			else
+			{
+				sender.sendMessage(ChatColor.YELLOW + "Removing..");
+				//Remove everything
+				for (int x = -i; x <= i; x++)
+				{
+					for (int z = -i; z <= i; z++)
+					{
+						double cX = pLoc.getX() + (x);
+						double cZ = pLoc.getZ() + (z);
+						double cY = sender.getWorld().getHighestBlockYAt(
+								(int) cX, (int) cZ);
+						
+						Block b = w.getBlockAt((int) cX, (int) cY, (int) cZ);
+						Material mat = b.getType();
+						
+						if (mat == Material.LONG_GRASS
+								|| mat == Material.DOUBLE_PLANT
+								|| mat == Material.RED_ROSE
+								|| mat == Material.YELLOW_FLOWER)
+						{
+							b.setType(Material.AIR);
+						}
+					}
+				}
+			}
 		}
 	}
 }
