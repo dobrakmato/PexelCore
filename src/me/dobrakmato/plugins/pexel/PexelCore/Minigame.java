@@ -47,5 +47,5 @@ public interface Minigame
 	 * 
 	 * @return
 	 */
-	public Location getLobby();
+	public Location getLobbyLocation();
 }

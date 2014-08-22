@@ -19,6 +19,7 @@ public class PexelCore extends JavaPlugin
 	/**
 	 * Pexel TCP server.
 	 */
+	@SuppressWarnings("deprecation")
 	public PexelServer		server;
 	/**
 	 * Player freezer.

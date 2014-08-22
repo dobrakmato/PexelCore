@@ -85,7 +85,7 @@ public class TntTagMinigame implements Minigame
 	}
 	
 	@Override
-	public Location getLobby()
+	public Location getLobbyLocation()
 	{
 		return this.minigameLobby;
 	}

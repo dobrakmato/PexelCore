@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -130,6 +131,23 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	}
 	
 	/**
+	 * Plays sound for all players in arena.
+	 * 
+	 * @param sound
+	 *            sound to play
+	 * @param volume
+	 *            volume
+	 * @param pitch
+	 *            pitch
+	 */
+	public void playSoundAll(final Sound sound, final float volume,
+			final float pitch)
+	{
+		for (Player p : this.activePlayers)
+			p.playSound(p.getLocation(), sound, volume, pitch);
+	}
+	
+	/**
 	 * Sets spectating mode for player in this arena.
 	 * 
 	 * @param player
@@ -202,6 +220,30 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	public boolean empty()
 	{
 		return this.activePlayers.size() == 0;
+	}
+	
+	/**
+	 * Kicks all players from arena.
+	 */
+	public void kickAll()
+	{
+		for (Player p : this.activePlayers)
+			this.onPlayerLeft(p);
+	}
+	
+	/**
+	 * Sends a message to all players and kicks them.
+	 * 
+	 * @param message
+	 *            message to send
+	 */
+	public void kickAll(final String message)
+	{
+		for (Player p : this.activePlayers)
+		{
+			p.sendMessage(message);
+			this.onPlayerLeft(p);
+		}
 	}
 	
 	/**

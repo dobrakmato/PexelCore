@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
+@Deprecated
 public class PexelServer implements Runnable
 {
 	private final int		port			= 41976;
@@ -89,6 +90,11 @@ public class PexelServer implements Runnable
 	
 	private void processClient(final Socket client) throws IOException
 	{
+		Log.info("[PexelServer] Processing client "
+				+ client.getInetAddress().toString());
+		//Set some settings.
+		client.setKeepAlive(true);
+		client.setTcpNoDelay(true);
 		//Uz sme vo vlastnom vlakne.
 		ObjectInputStream in = new ObjectInputStream(client.getInputStream());
 		ObjectOutputStream out = new ObjectOutputStream(

@@ -308,7 +308,7 @@ public class TntTagArena extends MinigameArena implements Listener
 	{
 		super.onPlayerLeft(player);
 		
-		player.teleport(this.getMinigame().getLobby());
+		player.teleport(this.getMinigame().getLobbyLocation());
 		player.removePotionEffect(PotionEffectType.SPEED);
 		
 		this.chatAll(ChatFormat.minigame(this.getMinigame(), "Player '"

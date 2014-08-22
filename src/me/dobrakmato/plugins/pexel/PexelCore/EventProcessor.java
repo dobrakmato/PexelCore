@@ -22,6 +22,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 /**
  * Event processor for pexel.
  * 
+ * <b>There will be changes in EVENTS!</b>
+ * 
  * @author Mato Kormuth
  * 
  */

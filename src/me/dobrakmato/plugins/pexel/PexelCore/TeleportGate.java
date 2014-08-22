@@ -15,6 +15,7 @@ public class TeleportGate
 	private final Region	region;
 	private String			actionType;
 	private String			actionContent;
+	private Server			targetServer;
 	
 	public TeleportGate(final Region region, final String actionType,
 			final String actionContent)
@@ -22,6 +23,11 @@ public class TeleportGate
 		this.region = region;
 		this.actionContent = actionContent;
 		this.actionType = actionType;
+	}
+	
+	public boolean isCrossServer()
+	{
+		return !this.targetServer.isThis();
 	}
 	
 	public Region getRegion()
@@ -33,24 +39,33 @@ public class TeleportGate
 	{
 		if (this.actionType.equalsIgnoreCase("teleport"))
 		{
-			String[] parts = this.actionContent.split(",");
-			
-			try
+			if (this.isCrossServer())
 			{
-				Double x = Double.parseDouble(parts[0]);
-				Double y = Double.parseDouble(parts[1]);
-				Double z = Double.parseDouble(parts[2]);
-				Float yaw = Float.parseFloat(parts[3]);
-				Float pitch = Float.parseFloat(parts[4]);
-				String world = parts[5];
+				this.targetServer.getClient().sendPacket(
+						new CrossServerTeleportPacket(player,
+								this.actionContent));
+			}
+			else
+			{
+				String[] parts = this.actionContent.split(",");
 				
-				player.teleport(new Location(Bukkit.getWorld(world), x, y, z,
-						yaw, pitch));
-			} catch (Exception ex)
-			{
-				Log.addProblem("Invalid action at gate ("
-						+ this.region.toString() + "): " + this.actionType
-						+ " >> " + this.actionContent);
+				try
+				{
+					Double x = Double.parseDouble(parts[0]);
+					Double y = Double.parseDouble(parts[1]);
+					Double z = Double.parseDouble(parts[2]);
+					Float yaw = Float.parseFloat(parts[3]);
+					Float pitch = Float.parseFloat(parts[4]);
+					String world = parts[5];
+					
+					player.teleport(new Location(Bukkit.getWorld(world), x, y,
+							z, yaw, pitch));
+				} catch (Exception ex)
+				{
+					Log.addProblem("Invalid action at gate ("
+							+ this.region.toString() + "): " + this.actionType
+							+ " >> " + this.actionContent);
+				}
 			}
 		}
 		else if (this.actionType.equalsIgnoreCase("command"))

@@ -22,21 +22,44 @@ public final class Pexel
 		Pexel.plugin = plugin;
 	}
 	
+	/**
+	 * Returns the main plugin instance.
+	 * 
+	 * @return
+	 */
 	public static final PexelCore getCore()
 	{
 		return Pexel.plugin;
 	}
 	
+	/**
+	 * Returns Matchmaking class.
+	 * 
+	 * @return
+	 */
 	public static Matchmaking getMatchmaking()
 	{
 		return Pexel.plugin.matchmaking;
 	}
 	
+	/**
+	 * Returns player freezer.
+	 * 
+	 * @return
+	 */
 	public static PlayerFreezer getFreezer()
 	{
 		return Pexel.plugin.freezer;
 	}
 	
+	/**
+	 * Schedules periodic task. Returns task id.
+	 * 
+	 * @param runnable
+	 * @param delay
+	 * @param period
+	 * @return task id
+	 */
 	public static int schedule(final Runnable runnable, final long delay,
 			final long period)
 	{
@@ -44,6 +67,21 @@ public final class Pexel
 				runnable, delay, period);
 	}
 	
+	/**
+	 * Cancles task.
+	 * 
+	 * @param taskId
+	 */
+	public static void cancledTask(final int taskId)
+	{
+		Bukkit.getScheduler().cancelTask(taskId);
+	}
+	
+	/**
+	 * Returns instance of {@link Random}.
+	 * 
+	 * @return
+	 */
 	public static Random getRandom()
 	{
 		return Pexel.random;
@@ -54,6 +92,11 @@ public final class Pexel
 		return Pexel.plugin.eventProcessor;
 	}
 	
+	/**
+	 * Returns pexel's magic clock class.
+	 * 
+	 * @return
+	 */
 	public static MagicClock getMagicClock()
 	{
 		return Pexel.plugin.magicClock;
