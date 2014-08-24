@@ -16,7 +16,7 @@ public abstract class ParametrizedRunnable implements Runnable
 	}
 	
 	/**
-	 * In {@link JavaInventoryMenuAction} <code>args[0]</code> is player, who executed the action.
+	 * In {@link JavaArbitraryAction} <code>args[0]</code> is player, who executed the action.
 	 * 
 	 * @param args
 	 */

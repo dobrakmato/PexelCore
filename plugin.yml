@@ -19,8 +19,10 @@ commands:
      usage: /qj [game]
    friend:
      description: Pouziva sa na pracu s priatelmi.
-     aliases: [friends, f]
-     usage: /friend <action> <playerName>
+     usage: /friend <playerName>
+   unfriend:
+     description: Pouziva sa na pracu s priatelmi.
+     usage: /unfriend <playerName>
    party:
      description: Pouziva sa na pracu s priatelmi.
      aliases: [p]

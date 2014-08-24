@@ -108,7 +108,7 @@ public class EventProcessor implements Listener
 						World w = Bukkit.getWorld(lines[1]);
 						if (w == null)
 							event.getPlayer().sendMessage(
-									ChatFormat.error(Lang.getTranslation("worldnotfound")));
+									ChatManager.error(Lang.getTranslation("worldnotfound")));
 						else
 							event.getPlayer().teleport(w.getSpawnLocation());
 					}
@@ -128,12 +128,11 @@ public class EventProcessor implements Listener
 	@EventHandler
 	private void onChat(final AsyncPlayerChatEvent event)
 	{
-		if (event.getPlayer().isOp())
-			event.setFormat(ChatFormat.chatPlayerOp(event.getMessage(),
-					event.getPlayer()));
-		else
-			event.setFormat(ChatFormat.chatPlayer(event.getMessage(),
-					event.getPlayer()));
+		ChatManager.onChat(event);
+		/*
+		 * if (event.getPlayer().isOp()) event.setFormat(ChatManager.chatPlayerOp(event.getMessage(),
+		 * event.getPlayer())); else event.setFormat(ChatManager.chatPlayer(event.getMessage(), event.getPlayer()));
+		 */
 	}
 	
 	@EventHandler
@@ -159,6 +158,14 @@ public class EventProcessor implements Listener
 	{
 		//Load profile to memory or create empty profile.
 		StorageEngine.loadProfile(event.getPlayer().getUniqueId());
+		//Register chat channels.
+		ChatManager.CHANNEL_GLOBAL.subscribe(event.getPlayer(),
+				SubscribeMode.READ);
+		ChatManager.CHANNEL_LOBBY.subscribe(event.getPlayer(),
+				SubscribeMode.READ_WRITE);
+		if (event.getPlayer().isOp())
+			ChatManager.CHANNEL_OP.subscribe(event.getPlayer(),
+					SubscribeMode.READ_WRITE);
 	}
 	
 	@EventHandler
@@ -171,6 +178,8 @@ public class EventProcessor implements Listener
 	private boolean hasPermission(final Location location, final Player player,
 			final AreaFlag flag)
 	{
+		System.out.println("permission check: p:" + player.getName() + "; f"
+				+ flag.toString());
 		ProtectedArea area = null;
 		if ((area = Areas.findArea(location)) != null)
 		{
@@ -178,12 +187,13 @@ public class EventProcessor implements Listener
 			{
 				if (area.getGlobalFlag(AreaFlag.AREA_CHAT_PERMISSIONDENIED))
 					player.getPlayer().sendMessage(
-							ChatFormat.error("You don't have permission for '"
+							ChatManager.error("You don't have permission for '"
 									+ flag.toString() + "' in this area!"));
 				return false;
 			}
 			return true;
 		}
+		System.out.println("permcheck end");
 		return true;
 	}
 }

@@ -1,5 +1,6 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,7 +33,7 @@ public class FriendCommand implements CommandExecutor
 			}
 			else
 			{
-				sender.sendMessage(ChatFormat.error("This command is only avaiable for players!"));
+				sender.sendMessage(ChatManager.error("This command is only avaiable for players!"));
 			}
 			return true;
 		}
@@ -43,21 +44,25 @@ public class FriendCommand implements CommandExecutor
 	{
 		if (args.length > 1)
 		{
-			String action = args[0];
-			//String name = args[1];
-			
-			if (action.equalsIgnoreCase("add"))
+			String playerName = args[0];
+			boolean success = false;
+			for (Player p : Bukkit.getOnlinePlayers())
 			{
-				
+				if (p.getName().equalsIgnoreCase(playerName))
+				{
+					StorageEngine.getProfile(sender.getUniqueId()).addFriend(
+							p.getUniqueId());
+					sender.sendMessage(ChatManager.success("Player '"
+							+ p.getName() + "' has been ADDED to your friends!"));
+					success = true;
+				}
 			}
-			else if (action.equalsIgnoreCase("info"))
-			{
-				
-			}
-			else if (action.equalsIgnoreCase("remove"))
-			{
-				
-			}
+			if (!success)
+				sender.sendMessage(ChatManager.error("Player not found! Player must be online!"));
+		}
+		else
+		{
+			sender.sendMessage(ChatManager.error("You must provide player name!"));
 		}
 	}
 	

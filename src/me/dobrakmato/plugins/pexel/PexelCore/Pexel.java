@@ -1,8 +1,10 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.util.Random;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 /**
  * Class for static calls.
@@ -75,6 +77,28 @@ public final class Pexel
 	public static void cancledTask(final int taskId)
 	{
 		Bukkit.getScheduler().cancelTask(taskId);
+	}
+	
+	/**
+	 * Retruns player's profile.
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public PlayerProfile getProfile(final Player player)
+	{
+		return StorageEngine.getProfile(player.getUniqueId());
+	}
+	
+	/**
+	 * Retruns player's profile.
+	 * 
+	 * @param player
+	 * @return
+	 */
+	public PlayerProfile getProfile(final UUID player)
+	{
+		return StorageEngine.getProfile(player);
 	}
 	
 	/**

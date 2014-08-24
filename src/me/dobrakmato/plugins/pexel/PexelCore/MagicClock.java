@@ -29,7 +29,7 @@ public class MagicClock implements Listener
 	{
 		InventoryMenuItem everybodyItem = new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.EYE_OF_ENDER, "Everybody",
-						null), new JavaInventoryMenuAction(
+						null), new JavaArbitraryAction(
 						new ParametrizedRunnable() {
 							@Override
 							public void run(final Object... args)
@@ -38,13 +38,13 @@ public class MagicClock implements Listener
 								{
 									((Player) args[0]).showPlayer(onlinePlayer);
 								}
-								((Player) args[0]).sendMessage(ChatFormat.success("Now you can see everybody!"));
+								((Player) args[0]).sendMessage(ChatManager.success("Now you can see everybody!"));
 							}
 						}), 0, true);
 		
 		InventoryMenuItem nobodyItem = new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.ENDER_PEARL, "Nobody",
-						null), new JavaInventoryMenuAction(
+						null), new JavaArbitraryAction(
 						new ParametrizedRunnable() {
 							@Override
 							public void run(final Object... args)
@@ -58,27 +58,27 @@ public class MagicClock implements Listener
 									//else
 									((Player) args[0]).hidePlayer(onlinePlayer);
 								}
-								((Player) args[0]).sendMessage(ChatFormat.success("All players have been vanished!"));
+								((Player) args[0]).sendMessage(ChatManager.success("All players have been vanished!"));
 							}
 						}), 1, true);
 		
 		InventoryMenuItem kickItem = new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.APPLE, "Kick me", null),
-				new KickInventoryMenuAction(), 2, true);
+				new KickAction(), 2, true);
 		
 		InventoryMenuItem teleportItem = new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.BED,
 						"Teleport to 0 255 0", null),
-				new TeleportInventoryMenuAction(new Location(
+				new TeleportAction(new Location(
 						Bukkit.getWorld("world"), 0, 255, 0)), 3, true);
 		
 		InventoryMenuItem commandItem = new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.BEACON, "Suprise", null),
-				new CommandInventoryMenuAction("me je gay"), 4, false);
+				new CommandAction("me je gay"), 4, false);
 		
 		InventoryMenuItem soundItem = new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.NOTE_BLOCK, "Sound", null),
-				new JavaInventoryMenuAction(new ParametrizedRunnable() {
+				new JavaArbitraryAction(new ParametrizedRunnable() {
 					@Override
 					public void run(final Object... args)
 					{

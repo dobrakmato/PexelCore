@@ -32,12 +32,12 @@ public class SettingsCommand implements CommandExecutor
 					
 				} catch (Exception ex)
 				{
-					sender.sendMessage(ChatFormat.error(ex.toString()));
+					sender.sendMessage(ChatManager.error(ex.toString()));
 				}
 			}
 			else
 			{
-				sender.sendMessage(ChatFormat.error("/settings <setting> <false/true>"));
+				sender.sendMessage(ChatManager.error("/settings <setting> <false/true>"));
 				String avaiable = ChatColor.GOLD + "Avaiable settings: "
 						+ ChatColor.YELLOW;
 				for (Setting s : Setting.values())

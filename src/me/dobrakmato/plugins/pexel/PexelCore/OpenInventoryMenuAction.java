@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class OpenInventoryMenuAction implements InventoryMenuAction
+public class OpenInventoryMenuAction implements Action
 {
 	private final InventoryMenu	im;
 	

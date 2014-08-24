@@ -192,6 +192,7 @@ public class StorageEngine
 	
 	public static void saveData()
 	{
+		Log.info("Saving data...");
 		//Save lobbies.
 		YamlConfiguration yaml_lobbies = new YamlConfiguration();
 		int i_lobbies = 0;
@@ -209,6 +210,7 @@ public class StorageEngine
 		try
 		{
 			yaml_lobbies.save(new File(Paths.lobbiesPath()));
+			Log.info("Saved " + i_lobbies + " lobbies!");
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -234,6 +236,7 @@ public class StorageEngine
 		try
 		{
 			yaml_arenas.save(new File(Paths.arenasPath()));
+			Log.info("Saved " + i_arenas + " arenas!");
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -246,8 +249,10 @@ public class StorageEngine
 		{
 			TeleportGate tg = StorageEngine.gates.get(key);
 			yaml_gates.set("gates.gate" + i_gates + ".name", key);
-			yaml_gates.set("gates.gate" + i_gates + ".type", tg.getType());
-			yaml_gates.set("gates.gate" + i_gates + ".content", tg.getContent());
+			yaml_gates.set("gates.gate" + i_gates + ".action.type",
+					tg.getAction().getClass().getSimpleName());
+			yaml_gates.set("gates.gate" + i_gates + ".action.content",
+					tg.getAction().save());
 			tg.getRegion().serialize(yaml_gates,
 					"gates.gate" + i_gates + ".region");
 			i_gates++;
@@ -255,10 +260,17 @@ public class StorageEngine
 		try
 		{
 			yaml_gates.save(new File(Paths.gatesPath()));
+			Log.info("Saved " + i_gates + " gates!");
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public static void loadData()
+	{
+		Log.info("Loadgin data...");
+		
 	}
 	
 	public static void gateEnter(final Player player, final Location location)

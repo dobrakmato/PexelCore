@@ -1,7 +1,5 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
@@ -13,21 +11,12 @@ import org.bukkit.entity.Player;
 public class TeleportGate
 {
 	private final Region	region;
-	private String			actionType;
-	private String			actionContent;
-	private Server			targetServer;
+	private Action			action;
 	
-	public TeleportGate(final Region region, final String actionType,
-			final String actionContent)
+	public TeleportGate(final Region region, final Action action)
 	{
 		this.region = region;
-		this.actionContent = actionContent;
-		this.actionType = actionType;
-	}
-	
-	public boolean isCrossServer()
-	{
-		return !this.targetServer.isThis();
+		this.action = action;
 	}
 	
 	public Region getRegion()
@@ -37,66 +26,32 @@ public class TeleportGate
 	
 	protected void execute(final Player player)
 	{
-		if (this.actionType.equalsIgnoreCase("teleport"))
-		{
-			if (this.isCrossServer())
-			{
-				this.targetServer.getClient().sendPacket(
-						new CrossServerTeleportPacket(player,
-								this.actionContent));
-			}
-			else
-			{
-				String[] parts = this.actionContent.split(",");
-				
-				try
-				{
-					Double x = Double.parseDouble(parts[0]);
-					Double y = Double.parseDouble(parts[1]);
-					Double z = Double.parseDouble(parts[2]);
-					Float yaw = Float.parseFloat(parts[3]);
-					Float pitch = Float.parseFloat(parts[4]);
-					String world = parts[5];
-					
-					player.teleport(new Location(Bukkit.getWorld(world), x, y,
-							z, yaw, pitch));
-				} catch (Exception ex)
-				{
-					Log.addProblem("Invalid action at gate ("
-							+ this.region.toString() + "): " + this.actionType
-							+ " >> " + this.actionContent);
-				}
-			}
-		}
-		else if (this.actionType.equalsIgnoreCase("command"))
-		{
-			player.performCommand(this.actionContent.replace("%player%",
-					player.getName()));
-		}
-		else
-		{
-			Log.addProblem("Invalid action at gate (" + this.region.toString()
-					+ "): " + this.actionType + " >> " + this.actionContent);
-		}
+		this.action.execute(player);
+		/*
+		 * if (this.actionType.equalsIgnoreCase("teleport")) { if (this.isCrossServer()) {
+		 * this.targetServer.getClient().sendPacket( new CrossServerTeleportPacket(player, this.actionContent)); } else
+		 * { String[] parts = this.actionContent.split(",");
+		 * 
+		 * try { Double x = Double.parseDouble(parts[0]); Double y = Double.parseDouble(parts[1]); Double z =
+		 * Double.parseDouble(parts[2]); Float yaw = Float.parseFloat(parts[3]); Float pitch =
+		 * Float.parseFloat(parts[4]); String world = parts[5];
+		 * 
+		 * player.teleport(new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch)); } catch (Exception ex) {
+		 * Log.addProblem("Invalid action at gate (" + this.region.toString() + "): " + this.actionType + " >> " +
+		 * this.actionContent); } } } else if (this.actionType.equalsIgnoreCase("command")) {
+		 * player.performCommand(this.actionContent.replace("%player%", player.getName())); } else {
+		 * Log.addProblem("Invalid action at gate (" + this.region.toString() + "): " + this.actionType + " >> " +
+		 * this.actionContent); }
+		 */
 	}
 	
-	public String getType()
+	public Action getAction()
 	{
-		return this.actionType;
+		return this.action;
 	}
 	
-	public String getContent()
+	public void setContent(final Action action)
 	{
-		return this.actionContent;
-	}
-	
-	public void setContent(final String actionContent2)
-	{
-		this.actionContent = actionContent2;
-	}
-	
-	public void setType(final String actionType2)
-	{
-		this.actionType = actionType2;
+		this.action = action;
 	}
 }

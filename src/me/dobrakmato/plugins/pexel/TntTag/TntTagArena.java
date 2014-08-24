@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.dobrakmato.plugins.pexel.PexelCore.AreaFlag;
-import me.dobrakmato.plugins.pexel.PexelCore.ChatFormat;
+import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
+import me.dobrakmato.plugins.pexel.PexelCore.ChatManager;
 import me.dobrakmato.plugins.pexel.PexelCore.GameState;
 import me.dobrakmato.plugins.pexel.PexelCore.Log;
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
@@ -36,7 +37,9 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class TntTagArena extends MinigameArena implements Listener
 {
+	@ArenaOption(name = "gameTime")
 	private long		gameTimeLeft	= 60;
+	@ArenaOption(name = "lobbyTime")
 	private long		lobbyTimeLeft	= 10;
 	private final int	minimumPlayers	= 2;
 	private Location	arenaLobby;
@@ -86,7 +89,7 @@ public class TntTagArena extends MinigameArena implements Listener
 		else
 		{
 			//Spam everyone's chat with info that there is still not enough players.
-			this.chatAll(ChatFormat.minigame(this.getMinigame(),
+			this.chatAll(ChatManager.minigame(this.getMinigame(),
 					"Can't start right now! "
 							+ (this.minimumPlayers - this.activePlayers.size())
 							+ " players have to join!"));
@@ -114,7 +117,7 @@ public class TntTagArena extends MinigameArena implements Listener
 			if (this.lobbyTimeLeft > 0)
 			{
 				//Tell everyone that, we are starting soon.
-				this.chatAll(ChatFormat.minigame(this.getMinigame(),
+				this.chatAll(ChatManager.minigame(this.getMinigame(),
 						this.lobbyTimeLeft + " seconds to start!"));
 				//Is the start time?
 				if (this.lobbyTimeLeft == 1)
@@ -176,7 +179,7 @@ public class TntTagArena extends MinigameArena implements Listener
 					if (this.activePlayers.size() == 1)
 					{
 						Player winner = this.activePlayers.get(0);
-						winner.sendMessage(ChatFormat.minigame(
+						winner.sendMessage(ChatManager.minigame(
 								this.getMinigame(),
 								ChatColor.GREEN
 										+ "You won this TNT-TAG game! Congratulations!"));
@@ -254,7 +257,7 @@ public class TntTagArena extends MinigameArena implements Listener
 					Integer.MAX_VALUE, 4));
 			p.getInventory().setHelmet(new ItemStack(Material.TNT));
 			
-			this.chatAll(ChatFormat.minigame(this.getMinigame(), ChatColor.GOLD
+			this.chatAll(ChatManager.minigame(this.getMinigame(), ChatColor.GOLD
 					+ "Player " + p.getName() + " is 'it' now!"));
 			
 			this.arenaLobby.getWorld().playSound(p.getLocation(),
@@ -292,7 +295,7 @@ public class TntTagArena extends MinigameArena implements Listener
 			
 			player.setGameMode(GameMode.ADVENTURE);
 			
-			this.chatAll(ChatFormat.minigame(this.getMinigame(), "Player '"
+			this.chatAll(ChatManager.minigame(this.getMinigame(), "Player '"
 					+ player.getDisplayName() + "' has joined game!"));
 			
 			this.tryToStart();
@@ -311,7 +314,7 @@ public class TntTagArena extends MinigameArena implements Listener
 		player.teleport(this.getMinigame().getLobbyLocation());
 		player.removePotionEffect(PotionEffectType.SPEED);
 		
-		this.chatAll(ChatFormat.minigame(this.getMinigame(), "Player '"
+		this.chatAll(ChatManager.minigame(this.getMinigame(), "Player '"
 				+ player.getDisplayName() + "' has left game!"));
 	}
 	

@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_21"/>
 	<classpathentry kind="lib" path="libs/WorldEdit.jar"/>
 	<classpathentry kind="lib" path="libs/craftbukkit-1.7.9-R0.2.jar"/>
+	<classpathentry kind="lib" path="libs/BarAPI.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

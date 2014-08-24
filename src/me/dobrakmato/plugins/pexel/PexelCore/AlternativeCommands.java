@@ -47,7 +47,7 @@ public class AlternativeCommands implements Listener
 			particleTypesMenuItems.add(new InventoryMenuItem(
 					ItemUtils.namedItemStack(Material.NETHER_STAR,
 							effect.toString(), null),
-					new JavaInventoryMenuAction(new ParametrizedRunnable() {
+					new JavaArbitraryAction(new ParametrizedRunnable() {
 						@Override
 						public void run(final Object... args)
 						{
@@ -63,7 +63,7 @@ public class AlternativeCommands implements Listener
 		
 		particleAmountMenuItems.add(new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.BOOK, "Few particles", null),
-				new JavaInventoryMenuAction(new ParametrizedRunnable() {
+				new JavaArbitraryAction(new ParametrizedRunnable() {
 					@Override
 					public void run(final Object... args)
 					{
@@ -74,7 +74,7 @@ public class AlternativeCommands implements Listener
 		
 		particleAmountMenuItems.add(new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.BOOK, "The right amount",
-						null), new JavaInventoryMenuAction(
+						null), new JavaArbitraryAction(
 						new ParametrizedRunnable() {
 							@Override
 							public void run(final Object... args)
@@ -86,7 +86,7 @@ public class AlternativeCommands implements Listener
 		
 		particleAmountMenuItems.add(new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.BOOK, "Many particles", null),
-				new JavaInventoryMenuAction(new ParametrizedRunnable() {
+				new JavaArbitraryAction(new ParametrizedRunnable() {
 					@Override
 					public void run(final Object... args)
 					{

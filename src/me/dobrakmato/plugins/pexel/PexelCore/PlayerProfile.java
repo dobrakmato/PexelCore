@@ -50,6 +50,9 @@ public class PlayerProfile
 																	ServerLocationType.LOBBY);
 	private ParticleEffect					particleType;
 	
+	protected String						lastKnownName	= "";
+	protected int							points			= 0;
+	
 	/**
 	 * Creates player profile from Player object.
 	 * 
@@ -208,6 +211,8 @@ public class PlayerProfile
 		YamlConfiguration yaml = new YamlConfiguration();
 		
 		yaml.set("player.uuid", this.player.toString());
+		yaml.set("player.points", this.points);
+		yaml.set("player.lastKnownName", this.lastKnownName);
 		yaml.set("player.friends", this.friends);
 		yaml.set("player.foes", this.foes);
 		
@@ -233,6 +238,9 @@ public class PlayerProfile
 		
 		PlayerProfile profile = new PlayerProfile(uuid);
 		
+		profile.points = yaml.getInt("player.points");
+		profile.lastKnownName = yaml.getString("player.lastKnownName");
+		
 		List<?> friends = yaml.getList("player.friends");
 		List<?> foes = yaml.getList("player.foes");
 		
@@ -252,5 +260,25 @@ public class PlayerProfile
 	public ParticleEffect getParticleType()
 	{
 		return this.particleType;
+	}
+	
+	/**
+	 * Return the number of points.
+	 * 
+	 * @return
+	 */
+	public int getPoints()
+	{
+		return this.points;
+	}
+	
+	/**
+	 * Add specified amount of points.
+	 * 
+	 * @param points
+	 */
+	public void addPoints(final int points)
+	{
+		this.points += points;
 	}
 }

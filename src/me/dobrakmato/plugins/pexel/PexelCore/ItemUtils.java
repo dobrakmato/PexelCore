@@ -2,9 +2,11 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.util.List;
 
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 /**
  * Class that contains many useful functions for working with InventoryMenus.
@@ -72,5 +74,15 @@ public class ItemUtils
 			im.setLore(lore);
 		is.setItemMeta(im);
 		return is;
+	}
+	
+	public static ItemStack coloredLetherArmor(final Material material,
+			final Color color)
+	{
+		ItemStack larmor = new ItemStack(material, 1);
+		LeatherArmorMeta lam = (LeatherArmorMeta) larmor.getItemMeta();
+		lam.setColor(color);
+		larmor.setItemMeta(lam);
+		return larmor;
 	}
 }

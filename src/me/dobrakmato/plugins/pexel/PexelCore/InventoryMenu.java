@@ -31,7 +31,7 @@ public class InventoryMenu implements InventoryHolder
 	 * Creates new Inventory menu object with specified type of inventory, title and list of items.
 	 * 
 	 * @see InventoryMenuItem
-	 * @see InventoryMenuAction
+	 * @see Action
 	 * @see ItemUtils
 	 * 
 	 * @param type

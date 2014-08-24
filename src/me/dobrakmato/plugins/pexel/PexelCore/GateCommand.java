@@ -45,7 +45,7 @@ public class GateCommand implements CommandExecutor
 			}
 			else
 			{
-				sender.sendMessage(ChatFormat.error("This command is only avaiable for players!"));
+				sender.sendMessage(ChatManager.error("This command is only avaiable for players!"));
 			}
 			return true;
 		}
@@ -78,22 +78,22 @@ public class GateCommand implements CommandExecutor
 					{
 						if (StorageEngine.getGate(name) == null)
 						{
-							StorageEngine.addGate(name, new TeleportGate(
-									new Region(this.we.getSelection(sender)),
-									actionType, actionContent));
-							sender.sendMessage(ChatFormat.success("Gate '"
-									+ name + "' has been created!"));
+							/*
+							 * StorageEngine.addGate(name, new TeleportGate( new Region(this.we.getSelection(sender)),
+							 * actionType, actionContent)); sender.sendMessage(ChatFormat.success("Gate '" + name +
+							 * "' has been created!"));
+							 */
 						}
 						else
 						{
-							sender.sendMessage(ChatFormat.error("Gate with name '"
+							sender.sendMessage(ChatManager.error("Gate with name '"
 									+ name + "' already exists!"));
 						}
 					}
 				}
 				else
 				{
-					sender.sendMessage(ChatFormat.error("Wrong use! Type /gate to help!"));
+					sender.sendMessage(ChatManager.error("Wrong use! Type /gate to help!"));
 				}
 			}
 			else if (action.equalsIgnoreCase("modify"))
@@ -105,20 +105,21 @@ public class GateCommand implements CommandExecutor
 					
 					if (StorageEngine.getGate(name) != null)
 					{
-						StorageEngine.getGate(name).setType(actionType);
-						StorageEngine.getGate(name).setContent(actionContent);
-						sender.sendMessage(ChatFormat.success("Gate '" + name
-								+ "' has been modified!"));
+						/*
+						 * StorageEngine.getGate(name).setType(actionType);
+						 * StorageEngine.getGate(name).setContent(actionContent);
+						 * sender.sendMessage(ChatFormat.success("Gate '" + name + "' has been modified!"));
+						 */
 					}
 					else
 					{
-						sender.sendMessage(ChatFormat.error("Gate with name '"
+						sender.sendMessage(ChatManager.error("Gate with name '"
 								+ name + "' does not exists!"));
 					}
 				}
 				else
 				{
-					sender.sendMessage(ChatFormat.error("Wrong use! Type /gate to help!"));
+					sender.sendMessage(ChatManager.error("Wrong use! Type /gate to help!"));
 				}
 			}
 			else if (action.equalsIgnoreCase("remove"))
@@ -126,18 +127,18 @@ public class GateCommand implements CommandExecutor
 				if (StorageEngine.getGate(name) != null)
 				{
 					StorageEngine.removeGate(name);
-					sender.sendMessage(ChatFormat.success("Gate '" + name
+					sender.sendMessage(ChatManager.success("Gate '" + name
 							+ "' has been removed!"));
 				}
 				else
 				{
-					sender.sendMessage(ChatFormat.error("Gate '" + name
+					sender.sendMessage(ChatManager.error("Gate '" + name
 							+ "' not found!"));
 				}
 			}
 			else
 			{
-				sender.sendMessage(ChatFormat.error("Invalid action!"));
+				sender.sendMessage(ChatManager.error("Invalid action!"));
 			}
 		}
 		else
@@ -165,7 +166,7 @@ public class GateCommand implements CommandExecutor
 	
 	private void processCommand(final Player sender, final String[] args)
 	{
-		sender.sendMessage(ChatFormat.error("Permission denied!"));
+		sender.sendMessage(ChatManager.error("Permission denied!"));
 	}
 	
 	private boolean checkSelection(final Player sender)
@@ -174,7 +175,7 @@ public class GateCommand implements CommandExecutor
 			return true;
 		else
 		{
-			sender.sendMessage(ChatFormat.error("Make a WorldEdit selection first!"));
+			sender.sendMessage(ChatManager.error("Make a WorldEdit selection first!"));
 			return true;
 		}
 	}

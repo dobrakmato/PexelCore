@@ -1,6 +1,7 @@
 package me.dobrakmato.plugins.pexel.ZabiPitkesa;
 
-import me.dobrakmato.plugins.pexel.PexelCore.LobbyMinigameArena;
+import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
+import me.dobrakmato.plugins.pexel.PexelCore.AdvancedMinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
@@ -20,18 +21,14 @@ import org.bukkit.event.entity.EntityDeathEvent;
  * @author Mato Kormuth
  * 
  */
-public class ZabiPitkesaArena extends LobbyMinigameArena
+public class ZabiPitkesaArena extends AdvancedMinigameArena
 {
 	private Pig		boss;
 	private int		taskId;
-	private long	ticks	= 0L;
+	private long	ticks			= 0L;
+	@ArenaOption(name = "bossStrenght")
+	public float	bossStrenght	= 1.5F;
 	
-	/**
-	 * @param minigame
-	 * @param arenaName
-	 * @param region
-	 * @param maxPlayers
-	 */
 	public ZabiPitkesaArena(final Minigame minigame, final String arenaName,
 			final Region region, final int maxPlayers, final int minPlayers,
 			final Location lobbyLocation, final Location gameSpawn)
@@ -84,7 +81,7 @@ public class ZabiPitkesaArena extends LobbyMinigameArena
 		Player target = this.findTraget();
 		//Find attack - knockback. 
 		target.setVelocity(target.getLocation().clone().subtract(
-				this.boss.getLocation()).multiply(-1.5F).toVector());
+				this.boss.getLocation()).multiply(-1 * this.bossStrenght).toVector());
 		
 		this.chatAll("The boss attacked '" + target.getDisplayName() + "'!");
 	}
@@ -123,15 +120,12 @@ public class ZabiPitkesaArena extends LobbyMinigameArena
 	private void onEntityDied(final EntityDeathEvent event)
 	{
 		if (event.getEntity().getUniqueId() == this.boss.getUniqueId())
-		{
 			this.onBossDefeat();
-		}
 	}
 	
 	private void onBossDefeat()
 	{
 		this.chatAll("You managed to kill pitkes22! Congratulations!");
-		
 		this.kickAll();
 	}
 }

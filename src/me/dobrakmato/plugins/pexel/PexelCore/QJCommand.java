@@ -34,11 +34,11 @@ public class QJCommand implements CommandExecutor
 			}
 			else
 			{
-				sender.sendMessage(ChatFormat.error("This command is only avaiable for players!"));
+				sender.sendMessage(ChatManager.error("This command is only avaiable for players!"));
 			}
 			return true;
 		}
-		sender.sendMessage(ChatFormat.error("Wrong use!"));
+		sender.sendMessage(ChatManager.error("Wrong use!"));
 		return true;
 	}
 	
@@ -48,7 +48,7 @@ public class QJCommand implements CommandExecutor
 		{
 			Pexel.getMatchmaking().registerRequest(
 					new MatchmakingRequest(Arrays.asList(sender), null, null));
-			sender.sendMessage(ChatFormat.success("Successfully joined matchmaking!"));
+			sender.sendMessage(ChatManager.success("Successfully joined matchmaking!"));
 		}
 		else if (args.length == 1)
 		{
@@ -57,20 +57,20 @@ public class QJCommand implements CommandExecutor
 				Pexel.getMatchmaking().registerRequest(
 						new MatchmakingRequest(Arrays.asList(sender),
 								StorageEngine.getMinigame(args[0]), null));
-				sender.sendMessage(ChatFormat.success("Successfully joined matchmaking!"));
+				sender.sendMessage(ChatManager.success("Successfully joined matchmaking!"));
 			}
 			else
 			{
-				sender.sendMessage(ChatFormat.error("QJ: That minigame does not exists!"));
+				sender.sendMessage(ChatManager.error("QJ: That minigame does not exists!"));
 			}
 		}
 		else if (args.length == 2)
 		{
-			sender.sendMessage(ChatFormat.error("QJ: Not avaiable at this time!"));
+			sender.sendMessage(ChatManager.error("QJ: Not avaiable at this time!"));
 		}
 		else
 		{
-			sender.sendMessage(ChatFormat.error("/qj [minigame] [map]"));
+			sender.sendMessage(ChatManager.error("/qj [minigame] [map]"));
 		}
 	}
 	

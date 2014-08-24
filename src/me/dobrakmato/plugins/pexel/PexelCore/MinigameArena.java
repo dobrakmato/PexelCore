@@ -161,7 +161,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 		{
 			if (!StorageEngine.getProfile(player.getUniqueId()).isSpectating())
 			{
-				player.sendMessage(ChatFormat.success("You are now spectating!"));
+				player.sendMessage(ChatManager.success("You are now spectating!"));
 				StorageEngine.getProfile(player.getUniqueId()).setSpectating(
 						true);
 				player.getInventory().clear();
@@ -190,7 +190,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 		{
 			if (StorageEngine.getProfile(player.getUniqueId()).isSpectating())
 			{
-				player.sendMessage(ChatFormat.success("You are no longer spectating!"));
+				player.sendMessage(ChatManager.success("You are no longer spectating!"));
 				StorageEngine.getProfile(player.getUniqueId()).setSpectating(
 						false);
 				player.getInventory().clear();

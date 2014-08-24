@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,17 +49,17 @@ public class ArenaCommand implements CommandExecutor
 			}
 			else
 			{
-				sender.sendMessage(ChatFormat.error("This command is only avaiable for players!"));
+				sender.sendMessage(ChatManager.error("This command is only avaiable for players!"));
 			}
 			return true;
 		}
-		sender.sendMessage(ChatFormat.error("Wrong use!"));
+		sender.sendMessage(ChatManager.error("Wrong use!"));
 		return true;
 	}
 	
 	private void processCommand(final Player sender, final String[] args)
 	{
-		sender.sendMessage(ChatFormat.error("Permission denied!"));
+		sender.sendMessage(ChatManager.error("Permission denied!"));
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
@@ -81,7 +82,7 @@ public class ArenaCommand implements CommandExecutor
 						//Check if minigame exists.
 						if (StorageEngine.getMinigame(minigameName) == null)
 						{
-							sender.sendMessage(ChatFormat.error("Minigame not defined: "
+							sender.sendMessage(ChatManager.error("Minigame not defined: "
 									+ minigameName));
 							return;
 						}
@@ -105,21 +106,21 @@ public class ArenaCommand implements CommandExecutor
 									int.class).newInstance(
 									StorageEngine.getMinigame(minigameName),
 									arenaName, region, 16);
-							sender.sendMessage(ChatFormat.success("Created new arena with 16 slots."));
+							sender.sendMessage(ChatManager.success("Created new arena with 16 slots."));
 							//Register arena to plugin.
 							Pexel.getMatchmaking().registerArena(newArena);
 							StorageEngine.addArena(newArena);
 						} catch (Exception e)
 						{
 							e.printStackTrace();
-							sender.sendMessage(ChatFormat.error("Create command failed: "
+							sender.sendMessage(ChatManager.error("Create command failed: "
 									+ e.toString()));
 						}
 					}
 				}
 				else
 				{
-					sender.sendMessage(ChatFormat.error("/arena create <name> <arenaClass> <minigameClass>"));
+					sender.sendMessage(ChatManager.error("/arena create <name> <arenaClass> <minigameClass>"));
 				}
 			}
 			else if (actionName.equalsIgnoreCase("edit"))
@@ -137,8 +138,10 @@ public class ArenaCommand implements CommandExecutor
 							{
 								StorageEngine.getArena(arenaName).setGlobalFlag(
 										AreaFlag.valueOf(flagName), flagValue);
-								sender.sendMessage(ChatFormat.success("Flag '"
-										+ flagName + "' set to '" + flagValue
+								sender.sendMessage(ChatManager.success("Flag '"
+										+ flagName
+										+ "' set to '"
+										+ flagValue
 										+ "' in arena " + arenaName));
 							}
 							else
@@ -148,13 +151,13 @@ public class ArenaCommand implements CommandExecutor
 							}
 						} catch (Exception ex)
 						{
-							sender.sendMessage(ChatFormat.error("Edit command failed: "
+							sender.sendMessage(ChatManager.error("Edit command failed: "
 									+ ex.toString()));
 						}
 					}
 					else
 					{
-						sender.sendMessage(ChatFormat.error("/arena edit <name> gflag <flag> <value>"));
+						sender.sendMessage(ChatManager.error("/arena edit <name> gflag <flag> <value>"));
 					}
 				}
 				else if (editAction.equalsIgnoreCase("pflag"))
@@ -182,8 +185,10 @@ public class ArenaCommand implements CommandExecutor
 								StorageEngine.getArena(arenaName).setPlayerFlag(
 										AreaFlag.valueOf(flagName), flagValue,
 										uuid);
-								sender.sendMessage(ChatFormat.success("Flag '"
-										+ flagName + "' set to '" + flagValue
+								sender.sendMessage(ChatManager.success("Flag '"
+										+ flagName
+										+ "' set to '"
+										+ flagValue
 										+ "' in arena " + arenaName));
 							}
 							else
@@ -193,13 +198,13 @@ public class ArenaCommand implements CommandExecutor
 							}
 						} catch (Exception ex)
 						{
-							sender.sendMessage(ChatFormat.error("Edit command failed: "
+							sender.sendMessage(ChatManager.error("Edit command failed: "
 									+ ex.toString()));
 						}
 					}
 					else
 					{
-						sender.sendMessage(ChatFormat.error("/arena edit <name> pflag <flag> <value>"));
+						sender.sendMessage(ChatManager.error("/arena edit <name> pflag <flag> <value>"));
 					}
 				}
 				else if (editAction.equalsIgnoreCase("slots"))
@@ -213,7 +218,7 @@ public class ArenaCommand implements CommandExecutor
 							{
 								StorageEngine.getArena(arenaName).setSlots(
 										slotCount);
-								sender.sendMessage(ChatFormat.success("Slots set to '"
+								sender.sendMessage(ChatManager.success("Slots set to '"
 										+ slotCount + "' in arena " + arenaName));
 							}
 							else
@@ -223,13 +228,13 @@ public class ArenaCommand implements CommandExecutor
 							}
 						} catch (Exception ex)
 						{
-							sender.sendMessage(ChatFormat.error("Slots command failed: "
+							sender.sendMessage(ChatManager.error("Slots command failed: "
 									+ ex.toString()));
 						}
 					}
 					else
 					{
-						sender.sendMessage(ChatFormat.error("/arena edit <name> slots <count>"));
+						sender.sendMessage(ChatManager.error("/arena edit <name> slots <count>"));
 					}
 				}
 				else if (editAction.equalsIgnoreCase("option"))
@@ -243,12 +248,93 @@ public class ArenaCommand implements CommandExecutor
 						{
 							if (StorageEngine.getArena(arenaName) != null)
 							{
+								boolean set = false;
 								MinigameArena arena = StorageEngine.getArena(arenaName);
-								//Try to find option type.
 								
-								//Convert optionValue to right type.
-								
-								//Set value.
+								Field[] fields = arena.getClass().getDeclaredFields();
+								for (Field f : fields)
+								{
+									if (f.isAnnotationPresent(ArenaOption.class))
+									{
+										if (f.getAnnotation(ArenaOption.class).name().equalsIgnoreCase(
+												optionName)
+												|| f.getName().equalsIgnoreCase(
+														optionName))
+										{
+											Class<?> type = f.getType();
+											if (type.equals(Integer.class))
+											{
+												f.set(arena,
+														Integer.parseInt(optionValue));
+												sender.sendMessage(ChatManager.success("Type: Integer"));
+												set = true;
+											}
+											else if (type.equals(Double.class))
+											{
+												f.set(arena,
+														Double.parseDouble(optionValue));
+												sender.sendMessage(ChatManager.success("Type: Double"));
+												set = true;
+											}
+											else if (type.equals(Float.class))
+											{
+												f.set(arena,
+														Float.parseFloat(optionValue));
+												sender.sendMessage(ChatManager.success("Type: Float"));
+												set = true;
+											}
+											else if (type.equals(Long.class))
+											{
+												f.set(arena,
+														Long.parseLong(optionValue));
+												sender.sendMessage(ChatManager.success("Type: Long"));
+												set = true;
+											}
+											else if (type.equals(Short.class))
+											{
+												f.set(arena,
+														Short.parseShort(optionValue));
+												sender.sendMessage(ChatManager.success("Type: Short"));
+												set = true;
+											}
+											else if (type.equals(Byte.class))
+											{
+												f.set(arena,
+														Byte.parseByte(optionValue));
+												sender.sendMessage(ChatManager.success("Type: Byte"));
+												set = true;
+											}
+											else if (type.equals(String.class))
+											{
+												f.set(arena, optionValue);
+												sender.sendMessage(ChatManager.success("Type: String"));
+												set = true;
+											}
+											else if (type.equals(Location.class))
+											{
+												f.set(arena,
+														sender.getLocation());
+												sender.sendMessage(ChatManager.success("Type: Location. Taking your location as argument!"));
+												set = true;
+											}
+											else
+											{
+												sender.sendMessage(ChatManager.error("I don't know how to set type '"
+														+ type.getName() + "'!"));
+												sender.sendMessage(ChatManager.error("If you believe, this is an error, create bug tickes at http://bugs.mertex.eu."));
+											}
+											
+											break;
+										}
+									}
+								}
+								if (set)
+									sender.sendMessage(ChatManager.success("Value of '"
+											+ optionName
+											+ "' set to '"
+											+ optionValue + "'!"));
+								else
+									sender.sendMessage(ChatManager.error("Option probably not found! Contact minigame author to provide valid OPTION mapping!"));
 							}
 							else
 							{
@@ -257,13 +343,13 @@ public class ArenaCommand implements CommandExecutor
 							}
 						} catch (Exception ex)
 						{
-							sender.sendMessage(ChatFormat.error("Option command failed: "
+							sender.sendMessage(ChatManager.error("Option command failed: "
 									+ ex.toString()));
 						}
 					}
 					else
 					{
-						sender.sendMessage(ChatFormat.error("/arena edit <name> option <optionName> <optionValue>"));
+						sender.sendMessage(ChatManager.error("/arena edit <name> option <optionName> <optionValue>"));
 					}
 				}
 				else if (editAction.equalsIgnoreCase("options"))
@@ -276,17 +362,21 @@ public class ArenaCommand implements CommandExecutor
 							
 							for (Field f : arena.getClass().getDeclaredFields())
 							{
-								if (Modifier.isFinal(f.getModifiers()))
-									sender.sendMessage(ChatColor.RED
-											+ "[READONLY]" + ChatColor.YELLOW
-											+ f.getName() + ChatColor.WHITE
-											+ " = " + ChatColor.GREEN
-											+ f.get(arena).toString());
-								else
-									sender.sendMessage(ChatColor.GREEN
-											+ f.getName() + ChatColor.WHITE
-											+ " = " + ChatColor.GREEN
-											+ f.get(arena).toString());
+								if (f.isAnnotationPresent(ArenaOption.class))
+								{
+									if (Modifier.isFinal(f.getModifiers()))
+										sender.sendMessage(ChatColor.RED
+												+ "[READONLY]"
+												+ ChatColor.YELLOW
+												+ f.getName() + ChatColor.WHITE
+												+ " = " + ChatColor.GREEN
+												+ f.get(arena).toString());
+									else
+										sender.sendMessage(ChatColor.GREEN
+												+ f.getName() + ChatColor.WHITE
+												+ " = " + ChatColor.GREEN
+												+ f.get(arena).toString());
+								}
 							}
 						}
 						else
@@ -296,7 +386,7 @@ public class ArenaCommand implements CommandExecutor
 						}
 					} catch (Exception ex)
 					{
-						sender.sendMessage(ChatFormat.error("Options command failed: "
+						sender.sendMessage(ChatManager.error("Options command failed: "
 								+ ex.toString()));
 					}
 				}
@@ -324,7 +414,7 @@ public class ArenaCommand implements CommandExecutor
 							if (StorageEngine.getArena(arenaName) != null)
 							{
 								StorageEngine.getArena(arenaName).state = stateToSet;
-								sender.sendMessage(ChatFormat.success("State set to '"
+								sender.sendMessage(ChatManager.success("State set to '"
 										+ stateToSet.toString()
 										+ "' in arena "
 										+ arenaName));
@@ -336,24 +426,24 @@ public class ArenaCommand implements CommandExecutor
 							}
 						} catch (Exception ex)
 						{
-							sender.sendMessage(ChatFormat.error("State command failed: "
+							sender.sendMessage(ChatManager.error("State command failed: "
 									+ ex.toString()));
 						}
 					}
 					else
 					{
-						sender.sendMessage(ChatFormat.error("/arena edit <name> state (open/closed)/(WAITING_EMPTY)"));
+						sender.sendMessage(ChatManager.error("/arena edit <name> state (open/closed)/(WAITING_EMPTY)"));
 					}
 				}
 				else
 				{
-					sender.sendMessage(ChatFormat.error("Unknown command!"));
+					sender.sendMessage(ChatManager.error("Unknown command!"));
 				}
 			}
 		}
 		else
 		{
-			sender.sendMessage(ChatFormat.error("/area <areaName> <action> [param1] [params...]"));
+			sender.sendMessage(ChatManager.error("/area <areaName> <action> [param1] [params...]"));
 		}
 	}
 	
@@ -363,7 +453,7 @@ public class ArenaCommand implements CommandExecutor
 			return true;
 		else
 		{
-			sender.sendMessage(ChatFormat.error("Make a WorldEdit selection first!"));
+			sender.sendMessage(ChatManager.error("Make a WorldEdit selection first!"));
 			return false;
 		}
 	}

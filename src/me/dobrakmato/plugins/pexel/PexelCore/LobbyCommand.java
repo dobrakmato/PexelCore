@@ -43,22 +43,22 @@ public class LobbyCommand implements CommandExecutor
 			}
 			else
 			{
-				sender.sendMessage(ChatFormat.error("This command is only avaiable for players!"));
+				sender.sendMessage(ChatManager.error("This command is only avaiable for players!"));
 			}
 			return true;
 		}
-		sender.sendMessage(ChatFormat.error("Wrong use!"));
+		sender.sendMessage(ChatManager.error("Wrong use!"));
 		return true;
 	}
 	
 	private void processCommand(final Player sender, final String[] args)
 	{
-		sender.sendMessage(ChatFormat.error("Permission denied!"));
+		sender.sendMessage(ChatManager.error("Permission denied!"));
 	}
 	
 	private void processOpCommand(final Player sender, final String[] args)
 	{
-		if (args.length > 2)
+		if (args.length >= 2)
 		{
 			String actionName = args[0];
 			String lobbyName = args[1];
@@ -69,25 +69,25 @@ public class LobbyCommand implements CommandExecutor
 				{
 					Region region = new Region(this.we.getSelection(sender));
 					StorageEngine.addLobby(new Lobby(lobbyName, region));
-					sender.sendMessage(ChatFormat.success("Lobby '" + lobbyName
-							+ "' has been created!"));
+					sender.sendMessage(ChatManager.success("Lobby '"
+							+ lobbyName + "' has been created!"));
 				}
 			}
 			else if (actionName.equalsIgnoreCase("setspawn"))
 			{
 				StorageEngine.getLobby(lobbyName).setSpawn(sender.getLocation());
-				sender.sendMessage(ChatFormat.success("Spawn of lobby '"
+				sender.sendMessage(ChatManager.success("Spawn of lobby '"
 						+ lobbyName + "' has been set to your position."));
 			}
 			else
 			{
-				sender.sendMessage(ChatFormat.error("Invalid action!"));
+				sender.sendMessage(ChatManager.error("Invalid action!"));
 			}
 		}
 		else
 		{
-			sender.sendMessage(ChatFormat.error("/lobby create <name>"));
-			sender.sendMessage(ChatFormat.error("/lobby setspawn <name>"));
+			sender.sendMessage(ChatManager.error("/lobby create <name>"));
+			sender.sendMessage(ChatManager.error("/lobby setspawn <name>"));
 		}
 	}
 	
@@ -97,7 +97,7 @@ public class LobbyCommand implements CommandExecutor
 			return true;
 		else
 		{
-			sender.sendMessage(ChatFormat.error("Make a WorldEdit selection first!"));
+			sender.sendMessage(ChatManager.error("Make a WorldEdit selection first!"));
 			return false;
 		}
 	}

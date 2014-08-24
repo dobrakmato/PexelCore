@@ -1,7 +1,5 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
-import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
-
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -19,7 +17,6 @@ public class PexelCore extends JavaPlugin
 	/**
 	 * Pexel TCP server.
 	 */
-	@SuppressWarnings("deprecation")
 	public PexelServer		server;
 	/**
 	 * Player freezer.
@@ -73,6 +70,7 @@ public class PexelCore extends JavaPlugin
 		
 		this.getCommand("arena").setExecutor(new ArenaCommand());
 		this.getCommand("friend").setExecutor(new FriendCommand());
+		this.getCommand("unfriend").setExecutor(new UnfriendCommand());
 		this.getCommand("settings").setExecutor(new SettingsCommand());
 		this.getCommand("party").setExecutor(new PartyCommand());
 		this.getCommand("lobbyarena").setExecutor(new LobbyCommand());
@@ -80,10 +78,10 @@ public class PexelCore extends JavaPlugin
 		this.getCommand("gate").setExecutor(new GateCommand());
 		
 		StorageEngine.initialize(this);
+		StorageEngine.loadData();
 		
 		new AlternativeCommands();
 		
-		//Initialize minigame
-		new TntTagMinigame();
+		HardCoded.main();
 	}
 }

@@ -8,6 +8,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.UUID;
 
+import me.dobrakmato.plugins.pexel.PexelNetworking.ServerRequestType;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -19,7 +21,6 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-@Deprecated
 public class PexelServer implements Runnable
 {
 	private final int		port			= 41976;
