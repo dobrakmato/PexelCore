@@ -1,5 +1,7 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import me.confuser.barapi.BarAPI;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -52,6 +54,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	 */
 	protected boolean	playersCanJoinAfterStart	= false;
 	/**
+	 * Spcifies if the boss bar should be used for displaying time to start.
+	 */
+	protected boolean	useBossBar					= true;
+	/**
 	 * Time left to game start.
 	 */
 	protected int		countdownTimeLeft			= 10;
@@ -76,9 +82,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	 * @param region
 	 * @param maxPlayers
 	 */
-	public AdvancedMinigameArena(final Minigame minigame, final String arenaName,
-			final Region region, final int maxPlayers, final int minPlayers,
-			final Location lobbyLocation, final Location gameSpawn)
+	public AdvancedMinigameArena(final Minigame minigame,
+			final String arenaName, final Region region, final int maxPlayers,
+			final int minPlayers, final Location lobbyLocation,
+			final Location gameSpawn)
 	{
 		super(minigame, arenaName, region, maxPlayers);
 		
@@ -154,7 +161,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	private void tryStartCountdown()
 	{
 		if (this.activePlayers.size() >= this.minimalPlayers)
-			this.onCountdownStart();
+			this.startCountdown();
 		else
 			this.onNotEnoughPlayers();
 	}
@@ -166,7 +173,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	{
 		//Check if we can stop, once the countdown started.
 		if (this.countdownCanCancel)
+		{
+			Bukkit.getScheduler().cancelTask(this.countdownTaskId);
 			this.onCountdownCancelled();
+		}
 	}
 	
 	public World getWorld()
@@ -174,10 +184,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		return this.gameSpawn.getWorld();
 	}
 	
-	/**
-	 * Called when countdown starts.
-	 */
-	public void onCountdownStart()
+	private void startCountdown()
 	{
 		//Reset countdown time.
 		this.countdownTimeLeft = this.countdownLenght;
@@ -189,6 +196,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 				AdvancedMinigameArena.this.countdownTick();
 			}
 		}, 0L, 20L);
+		
+		this.onCountdownStart();
 	}
 	
 	private void onCountdownStop()
@@ -206,6 +215,13 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 				this.minigame,
 				this.countdownFormat.replace("%timeleft%",
 						Integer.toString(this.countdownTimeLeft))));
+		//If we are using boss bar.
+		if (this.useBossBar)
+			this.setBossBarAll(
+					this.countdownFormat.replace("%timeleft%",
+							Integer.toString(this.countdownTimeLeft)),
+					Math.round(this.countdownTimeLeft / this.countdownLenght
+							* 100));
 		//If we reached zero.
 		if (this.countdownTimeLeft <= 0)
 		{
@@ -220,8 +236,32 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	}
 	
 	/**
-	 * Reseta arena basic things. <b>Calls {@link AdvancedMinigameArena#onReset()} at the end of this function!</b></br> If
-	 * you want to extend reset function, override onReset() function.
+	 * Set's boss bar content for all players.
+	 * 
+	 * @param replace
+	 *            message (max 40 char.)
+	 */
+	public void setBossBarAll(final String message)
+	{
+		for (Player p : this.activePlayers)
+			BarAPI.setMessage(p, message);
+	}
+	
+	/**
+	 * Set's boss bar content for all players.
+	 * 
+	 * @param replace
+	 *            message (max 40 char.)
+	 */
+	public void setBossBarAll(final String message, final float percent)
+	{
+		for (Player p : this.activePlayers)
+			BarAPI.setMessage(p, message, percent);
+	}
+	
+	/**
+	 * Reseta arena basic things. <b>Calls {@link AdvancedMinigameArena#onReset()} at the end of this function!</b></br>
+	 * If you want to extend reset function, override onReset() function.
 	 */
 	public final void reset()
 	{
@@ -243,11 +283,19 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	}
 	
 	/**
+	 * Called when countdown starts.
+	 */
+	public void onCountdownStart()
+	{
+		
+	}
+	
+	/**
 	 * Called when countdown stops.
 	 */
 	public void onCountdownCancelled()
 	{
-		Bukkit.getScheduler().cancelTask(this.countdownTaskId);
+		
 	}
 	
 	/**

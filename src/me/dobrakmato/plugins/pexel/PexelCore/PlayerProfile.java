@@ -50,7 +50,13 @@ public class PlayerProfile
 																	ServerLocationType.LOBBY);
 	private ParticleEffect					particleType;
 	
+	/**
+	 * Last known name of this player.
+	 */
 	protected String						lastKnownName	= "";
+	/**
+	 * Amount of player's points (probably in-game currency or whatever).
+	 */
 	protected int							points			= 0;
 	
 	/**

@@ -1,7 +1,10 @@
 package me.dobrakmato.plugins.pexel.ZabiPitkesa;
 
-import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
 import me.dobrakmato.plugins.pexel.PexelCore.AdvancedMinigameArena;
+import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
+import me.dobrakmato.plugins.pexel.PexelCore.BlockChange;
+import me.dobrakmato.plugins.pexel.PexelCore.BlockRollbacker;
+import me.dobrakmato.plugins.pexel.PexelCore.GameState;
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
@@ -10,12 +13,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 
 /**
  * @author Mato Kormuth
@@ -23,11 +28,12 @@ import org.bukkit.event.entity.EntityDeathEvent;
  */
 public class ZabiPitkesaArena extends AdvancedMinigameArena
 {
-	private Pig		boss;
-	private int		taskId;
-	private long	ticks			= 0L;
+	private final BlockRollbacker	rollback;
+	private Pig						boss;
+	private int						taskId;
+	private long					ticks			= 0L;
 	@ArenaOption(name = "bossStrenght")
-	public float	bossStrenght	= 1.5F;
+	public float					bossStrenght	= 1.5F;
 	
 	public ZabiPitkesaArena(final Minigame minigame, final String arenaName,
 			final Region region, final int maxPlayers, final int minPlayers,
@@ -36,12 +42,13 @@ public class ZabiPitkesaArena extends AdvancedMinigameArena
 		super(minigame, arenaName, region, maxPlayers, 10, lobbyLocation,
 				gameSpawn);
 		this.setPlayersCanRespawn(false);
+		this.rollback = new BlockRollbacker();
+		
 	}
 	
 	@Override
 	public void onGameStart()
 	{
-		super.onGameStart();
 		this.startTask();
 		this.spawnBoss();
 	}
@@ -49,8 +56,15 @@ public class ZabiPitkesaArena extends AdvancedMinigameArena
 	@Override
 	public void onReset()
 	{
-		super.onReset();
 		this.ticks = 0L;
+		this.rollback.rollbackAsync(new Runnable() {
+			@Override
+			public void run()
+			{
+				ZabiPitkesaArena.this.state = GameState.WAITING_EMPTY;
+			}
+		});
+		
 	}
 	
 	@Override
@@ -121,6 +135,13 @@ public class ZabiPitkesaArena extends AdvancedMinigameArena
 	{
 		if (event.getEntity().getUniqueId() == this.boss.getUniqueId())
 			this.onBossDefeat();
+	}
+	
+	@EventHandler
+	private void onExplosion(final EntityExplodeEvent event)
+	{
+		for (Block b : event.blockList())
+			this.rollback.addChange(new BlockChange(b));
 	}
 	
 	private void onBossDefeat()
