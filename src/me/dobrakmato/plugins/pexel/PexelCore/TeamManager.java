@@ -69,7 +69,7 @@ public class TeamManager implements Listener
 		if (event.getAction() == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK
 				|| event.getAction() == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK)
 			if (event.getMaterial() == Material.SIGN_POST)
-				if (this.arena.region.intersects(event.getClickedBlock().getLocation()))
+				if (this.arena.activePlayers.contains(event.getPlayer()))
 					this.signClick(event.getPlayer(), event.getClickedBlock());
 	}
 	
@@ -94,6 +94,8 @@ public class TeamManager implements Listener
 			{
 				if (team.canJoin())
 				{
+					player.sendMessage(ChatManager.error("Joining team '"
+							+ team.getName() + "'..."));
 					team.addPlayer(player);
 					this.updateSign(clickedBlock.getLocation(), team);
 				}

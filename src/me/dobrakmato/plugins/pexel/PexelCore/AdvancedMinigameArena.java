@@ -355,6 +355,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		
 		this.clearPlayer(player);
 		
+		this.chatAll("Player '" + player.getName() + "' joined arena! ("
+				+ this.playerCount() + "/" + this.minimalPlayers + " - "
+				+ this.slots + ")");
+		
 		player.teleport(this.lobbyLocation);
 	}
 	
