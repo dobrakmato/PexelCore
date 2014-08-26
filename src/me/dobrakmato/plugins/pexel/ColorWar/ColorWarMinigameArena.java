@@ -265,7 +265,7 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	
 	private ItemStack getZbran()
 	{
-		return ItemUtils.namedItemStack(Material.POTATO,
+		return ItemUtils.namedItemStack(Material.INK_SACK,
 				ChatColor.RESET.toString() + ChatColor.BOLD + "Color Gun", null);
 	}
 	

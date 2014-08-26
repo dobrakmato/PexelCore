@@ -72,8 +72,14 @@ public class ProtectedArea
 	 */
 	public boolean getGlobalFlag(final AreaFlag flag)
 	{
-		return this.globalFlags.get(flag)
-				| ProtectedArea.defaultFlags.get(flag) | false;
+		if (this.globalFlags.get(flag) == null)
+			if (ProtectedArea.defaultFlags.get(flag) == null)
+				return false;
+			else
+				return ProtectedArea.defaultFlags.get(flag);
+		else
+			return this.globalFlags.get(flag);
+		
 	}
 	
 	/**
@@ -86,12 +92,26 @@ public class ProtectedArea
 	public boolean getPlayerFlag(final AreaFlag flag, final UUID player)
 	{
 		if (this.playerFlags.containsKey(player))
-			return this.playerFlags.get(player).get(flag)
-					| this.globalFlags.get(flag)
-					| ProtectedArea.defaultFlags.get(flag) | false;
+			if (this.playerFlags.get(player).get(flag) == null)
+				if (this.globalFlags.get(flag) == null)
+					if (ProtectedArea.defaultFlags.get(flag) == null)
+						return false;
+					else
+						return ProtectedArea.defaultFlags.get(flag);
+				else
+					return this.globalFlags.get(flag);
+			else
+				return this.playerFlags.get(player).get(flag);
 		else
-			return this.globalFlags.get(flag)
-					| ProtectedArea.defaultFlags.get(flag) | false;
+		{
+			if (this.globalFlags.get(flag) == null)
+				if (ProtectedArea.defaultFlags.get(flag) == null)
+					return false;
+				else
+					return ProtectedArea.defaultFlags.get(flag);
+			else
+				return this.globalFlags.get(flag);
+		}
 	}
 	
 	/**
