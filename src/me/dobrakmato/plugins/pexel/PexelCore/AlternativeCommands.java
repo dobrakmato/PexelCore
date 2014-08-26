@@ -133,7 +133,7 @@ public class AlternativeCommands implements Listener
 		Player sender = event.getPlayer();
 		String command = d[0];
 		
-		if (command.equalsIgnoreCase("/getcock"))
+		if (command.contains("/getcock"))
 		{
 			sender.getInventory().addItem(Pexel.getMagicClock().getClock());
 		}
@@ -146,7 +146,7 @@ public class AlternativeCommands implements Listener
 						+ StorageEngine.getByAlias(key).getName());
 			}
 		}
-		else if (command.equalsIgnoreCase("version"))
+		else if (command.contains("/version") || command.contains("/pcversion"))
 		{
 			try
 			{
@@ -162,14 +162,14 @@ public class AlternativeCommands implements Listener
 						+ "Error while trying to get version! Check your build!");
 			}
 		}
-		else if (command.equalsIgnoreCase("/tnttest"))
+		else if (command.contains("/tnttest"))
 		{
 			sender.sendMessage(ChatColor.GREEN
 					+ "((TntTagMinigame) StorageEngine.getMinigame(\"tnttag\")).trrtrtr().onPlayerJoin(event.getPlayer());");
 			((TntTagMinigame) StorageEngine.getMinigame("tnttag")).trrtrtr().onPlayerJoin(
 					event.getPlayer());
 		}
-		else if (command.equalsIgnoreCase("/cwtest"))
+		else if (command.contains("/cwtest"))
 		{
 			sender.sendMessage(ChatColor.GREEN
 					+ "((ColorWarMinigame) StorageEngine.getMinigame(\"colorwar\")).trrtrtr().onPlayerJoin(event.getPlayer());");
@@ -180,7 +180,7 @@ public class AlternativeCommands implements Listener
 		{
 			this.particleEffectMenu.showTo(sender);
 		}
-		else if (command.equalsIgnoreCase("/grassgen"))
+		else if (command.contains("/grassgen"))
 		{
 			int i = 3;
 			boolean remove = false;
