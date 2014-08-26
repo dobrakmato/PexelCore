@@ -78,7 +78,7 @@ public class TeamManager implements Listener
 		Sign s = (Sign) clickedBlock;
 		String teamName = s.getLine(1);
 		
-		if (s.getLine(0).equalsIgnoreCase("[Team]"))
+		if (s.getLine(0).contains("[Team]"))
 		{
 			Team team = null;
 			for (Team t : this.teams)
