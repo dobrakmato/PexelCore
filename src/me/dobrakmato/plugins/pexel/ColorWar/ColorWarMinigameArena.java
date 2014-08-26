@@ -300,7 +300,7 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 		ball.setMetadata("damagerTeam", new FixedMetadataValue(Pexel.getCore(),
 				this.getTeamByPlayer(p)));
 		
-		p.playSound(p.getLocation(), Sound.IRONGOLEM_THROW, 1F, 0.5F);
+		p.playSound(p.getLocation(), Sound.IRONGOLEM_THROW, 1F, 1.5F);
 		
 		/*
 		 * if (this.maskSnowBalls) for (Player player : this.activePlayers) { ((CraftPlayer)
@@ -312,23 +312,22 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	{
 		for (Entity e : this.gameSpawn.getWorld().getEntities())
 			if (e instanceof Snowball)
-				if (this.region.intersectsXZ(e.getLocation()))
-				{
-					Team team = (Team) e.getMetadata("damagerTeam").get(0).value();
-					byte color = 0;
-					
-					if (team == this.blueTeam)
-						color = 11;
-					else if (team == this.redTeam)
-						color = 14;
-					else if (team == this.greenTeam)
-						color = 5;
-					else if (team == this.yellowTeam)
-						color = 4;
-					
-					ParticleEffect2.displayBlockCrack(e.getLocation(), 16, 35,
-							color, 0.05F, 0.05F, 0.05F, 10);
-				}
+			{
+				Team team = (Team) e.getMetadata("damagerTeam").get(0).value();
+				byte color = 0;
+				
+				if (team == this.blueTeam)
+					color = 11;
+				else if (team == this.redTeam)
+					color = 14;
+				else if (team == this.greenTeam)
+					color = 5;
+				else if (team == this.yellowTeam)
+					color = 4;
+				
+				ParticleEffect2.displayBlockCrack(e.getLocation(), 16, 35,
+						color, 0.05F, 0.05F, 0.05F, 10);
+			}
 	}
 	
 	@Override
@@ -397,7 +396,10 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 				
 				ParticleEffect2.displayBlockCrack(
 						event.getEntity().getLocation(), 16, 35, color, 0.5F,
-						0.5F, 0.5F, 50);
+						0.5F, 0.5F, 100);
+				
+				this.gameSpawn.getWorld().playSound(
+						event.getEntity().getLocation(), Sound.SLIME_WALK, 1, 1);
 			}
 	}
 }
