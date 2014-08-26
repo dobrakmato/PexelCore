@@ -11,7 +11,6 @@ import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.Team;
 import me.dobrakmato.plugins.pexel.PexelCore.TeamManager;
-import net.minecraft.server.v1_7_R3.PacketPlayOutEntityDestroy;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,7 +18,6 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -293,6 +291,7 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	
 	private void gunFire(final Player p)
 	{
+		System.out.println("gunFire();");
 		Snowball ball = (Snowball) this.gameSpawn.getWorld().spawnEntity(
 				p.getEyeLocation().add(p.getEyeLocation().multiply(2F)),
 				EntityType.SNOWBALL);
@@ -302,12 +301,10 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 		
 		p.playSound(p.getLocation(), Sound.IRONGOLEM_THROW, 1F, 0.5F);
 		
-		if (this.maskSnowBalls)
-			for (Player player : this.activePlayers)
-			{
-				((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(
-						ball.getEntityId()));
-			}
+		/*
+		 * if (this.maskSnowBalls) for (Player player : this.activePlayers) { ((CraftPlayer)
+		 * player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy( ball.getEntityId())); }
+		 */
 	}
 	
 	private void makeTrails()
@@ -342,6 +339,11 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 		if (player.getName().equalsIgnoreCase("dobrakmato"))
 		{
 			this.greenTeam.addPlayer(player);
+			player.getInventory().addItem(this.getZbran());
+		}
+		else if (player.getName().equalsIgnoreCase("pitkes22"))
+		{
+			this.redTeam.addPlayer(player);
 			player.getInventory().addItem(this.getZbran());
 		}
 	}
