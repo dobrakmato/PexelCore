@@ -168,7 +168,10 @@ public class Region
 	private final static boolean range(final double min, final double max,
 			final double value)
 	{
-		return (value <= max ? (value >= min ? true : false) : false);
+		if (max > min)
+			return (value <= max ? (value >= min ? true : false) : false);
+		else
+			return (value <= min ? (value >= max ? true : false) : false);
 	}
 	
 	public Location getMinimalLocation()
