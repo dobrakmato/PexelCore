@@ -3,6 +3,7 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 import me.confuser.barapi.BarAPI;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -10,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.potion.PotionEffectType;
 
 /**
  * Arena that has built-in support for pre-game lobby and stuff... Also implements {@link Listener} and calls
@@ -113,16 +113,11 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		
 		player.getInventory().clear();
 		
-		for (PotionEffectType effect : PotionEffectType.values())
-			try
-			{
-				if (player.hasPotionEffect(effect))
-					player.removePotionEffect(effect);
-			} catch (Exception ex)
-			{
-				Log.warn("PlayerClearing_Error: " + ex.getMessage());
-			}
-		player.setGameMode(this.defaultGameMode);
+		/*
+		 * for (PotionEffectType effect : PotionEffectType.values()) try { if (player.hasPotionEffect(effect))
+		 * player.removePotionEffect(effect); } catch (Exception ex) { Log.warn("PlayerClearing_Error: " +
+		 * ex.getMessage()); }
+		 */
 	}
 	
 	/**
@@ -355,9 +350,9 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		
 		this.clearPlayer(player);
 		
-		this.chatAll("Player '" + player.getName() + "' joined arena! ("
-				+ this.playerCount() + "/" + this.minimalPlayers + " - "
-				+ this.slots + ")");
+		this.chatAll(ChatColor.GOLD + "Player '" + player.getName()
+				+ "' joined arena! (" + this.playerCount() + "/"
+				+ this.minimalPlayers + " - " + this.slots + ")");
 		
 		player.teleport(this.lobbyLocation);
 	}

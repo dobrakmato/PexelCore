@@ -66,6 +66,7 @@ public class TeamManager implements Listener
 	@EventHandler
 	private void onPlayerInteract(final PlayerInteractEvent event)
 	{
+		System.out.println("onPlayerInteract: ");
 		if (event.getAction() == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK
 				|| event.getAction() == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK)
 			if (event.getMaterial() == Material.SIGN_POST)
@@ -75,6 +76,8 @@ public class TeamManager implements Listener
 	
 	private void signClick(final Player player, final Block clickedBlock)
 	{
+		System.out.println("signClick: p: " + player.getName() + ", cb: "
+				+ clickedBlock.getLocation().toVector().toString());
 		Sign s = (Sign) clickedBlock;
 		String teamName = s.getLine(1);
 		

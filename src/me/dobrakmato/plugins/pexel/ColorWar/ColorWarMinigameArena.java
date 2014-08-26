@@ -341,6 +341,7 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 		//debug
 		if (player.getName().equalsIgnoreCase("dobrakmato"))
 		{
+			//this.greenTeam.addPlayer(player);
 			player.getInventory().addItem(this.getZbran());
 		}
 	}
