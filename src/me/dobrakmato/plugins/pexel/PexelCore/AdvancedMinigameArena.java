@@ -111,7 +111,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	{
 		player.getInventory().clear();
 		for (PotionEffectType effect : PotionEffectType.values())
-			player.removePotionEffect(effect);
+			if (player.hasPotionEffect(effect))
+				player.removePotionEffect(effect);
 		player.setGameMode(this.defaultGameMode);
 	}
 	

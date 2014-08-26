@@ -41,20 +41,32 @@ public class UnfriendCommand implements CommandExecutor
 	
 	private void processCommand(final Player sender, final String[] args)
 	{
-		if (args.length > 1)
+		if (args.length >= 1)
 		{
 			String playerName = args[0];
 			boolean success = false;
+			
 			for (Player p : Bukkit.getOnlinePlayers())
 			{
 				if (p.getName().equalsIgnoreCase(playerName))
 				{
-					StorageEngine.getProfile(sender.getUniqueId()).removeFriend(
-							p.getUniqueId());
-					sender.sendMessage(ChatManager.success("Player '"
-							+ p.getName()
-							+ "' has been REMOVED from your friends!"));
-					success = true;
+					if (StorageEngine.getProfile(sender.getUniqueId()).isFriend(
+							p.getUniqueId()))
+					{
+						StorageEngine.getProfile(sender.getUniqueId()).removeFriend(
+								p.getUniqueId());
+						sender.sendMessage(ChatManager.success("Player '"
+								+ p.getName()
+								+ "' has been REMOVED from your friends!"));
+						success = true;
+					}
+					else
+					{
+						sender.sendMessage(ChatManager.error("Player '"
+								+ p.getName()
+								+ "' is not in your friends list!"));
+						
+					}
 				}
 			}
 			if (!success)

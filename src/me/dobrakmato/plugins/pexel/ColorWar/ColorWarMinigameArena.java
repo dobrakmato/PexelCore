@@ -332,6 +332,18 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 				}
 	}
 	
+	@Override
+	public void onPlayerJoin(final Player player)
+	{
+		super.onPlayerJoin(player);
+		
+		//debug
+		if (player.getName().equalsIgnoreCase("dobrakmato"))
+		{
+			player.getInventory().addItem(this.getZbran());
+		}
+	}
+	
 	@EventHandler
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{

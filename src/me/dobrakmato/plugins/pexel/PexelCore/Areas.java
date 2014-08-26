@@ -11,7 +11,7 @@ import org.bukkit.Location;
 public class Areas
 {
 	/**
-	 * Returns area by location.
+	 * Tries to find arena by specified lcoation, if not found, returns null.
 	 * 
 	 * @param location
 	 * @return
@@ -19,10 +19,8 @@ public class Areas
 	public static final ProtectedArea findArea(final Location location)
 	{
 		for (ProtectedArea area : StorageEngine.getAreas().values())
-		{
 			if (area.getRegion().intersects(location))
 				return area;
-		}
 		return null;
 	}
 	

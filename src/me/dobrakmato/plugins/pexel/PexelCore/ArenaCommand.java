@@ -149,6 +149,7 @@ public class ArenaCommand implements CommandExecutor
 							}
 						} catch (Exception ex)
 						{
+							ex.printStackTrace();
 							sender.sendMessage(ChatManager.error("Edit command failed: "
 									+ ex.toString()));
 						}
@@ -194,6 +195,7 @@ public class ArenaCommand implements CommandExecutor
 							}
 						} catch (Exception ex)
 						{
+							ex.printStackTrace();
 							sender.sendMessage(ChatManager.error("Edit command failed: "
 									+ ex.toString()));
 						}
@@ -224,6 +226,7 @@ public class ArenaCommand implements CommandExecutor
 							}
 						} catch (Exception ex)
 						{
+							ex.printStackTrace();
 							sender.sendMessage(ChatManager.error("Slots command failed: "
 									+ ex.toString()));
 						}
@@ -343,6 +346,7 @@ public class ArenaCommand implements CommandExecutor
 							}
 						} catch (Exception ex)
 						{
+							ex.printStackTrace();
 							sender.sendMessage(ChatManager.error("Option command failed: "
 									+ ex.toString()));
 						}
@@ -386,6 +390,7 @@ public class ArenaCommand implements CommandExecutor
 						}
 					} catch (Exception ex)
 					{
+						ex.printStackTrace();
 						sender.sendMessage(ChatManager.error("Options command failed: "
 								+ ex.toString()));
 					}
@@ -426,6 +431,7 @@ public class ArenaCommand implements CommandExecutor
 							}
 						} catch (Exception ex)
 						{
+							ex.printStackTrace();
 							sender.sendMessage(ChatManager.error("State command failed: "
 									+ ex.toString()));
 						}

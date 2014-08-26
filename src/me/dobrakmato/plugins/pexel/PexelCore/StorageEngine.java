@@ -2,6 +2,7 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,6 +152,7 @@ public class StorageEngine
 	public static void addLobby(final Lobby lobby)
 	{
 		StorageEngine.lobbies.put(lobby.getName(), lobby);
+		StorageEngine.areas.put(lobby.getName(), lobby);
 	}
 	
 	public static Lobby getLobby(final String lobbyName)
@@ -228,6 +230,31 @@ public class StorageEngine
 					a.getMinigame().getName());
 			yaml_arenas.set("arenas.arena" + i_arenas + ".slots",
 					a.getMaximumSlots());
+			//Get options
+			for (Field f : a.getClass().getDeclaredFields())
+				if (f.isAnnotationPresent(ArenaOption.class))
+				{
+					if (!f.isAccessible())
+						f.setAccessible(true);
+					
+					try
+					{
+						yaml_arenas.set("arenas.arena" + i_arenas + ".options."
+								+ f.getName(), f.get(a).toString());
+					} catch (IllegalArgumentException | IllegalAccessException e)
+					{
+						System.out.println("Error while saving arena "
+								+ a.getName() + "!");
+						e.printStackTrace();
+					}
+				}
+			
+			//Save global flags
+			for (AreaFlag flag : AreaFlag.values())
+				if (a.getGlobalFlag(flag) != ProtectedArea.defaultFlags.get(flag))
+					yaml_arenas.set("arenas.arena" + i_arenas + ".flags."
+							+ flag.toString(), a.getGlobalFlag(flag));
+			
 			yaml_arenas.set("arenas.arena" + i_arenas + ".owner", a.getOwner());
 			a.getRegion().serialize(yaml_arenas,
 					"arenas.arena" + i_arenas + ".region");

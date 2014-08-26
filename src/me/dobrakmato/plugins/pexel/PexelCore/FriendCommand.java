@@ -42,7 +42,7 @@ public class FriendCommand implements CommandExecutor
 	
 	private void processCommand(final Player sender, final String[] args)
 	{
-		if (args.length > 1)
+		if (args.length >= 1)
 		{
 			String playerName = args[0];
 			boolean success = false;
@@ -54,6 +54,11 @@ public class FriendCommand implements CommandExecutor
 							p.getUniqueId());
 					sender.sendMessage(ChatManager.success("Player '"
 							+ p.getName() + "' has been ADDED to your friends!"));
+					p.sendMessage(ChatManager.success("Player '"
+							+ sender.getName()
+							+ "' added you to his/her friends! Add him too! /friend "
+							+ sender.getName()));
+					
 					success = true;
 				}
 			}
