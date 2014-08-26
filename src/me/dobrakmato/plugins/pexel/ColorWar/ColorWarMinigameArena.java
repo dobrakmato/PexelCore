@@ -327,7 +327,7 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 						color = 4;
 					
 					ParticleEffect2.displayBlockCrack(e.getLocation(), 16, 35,
-							color, 0.5F, 0.5F, 00.5F, 5);
+							color, 0.05F, 0.05F, 0.05F, 10);
 				}
 	}
 	
@@ -396,8 +396,8 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 					color = 4;
 				
 				ParticleEffect2.displayBlockCrack(
-						event.getEntity().getLocation(), 16, 35, color, 3F, 3F,
-						3F, 30);
+						event.getEntity().getLocation(), 16, 35, color, 0.5F,
+						0.5F, 0.5F, 50);
 			}
 	}
 }
