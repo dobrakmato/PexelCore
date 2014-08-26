@@ -294,7 +294,8 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	private void gunFire(final Player p)
 	{
 		Snowball ball = (Snowball) this.gameSpawn.getWorld().spawnEntity(
-				p.getEyeLocation(), EntityType.SNOWBALL);
+				p.getEyeLocation().add(p.getEyeLocation().multiply(2F)),
+				EntityType.SNOWBALL);
 		ball.setVelocity(p.getEyeLocation().getDirection().multiply(1.5F));
 		ball.setMetadata("damagerTeam", new FixedMetadataValue(Pexel.getCore(),
 				this.getTeamByPlayer(p)));
