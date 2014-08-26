@@ -178,19 +178,22 @@ public class EventProcessor implements Listener
 	private boolean hasPermission(final Location location, final Player player,
 			final AreaFlag flag)
 	{
-		System.out.println("permission check: p:" + player.getName() + "; f"
+		System.out.println("permission check: p: " + player.getName() + "; f: "
 				+ flag.toString());
 		ProtectedArea area = null;
 		if ((area = Areas.findArea(location)) != null)
 		{
+			System.out.println("in area");
 			if (!area.getPlayerFlag(flag, player.getUniqueId()))
 			{
-				if (area.getGlobalFlag(AreaFlag.AREA_CHAT_PERMISSIONDENIED))
-					player.getPlayer().sendMessage(
-							ChatManager.error("You don't have permission for '"
-									+ flag.toString() + "' in this area!"));
+				System.out.println("perm denied");
+				//if (area.getPlayerFlag(AreaFlag.AREA_CHAT_PERMISSIONDENIED, player.getUniqueId()))
+				player.getPlayer().sendMessage(
+						ChatManager.error("You don't have permission for '"
+								+ flag.toString() + "' in this area!"));
 				return false;
 			}
+			System.out.println("perm granted");
 			return true;
 		}
 		System.out.println("permcheck end");

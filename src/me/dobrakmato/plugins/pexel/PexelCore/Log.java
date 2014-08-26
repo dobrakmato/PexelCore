@@ -129,6 +129,6 @@ public class Log
 	
 	public static void chat(final String msg)
 	{
-		Log.log.severe("[CHAT] " + msg);
+		Log.log.info("[CHAT] " + msg);
 	}
 }

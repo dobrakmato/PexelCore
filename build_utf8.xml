@@ -33,7 +33,7 @@
             <classpath refid="pexel.classpath"/>
         </javac>
         <copy file="plugin.yml" todir="bin"/>
-    	<echo file="bin/versionFile.txt">Pexel-Core ci-build-${env.BUILD_NUMBER}</echo>
+    	<echo file="bin/me/dobrakmato/plugins/pexel/PexelCore/versionFile.txt">Pexel-Core ci-build-${env.BUILD_NUMBER}</echo>
     	<jar jarfile="build/PexelCore-${env.BUILD_NUMBER}.jar" basedir="bin"/>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
