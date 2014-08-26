@@ -111,16 +111,17 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		if (player == null)
 			System.out.println("WTF PLAYER IS NULL!?");
 		
-		try
-		{
-			player.getInventory().clear();
-			for (PotionEffectType effect : PotionEffectType.values())
+		player.getInventory().clear();
+		
+		for (PotionEffectType effect : PotionEffectType.values())
+			try
+			{
 				if (player.hasPotionEffect(effect))
 					player.removePotionEffect(effect);
-		} catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
+			} catch (Exception ex)
+			{
+				Log.warn("PlayerClearing_Error: " + ex.getMessage());
+			}
 		player.setGameMode(this.defaultGameMode);
 	}
 	
