@@ -171,6 +171,18 @@ public class Region
 		return (value <= max ? (value >= min ? true : false) : false);
 	}
 	
+	public Location getMinimalLocation()
+	{
+		return new Location(this.w, this.v1.getX(), this.v1.getY(),
+				this.v1.getZ());
+	}
+	
+	public Location getMaximalLocation()
+	{
+		return new Location(this.w, this.v2.getX(), this.v2.getY(),
+				this.v2.getZ());
+	}
+	
 	@Override
 	public String toString()
 	{

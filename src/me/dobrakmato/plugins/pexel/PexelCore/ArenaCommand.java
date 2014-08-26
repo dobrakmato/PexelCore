@@ -139,9 +139,7 @@ public class ArenaCommand implements CommandExecutor
 								StorageEngine.getArena(arenaName).setGlobalFlag(
 										AreaFlag.valueOf(flagName), flagValue);
 								sender.sendMessage(ChatManager.success("Flag '"
-										+ flagName
-										+ "' set to '"
-										+ flagValue
+										+ flagName + "' set to '" + flagValue
 										+ "' in arena " + arenaName));
 							}
 							else
@@ -186,9 +184,7 @@ public class ArenaCommand implements CommandExecutor
 										AreaFlag.valueOf(flagName), flagValue,
 										uuid);
 								sender.sendMessage(ChatManager.success("Flag '"
-										+ flagName
-										+ "' set to '"
-										+ flagValue
+										+ flagName + "' set to '" + flagValue
 										+ "' in arena " + arenaName));
 							}
 							else
@@ -262,6 +258,10 @@ public class ArenaCommand implements CommandExecutor
 														optionName))
 										{
 											Class<?> type = f.getType();
+											
+											if (!f.isAccessible())
+												f.setAccessible(true);
+											
 											if (type.equals(Integer.class))
 											{
 												f.set(arena,

@@ -83,7 +83,7 @@ public enum ParticleEffect
 	
 	private static final Map<String, ParticleEffect>	NAME_MAP	= new HashMap<String, ParticleEffect>();
 	private static final Map<Integer, ParticleEffect>	ID_MAP		= new HashMap<Integer, ParticleEffect>();
-	private static final double							MAX_RANGE	= 100.0D;									// Denizen: Modified from original range of 20.0D
+	private static final double							MAX_RANGE	= 300.0D;									// Denizen: Modified from original range of 20.0D
 	private static Constructor<?>						PARTICLE_PACKET_CONSTRUCTOR;
 	
 	static

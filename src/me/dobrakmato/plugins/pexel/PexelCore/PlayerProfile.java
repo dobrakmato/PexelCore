@@ -48,7 +48,7 @@ public class PlayerProfile
 	protected ServerLocation				serverLocation	= new ServerLocation(
 																	"Main Lobby",
 																	ServerLocationType.LOBBY);
-	private ParticleEffect					particleType;
+	private ParticleEffect2					particleType;
 	
 	/**
 	 * Last known name of this player.
@@ -258,12 +258,12 @@ public class PlayerProfile
 		return profile;
 	}
 	
-	public void setParticleType(final ParticleEffect effect)
+	public void setParticleType(final ParticleEffect2 effect)
 	{
 		this.particleType = effect;
 	}
 	
-	public ParticleEffect getParticleType()
+	public ParticleEffect2 getParticleType()
 	{
 		return this.particleType;
 	}

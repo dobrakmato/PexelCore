@@ -21,6 +21,7 @@ public class Team
 	private final Color			color;
 	private final String		name;
 	private final ChatChannel	teamchat	= ChatChannel.createRandom();
+	private final int			maxPlayers;
 	
 	/**
 	 * Creates a new Team with specified team color and team name.
@@ -28,10 +29,11 @@ public class Team
 	 * @param color
 	 * @param name
 	 */
-	public Team(final Color color, final String name)
+	public Team(final Color color, final String name, final int maximumPlayers)
 	{
 		this.color = color;
 		this.name = name;
+		this.maxPlayers = maximumPlayers;
 		this.teamchat.setPrefix(ChatColor.YELLOW + "[TEAM]");
 	}
 	
@@ -125,5 +127,61 @@ public class Team
 						this.color));
 		p.getInventory().setBoots(
 				ItemUtils.coloredLetherArmor(Material.LEATHER_BOOTS, this.color));
+	}
+	
+	/**
+	 * Retruns list of players.
+	 * 
+	 * @return
+	 */
+	public List<Player> getPlayers()
+	{
+		return this.players;
+	}
+	
+	/**
+	 * Returns if this team contains specified player.
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public boolean contains(final Player p)
+	{
+		return this.players.contains(p);
+	}
+	
+	/**
+	 * Returns player count.
+	 * 
+	 * @return
+	 */
+	public int getPlayerCount()
+	{
+		return this.players.size();
+	}
+	
+	public int getMaximumPlayers()
+	{
+		return this.maxPlayers;
+	}
+	
+	public boolean canJoin()
+	{
+		return this.players.size() < this.maxPlayers;
+	}
+	
+	public boolean canJoin(final int amount)
+	{
+		return this.players.size() + amount < this.maxPlayers;
+	}
+	
+	/**
+	 * Retrun's this team color.
+	 * 
+	 * @return
+	 */
+	public Color getColor()
+	{
+		return this.color;
 	}
 }

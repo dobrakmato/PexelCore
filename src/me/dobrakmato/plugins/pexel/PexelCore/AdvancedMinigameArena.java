@@ -8,6 +8,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffectType;
 
@@ -60,11 +62,15 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	/**
 	 * Time left to game start.
 	 */
-	protected int		countdownTimeLeft			= 10;
+	protected int		countdownTimeLeft			= 30;
 	/**
 	 * Specifies, if the arena should call <code>reset()</code> function automaticaly when game ends.
 	 */
 	protected boolean	autoReset					= false;
+	/**
+	 * Specifies, if inventory actions are enabled in this arena.
+	 */
+	protected boolean	inventoryDisabled			= true;
 	/**
 	 * Chat format for countdown message.
 	 */
@@ -336,6 +342,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		this.tryStartCountdown();
 		
 		this.updateGameState();
+		
+		this.clearPlayer(player);
+		
+		player.teleport(this.lobbyLocation);
 	}
 	
 	/**
@@ -394,6 +404,20 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 			//Kick from arena
 			this.onPlayerLeft(event.getPlayer());
 		}
+	}
+	
+	@EventHandler
+	public void onPlayerDropItem(final PlayerDropItemEvent event)
+	{
+		if (this.inventoryDisabled)
+			event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onPlayerInventoryClick(final InventoryClickEvent event)
+	{
+		if (this.inventoryDisabled)
+			event.setCancelled(true);
 	}
 	
 	public int getMinimalPlayers()

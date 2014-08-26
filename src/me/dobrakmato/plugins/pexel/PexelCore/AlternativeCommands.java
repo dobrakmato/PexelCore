@@ -1,9 +1,12 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
 import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
+import net.minecraft.util.org.apache.commons.io.IOUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -40,22 +43,22 @@ public class AlternativeCommands implements Listener
 		List<InventoryMenuItem> particleAmountMenuItems = new ArrayList<InventoryMenuItem>();
 		List<InventoryMenuItem> particleAnimationMenuItems = new ArrayList<InventoryMenuItem>();
 		
-		ParticleEffect[] values = ParticleEffect.values();
+		ParticleEffect2[] values = ParticleEffect2.values();
 		for (int i = 0; i < values.length; i++)
 		{
-			final ParticleEffect effect = values[i];
+			final ParticleEffect2 effect = values[i];
 			particleTypesMenuItems.add(new InventoryMenuItem(
 					ItemUtils.namedItemStack(Material.NETHER_STAR,
-							effect.toString(), null),
-					new JavaArbitraryAction(new ParametrizedRunnable() {
-						@Override
-						public void run(final Object... args)
-						{
-							StorageEngine.getProfile(
-									(((Player) args[0]).getUniqueId())).setParticleType(
-									effect);
-						}
-					}), i, true));
+							effect.toString(), null), new JavaArbitraryAction(
+							new ParametrizedRunnable() {
+								@Override
+								public void run(final Object... args)
+								{
+									StorageEngine.getProfile(
+											(((Player) args[0]).getUniqueId())).setParticleType(
+											effect);
+								}
+							}), i, true));
 		}
 		
 		this.particleTypesMenu = new InventoryMenu(54, "Particle type",
@@ -143,11 +146,34 @@ public class AlternativeCommands implements Listener
 						+ StorageEngine.getByAlias(key).getName());
 			}
 		}
+		else if (command.equalsIgnoreCase("version"))
+		{
+			try
+			{
+				String version = IOUtils.toString(this.getClass().getResourceAsStream(
+						"versionFile.txt"));
+				sender.sendMessage(ChatColor.DARK_RED
+						+ "This server is running Pexel-Core version "
+						+ version);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+				sender.sendMessage(ChatColor.RED
+						+ "Error while trying to get version! Check your build!");
+			}
+		}
 		else if (command.equalsIgnoreCase("/tnttest"))
 		{
-			sender.sendMessage(ChatColor.RED
-					+ "Pexel.getMatchmaking().registerRequest(new MatchmakingRequest(Arrays.asList(event.getPlayer()),StorageEngine.getMinigame(\"tnttag\"), null));");
+			sender.sendMessage(ChatColor.GREEN
+					+ "((TntTagMinigame) StorageEngine.getMinigame(\"tnttag\")).trrtrtr().onPlayerJoin(event.getPlayer());");
 			((TntTagMinigame) StorageEngine.getMinigame("tnttag")).trrtrtr().onPlayerJoin(
+					event.getPlayer());
+		}
+		else if (command.equalsIgnoreCase("/cwtest"))
+		{
+			sender.sendMessage(ChatColor.GREEN
+					+ "((ColorWarMinigame) StorageEngine.getMinigame(\"colorwar\")).trrtrtr().onPlayerJoin(event.getPlayer());");
+			((ColorWarMinigame) StorageEngine.getMinigame("colorwar")).trrtrtr().onPlayerJoin(
 					event.getPlayer());
 		}
 		else if (command.contains("/secretparticles"))
