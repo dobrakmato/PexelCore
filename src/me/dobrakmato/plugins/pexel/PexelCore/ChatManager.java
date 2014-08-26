@@ -38,7 +38,7 @@ public class ChatManager
 																				false);
 	public static final ChatChannel					CHANNEL_OP			= new ChatChannel(
 																				"_op",
-																				"[OP]");
+																				"[OP] ");
 	public static final ChatChannel					CHANNEL_LOBBY		= new ChatChannel(
 																				"_lobby");
 	
@@ -130,6 +130,7 @@ public class ChatManager
 			if (channel.canWrite(event.getPlayer()))
 				channel.broadcastMessage(event.getMessage());
 		
+		Log.chat(event.getPlayer().getName() + ": " + event.getMessage());
 		event.setCancelled(true);
 	}
 }

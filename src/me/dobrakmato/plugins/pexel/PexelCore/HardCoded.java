@@ -1,5 +1,6 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
 import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
 
 /**
@@ -17,5 +18,7 @@ public class HardCoded
 	{
 		//Initialize tnt tag minigame
 		new TntTagMinigame();
+		//Initialize color war mingiame
+		new ColorWarMinigame();
 	}
 }
