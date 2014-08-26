@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffectType;
 
@@ -417,17 +416,12 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	}
 	
 	@EventHandler
-	public void onPlayerDropItem(final PlayerDropItemEvent event)
-	{
-		if (this.inventoryDisabled)
-			event.setCancelled(true);
-	}
-	
-	@EventHandler
 	public void onPlayerInventoryClick(final InventoryClickEvent event)
 	{
-		if (this.inventoryDisabled)
-			event.setCancelled(true);
+		if (event.getWhoClicked() instanceof Player)
+			if (this.activePlayers.contains(event.getWhoClicked()))
+				if (this.inventoryDisabled)
+					event.setCancelled(true);
 	}
 	
 	public int getMinimalPlayers()

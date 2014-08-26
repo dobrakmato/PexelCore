@@ -180,8 +180,9 @@ public class EventProcessor implements Listener
 	{
 		System.out.println("permission check: p: " + player.getName() + "; f: "
 				+ flag.toString());
-		ProtectedArea area = null;
-		if ((area = Areas.findArea(location)) != null)
+		
+		ProtectedArea area = Areas.findArea(location);
+		if (area != null)
 		{
 			System.out.println("in area");
 			if (!area.getPlayerFlag(flag, player.getUniqueId()))
@@ -196,7 +197,8 @@ public class EventProcessor implements Listener
 			System.out.println("perm granted");
 			return true;
 		}
-		System.out.println("permcheck end");
+		
+		System.out.println("permcheck end - not in area - granted");
 		return true;
 	}
 }
