@@ -69,7 +69,13 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 		this.oldServer = new PexelServer();
 		this.oldServer.listen();
 		
-		this.pexelserver = new PexelMasterServer(30789);
+		try
+		{
+			this.pexelserver = new PexelMasterServer(30789);
+		} catch (Exception e)
+		{
+			
+		}
 		
 		this.message = new AutoMessage();
 		this.message.updateStart(this);
@@ -95,7 +101,12 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 		
 		new AlternativeCommands();
 		
-		this.pexelclient = new PexelServerClient("127.0.0.1", 30789);
+		try
+		{
+			this.pexelclient = new PexelServerClient("127.0.0.1", 30789);
+		} catch (Exception e)
+		{
+		}
 		
 		HardCoded.main();
 		
