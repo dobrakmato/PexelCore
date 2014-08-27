@@ -382,14 +382,18 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	public void onPlayerInteract(final PlayerInteractEvent event)
 	{
 		if (this.activePlayers.contains(event.getPlayer()))
-			this.gunFire(event.getPlayer());
+			if (event.getItem() != null)
+				if (event.getMaterial() == Material.INK_SACK)
+					this.gunFire(event.getPlayer());
 	}
 	
 	@EventHandler
 	public void onPlayerInteractEntity(final PlayerInteractEntityEvent event)
 	{
 		if (this.activePlayers.contains(event.getPlayer()))
-			this.gunFire(event.getPlayer());
+			if (event.getPlayer().getItemInHand() != null)
+				if (event.getPlayer().getItemInHand().getType() == Material.INK_SACK)
+					this.gunFire(event.getPlayer());
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
