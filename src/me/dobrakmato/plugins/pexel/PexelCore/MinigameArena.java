@@ -22,6 +22,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	/**
 	 * Number of slots.
 	 */
+	@ArenaOption(name = "maximumPlayers")
 	protected int					slots;
 	/**
 	 * The actual state of the arena.

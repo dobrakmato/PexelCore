@@ -106,6 +106,9 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 		this.manager.addTeam(this.blueTeam);
 		this.manager.addTeam(this.greenTeam);
 		this.manager.addTeam(this.yellowTeam);
+		
+		this.countdownLenght = 60;
+		
 	}
 	
 	@Override

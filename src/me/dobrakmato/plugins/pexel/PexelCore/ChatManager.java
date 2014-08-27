@@ -150,7 +150,8 @@ public class ChatManager
 		
 		for (ChatChannel channel : ChatManager.channels.values())
 			if (channel.canWrite(event.getPlayer()))
-				channel.broadcastMessage(event.getMessage());
+				channel.broadcastMessage(event.getPlayer().getDisplayName()
+						+ " > " + event.getMessage());
 		
 		Log.chat(event.getPlayer().getName() + ": " + event.getMessage());
 		event.setCancelled(true);

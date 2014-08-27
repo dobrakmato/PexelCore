@@ -24,62 +24,69 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	/**
 	 * Amount of players, that is required to start the countdown.
 	 */
-	protected int		minimalPlayers				= 0;
+	@ArenaOption(name = "minimalPlayers")
+	public int		minimalPlayers				= 0;
 	/**
 	 * Lenght of countdown in seconds.
 	 */
-	protected int		countdownLenght				= 10;
+	@ArenaOption(name = "countdownLenght")
+	public int		countdownLenght				= 10;
 	/**
 	 * Location of this arena lobby.
 	 */
-	protected Location	lobbyLocation;
+	@ArenaOption(name = "lobbyLocation")
+	public Location	lobbyLocation;
 	/**
 	 * Location of this arena game spawn.
 	 */
-	protected Location	gameSpawn;
+	@ArenaOption(name = "gameSpawn")
+	public Location	gameSpawn;
 	/**
 	 * Specifies if the countdown should be canceled, if a player leaves arena and there is not enough players to start
 	 * game, but the countdown is alredy running.
 	 */
-	protected boolean	countdownCanCancel			= true;
+	@ArenaOption(name = "countdownCanCancel")
+	public boolean	countdownCanCancel			= true;
 	/**
 	 * Specifies if the players should be teleported to gameSpawn and lobbyLocation automaticaly.
 	 */
-	protected boolean	shouldTeleportPlayers		= true;
+	public boolean	shouldTeleportPlayers		= true;
 	/**
 	 * Specifies if players can respawn in this arena, or not.
 	 */
-	protected boolean	playersCanRespawn			= true;
+	public boolean	playersCanRespawn			= true;
 	/**
 	 * Specifies if players can join the game after the game was started.
 	 */
-	protected boolean	playersCanJoinAfterStart	= false;
+	public boolean	playersCanJoinAfterStart	= false;
 	/**
 	 * Spcifies if the boss bar should be used for displaying time to start.
 	 */
-	protected boolean	useBossBar					= true;
+	@ArenaOption(name = "useBossBar")
+	public boolean	useBossBar					= true;
 	/**
 	 * Time left to game start.
 	 */
-	protected int		countdownTimeLeft			= 30;
+	@ArenaOption(name = "countdownTimeLeft")
+	public int		countdownTimeLeft			= 30;
 	/**
 	 * Specifies, if the arena should call <code>reset()</code> function automaticaly when game ends.
 	 */
-	protected boolean	autoReset					= false;
+	public boolean	autoReset					= true;
 	/**
 	 * Specifies, if inventory actions are enabled in this arena.
 	 */
-	protected boolean	inventoryDisabled			= true;
+	public boolean	inventoryDisabled			= true;
 	/**
 	 * Chat format for countdown message.
 	 */
-	protected String	countdownFormat				= "%timeleft% seconds to game start!";
+	public String	countdownFormat				= "%timeleft% seconds to game start!";
 	
-	protected int		countdownTaskId				= 0;
+	public int		countdownTaskId				= 0;
 	/**
 	 * Identifies if the game has started.
 	 */
-	private boolean		gameStarted					= false;
+	private boolean	gameStarted					= false;
 	
 	/**
 	 * @param minigame

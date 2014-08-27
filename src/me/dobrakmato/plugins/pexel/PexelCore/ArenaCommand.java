@@ -186,7 +186,8 @@ public class ArenaCommand implements CommandExecutor
 										uuid);
 								sender.sendMessage(ChatManager.success("Flag '"
 										+ flagName + "' set to '" + flagValue
-										+ "' in arena " + arenaName));
+										+ "' in arena " + arenaName
+										+ " for player " + playerName));
 							}
 							else
 							{
@@ -265,42 +266,48 @@ public class ArenaCommand implements CommandExecutor
 											if (!f.isAccessible())
 												f.setAccessible(true);
 											
-											if (type.equals(Integer.class))
+											if (type.equals(Integer.class)
+													|| type.equals(int.class))
 											{
 												f.set(arena,
 														Integer.parseInt(optionValue));
 												sender.sendMessage(ChatManager.success("Type: Integer"));
 												set = true;
 											}
-											else if (type.equals(Double.class))
+											else if (type.equals(Double.class)
+													|| type.equals(double.class))
 											{
 												f.set(arena,
 														Double.parseDouble(optionValue));
 												sender.sendMessage(ChatManager.success("Type: Double"));
 												set = true;
 											}
-											else if (type.equals(Float.class))
+											else if (type.equals(Float.class)
+													|| type.equals(float.class))
 											{
 												f.set(arena,
 														Float.parseFloat(optionValue));
 												sender.sendMessage(ChatManager.success("Type: Float"));
 												set = true;
 											}
-											else if (type.equals(Long.class))
+											else if (type.equals(Long.class)
+													|| type.equals(long.class))
 											{
 												f.set(arena,
 														Long.parseLong(optionValue));
 												sender.sendMessage(ChatManager.success("Type: Long"));
 												set = true;
 											}
-											else if (type.equals(Short.class))
+											else if (type.equals(Short.class)
+													|| type.equals(short.class))
 											{
 												f.set(arena,
 														Short.parseShort(optionValue));
 												sender.sendMessage(ChatManager.success("Type: Short"));
 												set = true;
 											}
-											else if (type.equals(Byte.class))
+											else if (type.equals(Byte.class)
+													|| type.equals(byte.class))
 											{
 												f.set(arena,
 														Byte.parseByte(optionValue));
@@ -385,8 +392,8 @@ public class ArenaCommand implements CommandExecutor
 										if (f.get(arena) != null)
 											sender.sendMessage(ChatColor.AQUA
 													+ "["
-													+ f.getType().toString()
-													+ "]" + ChatColor.GREEN
+													+ f.getType().getSimpleName()
+													+ "] " + ChatColor.GREEN
 													+ f.getName()
 													+ ChatColor.WHITE + " = "
 													+ ChatColor.GREEN
@@ -394,8 +401,8 @@ public class ArenaCommand implements CommandExecutor
 										else
 											sender.sendMessage(ChatColor.AQUA
 													+ "["
-													+ f.getType().toString()
-													+ "]" + ChatColor.GREEN
+													+ f.getType().getSimpleName()
+													+ "] " + ChatColor.GREEN
 													+ f.getName()
 													+ ChatColor.WHITE + " = "
 													+ ChatColor.GREEN + "null");
