@@ -57,6 +57,7 @@ public class TeamManager implements Listener
 	
 	public void updateSign(final Location location, final Team team)
 	{
+		this.signs.put(location, team);
 		Sign s = (Sign) location.getBlock().getState();
 		s.setLine(1, team.getName());
 		if (team.getMaximumPlayers() == team.getPlayerCount())
