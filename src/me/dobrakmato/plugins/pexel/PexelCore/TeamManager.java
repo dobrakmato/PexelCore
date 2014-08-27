@@ -86,7 +86,7 @@ public class TeamManager implements Listener
 	{
 		System.out.println("signClick: p: " + player.getName() + ", cb: "
 				+ clickedBlock.getLocation().toVector().toString());
-		Sign s = (Sign) clickedBlock;
+		Sign s = (Sign) clickedBlock.getState();
 		String teamName = s.getLine(1);
 		
 		if (s.getLine(0).contains("[Team]"))
