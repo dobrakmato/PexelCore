@@ -34,14 +34,15 @@ public class ChatManager
 	private static final Map<String, ChatChannel>	channels			= new HashMap<String, ChatChannel>();
 	
 	public static final ChatChannel					CHANNEL_GLOBAL		= new ChatChannel(
-																				"_global",
+																				"global",
 																				false);
 	public static final ChatChannel					CHANNEL_OP			= new ChatChannel(
-																				"_op",
+																				"op",
 																				"[OP] ");
 	public static final ChatChannel					CHANNEL_LOBBY		= new ChatChannel(
-																				"_lobby");
-	
+																				"lobby");
+	private static final long						channelLifeTime		= 1000 * 60 * 60 * 24;					//One day
+																												
 	public static final String error(final String msg)
 	{
 		return ChatManager.errorFormat.replace("%msg%", msg);
@@ -124,8 +125,29 @@ public class ChatManager
 			throw new RuntimeException("Chat channel not found!");
 	}
 	
+	/**
+	 * Removes old, unused channels.
+	 */
+	public static void cleanUpChannels()
+	{
+		for (ChatChannel channel : ChatManager.channels.values())
+			if (channel.getLastActivity() + ChatManager.channelLifeTime < System.currentTimeMillis())
+				ChatManager.channels.remove(channel.getName());
+		
+	}
+	
 	protected static void onChat(final AsyncPlayerChatEvent event)
 	{
+		if (event.getMessage().trim().startsWith("@"))
+		{
+			String channelName = event.getMessage().substring(1,
+					event.getMessage().indexOf(" ")).replace(":", "");
+			for (ChatChannel channel : ChatManager.channels.values())
+				if (channel.getName().equalsIgnoreCase(channelName))
+					if (channel.canWrite(event.getPlayer()))
+						channel.broadcastMessage(event.getMessage());
+		}
+		
 		for (ChatChannel channel : ChatManager.channels.values())
 			if (channel.canWrite(event.getPlayer()))
 				channel.broadcastMessage(event.getMessage());

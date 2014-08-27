@@ -72,17 +72,17 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	
 	//Slots
 	@ArenaOption(name = "zbranSlot")
-	private final int			zbranSlot		= 36;
+	protected int				zbranSlot		= 36;
 	@ArenaOption(name = "colorSlot")
-	private final int			colorSlot		= 37;
+	protected int				colorSlot		= 37;
 	@ArenaOption(name = "helmetSlot")
-	private final int			sArmor1			= 41;
+	protected int				sArmor1			= 41;
 	@ArenaOption(name = "chestplateSlot")
-	private final int			sArmor2			= 42;
+	protected int				sArmor2			= 42;
 	@ArenaOption(name = "leggingsSlot")
-	private final int			sArmor3			= 43;
+	protected int				sArmor3			= 43;
 	@ArenaOption(name = "bootsSlot")
-	private final int			sArmor4			= 44;
+	protected int				sArmor4			= 44;
 	
 	/**
 	 * @param minigame

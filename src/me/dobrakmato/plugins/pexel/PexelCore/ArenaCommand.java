@@ -128,7 +128,7 @@ public class ArenaCommand implements CommandExecutor
 				String editAction = args[2];
 				if (editAction.equalsIgnoreCase("gflag"))
 				{
-					if (args.length == 4)
+					if (args.length >= 5)
 					{
 						String flagName = args[3];
 						try
@@ -161,7 +161,7 @@ public class ArenaCommand implements CommandExecutor
 				}
 				else if (editAction.equalsIgnoreCase("pflag"))
 				{
-					if (args.length == 5)
+					if (args.length >= 5)
 					{
 						String flagName = args[3];
 						String playerName = args[4];
@@ -207,7 +207,7 @@ public class ArenaCommand implements CommandExecutor
 				}
 				else if (editAction.equalsIgnoreCase("slots"))
 				{
-					if (args.length == 4)
+					if (args.length >= 4)
 					{
 						Integer slotCount = Integer.parseInt(args[3]);
 						try
@@ -238,7 +238,7 @@ public class ArenaCommand implements CommandExecutor
 				}
 				else if (editAction.equalsIgnoreCase("option"))
 				{
-					if (args.length == 5)
+					if (args.length >= 5)
 					{
 						String optionName = args[3];
 						String optionValue = args[4];
@@ -376,10 +376,20 @@ public class ArenaCommand implements CommandExecutor
 												+ " = " + ChatColor.GREEN
 												+ f.get(arena).toString());
 									else
-										sender.sendMessage(ChatColor.GREEN
-												+ f.getName() + ChatColor.WHITE
-												+ " = " + ChatColor.GREEN
-												+ f.get(arena).toString());
+									{
+										if (f.get(arena) != null)
+											sender.sendMessage(ChatColor.GREEN
+													+ f.getName()
+													+ ChatColor.WHITE + " = "
+													+ ChatColor.GREEN
+													+ f.get(arena).toString());
+										else
+											sender.sendMessage(ChatColor.GREEN
+													+ f.getName()
+													+ ChatColor.WHITE + " = "
+													+ ChatColor.GREEN + "null");
+										
+									}
 								}
 							}
 						}
@@ -397,7 +407,7 @@ public class ArenaCommand implements CommandExecutor
 				}
 				else if (editAction.equalsIgnoreCase("state"))
 				{
-					if (args.length == 4)
+					if (args.length >= 4)
 					{
 						String state = args[3];
 						GameState stateToSet;
@@ -446,10 +456,26 @@ public class ArenaCommand implements CommandExecutor
 					sender.sendMessage(ChatManager.error("Unknown command!"));
 				}
 			}
+			else if (actionName.equalsIgnoreCase("list"))
+			{
+				for (ProtectedArea a : StorageEngine.getAreas().values())
+				{
+					sender.sendMessage(ChatColor.YELLOW + "PA:" + a.getName());
+				}
+				
+				for (MinigameArena a : StorageEngine.getArenas().values())
+				{
+					sender.sendMessage(ChatColor.GREEN + "MA:" + a.getName());
+				}
+			}
+			else
+			{
+				sender.sendMessage(ChatManager.error("Valid subcommands are: create, edit, list"));
+			}
 		}
 		else
 		{
-			sender.sendMessage(ChatManager.error("/area <areaName> <action> [param1] [params...]"));
+			sender.sendMessage(ChatManager.error("Wrong use!"));
 		}
 	}
 	

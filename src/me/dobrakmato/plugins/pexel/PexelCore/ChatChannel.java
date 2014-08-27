@@ -15,11 +15,12 @@ import org.bukkit.entity.Player;
  */
 public class ChatChannel
 {
-	private static long								randomId	= 0;
+	private static long								randomId		= 0;
 	
 	private final String							name;
-	private final Map<Player, ChannelSubscriber>	subscribers	= new HashMap<Player, ChannelSubscriber>();
-	private String									prefix		= "";
+	private final Map<Player, ChannelSubscriber>	subscribers		= new HashMap<Player, ChannelSubscriber>();
+	private String									prefix			= "";
+	private long									lastActivity	= Long.MAX_VALUE;
 	
 	/**
 	 * Creates new chat channel with specified name.
@@ -109,6 +110,7 @@ public class ChatChannel
 	 */
 	public void broadcastMessage(final String message)
 	{
+		this.lastActivity = System.currentTimeMillis();
 		for (Iterator<ChannelSubscriber> iterator = this.subscribers.values().iterator(); iterator.hasNext();)
 		{
 			ChannelSubscriber p = iterator.next();
@@ -165,5 +167,13 @@ public class ChatChannel
 	public void setPrefix(final String prefix)
 	{
 		this.prefix = prefix;
+	}
+	
+	/**
+	 * @return the lastActivity
+	 */
+	public long getLastActivity()
+	{
+		return this.lastActivity;
 	}
 }

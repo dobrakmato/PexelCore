@@ -69,7 +69,8 @@ public class TeamManager implements Listener
 		System.out.println("onPlayerInteract: ");
 		if (event.getAction() == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK
 				|| event.getAction() == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK)
-			if (event.getMaterial() == Material.SIGN_POST)
+			if (event.getMaterial() == Material.SIGN_POST
+					|| event.getMaterial() == Material.SIGN)
 				if (this.arena.activePlayers.contains(event.getPlayer()))
 					this.signClick(event.getPlayer(), event.getClickedBlock());
 	}
