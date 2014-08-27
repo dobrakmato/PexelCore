@@ -355,19 +355,26 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	@Override
 	public void onPlayerJoin(final Player player)
 	{
-		super.onPlayerJoin(player);
-		
-		this.tryStartCountdown();
-		
-		this.updateGameState();
-		
-		this.clearPlayer(player);
-		
-		this.chatAll(ChatColor.GOLD + "Player '" + player.getName()
-				+ "' joined arena! (" + this.playerCount() + "/"
-				+ this.minimalPlayers + " - " + this.slots + ")");
-		
-		player.teleport(this.lobbyLocation);
+		if (!this.activePlayers.contains(player))
+		{
+			super.onPlayerJoin(player);
+			
+			this.tryStartCountdown();
+			
+			this.updateGameState();
+			
+			this.clearPlayer(player);
+			
+			this.chatAll(ChatColor.GOLD + "Player '" + player.getName()
+					+ "' joined arena! (" + this.playerCount() + "/"
+					+ this.minimalPlayers + " - " + this.slots + ")");
+			
+			player.teleport(this.lobbyLocation);
+		}
+		else
+		{
+			player.sendMessage(ChatManager.error("WTF?! You are already in this arena!"));
+		}
 	}
 	
 	/**
