@@ -90,27 +90,33 @@ public class EventProcessor implements Listener
 			if (event.getClickedBlock().getType() == Material.SIGN
 					|| event.getClickedBlock().getType() == Material.SIGN_POST)
 			{
-				Sign sign = (Sign) event.getClickedBlock().getState();
-				String[] lines = sign.getLines();
-				if (lines.length > 1)
+				if (event.getPlayer().isOp()
+						&& event.getAction() == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK
+						|| !event.getPlayer().isOp())
 				{
-					String command = lines[0];
-					if (command.equalsIgnoreCase("[Server]"))
+					Sign sign = (Sign) event.getClickedBlock().getState();
+					String[] lines = sign.getLines();
+					if (lines.length > 1)
 					{
-						event.getPlayer().performCommand("/server " + lines[1]);
-					}
-					else if (command.equalsIgnoreCase("[Warp]"))
-					{
-						event.getPlayer().performCommand("/warp " + lines[1]);
-					}
-					else if (command.equalsIgnoreCase("[World]"))
-					{
-						World w = Bukkit.getWorld(lines[1]);
-						if (w == null)
-							event.getPlayer().sendMessage(
-									ChatManager.error(Lang.getTranslation("worldnotfound")));
-						else
-							event.getPlayer().teleport(w.getSpawnLocation());
+						String command = lines[0].trim();
+						if (command.equalsIgnoreCase("[Server]"))
+						{
+							event.getPlayer().performCommand(
+									"server " + lines[1]);
+						}
+						else if (command.equalsIgnoreCase("[Warp]"))
+						{
+							event.getPlayer().performCommand("warp " + lines[1]);
+						}
+						else if (command.equalsIgnoreCase("[World]"))
+						{
+							World w = Bukkit.getWorld(lines[1]);
+							if (w == null)
+								event.getPlayer().sendMessage(
+										ChatManager.error(Lang.getTranslation("worldnotfound")));
+							else
+								event.getPlayer().teleport(w.getSpawnLocation());
+						}
 					}
 				}
 			}

@@ -371,16 +371,11 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 		super.onPlayerJoin(player);
 		
 		//debug
-		if (player.getName().equalsIgnoreCase("dobrakmato"))
-		{
-			this.greenTeam.addPlayer(player);
-			player.getInventory().addItem(this.getZbran());
-		}
-		else if (player.getName().equalsIgnoreCase("pitkes22"))
-		{
-			this.redTeam.addPlayer(player);
-			player.getInventory().addItem(this.getZbran());
-		}
+		/*
+		 * if (player.getName().equalsIgnoreCase("dobrakmato")) { this.greenTeam.addPlayer(player);
+		 * player.getInventory().addItem(this.getZbran()); } else if (player.getName().equalsIgnoreCase("pitkes22")) {
+		 * this.redTeam.addPlayer(player); player.getInventory().addItem(this.getZbran()); }
+		 */
 	}
 	
 	@EventHandler

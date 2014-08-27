@@ -48,6 +48,13 @@ public class TeamManager implements Listener
 		this.teams.add(team);
 	}
 	
+	private void updateSignCache(final Team team)
+	{
+		for (Location loc : this.signs.keySet())
+			if (this.signs.get(loc) == team)
+				this.updateSign(loc, team);
+	}
+	
 	public void updateSign(final Location location, final Team team)
 	{
 		Sign s = (Sign) location.getBlock().getState();
@@ -69,8 +76,8 @@ public class TeamManager implements Listener
 	{
 		if (event.getAction() == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK
 				|| event.getAction() == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK)
-			if (event.getMaterial() == Material.SIGN_POST
-					|| event.getMaterial() == Material.SIGN)
+			if (event.getClickedBlock().getType() == Material.SIGN_POST
+					|| event.getClickedBlock().getType() == Material.SIGN)
 				if (this.arena.activePlayers.contains(event.getPlayer()))
 					this.signClick(event.getPlayer(), event.getClickedBlock());
 	}
@@ -98,8 +105,13 @@ public class TeamManager implements Listener
 			{
 				if (team.canJoin())
 				{
-					player.sendMessage(ChatManager.error("Joining team '"
-							+ team.getName() + "'..."));
+					if (this.playerInTeam(player))
+					{
+						Team oldTeam = this.getTeam(player);
+						oldTeam.removePlayer(player);
+						this.updateSignCache(oldTeam);
+					}
+					
 					team.addPlayer(player);
 					this.updateSign(clickedBlock.getLocation(), team);
 				}
@@ -111,12 +123,28 @@ public class TeamManager implements Listener
 		}
 	}
 	
+	public Team getTeam(final Player player)
+	{
+		for (Team t : this.teams)
+			if (t.contains(player))
+				return t;
+		return null;
+	}
+	
+	public boolean playerInTeam(final Player player)
+	{
+		for (Team t : this.teams)
+			if (t.contains(player))
+				return true;
+		return false;
+	}
+	
 	public boolean canJoinTeam(final Team team, final Player player)
 	{
 		return team.getPlayerCount() > this.getAvarangePlayerCount();
 	}
 	
-	private int getAvarangePlayerCount()
+	public int getAvarangePlayerCount()
 	{
 		int allPlayers = this.odchylka;
 		for (Team team : this.teams)
