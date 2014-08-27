@@ -239,8 +239,12 @@ public class StorageEngine
 					
 					try
 					{
-						yaml_arenas.set("arenas.arena" + i_arenas + ".options."
-								+ f.getName(), f.get(a).toString());
+						if (f.get(a) != null)
+						{
+							yaml_arenas.set("arenas.arena" + i_arenas
+									+ ".options." + f.getName(),
+									f.get(a).toString());
+						}
 					} catch (IllegalArgumentException | IllegalAccessException e)
 					{
 						System.out.println("Error while saving arena "
