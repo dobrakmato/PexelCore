@@ -125,6 +125,11 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 		for (Player p : this.activePlayers)
 			this.clearPlayer(p);
 		
+		//Find players without team
+		for (Player p : this.activePlayers)
+			if (this.getTeamByPlayerOrNull(p) == null)
+				this.joinRandomTeam(p);
+		
 		this.redTeam.applyArmorAll();
 		this.blueTeam.applyArmorAll();
 		this.greenTeam.applyArmorAll();
@@ -170,6 +175,11 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 				ColorWarMinigameArena.this.makeTrails();
 			}
 		}, 0L, 2L);
+	}
+	
+	private void joinRandomTeam(final Player p)
+	{
+		this.manager.autoJoinTeam(p);
 	}
 	
 	private void playerHitByColor(final Team team, final Player p)
@@ -249,6 +259,20 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 				+ " was not fond in any team!");
 	}
 	
+	private Team getTeamByPlayerOrNull(final Player p)
+	{
+		if (this.redTeam.contains(p))
+			return this.redTeam;
+		if (this.blueTeam.contains(p))
+			return this.blueTeam;
+		if (this.greenTeam.contains(p))
+			return this.greenTeam;
+		if (this.yellowTeam.contains(p))
+			return this.yellowTeam;
+		
+		return null;
+	}
+	
 	private void updateHotBar(final Player p)
 	{
 		p.getInventory().setItem(this.sArmor1,
@@ -300,7 +324,6 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	
 	private void gunFire(final Player p)
 	{
-		System.out.println("gunFire();");
 		Snowball ball = (Snowball) this.gameSpawn.getWorld().spawnEntity(
 				p.getEyeLocation().add(
 						p.getEyeLocation().getDirection().multiply(2F)),

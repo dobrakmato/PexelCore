@@ -122,4 +122,15 @@ public class TeamManager implements Listener
 			allPlayers += team.getPlayerCount();
 		return (int) Math.ceil(allPlayers / this.teams.size());
 	}
+	
+	public void autoJoinTeam(final Player p)
+	{
+		Team leastCrowdedTeam = this.teams.get(0);
+		
+		for (Team t : this.teams)
+			if (t.getPlayerCount() < leastCrowdedTeam.getPlayerCount())
+				leastCrowdedTeam = t;
+		
+		leastCrowdedTeam.addPlayer(p);
+	}
 }
