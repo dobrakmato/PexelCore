@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  * Class used for managing teams.
@@ -81,6 +82,14 @@ public class TeamManager implements Listener
 					|| event.getClickedBlock().getType() == Material.SIGN)
 				if (this.arena.activePlayers.contains(event.getPlayer()))
 					this.signClick(event.getPlayer(), event.getClickedBlock());
+	}
+	
+	@EventHandler
+	private void onPlayerLeft(final PlayerQuitEvent event)
+	{
+		for (Team t : this.teams)
+			if (t.contains(event.getPlayer()))
+				t.removePlayer(event.getPlayer());
 	}
 	
 	private void signClick(final Player player, final Block clickedBlock)
