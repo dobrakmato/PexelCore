@@ -253,6 +253,9 @@ public class ArenaCommand implements CommandExecutor
 								Field[] fields = arena.getClass().getDeclaredFields();
 								for (Field f : fields)
 								{
+									if (f.isAccessible())
+										f.setAccessible(true);
+									
 									if (f.isAnnotationPresent(ArenaOption.class))
 									{
 										if (f.getAnnotation(ArenaOption.class).name().equalsIgnoreCase(
