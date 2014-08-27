@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 /**
@@ -383,6 +384,11 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		this.checkForEnd();
 		
 		this.updateGameState();
+	}
+	
+	protected void onPlayerQuit(final PlayerQuitEvent event)
+	{
+		this.onPlayerLeft(event.getPlayer());
 	}
 	
 	/**
