@@ -13,16 +13,13 @@ public abstract class AbstractPacket implements PexelPacket
 {
 	public short	packetId;
 	
-	public abstract void handleLocal();
-	
-	public boolean isBroadcasted()
-	{
-		return false;
-	}
+	public abstract void handleClient();
 	
 	public static AbstractPacket read(final DataInputStream stream)
 			throws IOException
 	{
 		throw new NotImplementedException("Read method not implemented!");
 	}
+	
+	public abstract void handleServer();
 }

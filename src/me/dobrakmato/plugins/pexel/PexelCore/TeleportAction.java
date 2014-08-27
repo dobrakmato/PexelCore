@@ -6,6 +6,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+
 /**
  * Inventory action that teleports player to specified location.
  * 
@@ -68,7 +71,14 @@ public class TeleportAction implements Action
 		}
 		else
 		{
-			//Perform server-wide teleport
+			//TODO: Add teleport to location. Perform server-wide teleport
+			
+			//Teleport to other server
+			ByteArrayDataOutput out = ByteStreams.newDataOutput();
+			out.writeUTF("Connect");
+			out.writeUTF(this.server.getBungeeName());
+			player.sendPluginMessage(Pexel.getCore(), "BungeeCord",
+					out.toByteArray());
 		}
 	}
 }

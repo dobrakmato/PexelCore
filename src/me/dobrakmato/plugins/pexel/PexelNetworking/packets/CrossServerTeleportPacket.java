@@ -62,8 +62,15 @@ public class CrossServerTeleportPacket extends AbstractPacket
 	}
 	
 	@Override
-	public void handleLocal()
+	public void handleClient()
 	{
 		//Add to teleport queue, expire in 30 seconds.
+	}
+	
+	@Override
+	public void handleServer()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

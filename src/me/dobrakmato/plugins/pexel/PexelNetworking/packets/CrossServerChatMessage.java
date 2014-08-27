@@ -24,12 +24,6 @@ public class CrossServerChatMessage extends AbstractPacket
 		stream.writeUTF(this.message);
 	}
 	
-	@Override
-	public boolean isBroadcasted()
-	{
-		return true;
-	}
-	
 	public static CrossServerChatMessage read(final DataInputStream stream)
 			throws IOException
 	{
@@ -41,8 +35,14 @@ public class CrossServerChatMessage extends AbstractPacket
 	}
 	
 	@Override
-	public void handleLocal()
+	public void handleClient()
 	{
 		Bukkit.broadcastMessage(this.message);
+	}
+	
+	@Override
+	public void handleServer()
+	{
+		//TODO: broadcast packet
 	}
 }

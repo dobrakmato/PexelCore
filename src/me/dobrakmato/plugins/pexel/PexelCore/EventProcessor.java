@@ -19,6 +19,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+
 /**
  * Event processor for pexel.
  * 
@@ -101,8 +104,12 @@ public class EventProcessor implements Listener
 						String command = lines[0].trim();
 						if (command.equalsIgnoreCase("[Server]"))
 						{
-							event.getPlayer().performCommand(
-									"server " + lines[1]);
+							ByteArrayDataOutput out = ByteStreams.newDataOutput();
+							out.writeUTF("Connect");
+							out.writeUTF(lines[1]);
+							event.getPlayer().sendPluginMessage(
+									Pexel.getCore(), "BungeeCord",
+									out.toByteArray());
 						}
 						else if (command.equalsIgnoreCase("[Warp]"))
 						{

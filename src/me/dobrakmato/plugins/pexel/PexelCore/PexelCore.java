@@ -1,6 +1,12 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import me.dobrakmato.plugins.pexel.PexelNetworking.PexelMasterServer;
+import me.dobrakmato.plugins.pexel.PexelNetworking.PexelServerClient;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.PluginMessageListener;
 
 /**
  * Hlavna trieda Pexel.
@@ -8,30 +14,33 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author Mato Kormuth
  * 
  */
-public class PexelCore extends JavaPlugin
+public class PexelCore extends JavaPlugin implements PluginMessageListener
 {
 	/**
 	 * Pexel matchmaking.
 	 */
-	public Matchmaking		matchmaking;
+	public Matchmaking			matchmaking;
 	/**
 	 * Pexel TCP server.
 	 */
-	public PexelServer		server;
+	public PexelServer			oldServer;
 	/**
 	 * Player freezer.
 	 */
-	public PlayerFreezer	freezer;
+	public PlayerFreezer		freezer;
 	/**
 	 * Eent processor.
 	 */
-	public EventProcessor	eventProcessor;
+	public EventProcessor		eventProcessor;
 	/**
 	 * Magic clock instance.
 	 */
-	public MagicClock		magicClock;
+	public MagicClock			magicClock;
 	
-	public AutoMessage		message;
+	public AutoMessage			message;
+	
+	private PexelMasterServer	pexelserver;
+	public PexelServerClient	pexelclient;
 	
 	@Override
 	public void onDisable()
@@ -39,7 +48,9 @@ public class PexelCore extends JavaPlugin
 		//Shutdown all updated parts.
 		UpdatedParts.shutdown();
 		
-		this.server.close();
+		this.oldServer.close();
+		
+		this.pexelserver.close();
 		
 		StorageEngine.saveData();
 		
@@ -55,8 +66,10 @@ public class PexelCore extends JavaPlugin
 		
 		this.freezer = new PlayerFreezer();
 		
-		this.server = new PexelServer();
-		this.server.listen();
+		this.oldServer = new PexelServer();
+		this.oldServer.listen();
+		
+		this.pexelserver = new PexelMasterServer(30789);
 		
 		this.message = new AutoMessage();
 		this.message.updateStart(this);
@@ -82,6 +95,26 @@ public class PexelCore extends JavaPlugin
 		
 		new AlternativeCommands();
 		
+		this.pexelclient = new PexelServerClient("127.0.0.1", 30789);
+		
 		HardCoded.main();
+		
+		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+		Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord",
+				this);
+	}
+	
+	@Override
+	public void onPluginMessageReceived(final String channel,
+			final Player player, final byte[] message)
+	{
+		if (!channel.equals("BungeeCord"))
+		{
+			return;
+		}
+		else
+		{
+			Log.info("onPluginMessageReceived: " + new String(message));
+		}
 	}
 }

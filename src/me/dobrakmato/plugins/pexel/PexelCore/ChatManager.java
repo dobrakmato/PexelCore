@@ -35,12 +35,15 @@ public class ChatManager
 	
 	public static final ChatChannel					CHANNEL_GLOBAL		= new ChatChannel(
 																				"global",
+																				ChatColor.GOLD
+																						+ "[GLOBAL]",
 																				false);
 	public static final ChatChannel					CHANNEL_OP			= new ChatChannel(
 																				"op",
 																				"[OP] ");
 	public static final ChatChannel					CHANNEL_LOBBY		= new ChatChannel(
-																				"lobby");
+																				"lobby",
+																				ChatColor.GRAY.toString());
 	private static final long						channelLifeTime		= 1000 * 60 * 60 * 24;					//One day
 																												
 	public static final String error(final String msg)
