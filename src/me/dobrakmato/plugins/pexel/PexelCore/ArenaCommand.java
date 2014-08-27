@@ -253,9 +253,6 @@ public class ArenaCommand implements CommandExecutor
 								Field[] fields = arena.getClass().getDeclaredFields();
 								for (Field f : fields)
 								{
-									if (f.isAccessible())
-										f.setAccessible(true);
-									
 									if (f.isAnnotationPresent(ArenaOption.class))
 									{
 										if (f.getAnnotation(ArenaOption.class).name().equalsIgnoreCase(
@@ -365,10 +362,15 @@ public class ArenaCommand implements CommandExecutor
 					{
 						if (StorageEngine.getArena(arenaName) != null)
 						{
+							sender.sendMessage(ChatColor.GOLD
+									+ "======= OPTIONS =======");
 							MinigameArena arena = StorageEngine.getArena(arenaName);
 							
 							for (Field f : arena.getClass().getDeclaredFields())
 							{
+								if (f.isAccessible())
+									f.setAccessible(true);
+								
 								if (f.isAnnotationPresent(ArenaOption.class))
 								{
 									if (Modifier.isFinal(f.getModifiers()))
@@ -381,13 +383,19 @@ public class ArenaCommand implements CommandExecutor
 									else
 									{
 										if (f.get(arena) != null)
-											sender.sendMessage(ChatColor.GREEN
+											sender.sendMessage(ChatColor.AQUA
+													+ "["
+													+ f.getType().toString()
+													+ "]" + ChatColor.GREEN
 													+ f.getName()
 													+ ChatColor.WHITE + " = "
 													+ ChatColor.GREEN
 													+ f.get(arena).toString());
 										else
-											sender.sendMessage(ChatColor.GREEN
+											sender.sendMessage(ChatColor.AQUA
+													+ "["
+													+ f.getType().toString()
+													+ "]" + ChatColor.GREEN
 													+ f.getName()
 													+ ChatColor.WHITE + " = "
 													+ ChatColor.GREEN + "null");
