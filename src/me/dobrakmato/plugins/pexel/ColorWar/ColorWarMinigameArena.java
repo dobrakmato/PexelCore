@@ -235,12 +235,12 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	
 	private Color getColor(final ItemStack item)
 	{
-		return ((LeatherArmorMeta) item.getData()).getColor();
+		return ((LeatherArmorMeta) item.getItemMeta()).getColor();
 	}
 	
 	private void setColor(final ItemStack item, final Color color)
 	{
-		((LeatherArmorMeta) item.getData()).setColor(color);
+		((LeatherArmorMeta) item.getItemMeta()).setColor(color);
 	}
 	
 	private Team getTeamByPlayer(final Player p)
