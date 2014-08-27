@@ -78,17 +78,17 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	
 	//Slots
 	@ArenaOption(name = "zbranSlot")
-	protected int				zbranSlot		= 36;
+	protected int				zbranSlot		= 0;
 	@ArenaOption(name = "colorSlot")
-	protected int				colorSlot		= 37;
+	protected int				colorSlot		= 1;
 	@ArenaOption(name = "helmetSlot")
-	protected int				sArmor1			= 41;
+	protected int				sArmor1			= 5;
 	@ArenaOption(name = "chestplateSlot")
-	protected int				sArmor2			= 42;
+	protected int				sArmor2			= 6;
 	@ArenaOption(name = "leggingsSlot")
-	protected int				sArmor3			= 43;
+	protected int				sArmor3			= 7;
 	@ArenaOption(name = "bootsSlot")
-	protected int				sArmor4			= 44;
+	protected int				sArmor4			= 8;
 	
 	/**
 	 * @param minigame
