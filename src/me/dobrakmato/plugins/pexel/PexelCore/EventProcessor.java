@@ -90,7 +90,7 @@ public class EventProcessor implements Listener
 			if (event.getClickedBlock().getType() == Material.SIGN
 					|| event.getClickedBlock().getType() == Material.SIGN_POST)
 			{
-				Sign sign = (Sign) event.getClickedBlock();
+				Sign sign = (Sign) event.getClickedBlock().getState();
 				String[] lines = sign.getLines();
 				if (lines.length > 1)
 				{
