@@ -203,6 +203,13 @@ public class StorageEngine
 			yaml_lobbies.set("lobbies.lobby" + i_lobbies + ".name", l.getName());
 			yaml_lobbies.set("lobbies.lobby" + i_lobbies + ".checkinterval",
 					l.getCheckInterval());
+			
+			//Save global flags
+			for (AreaFlag flag : AreaFlag.values())
+				if (l.getGlobalFlag(flag) != ProtectedArea.defaultFlags.get(flag))
+					yaml_lobbies.set("lobbies.lobby" + i_lobbies + ".gflags."
+							+ flag.toString(), l.getGlobalFlag(flag));
+			
 			yaml_lobbies.set("lobbies.lobby" + i_lobbies + ".thresholdY",
 					l.getThresholdY());
 			l.getRegion().serialize(yaml_lobbies,
@@ -256,7 +263,7 @@ public class StorageEngine
 			//Save global flags
 			for (AreaFlag flag : AreaFlag.values())
 				if (a.getGlobalFlag(flag) != ProtectedArea.defaultFlags.get(flag))
-					yaml_arenas.set("arenas.arena" + i_arenas + ".flags."
+					yaml_arenas.set("arenas.arena" + i_arenas + ".gflags."
 							+ flag.toString(), a.getGlobalFlag(flag));
 			
 			yaml_arenas.set("arenas.arena" + i_arenas + ".owner", a.getOwner());

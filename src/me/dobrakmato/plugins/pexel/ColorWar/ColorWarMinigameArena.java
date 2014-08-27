@@ -57,13 +57,17 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	private final TeamManager	manager;
 	
 	@ArenaOption(name = "redSpawn")
-	public Location				redSpawn;
+	public Location				redSpawn		= new Location(this.getWorld(),
+														-1967, 111.5, -1804);
 	@ArenaOption(name = "blueSpawn")
-	public Location				blueSpawn;
+	public Location				blueSpawn		= new Location(this.getWorld(),
+														-2025, 111.5, -1804);
 	@ArenaOption(name = "greenSpawn")
-	public Location				greenSpawn;
+	public Location				greenSpawn		= new Location(this.getWorld(),
+														-2025, 111.5, -1845);
 	@ArenaOption(name = "yellowSpawn")
-	public Location				yellowSpawn;
+	public Location				yellowSpawn		= new Location(this.getWorld(),
+														-1967, 111.5, -1845);
 	
 	@ArenaOption(name = "maskSnowballs")
 	public boolean				maskSnowBalls	= false;

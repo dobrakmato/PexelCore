@@ -66,7 +66,6 @@ public class TeamManager implements Listener
 	@EventHandler
 	private void onPlayerInteract(final PlayerInteractEvent event)
 	{
-		System.out.println("onPlayerInteract: ");
 		if (event.getAction() == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK
 				|| event.getAction() == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK)
 			if (event.getMaterial() == Material.SIGN_POST

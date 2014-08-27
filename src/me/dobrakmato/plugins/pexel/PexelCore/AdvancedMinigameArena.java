@@ -204,18 +204,21 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	
 	private void startCountdown()
 	{
-		//Reset countdown time.
-		this.countdownTimeLeft = this.countdownLenght;
-		//Start countdown.
-		this.countdownTaskId = Pexel.schedule(new Runnable() {
-			@Override
-			public void run()
-			{
-				AdvancedMinigameArena.this.countdownTick();
-			}
-		}, 0L, 20L);
-		
-		this.onCountdownStart();
+		if (this.countdownTaskId == 0)
+		{
+			//Reset countdown time.
+			this.countdownTimeLeft = this.countdownLenght;
+			//Start countdown.
+			this.countdownTaskId = Pexel.schedule(new Runnable() {
+				@Override
+				public void run()
+				{
+					AdvancedMinigameArena.this.countdownTick();
+				}
+			}, 0L, 20L);
+			
+			this.onCountdownStart();
+		}
 	}
 	
 	private void onCountdownStop()
@@ -229,17 +232,18 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	private void countdownTick()
 	{
 		//Send a chat message.
-		this.chatAll(ChatManager.minigame(
-				this.minigame,
-				this.countdownFormat.replace("%timeleft%",
-						Integer.toString(this.countdownTimeLeft))));
+		if (this.countdownTimeLeft < 10)
+			this.chatAll(ChatManager.minigame(
+					this.minigame,
+					this.countdownFormat.replace("%timeleft%",
+							Integer.toString(this.countdownTimeLeft))));
 		//If we are using boss bar.
 		if (this.useBossBar)
 			this.setBossBarAll(
 					this.countdownFormat.replace("%timeleft%",
 							Integer.toString(this.countdownTimeLeft)),
-					Math.round(this.countdownTimeLeft / this.countdownLenght
-							* 100));
+					this.countdownTimeLeft / this.countdownLenght * 100);
+		
 		//If we reached zero.
 		if (this.countdownTimeLeft <= 0)
 		{
@@ -285,6 +289,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	{
 		this.state = GameState.RESETING;
 		this.gameStarted = false;
+		this.countdownTaskId = 0;
 		//Not many things happeing here. Leaving method for future.
 		this.activePlayers.clear();
 		//Invoke callback.

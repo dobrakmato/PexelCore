@@ -314,6 +314,14 @@ public class ArenaCommand implements CommandExecutor
 												sender.sendMessage(ChatManager.success("Type: Byte"));
 												set = true;
 											}
+											else if (type.equals(Boolean.class)
+													|| type.equals(boolean.class))
+											{
+												f.set(arena,
+														Boolean.parseBoolean(optionValue));
+												sender.sendMessage(ChatManager.success("Type: Boolean"));
+												set = true;
+											}
 											else if (type.equals(String.class))
 											{
 												f.set(arena, optionValue);
