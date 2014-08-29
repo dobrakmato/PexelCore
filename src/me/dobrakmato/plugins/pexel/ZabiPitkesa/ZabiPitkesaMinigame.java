@@ -19,9 +19,10 @@ import org.bukkit.util.Vector;
 public class ZabiPitkesaMinigame implements Minigame
 {
 	
-	private final Location	lobbyLocation	= new Location(
-													Bukkit.getWorld("world"),
-													0, 0, 0);
+	private final Location		lobbyLocation	= new Location(
+														Bukkit.getWorld("world"),
+														0, 0, 0);
+	private ZabiPitkesaArena	a;
 	
 	public ZabiPitkesaMinigame()
 	{
@@ -34,13 +35,13 @@ public class ZabiPitkesaMinigame implements Minigame
 	
 	private void makeArenas()
 	{
-		ZabiPitkesaArena arena1 = new ZabiPitkesaArena(this, "arena1",
-				new Region(new Vector(-2072, 130, -1817), new Vector(-2137, 0,
-						-1882), Bukkit.getWorld("world")), 16, 2, new Location(
-						Bukkit.getWorld("world"), -2103, 110, -1853),
-				new Location(Bukkit.getWorld("world"), -2103, 101, -1853));
+		this.a = new ZabiPitkesaArena(this, "arena1", new Region(new Vector(
+				-2072, 130, -1817), new Vector(-2137, 0, -1882),
+				Bukkit.getWorld("world")), 16, 2, new Location(
+				Bukkit.getWorld("world"), -2103, 110, -1853), new Location(
+				Bukkit.getWorld("world"), -2103, 101, -1853));
 		
-		Pexel.getMatchmaking().registerArena(arena1);
+		Pexel.getMatchmaking().registerArena(this.a);
 	}
 	
 	@Override
@@ -73,6 +74,11 @@ public class ZabiPitkesaMinigame implements Minigame
 	public Location getLobbyLocation()
 	{
 		return this.lobbyLocation;
+	}
+	
+	public ZabiPitkesaArena trrtrtr()
+	{
+		return this.a;
 	}
 	
 }

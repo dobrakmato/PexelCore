@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
 import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
+import me.dobrakmato.plugins.pexel.ZabiPitkesa.ZabiPitkesaMinigame;
 import net.minecraft.util.org.apache.commons.io.IOUtils;
 
 import org.bukkit.Bukkit;
@@ -176,7 +177,14 @@ public class AlternativeCommands implements Listener
 			((ColorWarMinigame) StorageEngine.getMinigame("colorwar")).trrtrtr().onPlayerJoin(
 					event.getPlayer());
 		}
-		else if (command.contains("/secretparticles"))
+		else if (command.contains("/zptest"))
+		{
+			sender.sendMessage(ChatColor.GREEN
+					+ "((ZabiPitkesaMinigame) StorageEngine.getMinigame(\"zabipitkesa\")).trrtrtr().onPlayerJoin(event.getPlayer());");
+			((ZabiPitkesaMinigame) StorageEngine.getMinigame("zabipitkesa")).trrtrtr().onPlayerJoin(
+					event.getPlayer());
+		}
+		else if (command.contains("/particles"))
 		{
 			this.particleEffectMenu.showTo(sender);
 		}
