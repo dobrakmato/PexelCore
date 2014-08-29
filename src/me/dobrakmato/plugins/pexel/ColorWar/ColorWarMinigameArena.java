@@ -33,7 +33,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.projectiles.ProjectileSource;
 
 /**
  * Color War minigame by Dobrakmato.
@@ -329,8 +329,7 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 						p.getEyeLocation().getDirection().multiply(2F)),
 				EntityType.SNOWBALL);
 		ball.setVelocity(p.getEyeLocation().getDirection().multiply(1.5F));
-		ball.setMetadata("damagerTeam", new FixedMetadataValue(Pexel.getCore(),
-				this.getTeamByPlayer(p)));
+		ball.setShooter((ProjectileSource) p);
 		
 		p.playSound(p.getLocation(), Sound.IRONGOLEM_THROW, 1F, 1.5F);
 		
@@ -396,24 +395,21 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 					this.gunFire(event.getPlayer());
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onHitBySnowball(final EntityDamageByEntityEvent event)
 	{
 		if (event.getDamager() instanceof Snowball)
 		{
-			System.out.println("Snowball hit "
-					+ event.getEntity().getType().toString());
-			
 			if (event.getEntity() instanceof Player)
 			{
-				System.out.println("Player name: "
-						+ ((Player) event.getEntity()).getName());
-				if (this.activePlayers.contains(event.getEntity()))
+				Player p = (Player) event.getEntity();
+				if (this.activePlayers.contains(p))
 				{
 					
 					this.playerHitByColor(
-							(Team) event.getDamager().getMetadata("damagerTeam").get(
-									0).value(), ((Player) event.getEntity()));
+							this.manager.getTeam((Player) ((Snowball) event.getDamager()).getShooter()),
+							((Player) event.getEntity()));
 				}
 			}
 		}
