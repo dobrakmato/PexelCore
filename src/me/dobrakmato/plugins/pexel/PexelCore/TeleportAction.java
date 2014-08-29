@@ -36,6 +36,17 @@ public class TeleportAction implements Action
 		this.location = location;
 	}
 	
+	/**
+	 * Creates a new action.
+	 * 
+	 * @param location
+	 */
+	public TeleportAction(final Location location, final Server server)
+	{
+		this.location = location;
+		this.server = server;
+	}
+	
 	@Override
 	public void load(final String string)
 	{

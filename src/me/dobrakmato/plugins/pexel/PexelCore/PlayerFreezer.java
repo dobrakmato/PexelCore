@@ -28,7 +28,7 @@ public class PlayerFreezer implements Listener
 	}
 	
 	/**
-	 * Freezes the player.
+	 * Freezes (disables movement) the player.
 	 * 
 	 * @param player
 	 */
@@ -38,7 +38,7 @@ public class PlayerFreezer implements Listener
 	}
 	
 	/**
-	 * Unfreezes the player.
+	 * Unfreezes (enables movement) the player.
 	 * 
 	 * @param player
 	 */

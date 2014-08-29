@@ -11,7 +11,7 @@ public interface AreaOwner
 	/**
 	 * Returns name of owner.
 	 * 
-	 * @return
+	 * @return the name of owner
 	 */
 	public String getName();
 }

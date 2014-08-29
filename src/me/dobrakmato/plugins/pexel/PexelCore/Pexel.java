@@ -111,6 +111,11 @@ public final class Pexel
 		return Pexel.random;
 	}
 	
+	/**
+	 * Returns event processor.
+	 * 
+	 * @return
+	 */
 	public static EventProcessor getEventProcessor()
 	{
 		return Pexel.plugin.eventProcessor;

@@ -27,7 +27,11 @@ public class Team
 	 * Creates a new Team with specified team color and team name.
 	 * 
 	 * @param color
+	 *            color of team
 	 * @param name
+	 *            name of team
+	 * @param maximumPlayers
+	 *            maximum amount of players in team
 	 */
 	public Team(final Color color, final String name, final int maximumPlayers)
 	{
@@ -41,6 +45,7 @@ public class Team
 	 * Teleports all players.
 	 * 
 	 * @param loc
+	 *            location, to teleport to players
 	 */
 	public void teleportAll(final Location loc)
 	{
@@ -61,6 +66,7 @@ public class Team
 	 * Adds player to team.
 	 * 
 	 * @param p
+	 *            player to add
 	 */
 	public void addPlayer(final Player p)
 	{
@@ -74,6 +80,7 @@ public class Team
 	 * Adds players to team.
 	 * 
 	 * @param players
+	 *            players to add
 	 */
 	public void addPlayer(final Player... players)
 	{
@@ -85,6 +92,7 @@ public class Team
 	 * Removes player from the team.
 	 * 
 	 * @param p
+	 *            player to remove
 	 */
 	public void removePlayer(final Player p)
 	{
@@ -97,7 +105,7 @@ public class Team
 	/**
 	 * Return's this team chat channel.
 	 * 
-	 * @return
+	 * @return team chat channel
 	 */
 	public ChatChannel getTeamChannel()
 	{
@@ -107,7 +115,7 @@ public class Team
 	/**
 	 * Returns name of the team.
 	 * 
-	 * @return
+	 * @return name of team
 	 */
 	public String getName()
 	{
@@ -132,7 +140,7 @@ public class Team
 	/**
 	 * Retruns list of players.
 	 * 
-	 * @return
+	 * @return list of players in this team
 	 */
 	public List<Player> getPlayers()
 	{
@@ -143,7 +151,8 @@ public class Team
 	 * Returns if this team contains specified player.
 	 * 
 	 * @param p
-	 * @return
+	 *            specified player
+	 * @return true or false
 	 */
 	public boolean contains(final Player p)
 	{
@@ -153,23 +162,40 @@ public class Team
 	/**
 	 * Returns player count.
 	 * 
-	 * @return
+	 * @return amount of players
 	 */
 	public int getPlayerCount()
 	{
 		return this.players.size();
 	}
 	
+	/**
+	 * Get maximum number of players in team.
+	 * 
+	 * @return amount of players
+	 */
 	public int getMaximumPlayers()
 	{
 		return this.maxPlayers;
 	}
 	
+	/**
+	 * Returns whether one player can join this team.
+	 * 
+	 * @return boolean, if player can join
+	 */
 	public boolean canJoin()
 	{
 		return this.players.size() < this.maxPlayers;
 	}
 	
+	/**
+	 * Returns whether specified amount of players can join this team.
+	 * 
+	 * @param amount
+	 *            amount of players
+	 * @return true, if they can, else false
+	 */
 	public boolean canJoin(final int amount)
 	{
 		return this.players.size() + amount < this.maxPlayers;

@@ -22,7 +22,7 @@ public class PlayerChannelSubscriber implements ChannelSubscriber
 	/**
 	 * Returns subscription mode.
 	 * 
-	 * @return
+	 * @return subscription mode
 	 */
 	@Override
 	public SubscribeMode getMode()
@@ -34,6 +34,7 @@ public class PlayerChannelSubscriber implements ChannelSubscriber
 	 * Sends message to this subscriber.
 	 * 
 	 * @param message
+	 *            message to send
 	 */
 	@Override
 	public void sendMessage(final String message)

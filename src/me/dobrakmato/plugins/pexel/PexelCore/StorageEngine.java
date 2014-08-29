@@ -307,7 +307,7 @@ public class StorageEngine
 	
 	public static void loadData()
 	{
-		Log.info("Loadgin data...");
+		Log.info("Loading data...");
 		
 	}
 	

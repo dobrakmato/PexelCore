@@ -14,7 +14,8 @@ public class Areas
 	 * Tries to find arena by specified lcoation, if not found, returns null.
 	 * 
 	 * @param location
-	 * @return
+	 *            location to search for area
+	 * @return area that was find at specified location
 	 */
 	public static final ProtectedArea findArea(final Location location)
 	{
@@ -28,7 +29,8 @@ public class Areas
 	 * Returns area by name.
 	 * 
 	 * @param name
-	 * @return
+	 *            name of area
+	 * @return protected area by name
 	 */
 	public static final ProtectedArea getArea(final String name)
 	{

@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
  */
 public class ChatChannel
 {
+	//Last "random" channel ID.
 	private static long								randomId		= 0;
 	
 	private final String							name;
@@ -26,6 +27,7 @@ public class ChatChannel
 	 * Creates new chat channel with specified name.
 	 * 
 	 * @param name
+	 *            name of channel
 	 */
 	public ChatChannel(final String name)
 	{
@@ -58,6 +60,7 @@ public class ChatChannel
 	 * Subscribes player to this chat channel.
 	 * 
 	 * @param player
+	 *            player
 	 */
 	public void subscribe(final Player player, final SubscribeMode mode)
 	{
@@ -72,6 +75,7 @@ public class ChatChannel
 	 * Unsubscribes player from this chat channel.
 	 * 
 	 * @param player
+	 *            specified player
 	 */
 	public void unsubscribe(final Player player)
 	{
@@ -85,7 +89,8 @@ public class ChatChannel
 	 * Retruns true, if player is subscribed.
 	 * 
 	 * @param player
-	 * @return
+	 *            player to check
+	 * @return state of subscription
 	 */
 	public boolean isSubscribed(final Player player)
 	{
@@ -93,10 +98,11 @@ public class ChatChannel
 	}
 	
 	/**
-	 * Returns if player can read messages from this channel.
+	 * Returns whether player can read messages from this channel.
 	 * 
 	 * @param player
-	 * @return
+	 *            player to check
+	 * @return true if player can read
 	 */
 	public boolean canRead(final Player player)
 	{
@@ -107,6 +113,7 @@ public class ChatChannel
 	 * Sends message to all subscribers.
 	 * 
 	 * @param message
+	 *            message to be send
 	 */
 	public void broadcastMessage(final String message)
 	{
@@ -124,7 +131,7 @@ public class ChatChannel
 	/**
 	 * Returns name of channel.
 	 * 
-	 * @return
+	 * @return the name
 	 */
 	public String getName()
 	{
@@ -135,7 +142,7 @@ public class ChatChannel
 	 * Returns if player can write to this channel.
 	 * 
 	 * @param player
-	 * @return
+	 * @return true if player can write
 	 */
 	public boolean canWrite(final Player player)
 	{
@@ -153,12 +160,12 @@ public class ChatChannel
 	/**
 	 * Returns random new channel, without specified name and stuff.
 	 * 
-	 * @return
+	 * @return random chat channel
 	 */
 	public static ChatChannel createRandom()
 	{
 		ChatChannel.randomId++;
-		return new ChatChannel("random" + ChatChannel.randomId);
+		return new ChatChannel("r" + ChatChannel.randomId);
 	}
 	
 	/**

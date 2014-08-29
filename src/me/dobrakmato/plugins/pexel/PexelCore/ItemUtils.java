@@ -76,6 +76,13 @@ public class ItemUtils
 		return is;
 	}
 	
+	/**
+	 * Returns specified colored lether armor.
+	 * 
+	 * @param material
+	 * @param color
+	 * @return
+	 */
 	public static ItemStack coloredLetherArmor(final Material material,
 			final Color color)
 	{

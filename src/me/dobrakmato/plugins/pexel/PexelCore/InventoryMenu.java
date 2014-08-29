@@ -127,6 +127,12 @@ public class InventoryMenu implements InventoryHolder
 		return this.inventory;
 	}
 	
+	/**
+	 * Returns true, if the menu should be closed after the item in specified slot is clicked.
+	 * 
+	 * @param slot
+	 * @return
+	 */
 	public boolean shouldClose(final int slot)
 	{
 		return this.items.get(slot).isCloseAfterClick();

@@ -176,9 +176,10 @@ public class EventProcessor implements Listener
 				SubscribeMode.READ);
 		ChatManager.CHANNEL_LOBBY.subscribe(event.getPlayer(),
 				SubscribeMode.READ_WRITE);
-		if (event.getPlayer().isOp())
-			ChatManager.CHANNEL_OP.subscribe(event.getPlayer(),
-					SubscribeMode.READ_WRITE);
+		
+		//if (event.getPlayer().isOp())
+		//	ChatManager.CHANNEL_OP.subscribe(event.getPlayer(),
+		//			SubscribeMode.READ_WRITE);
 	}
 	
 	@EventHandler

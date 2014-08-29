@@ -17,8 +17,11 @@ public class BlockRollbacker
 {
 	private final List<BlockChange>	changes				= new ArrayList<BlockChange>();
 	private final List<Location>	changeLocations		= new ArrayList<Location>();
+	//Bukkit task id.
 	private int						taskId				= 0;
+	//Runnable to be run after async rollback.
 	private Runnable				onFinished;
+	//Max block changes per one game tick.
 	private int						maxChangesPerTick	= 128;
 	
 	/**
@@ -40,10 +43,12 @@ public class BlockRollbacker
 	 */
 	public void rollback()
 	{
-		for (BlockChange change : this.changes)
+		for (Iterator<BlockChange> iterator = this.changes.iterator(); iterator.hasNext();)
 		{
+			BlockChange change = iterator.next();
 			change.applyRollback();
 			this.changeLocations.remove(change.getLocation());
+			iterator.remove();
 		}
 	}
 	

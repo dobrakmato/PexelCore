@@ -80,7 +80,7 @@ public class Kit
 	/**
 	 * Returns item stack of this kit icon.
 	 * 
-	 * @return
+	 * @return item stack representing icon
 	 */
 	public ItemStack getIcon()
 	{

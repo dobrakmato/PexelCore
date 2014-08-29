@@ -120,6 +120,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 			System.out.println("WTF PLAYER IS NULL!?");
 		
 		player.getInventory().clear();
+		player.getInventory().setHelmet(null);
+		player.getInventory().setChestplate(null);
+		player.getInventory().setLeggings(null);
+		player.getInventory().setBoots(null);
 		
 		/*
 		 * for (PotionEffectType effect : PotionEffectType.values()) try { if (player.hasPotionEffect(effect))
@@ -198,6 +202,11 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		}
 	}
 	
+	/**
+	 * Returns world that this arena exists. (Got from world in this.gameSpawn).
+	 * 
+	 * @return world of this arena
+	 */
 	public World getWorld()
 	{
 		return this.gameSpawn.getWorld();
@@ -248,11 +257,15 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		//If we reached zero.
 		if (this.countdownTimeLeft <= 0)
 		{
-			this.gameStarted = true;
-			//Start game.
-			this.onGameStart();
+			//Remove bossbar
+			if (this.useBossBar)
+				for (Player p : this.activePlayers)
+					BarAPI.removeBar(p);
 			//Stop the countdown task.
 			this.onCountdownStop();
+			//Start game.
+			this.onGameStart();
+			this.gameStarted = true;
 		}
 		//Decrement the time.
 		this.countdownTimeLeft -= 1;
@@ -289,6 +302,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	public final void reset()
 	{
 		this.state = GameState.RESETING;
+		Log.info("Resetting arena " + this.getName() + "...");
 		this.gameStarted = false;
 		this.countdownTaskId = 0;
 		//Not many things happeing here. Leaving method for future.
@@ -393,6 +407,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		this.updateGameState();
 	}
 	
+	@EventHandler
 	protected void onPlayerQuit(final PlayerQuitEvent event)
 	{
 		this.onPlayerLeft(event.getPlayer());

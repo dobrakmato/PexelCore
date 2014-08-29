@@ -92,6 +92,15 @@ public class ChatManager
 		return string;
 	}
 	
+	/**
+	 * Returns formatted 'minigame' message.
+	 * 
+	 * @param minigame
+	 *            minigame
+	 * @param msg
+	 *            message to format
+	 * @return formatted message
+	 */
 	public static final String minigame(final Minigame minigame,
 			final String msg)
 	{
@@ -103,6 +112,7 @@ public class ChatManager
 	 * Registers chat channel.
 	 * 
 	 * @param chatChannel
+	 *            channel to register
 	 */
 	public static void registerChannel(final ChatChannel chatChannel)
 	{
@@ -117,7 +127,9 @@ public class ChatManager
 	 * Unregisters player from channel.
 	 * 
 	 * @param channelName
+	 *            channel name
 	 * @param player
+	 *            player
 	 */
 	public static void unregisterFromChannel(final String channelName,
 			final Player player)

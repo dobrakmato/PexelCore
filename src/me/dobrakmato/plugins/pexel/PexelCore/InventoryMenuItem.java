@@ -14,7 +14,7 @@ public class InventoryMenuItem
 	/**
 	 * ItemStack of item.
 	 */
-	private final ItemStack				item;
+	private final ItemStack	item;
 	/**
 	 * Action to execute when item is clicked.
 	 */
@@ -22,11 +22,11 @@ public class InventoryMenuItem
 	/**
 	 * Slot of inventory.
 	 */
-	private final int					slot;
+	private final int		slot;
 	/**
 	 * Specifies if the InventoryMenu have to close, after click.
 	 */
-	private final boolean				closeAfterClick;
+	private final boolean	closeAfterClick;
 	
 	/**
 	 * Creates new Inventory menu item from specified params.
@@ -40,9 +40,8 @@ public class InventoryMenuItem
 	 * @param closeAfterClick
 	 *            boolean, that specify, if the menu should close after click on this item.
 	 */
-	public InventoryMenuItem(final ItemStack item,
-			final Action action, final int slot,
-			final boolean closeAfterClick)
+	public InventoryMenuItem(final ItemStack item, final Action action,
+			final int slot, final boolean closeAfterClick)
 	{
 		this.item = item;
 		this.action = action;

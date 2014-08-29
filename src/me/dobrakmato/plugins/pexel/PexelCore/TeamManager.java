@@ -30,12 +30,21 @@ public class TeamManager implements Listener
 	private final int					odchylka	= 1;
 	private final MinigameArena			arena;
 	
+	/**
+	 * Creates new Team manager
+	 * 
+	 * @param arena
+	 *            arena in which team manager runs.
+	 */
 	public TeamManager(final MinigameArena arena)
 	{
 		Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
 		this.arena = arena;
 	}
 	
+	/**
+	 * Resets team manager.
+	 */
 	public void reset()
 	{
 		this.teams.clear();
@@ -44,6 +53,12 @@ public class TeamManager implements Listener
 		this.signs.clear();
 	}
 	
+	/**
+	 * Adds team to this manager.
+	 * 
+	 * @param team
+	 *            team to add
+	 */
 	public void addTeam(final Team team)
 	{
 		this.teams.add(team);
@@ -56,6 +71,14 @@ public class TeamManager implements Listener
 				this.updateSign(loc, team);
 	}
 	
+	/**
+	 * Updates sign content on specified location with specified team infromation.
+	 * 
+	 * @param location
+	 *            location of sign
+	 * @param team
+	 *            team
+	 */
 	public void updateSign(final Location location, final Team team)
 	{
 		this.signs.put(location, team);
@@ -133,6 +156,13 @@ public class TeamManager implements Listener
 		}
 	}
 	
+	/**
+	 * Returns team by player from this team manager.
+	 * 
+	 * @param player
+	 *            player to find
+	 * @return team, that specified players is in
+	 */
 	public Team getTeam(final Player player)
 	{
 		for (Team t : this.teams)
@@ -141,6 +171,13 @@ public class TeamManager implements Listener
 		return null;
 	}
 	
+	/**
+	 * Return whether specified player is in team, manager by this manager.
+	 * 
+	 * @param player
+	 *            player to find
+	 * @return true or false
+	 */
 	public boolean playerInTeam(final Player player)
 	{
 		for (Team t : this.teams)
@@ -149,11 +186,25 @@ public class TeamManager implements Listener
 		return false;
 	}
 	
+	/**
+	 * Returns if specified player can join specified team at this time.
+	 * 
+	 * @param team
+	 *            team player whats to join
+	 * @param player
+	 *            specififed player
+	 * @return true or false
+	 */
 	public boolean canJoinTeam(final Team team, final Player player)
 	{
 		return team.getPlayerCount() > this.getAvarangePlayerCount();
 	}
 	
+	/**
+	 * Returns avarange player count in teams of this manager.
+	 * 
+	 * @return avarange player count
+	 */
 	public int getAvarangePlayerCount()
 	{
 		int allPlayers = this.odchylka;
@@ -162,6 +213,12 @@ public class TeamManager implements Listener
 		return (int) Math.ceil(allPlayers / this.teams.size());
 	}
 	
+	/**
+	 * Automatically joins team for specified player.
+	 * 
+	 * @param p
+	 *            player, that have no team.
+	 */
 	public void autoJoinTeam(final Player p)
 	{
 		Team leastCrowdedTeam = this.teams.get(0);
