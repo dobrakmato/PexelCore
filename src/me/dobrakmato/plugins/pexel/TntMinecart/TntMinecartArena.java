@@ -3,6 +3,7 @@ package me.dobrakmato.plugins.pexel.TntMinecart;
 import me.dobrakmato.plugins.pexel.PexelCore.AdvancedMinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.Team;
 import me.dobrakmato.plugins.pexel.PexelCore.TeamManager;
@@ -37,6 +38,8 @@ public class TntMinecartArena extends AdvancedMinigameArena
 	@ArenaOption(name = "minecartSpawn")
 	protected Location			minecartSpawn;
 	
+	private int					taskId		= 0;
+	
 	public TntMinecartArena(final Minigame minigame, final String arenaName,
 			final Region region, final int maxPlayers, final int minPlayers,
 			final Location lobbyLocation, final Location gameSpawn)
@@ -64,6 +67,21 @@ public class TntMinecartArena extends AdvancedMinigameArena
 		this.blueTeam.teleportAll(this.blueSpawn);
 		
 		this.getWorld().spawnEntity(this.minecartSpawn, EntityType.MINECART_TNT);
+		
+		this.taskId = Pexel.schedule(new Runnable() {
+			@Override
+			public void run()
+			{
+				
+			}
+		}, 0L, 2L);
+	}
+	
+	@Override
+	public void onReset()
+	{
+		super.onReset();
+		Pexel.cancelTask(this.taskId);
 	}
 	
 }

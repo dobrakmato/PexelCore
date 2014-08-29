@@ -74,7 +74,7 @@ public final class Pexel
 	 * 
 	 * @param taskId
 	 */
-	public static void cancledTask(final int taskId)
+	public static void cancelTask(final int taskId)
 	{
 		Bukkit.getScheduler().cancelTask(taskId);
 	}

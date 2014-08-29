@@ -100,9 +100,9 @@ public class ColorWarArena extends AdvancedMinigameArena
 	 * @param lobbyLocation
 	 * @param gameSpawn
 	 */
-	public ColorWarArena(final Minigame minigame,
-			final String arenaName, final Region region,
-			final Location lobbyLocation, final Location gameSpawn)
+	public ColorWarArena(final Minigame minigame, final String arenaName,
+			final Region region, final Location lobbyLocation,
+			final Location gameSpawn)
 	{
 		super(minigame, arenaName, region, 32, 4, lobbyLocation, gameSpawn);
 		this.setGlobalFlag(AreaFlag.BLOCK_PLACE, false);
@@ -186,8 +186,6 @@ public class ColorWarArena extends AdvancedMinigameArena
 	
 	private void playerHitByColor(final Team team, final Player p)
 	{
-		System.out.println("playerHitByColor(); team: " + team.getName()
-				+ "; player: " + p.getName());
 		switch (Pexel.getRandom().nextInt(3))
 		{
 			case 0:
@@ -244,7 +242,9 @@ public class ColorWarArena extends AdvancedMinigameArena
 	
 	private void setColor(final ItemStack item, final Color color)
 	{
-		((LeatherArmorMeta) item.getItemMeta()).setColor(color);
+		LeatherArmorMeta meta = ((LeatherArmorMeta) item.getItemMeta());
+		meta.setColor(color);
+		item.setItemMeta(meta);
 	}
 	
 	private Team getTeamByPlayer(final Player p)
