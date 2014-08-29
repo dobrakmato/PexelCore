@@ -379,9 +379,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 			
 			this.clearPlayer(player);
 			
-			this.chatAll(ChatColor.GOLD + "Player '" + player.getName()
-					+ "' joined arena! (" + this.playerCount() + "/"
-					+ this.minimalPlayers + " - " + this.slots + ")");
+			this.chatAll(ChatManager.minigame(this.getMinigame(),
+					ChatColor.GOLD + "Player '" + player.getName()
+							+ "' joined arena! (" + this.playerCount() + "/"
+							+ this.minimalPlayers + " - " + this.slots + ")"));
 			
 			player.teleport(this.lobbyLocation);
 		}
@@ -399,6 +400,9 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	public void onPlayerLeft(final Player player)
 	{
 		super.onPlayerLeft(player);
+		
+		this.chatAll(ChatManager.minigame(this.getMinigame(), "Player '"
+				+ player.getName() + "' has left arena!"));
 		
 		this.tryStopCountdown();
 		

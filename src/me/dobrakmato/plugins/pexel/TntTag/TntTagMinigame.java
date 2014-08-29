@@ -43,12 +43,9 @@ public class TntTagMinigame implements Minigame
 	{
 		TntTagArena arena1 = new TntTagArena(
 				new Region(new Vector(-1953, 0, -1946), new Vector(-2089, 255,
-						-2089), Bukkit.getWorld("world")), this, "arena1");
-		arena1.setGameSpawn(new Location(Bukkit.getWorld("world"), -2010,
-				112.5, -1997));
-		arena1.setLobbySpawn(new Location(Bukkit.getWorld("world"), -2010,
-				138.5, -1997));
-		arena1.reset();
+						-2089), Bukkit.getWorld("world")), this, "arena1",
+				new Location(Bukkit.getWorld("world"), -2010, 138.5, -1997),
+				new Location(Bukkit.getWorld("world"), -2010, 112.5, -1997));
 		
 		this.are = arena1;
 		
