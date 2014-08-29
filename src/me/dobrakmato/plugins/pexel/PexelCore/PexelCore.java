@@ -155,7 +155,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 			}
 			else
 			{
-				Log.info("onPluginMessageReceived: " + new String(message));
+				//Log.info("onPluginMessageReceived: " + new String(message));
 			}
 		}
 	}

@@ -33,6 +33,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.projectiles.ProjectileSource;
 
 /**
@@ -105,6 +106,7 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	{
 		super(minigame, arenaName, region, 32, 4, lobbyLocation, gameSpawn);
 		this.setGlobalFlag(AreaFlag.BLOCK_PLACE, false);
+		this.setGlobalFlag(AreaFlag.PLAYER_GETDAMAGE, true);
 		this.inventoryDisabled = true;
 		
 		this.manager = new TeamManager(this);
@@ -174,7 +176,7 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 			{
 				ColorWarMinigameArena.this.makeTrails();
 			}
-		}, 0L, 2L);
+		}, 0L, 1L);
 	}
 	
 	private void joinRandomTeam(final Player p)
@@ -184,6 +186,8 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	
 	private void playerHitByColor(final Team team, final Player p)
 	{
+		System.out.println("playerHitByColor(); team: " + team.getName()
+				+ "; player: " + p.getName());
 		switch (Pexel.getRandom().nextInt(3))
 		{
 			case 0:
@@ -329,6 +333,8 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 						p.getEyeLocation().getDirection().multiply(2F)),
 				EntityType.SNOWBALL);
 		ball.setVelocity(p.getEyeLocation().getDirection().multiply(1.5F));
+		ball.setMetadata("damagerTeam", new FixedMetadataValue(Pexel.getCore(),
+				this.manager.getTeam(p)));
 		ball.setShooter((ProjectileSource) p);
 		
 		p.playSound(p.getLocation(), Sound.IRONGOLEM_THROW, 1F, 1.5F);
@@ -406,7 +412,6 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 				Player p = (Player) event.getEntity();
 				if (this.activePlayers.contains(p))
 				{
-					
 					this.playerHitByColor(
 							this.manager.getTeam((Player) ((Snowball) event.getDamager()).getShooter()),
 							((Player) event.getEntity()));
