@@ -35,3 +35,4 @@ commands:
      description: Pouziva sa na pracu s nastaveniami.
      aliases: [options, option, setting]
      usage: /settings <setting> <true/false>
+   

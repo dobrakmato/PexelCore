@@ -12,6 +12,12 @@ public class CommandAction implements Action
 {
 	private String	command	= "";
 	
+	/**
+	 * Creates a new command action.
+	 * 
+	 * @param command
+	 *            command of this action
+	 */
 	public CommandAction(final String command)
 	{
 		this.command = command;

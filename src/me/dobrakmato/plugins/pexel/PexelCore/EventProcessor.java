@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByBlockEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -83,6 +85,29 @@ public class EventProcessor implements Listener
 		if (!this.hasPermission(event.getPlayer().getLocation(),
 				event.getPlayer(), AreaFlag.PLAYER_DROPITEM))
 			event.setCancelled(true);
+	}
+	
+	@EventHandler
+	private void onPlayerDamageByEntity(final EntityDamageByEntityEvent event)
+	{
+		if (event.getEntity() instanceof Player)
+			if (!this.hasPermission(event.getEntity().getLocation(),
+					(Player) event.getEntity(), AreaFlag.PLAYER_GETDAMAGE))
+				event.setCancelled(true);
+		
+		if (event.getDamager() instanceof Player)
+			if (!this.hasPermission(event.getDamager().getLocation(),
+					(Player) event.getDamager(), AreaFlag.PLAYER_DODAMAGE))
+				event.setCancelled(true);
+	}
+	
+	@EventHandler
+	private void onPlayerDamageByBlock(final EntityDamageByBlockEvent event)
+	{
+		if (event.getEntity() instanceof Player)
+			if (!this.hasPermission(event.getEntity().getLocation(),
+					(Player) event.getEntity(), AreaFlag.PLAYER_GETDAMAGE))
+				event.setCancelled(true);
 	}
 	
 	@EventHandler
@@ -187,6 +212,8 @@ public class EventProcessor implements Listener
 	{
 		//Force save of player's profile.
 		StorageEngine.saveProfile(event.getPlayer().getUniqueId());
+		//Update points in database.
+		Points.pushPoints(event.getPlayer());
 	}
 	
 	private boolean hasPermission(final Location location, final Player player,

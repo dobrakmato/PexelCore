@@ -130,4 +130,12 @@ public final class Pexel
 	{
 		return Pexel.plugin.magicClock;
 	}
+	
+	/**
+	 * Returns pexel's async wokrer instance.
+	 */
+	public static AsyncWorker getAsyncWorker()
+	{
+		return Pexel.plugin.asyncWorker;
+	}
 }

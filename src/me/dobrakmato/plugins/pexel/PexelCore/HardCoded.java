@@ -46,5 +46,9 @@ public class HardCoded
 						new TeleportAction(
 								new Location(Bukkit.getWorld("world"), 1972.5,
 										147.5, 2492.5), Server.THIS_SERVER)));
+		
+		//Initialize lobbies
+		StorageEngine.addLobby(new Lobby("hub", new Region(new Vector(52, 107,
+				226), new Vector(-30, 1, 303), Bukkit.getWorld("world"))));
 	}
 }
