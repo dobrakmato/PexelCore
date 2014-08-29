@@ -66,10 +66,16 @@ public class TeleportAction implements Action
 	public String save()
 	{
 		//Serialize location data to string.
-		return this.location.getX() + "|" + this.location.getY() + "|"
-				+ this.location.getZ() + "|" + this.location.getPitch() + "|"
-				+ this.location.getYaw() + "|"
-				+ this.location.getWorld().getName();
+		try
+		{
+			return this.location.getX() + "|" + this.location.getY() + "|"
+					+ this.location.getZ() + "|" + this.location.getPitch()
+					+ "|" + this.location.getYaw() + "|"
+					+ this.location.getWorld().getName();
+		} catch (Exception ex)
+		{
+			return "";
+		}
 	}
 	
 	@Override

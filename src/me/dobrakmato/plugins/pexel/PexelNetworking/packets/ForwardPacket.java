@@ -4,33 +4,27 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelNetworking.AbstractPacket;
 
-import org.bukkit.Bukkit;
-
 /**
- * Server wide chat message.
- * 
  * @author Mato Kormuth
  * 
  */
-public class CrossServerChatMessage extends AbstractPacket
+public class ForwardPacket extends AbstractPacket
 {
-	public String	message;
+	public AbstractPacket	packet;
+	public String			serverName;
 	
 	@Override
 	public void write(final DataOutputStream stream) throws IOException
 	{
-		stream.writeUTF(this.message);
+		
 	}
 	
-	public static CrossServerChatMessage read(final DataInputStream stream)
+	public static ForwardPacket read(final DataInputStream stream)
 			throws IOException
 	{
-		CrossServerChatMessage packet = new CrossServerChatMessage();
-		
-		packet.message = stream.readUTF();
+		ForwardPacket packet = new ForwardPacket();
 		
 		return packet;
 	}
@@ -38,12 +32,14 @@ public class CrossServerChatMessage extends AbstractPacket
 	@Override
 	public void handleClient()
 	{
-		Bukkit.broadcastMessage(this.message);
+		//No handling.
 	}
 	
 	@Override
 	public void handleServer()
 	{
-		Pexel.getCore().pexelserver.broadcast(this);
+		//Forward to specified client.
+		
 	}
+	
 }

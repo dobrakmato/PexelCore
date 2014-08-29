@@ -39,7 +39,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 	
 	public AutoMessage			message;
 	
-	private PexelMasterServer	pexelserver;
+	public PexelMasterServer	pexelserver;
 	public PexelServerClient	pexelclient;
 	
 	@Override

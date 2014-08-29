@@ -70,7 +70,6 @@ public class CrossServerTeleportPacket extends AbstractPacket
 	@Override
 	public void handleServer()
 	{
-		// TODO Auto-generated method stub
-		
+		//No handling on master server.
 	}
 }

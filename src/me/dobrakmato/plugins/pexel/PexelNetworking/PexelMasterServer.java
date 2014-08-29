@@ -3,6 +3,8 @@ package me.dobrakmato.plugins.pexel.PexelNetworking;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import me.dobrakmato.plugins.pexel.PexelCore.Log;
 
@@ -14,7 +16,8 @@ import me.dobrakmato.plugins.pexel.PexelCore.Log;
  */
 public class PexelMasterServer implements Runnable
 {
-	private ServerSocket	socket;
+	private ServerSocket					socket;
+	private final List<PexelServerClient>	clients	= new ArrayList<PexelServerClient>();
 	
 	public PexelMasterServer(final int port)
 	{
@@ -63,8 +66,12 @@ public class PexelMasterServer implements Runnable
 								+ " passed login! Comunicating with him now.");
 						Thread.currentThread().setName(
 								"PexelMasterServer-ClientThread-" + serverName);
-						PexelMasterServer.this.processClient(new Server(
-								new PexelServerClient(client), serverName));
+						
+						PexelServerClient psc = new PexelServerClient(client);
+						PexelMasterServer.this.clients.add(psc);
+						
+						PexelMasterServer.this.processClient(new Server(psc,
+								serverName));
 					}
 				}).start();
 			} catch (IOException e)
@@ -86,5 +93,15 @@ public class PexelMasterServer implements Runnable
 				e.printStackTrace();
 			}
 		}
+		this.clients.remove(server.getClient());
+	}
+	
+	/**
+	 * @param crossServerChatMessage
+	 */
+	public void broadcast(final PexelPacket packet)
+	{
+		for (PexelServerClient client : this.clients)
+			client.sendPacket(packet);
 	}
 }

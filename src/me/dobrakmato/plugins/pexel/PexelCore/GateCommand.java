@@ -64,20 +64,21 @@ public class GateCommand implements CommandExecutor
 			{
 				if (args.length == 4)
 				{
-					String actionType = args[2];
-					String actionContent = args[3];
+					//String actionType = args[2];
+					//String actionContent = args[3];
 					
-					if (actionType.equalsIgnoreCase("command"))
-					{
-						actionContent = "";
-						for (int i = 3; i < args.length; i++)
-							actionContent += args[i] + " ";
-					}
+					//if (actionType.equalsIgnoreCase("command"))
+					//{
+					//	actionContent = "";
+					//	for (int i = 3; i < args.length; i++)
+					//		actionContent += args[i] + " ";
+					//}
 					
 					if (this.checkSelection(sender))
 					{
 						if (StorageEngine.getGate(name) == null)
 						{
+							sender.sendMessage(ChatManager.error("Can't configure gate!"));
 							/*
 							 * StorageEngine.addGate(name, new TeleportGate( new Region(this.we.getSelection(sender)),
 							 * actionType, actionContent)); sender.sendMessage(ChatFormat.success("Gate '" + name +
@@ -100,11 +101,12 @@ public class GateCommand implements CommandExecutor
 			{
 				if (args.length == 4)
 				{
-					String actionType = args[2];
-					String actionContent = args[3];
+					//String actionType = args[2];
+					//String actionContent = args[3];
 					
 					if (StorageEngine.getGate(name) != null)
 					{
+						sender.sendMessage(ChatManager.error("Can't configure gate by command in this build."));
 						/*
 						 * StorageEngine.getGate(name).setType(actionType);
 						 * StorageEngine.getGate(name).setContent(actionContent);
