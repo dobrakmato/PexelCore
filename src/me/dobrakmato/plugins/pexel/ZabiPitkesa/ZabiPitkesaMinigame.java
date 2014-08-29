@@ -35,10 +35,10 @@ public class ZabiPitkesaMinigame implements Minigame
 	private void makeArenas()
 	{
 		ZabiPitkesaArena arena1 = new ZabiPitkesaArena(this, "arena1",
-				new Region(new Vector(0, 0, 0), new Vector(128, 128, 128),
-						Bukkit.getWorld("world")), 16, 3, new Location(
-						Bukkit.getWorld("world"), 64, 129, 64), new Location(
-						Bukkit.getWorld("world"), 64, 5, 64));
+				new Region(new Vector(-2072, 130, -1817), new Vector(-2137, 0,
+						-1882), Bukkit.getWorld("world")), 16, 2, new Location(
+						Bukkit.getWorld("world"), -2103, 110, -1853),
+				new Location(Bukkit.getWorld("world"), -2103, 101, -1853));
 		
 		Pexel.getMatchmaking().registerArena(arena1);
 	}

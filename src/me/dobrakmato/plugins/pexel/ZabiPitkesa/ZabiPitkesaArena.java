@@ -5,6 +5,8 @@ import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
 import me.dobrakmato.plugins.pexel.PexelCore.BlockChange;
 import me.dobrakmato.plugins.pexel.PexelCore.BlockRollbacker;
 import me.dobrakmato.plugins.pexel.PexelCore.GameState;
+import me.dobrakmato.plugins.pexel.PexelCore.ItemUtils;
+import me.dobrakmato.plugins.pexel.PexelCore.Log;
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
@@ -12,15 +14,19 @@ import me.dobrakmato.plugins.pexel.PexelCore.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
  * @author Mato Kormuth
@@ -43,7 +49,7 @@ public class ZabiPitkesaArena extends AdvancedMinigameArena
 				gameSpawn);
 		this.setPlayersCanRespawn(false);
 		this.rollback = new BlockRollbacker();
-		
+		this.setCountdownLenght(15);
 	}
 	
 	@Override
@@ -51,6 +57,12 @@ public class ZabiPitkesaArena extends AdvancedMinigameArena
 	{
 		this.startTask();
 		this.spawnBoss();
+		this.teleportPlayers(this.gameSpawn);
+		
+		for (Player p : this.activePlayers)
+			p.getInventory().addItem(
+					ItemUtils.namedItemStack(Material.APPLE, ChatColor.RED
+							+ "Gun", null));
 	}
 	
 	@Override
@@ -62,6 +74,7 @@ public class ZabiPitkesaArena extends AdvancedMinigameArena
 			public void run()
 			{
 				ZabiPitkesaArena.this.state = GameState.WAITING_EMPTY;
+				Log.info("ZabiPitkesa reset skoncil.");
 			}
 		});
 		
@@ -135,6 +148,23 @@ public class ZabiPitkesaArena extends AdvancedMinigameArena
 	{
 		if (event.getEntity().getUniqueId() == this.boss.getUniqueId())
 			this.onBossDefeat();
+	}
+	
+	@EventHandler
+	private void onRightClick(final PlayerInteractEvent event)
+	{
+		if (event.getAction() == Action.RIGHT_CLICK_AIR)
+			if (event.getPlayer().getItemInHand() != null)
+				if (event.getPlayer().getItemInHand().getType() == Material.APPLE)
+					if (this.activePlayers.contains(event.getPlayer()))
+					{
+						TNTPrimed tnt = (TNTPrimed) this.getWorld().spawnEntity(
+								event.getPlayer().getLocation(),
+								EntityType.PRIMED_TNT);
+						tnt.setVelocity(event.getPlayer().getEyeLocation().getDirection().multiply(
+								1.5F));
+						tnt.setYield(2F);
+					}
 	}
 	
 	@EventHandler

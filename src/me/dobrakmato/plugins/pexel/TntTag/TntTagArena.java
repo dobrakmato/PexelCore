@@ -98,7 +98,8 @@ public class TntTagArena extends AdvancedMinigameArena
 						//Kill them.
 						p.getInventory().clear();
 						p.damage(20000D);
-						p.getWorld().createExplosion(p.getLocation(), 0, false);
+						p.getWorld().createExplosion(p.getLocation(), 0.1F,
+								false);
 						p.sendMessage("You lose the game.");
 						//Add him to dead people.
 						deads.add(p);
