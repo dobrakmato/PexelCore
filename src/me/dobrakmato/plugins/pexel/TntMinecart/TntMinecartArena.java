@@ -72,9 +72,15 @@ public class TntMinecartArena extends AdvancedMinigameArena
 			@Override
 			public void run()
 			{
-				
+				TntMinecartArena.this.checkMinecart();
 			}
 		}, 0L, 2L);
+	}
+	
+	protected void checkMinecart()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 	
 	@Override

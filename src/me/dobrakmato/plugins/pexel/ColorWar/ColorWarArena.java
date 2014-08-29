@@ -186,7 +186,7 @@ public class ColorWarArena extends AdvancedMinigameArena
 	
 	private void playerHitByColor(final Team team, final Player p)
 	{
-		switch (Pexel.getRandom().nextInt(3))
+		switch (Pexel.getRandom().nextInt(4))
 		{
 			case 0:
 				this.setColor(p.getInventory().getHelmet(), team.getColor());
@@ -198,6 +198,7 @@ public class ColorWarArena extends AdvancedMinigameArena
 				this.setColor(p.getInventory().getLeggings(), team.getColor());
 				break;
 			case 3:
+			default:
 				this.setColor(p.getInventory().getBoots(), team.getColor());
 				break;
 		}
