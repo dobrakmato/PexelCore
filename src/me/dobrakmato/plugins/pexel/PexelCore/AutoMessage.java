@@ -24,7 +24,7 @@ public class AutoMessage implements UpdatedPart
 	
 	static
 	{
-		AutoMessage.strings.add("Navstivte aj ansu webovu stranku mertex.eu!");
+		AutoMessage.strings.add("Navstivte aj nasu webovu stranku mertex.eu!");
 	}
 	
 	/**

@@ -223,17 +223,20 @@ public class ColorWarArena extends AdvancedMinigameArena
 		else if (toTeam == this.yellowTeam)
 			p.getInventory().setItem(this.colorSlot, this.getColorItem(4));
 		
+		toTeam.applyArmorTo(p);
+		
 		p.playSound(p.getLocation(), Sound.ZOMBIE_UNFECT, 1, 1);
 	}
 	
 	private boolean playerAllSameColor(final Player p)
 	{
 		Color c = this.getColor(p.getInventory().getHelmet());
-		if (c != this.getColor(p.getInventory().getChestplate())
-				|| c != this.getColor(p.getInventory().getLeggings())
-				|| c != this.getColor(p.getInventory().getBoots()))
-			return false;
-		return true;
+		
+		if (c.equals(this.getColor(p.getInventory().getChestplate()))
+				&& c.equals(this.getColor(p.getInventory().getLeggings()))
+				&& c.equals(this.getColor(p.getInventory().getBoots())))
+			return true;
+		return false;
 	}
 	
 	private Color getColor(final ItemStack item)

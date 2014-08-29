@@ -210,4 +210,15 @@ public class Team
 	{
 		return this.color;
 	}
+	
+	/**
+	 * Applies colored armor to specified player.
+	 * 
+	 * @param p
+	 *            specified player
+	 */
+	public void applyArmorTo(final Player p)
+	{
+		this.applyArmor(p);
+	}
 }
