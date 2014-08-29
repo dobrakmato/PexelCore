@@ -242,7 +242,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	private void countdownTick()
 	{
 		//Send a chat message.
-		if (this.countdownTimeLeft < 10)
+		if (this.countdownTimeLeft < 10 || (this.countdownTimeLeft % 10) == 0)
 			this.chatAll(ChatManager.minigame(
 					this.minigame,
 					this.countdownFormat.replace("%timeleft%",

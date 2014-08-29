@@ -23,15 +23,15 @@ public class ColorWarMinigame implements Minigame
 																Bukkit.getWorld("world"),
 																-1965, 141.5D,
 																-1857);
-	private final ColorWarMinigameArena	ar;
+	private final ColorWarArena	ar;
 	
 	public ColorWarMinigame()
 	{
 		StorageEngine.addMinigame(this);
 		Pexel.getMatchmaking().registerMinigame(this);
-		StorageEngine.registerArenaAlias(ColorWarMinigameArena.class,
+		StorageEngine.registerArenaAlias(ColorWarArena.class,
 				"ColorWarMinigameArena");
-		ColorWarMinigameArena arena1 = new ColorWarMinigameArena(this,
+		ColorWarArena arena1 = new ColorWarArena(this,
 				"cw_arena1",
 				new Region(new Vector(-1961, 138, -1853), new Vector(-2030,
 						103, -1799), Bukkit.getWorld("world")), new Location(
@@ -73,7 +73,7 @@ public class ColorWarMinigame implements Minigame
 		return this.lobbyLocation;
 	}
 	
-	public ColorWarMinigameArena trrtrtr()
+	public ColorWarArena trrtrtr()
 	{
 		return this.ar;
 	}

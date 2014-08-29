@@ -42,7 +42,7 @@ import org.bukkit.projectiles.ProjectileSource;
  * @author Mato Kormuth
  * 
  */
-public class ColorWarMinigameArena extends AdvancedMinigameArena
+public class ColorWarArena extends AdvancedMinigameArena
 {
 	private Team				redTeam			= new Team(Color.RED,
 														"Red team",
@@ -100,7 +100,7 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	 * @param lobbyLocation
 	 * @param gameSpawn
 	 */
-	public ColorWarMinigameArena(final Minigame minigame,
+	public ColorWarArena(final Minigame minigame,
 			final String arenaName, final Region region,
 			final Location lobbyLocation, final Location gameSpawn)
 	{
@@ -174,7 +174,7 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 			@Override
 			public void run()
 			{
-				ColorWarMinigameArena.this.makeTrails();
+				ColorWarArena.this.makeTrails();
 			}
 		}, 0L, 1L);
 	}
