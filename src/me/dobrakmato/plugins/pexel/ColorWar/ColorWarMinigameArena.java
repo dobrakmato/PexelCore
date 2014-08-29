@@ -400,13 +400,23 @@ public class ColorWarMinigameArena extends AdvancedMinigameArena
 	public void onHitBySnowball(final EntityDamageByEntityEvent event)
 	{
 		if (event.getDamager() instanceof Snowball)
+		{
+			System.out.println("Snowball hit "
+					+ event.getEntity().getType().toString());
+			
 			if (event.getEntity() instanceof Player)
+			{
+				System.out.println("Player name: "
+						+ ((Player) event.getEntity()).getName());
 				if (this.activePlayers.contains(event.getEntity()))
 				{
+					
 					this.playerHitByColor(
 							(Team) event.getDamager().getMetadata("damagerTeam").get(
 									0).value(), ((Player) event.getEntity()));
 				}
+			}
+		}
 	}
 	
 	@EventHandler
