@@ -51,6 +51,8 @@ public class HardCoded
 		StorageEngine.addLobby(new Lobby("hub", new Region(new Vector(52, 107,
 				226), new Vector(-30, 1, 303), Bukkit.getWorld("world"))));
 		
+		StorageEngine.getLobby("hub").setThresholdY(10);
+		
 		StorageEngine.addLobby(new Lobby("minigamelobby", new Region(
 				new Vector(2038, 0, 2571), new Vector(1910, 255, 2437),
 				Bukkit.getWorld("world"))));

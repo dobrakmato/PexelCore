@@ -39,11 +39,11 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	/**
 	 * How often should lobby check for players.
 	 */
-	private final long	checkInterval	= 20;	//40 ticks = 2 second.
+	private long		checkInterval	= 20;	//40 ticks = 2 second.
 	/**
 	 * The minimal Y coordinate value, after the lobby will teleport players to its spawn.
 	 */
-	private final int	thresholdY		= 50;
+	private int			thresholdY		= 50;
 	
 	/**
 	 * Returns lobby spawn.
@@ -118,5 +118,23 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	public long getCheckInterval()
 	{
 		return this.checkInterval;
+	}
+	
+	/**
+	 * @param checkInterval
+	 *            the checkInterval to set
+	 */
+	public void setCheckInterval(final long checkInterval)
+	{
+		this.checkInterval = checkInterval;
+	}
+	
+	/**
+	 * @param thresholdY
+	 *            the thresholdY to set
+	 */
+	public void setThresholdY(final int thresholdY)
+	{
+		this.thresholdY = thresholdY;
 	}
 }
