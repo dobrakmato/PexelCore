@@ -1,5 +1,6 @@
-package me.dobrakmato.plugins.pexel.TntMinecart;
+package me.dobrakmato.plugins.pexel.ControlPoints;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.Map;
 
 import me.dobrakmato.plugins.pexel.PexelCore.AdvancedMinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
-import me.dobrakmato.plugins.pexel.PexelCore.ChatManager;
 import me.dobrakmato.plugins.pexel.PexelCore.ItemUtils;
 import me.dobrakmato.plugins.pexel.PexelCore.Kit;
 import me.dobrakmato.plugins.pexel.PexelCore.KitInventoryMenu;
@@ -21,62 +21,46 @@ import me.dobrakmato.plugins.pexel.PexelCore.TeamManager;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.minecart.ExplosiveMinecart;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
 /**
- * Tnt minecart arena
- * 
  * @author Mato Kormuth
  * 
  */
-public class TntMinecartArena extends AdvancedMinigameArena
+public class ControlPointsArena extends AdvancedMinigameArena
 {
-	private final Map<Player, Kit>	kits			= new HashMap<Player, Kit>();
+	private final Map<Player, Kit>		kits		= new HashMap<Player, Kit>();
 	
-	private final Team				redTeam			= new Team(Color.RED,
+	private final Team					redTeam		= new Team(Color.RED,
 															"Red team", 12);
-	private final Team				blueTeam		= new Team(Color.BLUE,
+	private final Team					blueTeam	= new Team(Color.BLUE,
 															"Blue team", 12);
-	private final TeamManager		manager;
+	private final TeamManager			manager;
 	
 	@ArenaOption(name = "redSpawn")
-	public Location					redSpawn;
+	public Location						redSpawn;
 	@ArenaOption(name = "blueSpawn")
-	public Location					blueSpawn;
+	public Location						blueSpawn;
 	
-	public Kit						kit1;
-	public Kit						kit2;
-	public Kit						kit3;
-	public KitInventoryMenu			kitMenu;
+	public Kit							kit1;
+	public Kit							kit2;
+	public Kit							kit3;
+	public KitInventoryMenu				kitMenu;
 	
-	//Minecart
-	protected ExplosiveMinecart		minecart;
+	private int							taskId;
 	
-	@ArenaOption(name = "minecartSpawn")
-	protected Location				minecartSpawn;
+	//Control points
+	private final List<ControlPoint>	points		= new ArrayList<ControlPoint>();
 	
-	@ArenaOption(name = "minecartRadius")
-	public int						minecartRadius	= 4;
-	@ArenaOption(name = "minecartSpeed")
-	public float					minecartSpeed	= 0.1F;
-	
-	private int						taskId			= 0;
-	
-	public TntMinecartArena(final Minigame minigame, final String arenaName,
+	public ControlPointsArena(final Minigame minigame, final String arenaName,
 			final Region region, final int maxPlayers, final int minPlayers,
 			final Location lobbyLocation, final Location gameSpawn)
 	{
-		super(minigame, arenaName, region, 24, 2, lobbyLocation, gameSpawn);
+		super(minigame, arenaName, region, maxPlayers, minPlayers,
+				lobbyLocation, gameSpawn);
 		
 		this.manager = new TeamManager(this);
 		this.manager.addTeam(this.redTeam);
@@ -100,7 +84,8 @@ public class TntMinecartArena extends AdvancedMinigameArena
 			@Override
 			public void run(final Object... args)
 			{
-				TntMinecartArena.this.kits.put((Player) args[0], (Kit) args[1]);
+				ControlPointsArena.this.kits.put((Player) args[0],
+						(Kit) args[1]);
 			}
 		});
 		
@@ -119,35 +104,58 @@ public class TntMinecartArena extends AdvancedMinigameArena
 		this.redTeam.teleportAll(this.redSpawn);
 		this.blueTeam.teleportAll(this.blueSpawn);
 		
-		this.getWorld().spawnEntity(this.minecartSpawn, EntityType.MINECART_TNT);
-		
 		this.taskId = Pexel.schedule(new Runnable() {
 			@Override
 			public void run()
 			{
-				TntMinecartArena.this.checkMinecart();
+				ControlPointsArena.this.checkPoints();
 			}
 		}, 0L, 5L);
 	}
 	
-	protected void checkMinecart()
+	protected void checkPoints()
 	{
-		//Evaulate minecart movement.
-		List<Entity> entities = this.minecart.getNearbyEntities(
-				this.minecartRadius, this.minecartRadius, this.minecartRadius);
-		
-		float smer = 0F;
-		
-		for (Entity e : entities)
-			if (e instanceof Player)
+		for (ControlPoint cp : this.points)
+		{
+			int credits = 0;
+			
+			for (Player p : this.getNearByPlayers(cp.location, 4))
 			{
-				if (this.manager.getTeam((Player) e) == this.redTeam)
-					smer += this.minecartSpeed;
+				if (this.manager.getTeam(p) == this.blueTeam)
+					credits += 1;
 				else
-					smer -= this.minecartSpeed;
+					credits -= 1;
 			}
-		
-		this.minecart.setVelocity(new Vector(smer, 0, 0));
+			
+			cp.addCredits(credits);
+			cp.updateBlocks();
+		}
+	}
+	
+	public Team getOppositeTeam(final Team team)
+	{
+		if (team == this.redTeam)
+			return this.blueTeam;
+		else
+			return this.redTeam;
+	}
+	
+	public List<Player> getNearByPlayers(final Location loc, final int radius)
+	{
+		List<Player> players = new ArrayList<Player>();
+		for (Player p : this.activePlayers)
+			if (loc.distanceSquared(p.getLocation()) < radius * radius)
+				players.add(p);
+		return players;
+	}
+	
+	public int getCPCountByTeam(final Team team)
+	{
+		int count = 0;
+		for (ControlPoint cp : this.points)
+			if (cp.getTeam() == team)
+				count++;
+		return count;
 	}
 	
 	@Override
@@ -187,46 +195,65 @@ public class TntMinecartArena extends AdvancedMinigameArena
 		}
 	}
 	
-	@EventHandler
-	private void onEntityExplode(final EntityExplodeEvent event)
+	protected class ControlPoint
 	{
-		if (event.getEntity() == this.minecart)
+		private static final int	MAX_CREDITS	= 80;
+		private static final int	MIN_CREDITS	= -80;
+		
+		public final Location		location;
+		public int					credits;
+		private Team				lastTeam;
+		
+		public ControlPoint(final Location location, final int credits,
+				final Team lastTeam)
 		{
-			if (this.minecart.getLocation().distanceSquared(this.blueSpawn) < this.minecart.getLocation().distanceSquared(
-					this.redSpawn))
-			{
-				//Red team won
-				for (Player p : this.redTeam.getPlayers())
-					p.sendMessage(ChatManager.success("You have won!"));
-			}
+			super();
+			this.location = location;
+			this.credits = credits;
+			this.lastTeam = lastTeam;
+		}
+		
+		public void addCredits(final int amount)
+		{
+			if (this.credits + amount > ControlPoint.MAX_CREDITS)
+				this.credits = ControlPoint.MAX_CREDITS;
+			else if (this.credits + amount < ControlPoint.MIN_CREDITS)
+				this.credits = ControlPoint.MIN_CREDITS;
+		}
+		
+		public Team getTeam()
+		{
+			if (this.credits < 0)
+				return ControlPointsArena.this.redTeam;
 			else
-			{
-				//Blue team won
-				for (Player p : this.blueTeam.getPlayers())
-					p.sendMessage(ChatManager.success("You have successfully lost the match!"));
-			}
-			
-			//Kick players
-			for (Player p : this.activePlayers)
-				this.onPlayerLeft(p);
+				return ControlPointsArena.this.blueTeam;
 		}
-	}
-	
-	@EventHandler
-	private void onMineCartMove(final VehicleMoveEvent event)
-	{
-		if (event.getVehicle() == this.minecart)
-			event.getVehicle().teleport(event.getFrom());
-	}
-	
-	@EventHandler
-	private void onEntityDamage(final EntityDamageByEntityEvent event)
-	{
-		if (event.getEntity() == this.minecart)
+		
+		@SuppressWarnings("deprecation")
+		public void updateBlocks()
 		{
-			event.setDamage(0D);
-			event.setCancelled(true);
+			//If need redraw
+			if (this.lastTeam != this.getTeam())
+			{
+				this.lastTeam = this.getTeam();
+				byte color = 0;
+				if (this.lastTeam == ControlPointsArena.this.redTeam)
+					color = 14;
+				else
+					color = 11;
+				
+				for (int x = this.location.getBlockX() - 3; x < this.location.getBlockX() + 3; x++)
+				{
+					for (int z = this.location.getBlockZ() - 3; z < this.location.getBlockZ() + 3; z++)
+					{
+						this.location.getWorld().getBlockAt(x,
+								this.location.getBlockY(), z).setType(
+								Material.WOOL);
+						this.location.getWorld().getBlockAt(x,
+								this.location.getBlockY(), z).setData(color);
+					}
+				}
+			}
 		}
 	}
-	
 }

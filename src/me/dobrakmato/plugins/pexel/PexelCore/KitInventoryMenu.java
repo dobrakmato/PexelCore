@@ -13,14 +13,14 @@ import org.bukkit.entity.Player;
  */
 public class KitInventoryMenu
 {
-	private final InventoryMenu	menu;
+	private final InventoryMenu		menu;
+	private ParametrizedRunnable	onKitSelected;
 	
 	/**
 	 * Creates a new inventory menu for selecting kit.
 	 * 
-	 * @param size
-	 * @param title
-	 * @param items
+	 * @param kits
+	 *            kits in inventory menu.
 	 */
 	public KitInventoryMenu(final Kit... kits)
 	{
@@ -34,6 +34,8 @@ public class KitInventoryMenu
 						public void run(final Object... args)
 						{
 							kit.applyKit(((Player) args[0]));
+							KitInventoryMenu.this.onKitSelected.run(args[0],
+									kit);
 						}
 					}), i, false));
 		}
@@ -41,10 +43,16 @@ public class KitInventoryMenu
 		this.menu = new InventoryMenu(9, "Select kit: ", items);
 	}
 	
+	public void setOnKitSelected(final ParametrizedRunnable runnable)
+	{
+		this.onKitSelected = runnable;
+	}
+	
 	/**
 	 * Shows inventory to player.
 	 * 
 	 * @param player
+	 *            player to show menu to
 	 */
 	public void showTo(final Player player)
 	{

@@ -363,6 +363,18 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	}
 	
 	/**
+	 * Returns whether collection of activePlayers containts specified player.
+	 * 
+	 * @param player
+	 *            player to check
+	 * @return true or false
+	 */
+	public boolean isInArena(final Player player)
+	{
+		return this.activePlayers.contains(player);
+	}
+	
+	/**
 	 * Called when players join the arena. Also checks if there are enough players, if so, calls
 	 * {@link AdvancedMinigameArena#onGameStart()}. If not, calls {@link AdvancedMinigameArena#onNotEnoughPlayers()}.
 	 */
@@ -446,7 +458,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	}
 	
 	@EventHandler
-	public void onPlayerRespawn(final PlayerRespawnEvent event)
+	public void ___onPlayerRespawn(final PlayerRespawnEvent event)
 	{
 		if (this.playersCanRespawn)
 		{

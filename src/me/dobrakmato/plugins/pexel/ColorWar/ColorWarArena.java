@@ -205,7 +205,7 @@ public class ColorWarArena extends AdvancedMinigameArena
 		
 		this.updateHotBar(p);
 		
-		if (this.playerAllSameColor(p))
+		if (this.playerAllSameColor(p) && this.manager.getTeam(p) != team)
 			this.playerChangeTeam(p, team);
 	}
 	

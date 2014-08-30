@@ -2,7 +2,6 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 
 import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
 import me.dobrakmato.plugins.pexel.PexelNetworking.Server;
-import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
 import me.dobrakmato.plugins.pexel.ZabiPitkesa.ZabiPitkesaMinigame;
 
 import org.bukkit.Bukkit;
@@ -22,8 +21,6 @@ public class HardCoded
 	 */
 	public static final void main()
 	{
-		//Initialize tnt tag minigame
-		new TntTagMinigame();
 		//Initialize color war mingiame
 		new ColorWarMinigame();
 		//Initialize zabi pitkesa minigame
