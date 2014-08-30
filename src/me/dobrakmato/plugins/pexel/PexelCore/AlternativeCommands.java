@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
-import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
 import me.dobrakmato.plugins.pexel.ZabiPitkesa.ZabiPitkesaMinigame;
 import net.minecraft.util.org.apache.commons.io.IOUtils;
 
@@ -162,13 +161,6 @@ public class AlternativeCommands implements Listener
 				sender.sendMessage(ChatColor.RED
 						+ "Error while trying to get version! Check your build!");
 			}
-		}
-		else if (command.contains("/tnttest"))
-		{
-			sender.sendMessage(ChatColor.GREEN
-					+ "((TntTagMinigame) StorageEngine.getMinigame(\"tnttag\")).trrtrtr().onPlayerJoin(event.getPlayer());");
-			((TntTagMinigame) StorageEngine.getMinigame("tnttag")).trrtrtr().onPlayerJoin(
-					event.getPlayer());
 		}
 		else if (command.contains("/cwtest"))
 		{
