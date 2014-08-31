@@ -78,6 +78,7 @@ public class SimpleScoreboard implements ScoreboardWrapper
 	/**
 	 * Resets scoreboard.
 	 */
+	@Override
 	public void reset()
 	{
 		for (Score s : this.scores.values())

@@ -44,4 +44,12 @@ public class ScoreboardManager
 	{
 		p.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
 	}
+	
+	/**
+	 * Resets wrapper.
+	 */
+	public void reset()
+	{
+		this.scoreboard.reset();
+	}
 }

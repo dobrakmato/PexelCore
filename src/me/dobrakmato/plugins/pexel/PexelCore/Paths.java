@@ -32,4 +32,10 @@ public class Paths
 	{
 		return Pexel.getCore().getDataFolder().getAbsolutePath() + "/gates.yml";
 	}
+	
+	public static String matchRecord(final String name)
+	{
+		return Pexel.getCore().getDataFolder().getAbsolutePath() + "/matches/"
+				+ name + ".yml";
+	}
 }

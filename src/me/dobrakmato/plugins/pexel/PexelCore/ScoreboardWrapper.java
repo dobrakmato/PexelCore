@@ -16,4 +16,9 @@ public interface ScoreboardWrapper
 	 * @return the scoreboard objects
 	 */
 	public Scoreboard getScoreboard();
+	
+	/**
+	 * Resets scoreboard.
+	 */
+	public void reset();
 }

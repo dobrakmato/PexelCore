@@ -10,6 +10,8 @@ import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.ParticleEffect2;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
+import me.dobrakmato.plugins.pexel.PexelCore.ScoreboardManager;
+import me.dobrakmato.plugins.pexel.PexelCore.SimpleScoreboard;
 import me.dobrakmato.plugins.pexel.PexelCore.Team;
 import me.dobrakmato.plugins.pexel.PexelCore.TeamManager;
 import net.minecraft.server.v1_7_R3.PacketPlayOutEntityDestroy;
@@ -24,6 +26,7 @@ import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -45,52 +48,67 @@ import org.bukkit.projectiles.ProjectileSource;
  */
 public class ColorWarArena extends AdvancedMinigameArena
 {
-	private Team				redTeam			= new Team(Color.RED,
-														"Red team",
-														this.slots / 4);
-	private Team				blueTeam		= new Team(Color.BLUE,
-														"Blue team",
-														this.slots / 4);
-	private Team				greenTeam		= new Team(Color.GREEN,
-														"Green team",
-														this.slots / 4);
-	private Team				yellowTeam		= new Team(Color.YELLOW,
-														"Yellow team",
-														this.slots / 4);
+	private Team					redTeam				= new Team(Color.RED,
+																"Red team",
+																this.slots / 4);
+	private Team					blueTeam			= new Team(Color.BLUE,
+																"Blue team",
+																this.slots / 4);
+	private Team					greenTeam			= new Team(Color.GREEN,
+																"Green team",
+																this.slots / 4);
+	private Team					yellowTeam			= new Team(
+																Color.YELLOW,
+																"Yellow team",
+																this.slots / 4);
 	
-	private final TeamManager	manager;
+	private final TeamManager		manager;
 	
 	@ArenaOption(name = "redSpawn")
-	public Location				redSpawn		= new Location(this.getWorld(),
-														-1967, 111.5, -1804);
+	public Location					redSpawn			= new Location(
+																this.getWorld(),
+																-1967, 111.5,
+																-1804);
 	@ArenaOption(name = "blueSpawn")
-	public Location				blueSpawn		= new Location(this.getWorld(),
-														-2025, 111.5, -1804);
+	public Location					blueSpawn			= new Location(
+																this.getWorld(),
+																-2025, 111.5,
+																-1804);
 	@ArenaOption(name = "greenSpawn")
-	public Location				greenSpawn		= new Location(this.getWorld(),
-														-2025, 111.5, -1845);
+	public Location					greenSpawn			= new Location(
+																this.getWorld(),
+																-2025, 111.5,
+																-1845);
 	@ArenaOption(name = "yellowSpawn")
-	public Location				yellowSpawn		= new Location(this.getWorld(),
-														-1967, 111.5, -1845);
+	public Location					yellowSpawn			= new Location(
+																this.getWorld(),
+																-1967, 111.5,
+																-1845);
 	
 	@ArenaOption(name = "maskSnowballs")
-	public boolean				maskSnowBalls	= false;
+	public boolean					maskSnowBalls		= false;
 	
-	private int					taskId;
+	private int						taskId;
 	
 	//Slots
 	@ArenaOption(name = "zbranSlot")
-	protected int				zbranSlot		= 0;
+	protected int					zbranSlot			= 0;
 	@ArenaOption(name = "colorSlot")
-	protected int				colorSlot		= 1;
+	protected int					colorSlot			= 1;
 	@ArenaOption(name = "helmetSlot")
-	protected int				sArmor1			= 5;
+	protected int					sArmor1				= 5;
 	@ArenaOption(name = "chestplateSlot")
-	protected int				sArmor2			= 6;
+	protected int					sArmor2				= 6;
 	@ArenaOption(name = "leggingsSlot")
-	protected int				sArmor3			= 7;
+	protected int					sArmor3				= 7;
 	@ArenaOption(name = "bootsSlot")
-	protected int				sArmor4			= 8;
+	protected int					sArmor4				= 8;
+	
+	private final SimpleScoreboard	scoreboard			= new SimpleScoreboard(
+																"Top killers",
+																"topkillers");
+	private final ScoreboardManager	scoreboardManager	= new ScoreboardManager(
+																this.scoreboard);
 	
 	/**
 	 * @param minigame
@@ -353,6 +371,8 @@ public class ColorWarArena extends AdvancedMinigameArena
 		this.greenTeam = new Team(Color.GREEN, "Green team", this.slots / 4);
 		this.yellowTeam = new Team(Color.YELLOW, "Yellow team", this.slots / 4);
 		
+		this.scoreboardManager.reset();
+		
 		this.manager.reset();
 		
 		this.manager.addTeam(this.redTeam);
@@ -412,12 +432,22 @@ public class ColorWarArena extends AdvancedMinigameArena
 	{
 		super.onPlayerJoin(player);
 		
+		this.scoreboardManager.addPlayer(player);
+		
 		//debug
 		/*
 		 * if (player.getName().equalsIgnoreCase("dobrakmato")) { this.greenTeam.addPlayer(player);
 		 * player.getInventory().addItem(this.getZbran()); } else if (player.getName().equalsIgnoreCase("pitkes22")) {
 		 * this.redTeam.addPlayer(player); player.getInventory().addItem(this.getZbran()); }
 		 */
+	}
+	
+	@Override
+	public void onPlayerLeft(final Player player)
+	{
+		super.onPlayerLeft(player);
+		
+		this.scoreboardManager.removePlayer(player);
 	}
 	
 	@EventHandler
@@ -449,6 +479,9 @@ public class ColorWarArena extends AdvancedMinigameArena
 				Player p = (Player) event.getEntity();
 				if (this.activePlayers.contains(p))
 				{
+					this.scoreboard.incrementScore(
+							(Player) ((Projectile) event.getDamager()).getShooter(),
+							1);
 					this.playerHitByColor(
 							this.manager.getTeam((Player) ((Snowball) event.getDamager()).getShooter()),
 							((Player) event.getEntity()));

@@ -157,7 +157,7 @@ public class ProtectedArea
 	/**
 	 * Returns area name.
 	 * 
-	 * @return
+	 * @return name of area
 	 */
 	public String getName()
 	{
@@ -167,7 +167,7 @@ public class ProtectedArea
 	/**
 	 * Returns area owner.
 	 * 
-	 * @return
+	 * @return owner of area
 	 */
 	public AreaOwner getOwner()
 	{
