@@ -2,6 +2,8 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 
 import me.dobrakmato.plugins.pexel.ColorWar.ColorWarArena;
 import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
+import me.dobrakmato.plugins.pexel.TntTag.TntTagArena;
+import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -32,6 +34,21 @@ public class PCMDCommand implements CommandExecutor
 					{
 						sender.sendMessage(ChatColor.GREEN
 								+ "Joining ColorWar...");
+						arena.onPlayerJoin(psender);
+					}
+					else
+					{
+						sender.sendMessage(ChatColor.RED
+								+ "Arena is in progress now!");
+					}
+				}
+				else if (arg_command.equalsIgnoreCase("tnttest"))
+				{
+					TntTagArena arena = ((TntTagMinigame) StorageEngine.getMinigame("tnttag")).trrtrtr();
+					if (arena.canJoin())
+					{
+						sender.sendMessage(ChatColor.GREEN
+								+ "Joining TntTag...");
 						arena.onPlayerJoin(psender);
 					}
 					else
