@@ -3,6 +3,7 @@ package me.dobrakmato.plugins.pexel.ColorWar;
 import me.dobrakmato.plugins.pexel.PexelCore.AdvancedMinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.AreaFlag;
 import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
+import me.dobrakmato.plugins.pexel.PexelCore.ChatManager;
 import me.dobrakmato.plugins.pexel.PexelCore.GameState;
 import me.dobrakmato.plugins.pexel.PexelCore.ItemUtils;
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
@@ -232,7 +233,32 @@ public class ColorWarArena extends AdvancedMinigameArena
 	
 	private void checkEndGame()
 	{
-		//TODO:
+		if (this.allPlayersInTeam(this.redTeam))
+			this.teamWon(this.redTeam);
+		else if (this.allPlayersInTeam(this.blueTeam))
+			this.teamWon(this.blueTeam);
+		else if (this.allPlayersInTeam(this.greenTeam))
+			this.teamWon(this.greenTeam);
+		else if (this.allPlayersInTeam(this.yellowTeam))
+			this.teamWon(this.yellowTeam);
+	}
+	
+	private void teamWon(final Team team)
+	{
+		for (Player p : team.getPlayers())
+		{
+			p.sendMessage(ChatManager.minigame(this.getMinigame(),
+					"You have won!"));
+			this.onPlayerLeft(p);
+		}
+	}
+	
+	private boolean allPlayersInTeam(final Team team)
+	{
+		for (Player p : this.activePlayers)
+			if (!team.contains(p))
+				return false;
+		return true;
 	}
 	
 	private boolean playerAllSameColor(final Player p)
