@@ -53,6 +53,10 @@ public class HardCoded
 				new Vector(1976, 147, 2532), new Vector(1972, 153, 2534),
 				Bukkit.getWorld("world")), new CommandAction("pcmd cwtest")));
 		
+		StorageEngine.addGate("mg_tnttag", new TeleportGate(new Region(
+				new Vector(1962, 147, 2532), new Vector(1967, 153, 2534),
+				Bukkit.getWorld("world")), new CommandAction("pcmd tnttest")));
+		
 		//Initialize lobbies
 		StorageEngine.addLobby(new Lobby("hub", new Region(new Vector(52, 107,
 				226), new Vector(-30, 1, 303), Bukkit.getWorld("world"))));
@@ -62,5 +66,8 @@ public class HardCoded
 		StorageEngine.addLobby(new Lobby("minigamelobby", new Region(
 				new Vector(2038, 0, 2571), new Vector(1910, 255, 2437),
 				Bukkit.getWorld("world"))));
+		
+		StorageEngine.getLobby("minigamelobby").setSpawn(
+				new Location(Bukkit.getWorld("world"), 1972.5, 148, 2492.5));
 	}
 }

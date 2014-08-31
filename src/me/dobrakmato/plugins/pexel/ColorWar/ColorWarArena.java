@@ -105,8 +105,8 @@ public class ColorWarArena extends AdvancedMinigameArena
 	protected int					sArmor4				= 8;
 	
 	private final SimpleScoreboard	scoreboard			= new SimpleScoreboard(
-																"Top killers",
-																"topkillers");
+																"topkillers",
+																"Top killers");
 	private final ScoreboardManager	scoreboardManager	= new ScoreboardManager(
 																this.scoreboard);
 	
@@ -123,7 +123,7 @@ public class ColorWarArena extends AdvancedMinigameArena
 			final Region region, final Location lobbyLocation,
 			final Location gameSpawn)
 	{
-		super(minigame, arenaName, region, 32, 4, lobbyLocation, gameSpawn);
+		super(minigame, arenaName, region, 8, 4, lobbyLocation, gameSpawn);
 		this.setGlobalFlag(AreaFlag.BLOCK_PLACE, false);
 		this.setGlobalFlag(AreaFlag.PLAYER_GETDAMAGE, true);
 		this.inventoryDisabled = true;
@@ -186,7 +186,7 @@ public class ColorWarArena extends AdvancedMinigameArena
 		
 		this.redTeam.teleportAll(this.redSpawn);
 		this.blueTeam.teleportAll(this.blueSpawn);
-		this.greenTeam.teleportAll(this.gameSpawn);
+		this.greenTeam.teleportAll(this.greenSpawn);
 		this.yellowTeam.teleportAll(this.yellowSpawn);
 		
 		this.taskId = Pexel.schedule(new Runnable() {
@@ -423,7 +423,7 @@ public class ColorWarArena extends AdvancedMinigameArena
 					color = 4;
 				
 				ParticleEffect2.displayBlockCrack(e.getLocation(), 16, 35,
-						color, 0.05F, 0.05F, 0.05F, 10);
+						color, 0.05F, 0.05F, 0.05F, 5);
 			}
 	}
 	
@@ -511,7 +511,7 @@ public class ColorWarArena extends AdvancedMinigameArena
 				
 				ParticleEffect2.displayBlockCrack(
 						event.getEntity().getLocation(), 16, 35, color, 0.5F,
-						0.5F, 0.5F, 100);
+						0.5F, 0.5F, 50);
 				
 				this.gameSpawn.getWorld().playSound(
 						event.getEntity().getLocation(), Sound.SLIME_WALK, 1, 1);
