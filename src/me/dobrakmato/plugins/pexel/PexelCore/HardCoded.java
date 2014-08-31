@@ -1,5 +1,7 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import java.util.UUID;
+
 import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
 import me.dobrakmato.plugins.pexel.PexelNetworking.Server;
 import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
@@ -63,11 +65,23 @@ public class HardCoded
 		
 		StorageEngine.getLobby("hub").setThresholdY(10);
 		
+		StorageEngine.getLobby("hub").setPlayerFlag(AreaFlag.BLOCK_BREAK, true,
+				UUID.fromString("966ad920-d45e-3fe5-8956-bf7a7a877ab4"));
+		StorageEngine.getLobby("hub").setPlayerFlag(AreaFlag.BLOCK_PLACE, true,
+				UUID.fromString("966ad920-d45e-3fe5-8956-bf7a7a877ab4"));
+		
 		StorageEngine.addLobby(new Lobby("minigamelobby", new Region(
 				new Vector(2038, 0, 2571), new Vector(1910, 255, 2437),
 				Bukkit.getWorld("world"))));
 		
 		StorageEngine.getLobby("minigamelobby").setSpawn(
 				new Location(Bukkit.getWorld("world"), 1972.5, 148, 2492.5));
+		
+		StorageEngine.getLobby("minigamelobby").setPlayerFlag(
+				AreaFlag.BLOCK_BREAK, true,
+				UUID.fromString("966ad920-d45e-3fe5-8956-bf7a7a877ab4"));
+		StorageEngine.getLobby("minigamelobby").setPlayerFlag(
+				AreaFlag.BLOCK_PLACE, true,
+				UUID.fromString("966ad920-d45e-3fe5-8956-bf7a7a877ab4"));
 	}
 }

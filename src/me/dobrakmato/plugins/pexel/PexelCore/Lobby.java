@@ -23,8 +23,8 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	public Lobby(final String name, final Region region)
 	{
 		super(name, region);
-		this.setGlobalFlag(AreaFlag.BLOCK_BREAK, true);
-		this.setGlobalFlag(AreaFlag.BLOCK_PLACE, true);
+		this.setGlobalFlag(AreaFlag.BLOCK_BREAK, false);
+		this.setGlobalFlag(AreaFlag.BLOCK_PLACE, false);
 		this.setGlobalFlag(AreaFlag.PLAYER_GETDAMAGE, false);
 		//Wierd call, isn't it?
 		this.updateStart(Pexel.getCore());
