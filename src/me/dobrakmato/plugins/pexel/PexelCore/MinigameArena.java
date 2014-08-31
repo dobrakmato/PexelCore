@@ -267,4 +267,9 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
 	{
 		this.slots = slots;
 	}
+	
+	public boolean containsPlayer(final Player player)
+	{
+		return this.activePlayers.contains(player);
+	}
 }

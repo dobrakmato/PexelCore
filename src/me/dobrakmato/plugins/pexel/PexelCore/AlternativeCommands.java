@@ -133,9 +133,24 @@ public class AlternativeCommands implements Listener
 		Player sender = event.getPlayer();
 		String command = d[0];
 		
+		Log.info(sender.getName() + " issued command " + event.getMessage()
+				+ " at " + event.getPlayer().getLocation().getX() + ","
+				+ event.getPlayer().getLocation().getY() + ","
+				+ event.getPlayer().getLocation().getZ() + ","
+				+ event.getPlayer().getLocation().getWorld().getName());
+		
 		if (command.contains("/getcock"))
 		{
 			sender.getInventory().addItem(Pexel.getMagicClock().getClock());
+		}
+		else if (command.equalsIgnoreCase("lobby"))
+		{
+			for (MinigameArena arena : StorageEngine.getArenas().values())
+				if (arena.containsPlayer(event.getPlayer()))
+				{
+					arena.onPlayerLeft(event.getPlayer());
+					event.getPlayer().teleport(Pexel.getLobby());
+				}
 		}
 		else if (command.equalsIgnoreCase("list_arena_aliases"))
 		{

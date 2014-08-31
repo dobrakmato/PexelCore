@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
@@ -137,5 +138,15 @@ public final class Pexel
 	public static AsyncWorker getAsyncWorker()
 	{
 		return Pexel.plugin.asyncWorker;
+	}
+	
+	/**
+	 * Return's lobby location.
+	 * 
+	 * @return lobby lcoation
+	 */
+	public static Location getLobby()
+	{
+		return new Location(Bukkit.getWorld("world"), 9.5, 47.5, 262.5);
 	}
 }

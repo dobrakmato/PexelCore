@@ -226,6 +226,13 @@ public class ColorWarArena extends AdvancedMinigameArena
 		toTeam.applyArmorTo(p);
 		
 		p.playSound(p.getLocation(), Sound.ZOMBIE_UNFECT, 1, 1);
+		
+		this.checkEndGame();
+	}
+	
+	private void checkEndGame()
+	{
+		//TODO:
 	}
 	
 	private boolean playerAllSameColor(final Player p)
