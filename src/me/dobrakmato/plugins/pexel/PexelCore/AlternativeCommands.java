@@ -143,7 +143,8 @@ public class AlternativeCommands implements Listener
 		{
 			sender.getInventory().addItem(Pexel.getMagicClock().getClock());
 		}
-		else if (command.equalsIgnoreCase("lobby"))
+		else if (command.equalsIgnoreCase("/leave")
+				|| command.equalsIgnoreCase("/lobby"))
 		{
 			for (MinigameArena arena : StorageEngine.getArenas().values())
 				if (arena.containsPlayer(event.getPlayer()))
