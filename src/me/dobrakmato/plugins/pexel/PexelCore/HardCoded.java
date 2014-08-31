@@ -2,7 +2,6 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 
 import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
 import me.dobrakmato.plugins.pexel.PexelNetworking.Server;
-import me.dobrakmato.plugins.pexel.ZabiPitkesa.ZabiPitkesaMinigame;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -24,7 +23,7 @@ public class HardCoded
 		//Initialize color war mingiame
 		new ColorWarMinigame();
 		//Initialize zabi pitkesa minigame
-		new ZabiPitkesaMinigame();
+		//new ZabiPitkesaMinigame();
 		
 		//Initialize main gates
 		StorageEngine.addGate("Lsurvival",

@@ -17,7 +17,7 @@ public class AutoMessage implements UpdatedPart
 {
 	private static final List<String>	strings		= new ArrayList<String>();
 	private static final String			prefix		= "";
-	private static final long			interval	= 20000 / 20;				//each 60 seconds.
+	private static final long			interval	= 20000 / 30;				//each 60 seconds.
 																				
 	private static final Random			random		= new Random();
 	private static int					taskId		= 0;
@@ -30,7 +30,7 @@ public class AutoMessage implements UpdatedPart
 		AutoMessage.strings.add("Navstivte aj nasu web stranku www.pexel.eu (v priprave) !");
 		AutoMessage.strings.add("Hras " + ChatColor.BLUE + "BETA "
 				+ ChatColor.RESET + " verziu pexel-u. Dakujeme!");
-		AutoMessage.strings.add("Ak mas nejake pripomienky, povedz nam na na "
+		AutoMessage.strings.add("Ak mas nejake pripomienky, povedz nam na "
 				+ ChatColor.GREEN + "ts.mertex.eu!");
 	}
 	
