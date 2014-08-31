@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 /**
  * AutoMessage.
@@ -16,7 +17,7 @@ public class AutoMessage implements UpdatedPart
 {
 	private static final List<String>	strings		= new ArrayList<String>();
 	private static final String			prefix		= "";
-	private static final long			interval	= 60000 / 20;				//each 60 seconds.
+	private static final long			interval	= 20000 / 20;				//each 60 seconds.
 																				
 	private static final Random			random		= new Random();
 	private static int					taskId		= 0;
@@ -24,7 +25,13 @@ public class AutoMessage implements UpdatedPart
 	
 	static
 	{
-		AutoMessage.strings.add("Navstivte aj nasu webovu stranku mertex.eu!");
+		AutoMessage.strings.add("Hras " + ChatColor.BLUE + "BETA "
+				+ ChatColor.RESET + " verziu pexel-u. Dakujeme!");
+		AutoMessage.strings.add("Navstivte aj nasu web stranku www.pexel.eu (v priprave) !");
+		AutoMessage.strings.add("Hras " + ChatColor.BLUE + "BETA "
+				+ ChatColor.RESET + " verziu pexel-u. Dakujeme!");
+		AutoMessage.strings.add("Ak mas nejake pripomienky, povedz nam na na "
+				+ ChatColor.GREEN + "ts.mertex.eu!");
 	}
 	
 	/**
