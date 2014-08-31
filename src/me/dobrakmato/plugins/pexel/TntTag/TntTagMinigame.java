@@ -2,10 +2,13 @@ package me.dobrakmato.plugins.pexel.TntTag;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.MinigameArena;
+import me.dobrakmato.plugins.pexel.PexelCore.MinigameCategory;
+import me.dobrakmato.plugins.pexel.PexelCore.MinigameType;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.StorageEngine;
@@ -85,5 +88,17 @@ public class TntTagMinigame implements Minigame
 	public Location getLobbyLocation()
 	{
 		return this.minigameLobby;
+	}
+	
+	@Override
+	public MinigameCategory getCategory()
+	{
+		return MinigameCategory.ARCADE;
+	}
+	
+	@Override
+	public List<MinigameType> getTypes()
+	{
+		return MinigameType.makeTypes(MinigameType.TNT);
 	}
 }

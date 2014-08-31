@@ -52,12 +52,8 @@ public class EventProcessor implements Listener
 				{
 					StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParticleType().display(
 							event.getFrom().subtract(diff).clone().add(0, i, 0),
-							0.50F,
-							0.20F,
-							0.50F,
-							1,
-							(int) Math.floor(0.000005 * Math.pow(
-									event.getTo().distance(event.getFrom()), 2)));
+							0.50F, 0.20F, 0.50F, 1,
+							(int) Math.floor(0.000005 * Math.pow(1.4, 2)));
 				}
 			}
 		}

@@ -1,9 +1,12 @@
 package me.dobrakmato.plugins.pexel.ZabiPitkesa;
 
 import java.util.Collection;
+import java.util.List;
 
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.MinigameArena;
+import me.dobrakmato.plugins.pexel.PexelCore.MinigameCategory;
+import me.dobrakmato.plugins.pexel.PexelCore.MinigameType;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.StorageEngine;
@@ -79,6 +82,18 @@ public class ZabiPitkesaMinigame implements Minigame
 	public ZabiPitkesaArena trrtrtr()
 	{
 		return this.a;
+	}
+	
+	@Override
+	public MinigameCategory getCategory()
+	{
+		return MinigameCategory.ARCADE;
+	}
+	
+	@Override
+	public List<MinigameType> getTypes()
+	{
+		return MinigameType.makeTypes();
 	}
 	
 }

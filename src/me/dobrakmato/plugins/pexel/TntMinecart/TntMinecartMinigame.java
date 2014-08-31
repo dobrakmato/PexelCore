@@ -1,15 +1,18 @@
 package me.dobrakmato.plugins.pexel.TntMinecart;
 
 import java.util.Collection;
-
-import org.bukkit.Location;
+import java.util.List;
 
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.MinigameArena;
+import me.dobrakmato.plugins.pexel.PexelCore.MinigameCategory;
+import me.dobrakmato.plugins.pexel.PexelCore.MinigameType;
+
+import org.bukkit.Location;
 
 /**
  * @author Mato Kormuth
- *
+ * 
  */
 public class TntMinecartMinigame implements Minigame
 {
@@ -29,7 +32,7 @@ public class TntMinecartMinigame implements Minigame
 	}
 	
 	@Override
-	public MinigameArena getArena(String name)
+	public MinigameArena getArena(final String name)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -47,6 +50,19 @@ public class TntMinecartMinigame implements Minigame
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public MinigameCategory getCategory()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public List<MinigameType> getTypes()
+	{
+		return MinigameType.makeTypes(MinigameType.TNT);
 	}
 	
 }

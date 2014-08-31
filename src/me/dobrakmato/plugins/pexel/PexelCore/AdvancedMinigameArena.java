@@ -400,7 +400,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		}
 		else
 		{
-			player.sendMessage(ChatManager.error("WTF?! You are already in this arena!"));
+			player.sendMessage(ChatManager.error("Alredy playing!"));
 		}
 	}
 	
@@ -419,6 +419,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 		this.tryStopCountdown();
 		
 		this.checkForEnd();
+		
+		//BarApi fix
+		if (BarAPI.hasBar(player))
+			BarAPI.removeBar(player);
 		
 		this.updateGameState();
 	}

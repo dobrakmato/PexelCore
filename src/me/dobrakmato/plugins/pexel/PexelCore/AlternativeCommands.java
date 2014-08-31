@@ -151,7 +151,7 @@ public class AlternativeCommands implements Listener
 				if (arena.containsPlayer(event.getPlayer()))
 				{
 					arena.onPlayerLeft(event.getPlayer());
-					event.getPlayer().teleport(Pexel.getLobby());
+					event.getPlayer().teleport(Pexel.getHubLocation());
 				}
 		}
 		else if (command.equalsIgnoreCase("list_arena_aliases"))

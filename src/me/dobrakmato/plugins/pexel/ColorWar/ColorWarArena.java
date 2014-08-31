@@ -448,6 +448,10 @@ public class ColorWarArena extends AdvancedMinigameArena
 		super.onPlayerLeft(player);
 		
 		this.scoreboardManager.removePlayer(player);
+		
+		this.clearPlayer(player);
+		
+		player.teleport(Pexel.getHubLocation());
 	}
 	
 	@EventHandler

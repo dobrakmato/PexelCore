@@ -145,7 +145,7 @@ public final class Pexel
 	 * 
 	 * @return lobby lcoation
 	 */
-	public static Location getLobby()
+	public static Location getHubLocation()
 	{
 		return new Location(Bukkit.getWorld("world"), 9.5, 47.5, 262.5);
 	}
