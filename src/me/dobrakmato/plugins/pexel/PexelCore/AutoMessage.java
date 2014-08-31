@@ -27,7 +27,7 @@ public class AutoMessage implements UpdatedPart
 	{
 		AutoMessage.strings.add("Hras " + ChatColor.BLUE + "BETA"
 				+ ChatColor.RESET + " verziu pexel-u. Dakujeme!");
-		AutoMessage.strings.add("Navstivte aj nasu web stranku www.pexel.eu (v priprave) !");
+		AutoMessage.strings.add("Navstivte aj nasu web stranku www.pexel.eu (v priprave)!");
 		AutoMessage.strings.add("Hras " + ChatColor.BLUE + "BETA"
 				+ ChatColor.RESET + " verziu pexel-u. Dakujeme!");
 		AutoMessage.strings.add("Ak mas nejake pripomienky, povedz nam na "

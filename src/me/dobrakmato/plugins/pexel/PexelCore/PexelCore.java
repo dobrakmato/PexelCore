@@ -105,6 +105,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 		this.getCommand("lobbyarena").setExecutor(new LobbyCommand());
 		this.getCommand("qj").setExecutor(new QJCommand());
 		this.getCommand("gate").setExecutor(new GateCommand());
+		this.getCommand("pcmd").setExecutor(new PCMDCommand());
 		
 		StorageEngine.initialize(this);
 		StorageEngine.loadData();
