@@ -42,7 +42,7 @@ public class ColorWarMinigame implements Minigame
 				new Vector(-688, 25, -1058), new Vector(-758, 150, -1128),
 				Bukkit.getWorld("Minigame")), new Location(
 				Bukkit.getWorld("Minigame"), -772, 70.5D, -1092), new Location(
-				Bukkit.getWorld("Minigame"), -1996, 126.5D, -1826));
+				Bukkit.getWorld("Minigame"), -722.5, 57D, -1092.5));
 		
 		World w = Bukkit.getWorld("Minigame");
 		
@@ -54,7 +54,7 @@ public class ColorWarMinigame implements Minigame
 		Pexel.getMatchmaking().registerArena(demo_arena);
 		Pexel.getMatchmaking().registerArena(arena1);
 		
-		this.ar = demo_arena;
+		this.ar = arena1;
 	}
 	
 	@Override

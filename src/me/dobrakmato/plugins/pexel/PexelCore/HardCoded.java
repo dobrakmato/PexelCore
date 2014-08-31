@@ -47,6 +47,11 @@ public class HardCoded
 								new Location(Bukkit.getWorld("world"), 1972.5,
 										147.5, 2492.5), Server.THIS_SERVER)));
 		
+		//Initialize gates
+		StorageEngine.addGate("mg_colorwar", new TeleportGate(new Region(
+				new Vector(1976, 147, 2532), new Vector(1972, 153, 2534),
+				Bukkit.getWorld("world")), new CommandAction("cwtest")));
+		
 		//Initialize lobbies
 		StorageEngine.addLobby(new Lobby("hub", new Region(new Vector(52, 107,
 				226), new Vector(-30, 1, 303), Bukkit.getWorld("world"))));

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.dobrakmato.plugins.pexel.ColorWar.ColorWarArena;
 import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
 import me.dobrakmato.plugins.pexel.ZabiPitkesa.ZabiPitkesaMinigame;
 import net.minecraft.util.org.apache.commons.io.IOUtils;
@@ -180,10 +181,17 @@ public class AlternativeCommands implements Listener
 		}
 		else if (command.contains("/cwtest"))
 		{
-			sender.sendMessage(ChatColor.GREEN
-					+ "((ColorWarMinigame) StorageEngine.getMinigame(\"colorwar\")).trrtrtr().onPlayerJoin(event.getPlayer());");
-			((ColorWarMinigame) StorageEngine.getMinigame("colorwar")).trrtrtr().onPlayerJoin(
-					event.getPlayer());
+			ColorWarArena arena = ((ColorWarMinigame) StorageEngine.getMinigame("colorwar")).trrtrtr();
+			if (arena.canJoin())
+			{
+				sender.sendMessage(ChatColor.GREEN + "Joining ColorWar...");
+				arena.onPlayerJoin(event.getPlayer());
+			}
+			else
+			{
+				sender.sendMessage(ChatColor.RED + "Arena is in progress now!");
+			}
+			
 		}
 		else if (command.contains("/zptest"))
 		{
