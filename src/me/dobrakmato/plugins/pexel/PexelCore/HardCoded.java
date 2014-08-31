@@ -49,7 +49,7 @@ public class HardCoded
 		//Initialize gates
 		StorageEngine.addGate("mg_colorwar", new TeleportGate(new Region(
 				new Vector(1976, 147, 2532), new Vector(1972, 153, 2534),
-				Bukkit.getWorld("world")), new CommandAction("cwtest")));
+				Bukkit.getWorld("world")), new CommandAction("pcmd cwtest")));
 		
 		//Initialize lobbies
 		StorageEngine.addLobby(new Lobby("hub", new Region(new Vector(52, 107,
