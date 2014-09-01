@@ -89,9 +89,9 @@ public class MatchRecorder
 		Log.info("Saving started!");
 		long starttime = System.nanoTime();
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss-"
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss");
+		String name = Paths.matchRecord(sdf.format(new Date()) + "-"
 				+ this.arena.getName().toLowerCase());
-		String name = Paths.matchRecord(sdf.format(new Date()));
 		
 		OutputStreamWriter writer = null;
 		try
