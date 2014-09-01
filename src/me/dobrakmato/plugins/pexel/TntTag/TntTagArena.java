@@ -8,6 +8,7 @@ import me.dobrakmato.plugins.pexel.PexelCore.AreaFlag;
 import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
 import me.dobrakmato.plugins.pexel.PexelCore.ChatManager;
 import me.dobrakmato.plugins.pexel.PexelCore.GameState;
+import me.dobrakmato.plugins.pexel.PexelCore.MatchRecorder;
 import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.Region;
@@ -34,9 +35,10 @@ import org.bukkit.potion.PotionEffectType;
 public class TntTagArena extends AdvancedMinigameArena
 {
 	@ArenaOption(name = "gameTime")
-	public long	gameTimeLeft	= 60;
-	private int	taskId			= 0;
-	private int	round			= 0;
+	public long					gameTimeLeft	= 60;
+	private int					taskId			= 0;
+	private int					round			= 0;
+	private final MatchRecorder	recorder		= new MatchRecorder(this);
 	
 	public TntTagArena(final Region region, final Minigame minigame,
 			final String name, final Location lobbyLocation,
@@ -55,11 +57,14 @@ public class TntTagArena extends AdvancedMinigameArena
 	@Override
 	public void onReset()
 	{
+		this.recorder.stopCapturing();
+		this.recorder.save();
 		//Prepeare arena for new players.
 		Bukkit.getScheduler().cancelTask(this.taskId);
 		this.gameTimeLeft = 60;
 		this.round = 0;
 		this.taskId = 0;
+		this.recorder.reset();
 		//Open arena for new players.
 		this.state = GameState.WAITING_EMPTY;
 	}
@@ -150,6 +155,7 @@ public class TntTagArena extends AdvancedMinigameArena
 		}, 0L, 20L);
 		
 		this.newRound();
+		this.recorder.startCapturing();
 	}
 	
 	private void newRound()

@@ -35,7 +35,7 @@ public class Paths
 	
 	public static String matchRecord(final String name)
 	{
-		return Pexel.getCore().getDataFolder().getAbsolutePath() + "/matches/"
-				+ name + ".yml";
+		return Pexel.getCore().getDataFolder().getAbsolutePath() + "/records/"
+				+ name + ".record";
 	}
 }
