@@ -98,57 +98,60 @@ public class MatchRecorder
 			writer = new OutputStreamWriter(
 					new FileOutputStream(new File(name)));
 			
-			writer.write("# MATCH RECORD INFO START");
-			writer.write("version=1");
-			writer.write("interval=" + this.interval);
-			writer.write("# MATCH RECORD INFO END");
+			writer.write("# MATCH RECORD INFO START\n");
+			writer.write("version=1\n");
+			writer.write("interval=" + this.interval + "\n");
+			writer.write("# MATCH RECORD INFO END\n");
 			
-			writer.write("# MINIGAME INFO START");
-			writer.write("minigameName=" + this.arena.getMinigame().getName());
-			writer.write("arenaName=" + this.arena.areaName);
-			writer.write("date=" + System.currentTimeMillis());
-			writer.write("# MINIGAME INFO END");
+			writer.write("# MINIGAME INFO START\n");
+			writer.write("minigameName=" + this.arena.getMinigame().getName()
+					+ "\n");
+			writer.write("arenaName=" + this.arena.areaName + "\n");
+			writer.write("date=" + System.currentTimeMillis() + "\n");
+			writer.write("# MINIGAME INFO END\n");
 			
-			writer.write("# NAME TRANSLATE MAP START");
+			writer.write("# NAME TRANSLATE MAP START\n");
 			for (Entry<UUID, String> entry : this.playernames.entrySet())
-				writer.write(entry.getKey().toString() + "=" + entry.getValue());
-			writer.write("# NAME TRANSLATE MAP END");
+				writer.write(entry.getKey().toString() + "=" + entry.getValue()
+						+ "\n");
+			writer.write("# NAME TRANSLATE MAP END\n");
 			
-			writer.write("# ID TRANSLATE MAP START");
+			writer.write("# ID TRANSLATE MAP START\n");
 			for (Entry<UUID, Integer> entry : this.playerids.entrySet())
-				writer.write(entry.getKey().toString() + "=" + entry.getValue());
-			writer.write("# ID TRANSLATE MAP END");
+				writer.write(entry.getKey().toString() + "=" + entry.getValue()
+						+ "\n");
+			writer.write("# ID TRANSLATE MAP END\n");
 			
-			writer.write("# FRAMES SECTION START");
+			writer.write("# FRAMES SECTION START\n");
 			
 			List<Frame> frames2 = this.frames;
 			int frameCount = frames2.size();
 			for (int i = 0; i < frameCount; i++)
 			{
 				Frame f = frames2.get(i);
-				writer.write("# FRAME " + i + " START");
+				writer.write("# FRAME " + i + " START\n");
 				
-				writer.write("# FRAME PLAYER LOCATIONS LIST START");
+				writer.write("# FRAME PLAYER LOCATIONS LIST START\n");
 				for (Entry<Integer, Location> entry : f.p_locations.entrySet())
 				{
 					writer.write(entry.getKey() + "=" + entry.getValue().getX()
 							+ "|" + entry.getValue().getY() + "|"
 							+ entry.getValue().getZ() + "|"
 							+ entry.getValue().getYaw() + "|"
-							+ entry.getValue().getPitch());
+							+ entry.getValue().getPitch() + "\n");
 				}
-				writer.write("# FRAME PLAYER LOCATIONS LIST END");
+				writer.write("# FRAME PLAYER LOCATIONS LIST END\n");
 				
-				writer.write("# FRAME PLAYER HEALTH LIST START");
+				writer.write("# FRAME PLAYER HEALTH LIST START\n");
 				for (Entry<Integer, Double> entry : f.p_healths.entrySet())
 				{
-					writer.write(entry.getKey() + "=" + entry.getValue());
+					writer.write(entry.getKey() + "=" + entry.getValue() + "\n");
 				}
-				writer.write("# FRAME PLAYER HEALTH LIST END");
+				writer.write("# FRAME PLAYER HEALTH LIST END\n");
 				
-				writer.write("# FRAME " + i + " END");
+				writer.write("# FRAME " + i + " END\n");
 			}
-			writer.write("# FRAMES SECTION END");
+			writer.write("# FRAMES SECTION END\n");
 			
 		} catch (IOException e)
 		{
