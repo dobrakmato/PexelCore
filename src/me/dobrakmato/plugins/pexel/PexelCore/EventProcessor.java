@@ -136,6 +136,11 @@ public class EventProcessor implements Listener
 						{
 							event.getPlayer().performCommand("warp " + lines[1]);
 						}
+						else if (command.equalsIgnoreCase("[Matchmaking]"))
+						{
+							Pexel.getMatchmaking().processSign(lines,
+									event.getPlayer());
+						}
 						else if (command.equalsIgnoreCase("[World]"))
 						{
 							World w = Bukkit.getWorld(lines[1]);

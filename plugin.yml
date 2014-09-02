@@ -38,4 +38,6 @@ commands:
    pcmd:
      description: PCMD
      usage: /pcmd
-   
+   spawn:
+     description: Teleports player to spawn.
+     usage: /spawn

@@ -173,4 +173,11 @@ public class Matchmaking implements UpdatedPart
 		Log.partDisable("Matchmaking");
 		Bukkit.getScheduler().cancelTask(this.taskId);
 	}
+	
+	public void processSign(final String[] lines, final Player player)
+	{
+		String minigame = lines[1];
+		String map = lines[2];
+		String arena = lines[3];
+	}
 }
