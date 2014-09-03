@@ -44,15 +44,37 @@ public class TntTagMinigame implements Minigame
 	
 	public void makeArenas()
 	{
-		TntTagArena arena1 = new TntTagArena(
-				new Region(new Vector(-1953, 0, -1946), new Vector(-2089, 255,
-						-2089), Bukkit.getWorld("world")), this, "arena1",
-				new Location(Bukkit.getWorld("world"), -2010, 138.5, -1997),
-				new Location(Bukkit.getWorld("world"), -2010, 112.5, -1997));
+		TntTagArena demo_arena1 = new TntTagArena(new Region(new Vector(-1953,
+				0, -1946), new Vector(-2089, 255, -2089),
+				Bukkit.getWorld("world")), this, "demoarena1", new Location(
+				Bukkit.getWorld("world"), -2010, 138.5, -1997), new Location(
+				Bukkit.getWorld("world"), -2010, 112.5, -1997));
 		
-		this.are = arena1;
+		TntTagArena arena1 = new TntTagArena(new Region(new Vector(-867, 3,
+				-1647), new Vector(-944, 45, -1571),
+				Bukkit.getWorld("Minigame")), this, "arena1", new Location(
+				Bukkit.getWorld("Minigame"), -877, 31, -1637), new Location(
+				Bukkit.getWorld("Minigame"), -877, 5, -1637));
+		
+		TntTagArena arena2 = new TntTagArena(new Region(new Vector(-953, 3,
+				-1647), new Vector(-1030, 45, -1571),
+				Bukkit.getWorld("Minigame")), this, "arena2", new Location(
+				Bukkit.getWorld("Minigame"), -922, 31, -1603), new Location(
+				Bukkit.getWorld("Minigame"), -922, 8, -1603));
+		
+		TntTagArena arena3 = new TntTagArena(new Region(new Vector(-1029, 3,
+				-1563), new Vector(-952, 45, -1487),
+				Bukkit.getWorld("Minigame")), this, "arena3", new Location(
+				Bukkit.getWorld("Minigame"), -1000, 31, -1546), new Location(
+				Bukkit.getWorld("Minigame"), -1000, 8, -1546));
 		
 		Pexel.getMatchmaking().registerArena(arena1);
+		Pexel.getMatchmaking().registerArena(arena2);
+		Pexel.getMatchmaking().registerArena(arena3);
+		
+		this.are = demo_arena1;
+		
+		Pexel.getMatchmaking().registerArena(demo_arena1);
 	}
 	
 	public TntTagArena trrtrtr()

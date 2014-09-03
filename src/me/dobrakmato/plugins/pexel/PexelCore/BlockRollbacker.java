@@ -90,7 +90,8 @@ public class BlockRollbacker
 		if (this.changes.size() == 0)
 		{
 			Bukkit.getScheduler().cancelTask(this.taskId);
-			this.onFinished.run();
+			if (this.onFinished != null)
+				this.onFinished.run();
 		}
 		else
 		{

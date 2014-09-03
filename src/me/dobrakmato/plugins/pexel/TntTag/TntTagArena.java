@@ -44,7 +44,7 @@ public class TntTagArena extends AdvancedMinigameArena
 			final String name, final Location lobbyLocation,
 			final Location gameSpawn)
 	{
-		super(minigame, name, region, 12, 2, lobbyLocation, gameSpawn);
+		super(minigame, name, region, 12, 4, lobbyLocation, gameSpawn);
 		
 		//Allow player hitting each other.
 		this.setGlobalFlag(AreaFlag.PLAYER_DODAMAGE, true);

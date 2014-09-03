@@ -65,6 +65,7 @@ public class HardCoded
 		
 		StorageEngine.getLobby("hub").setThresholdY(10);
 		
+		//dobrakmato - block interactions
 		StorageEngine.getLobby("hub").setPlayerFlag(AreaFlag.BLOCK_BREAK, true,
 				UUID.fromString("966ad920-d45e-3fe5-8956-bf7a7a877ab4"));
 		StorageEngine.getLobby("hub").setPlayerFlag(AreaFlag.BLOCK_PLACE, true,

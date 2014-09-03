@@ -44,7 +44,7 @@ public class ColorWarMinigame implements Minigame
 		ColorWarArena arena1 = new ColorWarArena(this, "arena1", new Region(
 				new Vector(-688, 25, -1058), new Vector(-758, 150, -1128),
 				Bukkit.getWorld("Minigame")), new Location(
-				Bukkit.getWorld("Minigame"), -772, 70.5D, -1092), new Location(
+				Bukkit.getWorld("Minigame"), -722, 57.5D, -1092), new Location(
 				Bukkit.getWorld("Minigame"), -722.5, 57D, -1092.5));
 		
 		World w = Bukkit.getWorld("Minigame");

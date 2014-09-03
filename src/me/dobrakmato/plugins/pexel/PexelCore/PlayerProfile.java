@@ -57,7 +57,8 @@ public class PlayerProfile
 	/**
 	 * Amount of player's points (probably in-game currency or whatever).
 	 */
-	protected int							points			= 0;
+	protected int							coins			= 0;
+	protected int							warnCount		= 0;
 	
 	/**
 	 * Creates player profile from Player object.
@@ -217,7 +218,8 @@ public class PlayerProfile
 		YamlConfiguration yaml = new YamlConfiguration();
 		
 		yaml.set("player.uuid", this.player.toString());
-		yaml.set("player.points", this.points);
+		yaml.set("player.points", this.coins);
+		yaml.set("player.warnCount", this.warnCount);
 		yaml.set("player.lastKnownName", this.lastKnownName);
 		yaml.set("player.friends", this.friends);
 		yaml.set("player.foes", this.foes);
@@ -244,7 +246,7 @@ public class PlayerProfile
 		
 		PlayerProfile profile = new PlayerProfile(uuid);
 		
-		profile.points = yaml.getInt("player.points");
+		profile.coins = yaml.getInt("player.points");
 		profile.lastKnownName = yaml.getString("player.lastKnownName");
 		
 		List<?> friends = yaml.getList("player.friends");
@@ -275,7 +277,7 @@ public class PlayerProfile
 	 */
 	public int getPoints()
 	{
-		return this.points;
+		return this.coins;
 	}
 	
 	/**
@@ -285,6 +287,6 @@ public class PlayerProfile
 	 */
 	public void addPoints(final int points)
 	{
-		this.points += points;
+		this.coins += points;
 	}
 }

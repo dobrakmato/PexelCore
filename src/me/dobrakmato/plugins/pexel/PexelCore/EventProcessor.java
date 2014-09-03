@@ -20,6 +20,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -65,6 +66,12 @@ public class EventProcessor implements Listener
 		if (!this.hasPermission(event.getBlock().getLocation(),
 				event.getPlayer(), AreaFlag.BLOCK_BREAK))
 			event.setCancelled(true);
+	}
+	
+	@EventHandler
+	private void onPlayerRespawn(final PlayerRespawnEvent event)
+	{
+		event.getPlayer().teleport(Pexel.getHubLocation());
 	}
 	
 	@EventHandler
