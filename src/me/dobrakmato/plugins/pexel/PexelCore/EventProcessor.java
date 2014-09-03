@@ -43,21 +43,15 @@ public class EventProcessor implements Listener
 	@EventHandler
 	private void onPlayerMove(final PlayerMoveEvent event)
 	{
-		if (event.getPlayer().isSprinting())
-		{
-			for (double i = 0; i < 1.5; i += 0.20D)
-			{
-				Location diff = event.getTo().subtract(event.getFrom()).multiply(
-						1.2F);
-				if (StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParticleType() != null)
-				{
-					StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParticleType().display(
-							event.getFrom().subtract(diff).clone().add(0, i, 0),
-							0.50F, 0.20F, 0.50F, 1,
-							(int) Math.floor(0.000005 * Math.pow(1.4, 2)));
-				}
-			}
-		}
+		//FIXME: Temporarly removed.
+		/*
+		 * if (event.getPlayer().isSprinting()) { for (double i = 0; i < 1.5; i += 0.20D) { Location diff =
+		 * event.getTo().subtract(event.getFrom()).multiply( 1.2F); if
+		 * (StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParticleType() != null) {
+		 * StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParticleType().display(
+		 * event.getFrom().subtract(diff).clone().add(0, i, 0), 0.50F, 0.20F, 0.50F, 1, (int) Math.floor(0.000005 *
+		 * Math.pow(1.4, 2))); } } }
+		 */
 	}
 	
 	@EventHandler

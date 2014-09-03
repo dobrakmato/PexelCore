@@ -40,4 +40,5 @@ commands:
      usage: /pcmd
    spawn:
      description: Teleports player to spawn.
+     aliases: [hub, lobby]
      usage: /spawn

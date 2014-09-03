@@ -1,6 +1,7 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,31 +115,40 @@ public class Matchmaking implements UpdatedPart
 			if (iterations < maxIterations)
 				break;
 			
-			for (MinigameArena arena : this.arenas.get(request.getGame()))
+			if (request.getGame() != null)
 			{
-				//Ak nie je prazdna a je v nej pre nich miesto.
-				if (!arena.empty() && arena.canJoin(request.playerCount()))
-				{
-					//Pripoj kazdeho.
-					for (Player player : request.getPlayers())
-						arena.onPlayerJoin(player);
-					//Odstran request zo zoznamu.
-					this.removing.add(request);
-					break;
-				}
+				this.makeMatchesBySpecifiedMinigameAndMminigameArena(request);
 			}
-			
-			for (MinigameArena arena : this.arenas.get(request.getGame()))
+			else
 			{
-				//Ak nie je prazdna a je v nej pre nich miesto.
-				if (arena.canJoin(request.playerCount()))
+				List<MinigameArena> minigame_arenas = this.arenas.get(request.getMinigame());
+				
+				for (MinigameArena arena : minigame_arenas)
 				{
-					//Pripoj kazdeho.
-					for (Player player : request.getPlayers())
-						arena.onPlayerJoin(player);
-					//Odstran request zo zoznamu.
-					this.removing.add(request);
-					break;
+					//Ak nie je prazdna a je v nej pre nich miesto.
+					if (!arena.empty() && arena.canJoin(request.playerCount()))
+					{
+						//Pripoj kazdeho.
+						for (Player player : request.getPlayers())
+							arena.onPlayerJoin(player);
+						//Odstran request zo zoznamu.
+						this.removing.add(request);
+						break;
+					}
+				}
+				
+				for (MinigameArena arena : minigame_arenas)
+				{
+					//Ak nie je prazdna a je v nej pre nich miesto.
+					if (arena.canJoin(request.playerCount()))
+					{
+						//Pripoj kazdeho.
+						for (Player player : request.getPlayers())
+							arena.onPlayerJoin(player);
+						//Odstran request zo zoznamu.
+						this.removing.add(request);
+						break;
+					}
 				}
 			}
 			
@@ -149,6 +159,37 @@ public class Matchmaking implements UpdatedPart
 		for (MatchmakingRequest request : this.removing)
 		{
 			this.requests.remove(request);
+		}
+	}
+	
+	private void makeMatchesBySpecifiedMinigameAndMminigameArena(final MatchmakingRequest request)
+	{
+		for (MinigameArena arena : this.arenas.get(request.getGame()))
+		{
+			//Ak nie je prazdna a je v nej pre nich miesto.
+			if (!arena.empty() && arena.canJoin(request.playerCount()))
+			{
+				//Pripoj kazdeho.
+				for (Player player : request.getPlayers())
+					arena.onPlayerJoin(player);
+				//Odstran request zo zoznamu.
+				this.removing.add(request);
+				break;
+			}
+		}
+		
+		for (MinigameArena arena : this.arenas.get(request.getGame()))
+		{
+			//Ak nie je prazdna a je v nej pre nich miesto.
+			if (arena.canJoin(request.playerCount()))
+			{
+				//Pripoj kazdeho.
+				for (Player player : request.getPlayers())
+					arena.onPlayerJoin(player);
+				//Odstran request zo zoznamu.
+				this.removing.add(request);
+				break;
+			}
 		}
 	}
 	
@@ -177,7 +218,12 @@ public class Matchmaking implements UpdatedPart
 	public void processSign(final String[] lines, final Player player)
 	{
 		String minigame = lines[1];
-		String map = lines[2];
-		String arena = lines[3];
+		//String map = lines[2];
+		//String arena = lines[3];
+		
+		MatchmakingRequest request = new MatchmakingRequest(
+				Arrays.asList(player), StorageEngine.getMinigame(minigame),
+				null);
+		this.registerRequest(request);
 	}
 }
