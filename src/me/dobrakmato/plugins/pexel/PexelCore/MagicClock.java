@@ -1,3 +1,21 @@
+// @formatter:off
+/*
+ * Pexel Project - Minecraft minigame server platform. 
+ * Copyright (C) 2014 Matej Kormuth <http://www.matejkormuth.eu>
+ * 
+ * This file is part of Pexel.
+ * 
+ * Pexel is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * 
+ * Pexel is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ *
+ */
+// @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.util.Arrays;
@@ -43,33 +61,31 @@ public class MagicClock implements Listener
 						}), 0, true);
 		
 		InventoryMenuItem nobodyItem = new InventoryMenuItem(
-				ItemUtils.namedItemStack(Material.ENDER_PEARL, "Nobody",
-						null), new JavaArbitraryAction(
-						new ParametrizedRunnable() {
-							@Override
-							public void run(final Object... args)
-							{
-								for (Player onlinePlayer : Bukkit.getOnlinePlayers())
-								{
-									//if (StorageEngine.getProfile(
-									//		((Player) args[0]).getUniqueId()).isFriend(
-									//		onlinePlayer.getUniqueId()))
-									//	((Player) args[0]).showPlayer(onlinePlayer);
-									//else
-									((Player) args[0]).hidePlayer(onlinePlayer);
-								}
-								((Player) args[0]).sendMessage(ChatManager.success("All players have been vanished!"));
-							}
-						}), 1, true);
+				ItemUtils.namedItemStack(Material.ENDER_PEARL, "Nobody", null),
+				new JavaArbitraryAction(new ParametrizedRunnable() {
+					@Override
+					public void run(final Object... args)
+					{
+						for (Player onlinePlayer : Bukkit.getOnlinePlayers())
+						{
+							//if (StorageEngine.getProfile(
+							//		((Player) args[0]).getUniqueId()).isFriend(
+							//		onlinePlayer.getUniqueId()))
+							//	((Player) args[0]).showPlayer(onlinePlayer);
+							//else
+							((Player) args[0]).hidePlayer(onlinePlayer);
+						}
+						((Player) args[0]).sendMessage(ChatManager.success("All players have been vanished!"));
+					}
+				}), 1, true);
 		
 		InventoryMenuItem kickItem = new InventoryMenuItem(
 				ItemUtils.namedItemStack(Material.APPLE, "Kick me", null),
 				new KickAction(), 2, true);
 		
 		InventoryMenuItem teleportItem = new InventoryMenuItem(
-				ItemUtils.namedItemStack(Material.BED,
-						"Teleport to 0 255 0", null),
-				new TeleportAction(new Location(
+				ItemUtils.namedItemStack(Material.BED, "Teleport to 0 255 0",
+						null), new TeleportAction(new Location(
 						Bukkit.getWorld("world"), 0, 255, 0)), 3, true);
 		
 		InventoryMenuItem commandItem = new InventoryMenuItem(
