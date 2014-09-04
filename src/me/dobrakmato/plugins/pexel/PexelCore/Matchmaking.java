@@ -91,6 +91,7 @@ public class Matchmaking implements UpdatedPart
 	 * Registers new matchmaking request.
 	 * 
 	 * @param request
+	 *            the request
 	 */
 	public void registerRequest(final MatchmakingRequest request)
 	{
@@ -162,7 +163,8 @@ public class Matchmaking implements UpdatedPart
 		}
 	}
 	
-	private void makeMatchesBySpecifiedMinigameAndMminigameArena(final MatchmakingRequest request)
+	private void makeMatchesBySpecifiedMinigameAndMminigameArena(
+			final MatchmakingRequest request)
 	{
 		for (MinigameArena arena : this.arenas.get(request.getGame()))
 		{
