@@ -31,6 +31,14 @@ public class PlayerChannelSubscriber implements ChannelSubscriber
 	private final SubscribeMode	mode;
 	private final Player		player;
 	
+	/**
+	 * Creates new instance of player channel subscriber.
+	 * 
+	 * @param player
+	 *            player
+	 * @param mode
+	 *            subscribe mode
+	 */
 	public PlayerChannelSubscriber(final Player player, final SubscribeMode mode)
 	{
 		this.mode = mode;

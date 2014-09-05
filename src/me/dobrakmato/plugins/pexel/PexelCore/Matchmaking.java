@@ -144,10 +144,10 @@ public class Matchmaking implements UpdatedPart
 				
 				for (MinigameArena arena : minigame_arenas)
 				{
-					//Ak nie je prazdna a je v nej pre nich miesto.
+					// If is not empty, and there is a place for them
 					if (!arena.empty() && arena.canJoin(request.playerCount()))
 					{
-						//Pripoj kazdeho.
+						// Connect all of them
 						for (Player player : request.getPlayers())
 							arena.onPlayerJoin(player);
 						//Odstran request zo zoznamu.
@@ -158,13 +158,13 @@ public class Matchmaking implements UpdatedPart
 				
 				for (MinigameArena arena : minigame_arenas)
 				{
-					//Ak nie je prazdna a je v nej pre nich miesto.
+					// If is not empty, and there is a place for them
 					if (arena.canJoin(request.playerCount()))
 					{
-						//Pripoj kazdeho.
+						// Connect all of them
 						for (Player player : request.getPlayers())
 							arena.onPlayerJoin(player);
-						//Odstran request zo zoznamu.
+						// Remove request from queue.
 						this.removing.add(request);
 						break;
 					}
@@ -186,13 +186,13 @@ public class Matchmaking implements UpdatedPart
 	{
 		for (MinigameArena arena : this.arenas.get(request.getGame()))
 		{
-			//Ak nie je prazdna a je v nej pre nich miesto.
+			// If is not empty, and there is a place for them
 			if (!arena.empty() && arena.canJoin(request.playerCount()))
 			{
-				//Pripoj kazdeho.
+				// Connect all of them
 				for (Player player : request.getPlayers())
 					arena.onPlayerJoin(player);
-				//Odstran request zo zoznamu.
+				// Remove request from queue.
 				this.removing.add(request);
 				break;
 			}
@@ -200,13 +200,13 @@ public class Matchmaking implements UpdatedPart
 		
 		for (MinigameArena arena : this.arenas.get(request.getGame()))
 		{
-			//Ak nie je prazdna a je v nej pre nich miesto.
+			// If is not empty, and there is a place for them
 			if (arena.canJoin(request.playerCount()))
 			{
-				//Pripoj kazdeho.
+				// Connect all of them
 				for (Player player : request.getPlayers())
 					arena.onPlayerJoin(player);
-				//Odstran request zo zoznamu.
+				// Remove request from queue.
 				this.removing.add(request);
 				break;
 			}
@@ -238,6 +238,8 @@ public class Matchmaking implements UpdatedPart
 	public void processSign(final String[] lines, final Player player)
 	{
 		String minigame = lines[1];
+		
+		// Currently not used.
 		//String map = lines[2];
 		//String arena = lines[3];
 		

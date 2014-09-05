@@ -203,13 +203,19 @@ public class PlayerProfile
 			return true;
 	}
 	
+	/**
+	 * Set players settings.
+	 * 
+	 * @param setting
+	 * @param value
+	 */
 	public void setSetting(final Setting setting, final boolean value)
 	{
 		this.settings.put(setting, value);
 	}
 	
 	/**
-	 * Return's whatever is player spectating.
+	 * Return's whether is player spectating.
 	 * 
 	 * @return
 	 */
@@ -229,7 +235,10 @@ public class PlayerProfile
 	}
 	
 	/**
-	 * @param playerProfile
+	 * Saves player's profile to file.
+	 * 
+	 * @param path
+	 *            path to save
 	 */
 	public void save(final String path)
 	{
@@ -253,6 +262,8 @@ public class PlayerProfile
 	}
 	
 	/**
+	 * Loads player profile from specified path.
+	 * 
 	 * @param playerProfile
 	 * @return
 	 */

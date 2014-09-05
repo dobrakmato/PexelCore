@@ -31,44 +31,59 @@ public class TeleportGate
 	private final Region	region;
 	private Action			action;
 	
+	/**
+	 * Creates new teleport gate in specified region, with specified action that will be executed when PlayerPortalEvent
+	 * is thrown for this gate.
+	 * 
+	 * @param region
+	 *            region of gate
+	 * @param action
+	 *            action to be executed
+	 */
 	public TeleportGate(final Region region, final Action action)
 	{
 		this.region = region;
 		this.action = action;
 	}
 	
+	/**
+	 * Retruns region of gate.
+	 * 
+	 * @return
+	 */
 	public Region getRegion()
 	{
 		return this.region;
 	}
 	
+	/**
+	 * Executes specified action on specified player.
+	 * 
+	 * @param player
+	 *            player to execute action to
+	 */
 	protected void execute(final Player player)
 	{
 		this.action.execute(player);
-		/*
-		 * if (this.actionType.equalsIgnoreCase("teleport")) { if (this.isCrossServer()) {
-		 * this.targetServer.getClient().sendPacket( new CrossServerTeleportPacket(player, this.actionContent)); } else
-		 * { String[] parts = this.actionContent.split(",");
-		 * 
-		 * try { Double x = Double.parseDouble(parts[0]); Double y = Double.parseDouble(parts[1]); Double z =
-		 * Double.parseDouble(parts[2]); Float yaw = Float.parseFloat(parts[3]); Float pitch =
-		 * Float.parseFloat(parts[4]); String world = parts[5];
-		 * 
-		 * player.teleport(new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch)); } catch (Exception ex) {
-		 * Log.addProblem("Invalid action at gate (" + this.region.toString() + "): " + this.actionType + " >> " +
-		 * this.actionContent); } } } else if (this.actionType.equalsIgnoreCase("command")) {
-		 * player.performCommand(this.actionContent.replace("%player%", player.getName())); } else {
-		 * Log.addProblem("Invalid action at gate (" + this.region.toString() + "): " + this.actionType + " >> " +
-		 * this.actionContent); }
-		 */
 	}
 	
+	/**
+	 * Returns action of this gate.
+	 * 
+	 * @return action
+	 */
 	public Action getAction()
 	{
 		return this.action;
 	}
 	
-	public void setContent(final Action action)
+	/**
+	 * Sets action to this teleport gate.
+	 * 
+	 * @param action
+	 *            action
+	 */
+	public void setAction(final Action action)
 	{
 		this.action = action;
 	}

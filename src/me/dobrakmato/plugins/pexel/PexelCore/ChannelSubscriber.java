@@ -36,14 +36,14 @@ public interface ChannelSubscriber
 	/**
 	 * Returns this subscriber's mode.
 	 * 
-	 * @return
+	 * @return subscribe mode
 	 */
 	public SubscribeMode getMode();
 	
 	/**
 	 * Returns if is this subscriber online/active.
 	 * 
-	 * @return
+	 * @return whether the player is online
 	 */
 	public boolean isOnline();
 }

@@ -21,7 +21,7 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 import org.bukkit.entity.Player;
 
 /**
- * Basic sudo to player inventory action.
+ * Basic sudo command player action.
  * 
  * @author Mato Kormuth
  * 
@@ -31,7 +31,8 @@ public class CommandAction implements Action
 	private String	command	= "";
 	
 	/**
-	 * Creates a new command action.
+	 * Creates a new command action. Command should <b> not contain</b> slash. <code>%player%</code> in command will be
+	 * replaced with name of player, that is this command executing for.
 	 * 
 	 * @param command
 	 *            command of this action

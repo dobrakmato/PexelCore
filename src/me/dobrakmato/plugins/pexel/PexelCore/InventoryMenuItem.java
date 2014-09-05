@@ -71,6 +71,7 @@ public class InventoryMenuItem
 	 * Executes action with specified player(sender).
 	 * 
 	 * @param player
+	 *            player that is task executed
 	 */
 	public void execute(final Player player)
 	{
@@ -80,7 +81,7 @@ public class InventoryMenuItem
 	/**
 	 * Returns bukkit compactibile ItemStack of this menu item.
 	 * 
-	 * @return
+	 * @return item stack
 	 */
 	public ItemStack getItemStack()
 	{
@@ -90,7 +91,7 @@ public class InventoryMenuItem
 	/**
 	 * Returns slot in minecraft inventory.
 	 * 
-	 * @return
+	 * @return id of slot
 	 */
 	public int getSlot()
 	{

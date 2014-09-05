@@ -36,7 +36,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class PlayerFreezer implements Listener
 {
 	/**
-	 * List of frozen textures.
+	 * List of frozen textures. <br/>
+	 * FIXME: Remove 'dead' disconnected player objects.
 	 */
 	private final List<Player>	frozen	= new ArrayList<Player>();
 	
@@ -49,6 +50,7 @@ public class PlayerFreezer implements Listener
 	 * Freezes (disables movement) the player.
 	 * 
 	 * @param player
+	 *            player to freeze
 	 */
 	public void freeze(final Player player)
 	{
@@ -59,6 +61,7 @@ public class PlayerFreezer implements Listener
 	 * Unfreezes (enables movement) the player.
 	 * 
 	 * @param player
+	 *            player to unfreeze
 	 */
 	public void unfreeze(final Player player)
 	{

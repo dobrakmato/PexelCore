@@ -56,7 +56,7 @@ public class Team
 		this.color = color;
 		this.name = name;
 		this.maxPlayers = maximumPlayers;
-		this.teamchat.setPrefix(ChatColor.YELLOW + "[TEAM]");
+		this.teamchat.setPrefix(ChatColor.YELLOW + "[TEAM] ");
 	}
 	
 	/**

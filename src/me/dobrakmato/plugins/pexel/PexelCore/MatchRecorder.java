@@ -44,18 +44,33 @@ import org.bukkit.entity.Player;
  */
 public class MatchRecorder
 {
+	//Arena that this recorder record.
 	private final MinigameArena			arena;
+	//ID of periodic task
 	private int							taskId		= 0;
-	private final long					interval	= 2;
+	//Interval in ticks
+	private final long					interval	= 2L;
+	//List of frames
 	private final List<Frame>			frames		= new ArrayList<Frame>(600);
+	//Mapping UUID to player name
 	private final Map<UUID, String>		playernames	= new HashMap<UUID, String>();
+	//Mapping UUID to EntityID
 	private final Map<UUID, Integer>	playerids	= new HashMap<UUID, Integer>();
 	
+	/**
+	 * Initializes new instance of record for specified arena
+	 * 
+	 * @param arena
+	 *            arena to initialize recorder to
+	 */
 	public MatchRecorder(final MinigameArena arena)
 	{
 		this.arena = arena;
 	}
 	
+	/**
+	 * Starts periodic process of capturing frames.
+	 */
 	public void startCapturing()
 	{
 		this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
@@ -78,6 +93,9 @@ public class MatchRecorder
 		}, 0L, this.interval);
 	}
 	
+	/**
+	 * Makes snapshot of player healths and positions ak. records a frame.
+	 */
 	protected void captureFrame()
 	{
 		Frame frame = new Frame();
@@ -89,6 +107,9 @@ public class MatchRecorder
 		this.frames.add(frame);
 	}
 	
+	/**
+	 * Stops capturing process.
+	 */
 	public void stopCapturing()
 	{
 		this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
@@ -96,11 +117,19 @@ public class MatchRecorder
 		Pexel.cancelTask(this.taskId);
 	}
 	
+	/**
+	 * Returns whether is recorder recording or not.
+	 * 
+	 * @return true if is recorder enabled
+	 */
 	public boolean isEnabled()
 	{
 		return this.taskId != 0;
 	}
 	
+	/**
+	 * Saves recorder frames to file.
+	 */
 	public void save()
 	{
 		Log.info("Saving started!");
@@ -190,12 +219,22 @@ public class MatchRecorder
 				+ "ms)");
 	}
 	
+	/**
+	 * Frame.
+	 * 
+	 * @author Mato Kormuth
+	 * 
+	 */
 	public class Frame
 	{
+		//Various mappings.
 		Map<Integer, Location>	p_locations	= new HashMap<Integer, Location>();
 		Map<Integer, Double>	p_healths	= new HashMap<Integer, Double>();
 	}
 	
+	/**
+	 * Resets recorder.
+	 */
 	public void reset()
 	{
 		this.frames.clear();

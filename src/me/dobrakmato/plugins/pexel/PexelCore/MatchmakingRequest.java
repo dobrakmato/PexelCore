@@ -106,7 +106,9 @@ public class MatchmakingRequest
 	 * Updates server server location ({@link ServerLocation}) of players in request. Does not teleport players.
 	 * 
 	 * @param location
+	 * @deprecated
 	 */
+	@Deprecated
 	public void updateServerLocation(final ServerLocation location)
 	{
 		for (Player p : this.players)

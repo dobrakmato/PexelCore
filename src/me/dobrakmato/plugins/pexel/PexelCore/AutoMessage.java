@@ -64,7 +64,7 @@ public class AutoMessage implements UpdatedPart
 	/**
 	 * Returns if is AutoMessage enabled.
 	 * 
-	 * @return
+	 * @return true or false
 	 */
 	public static boolean isEnabled()
 	{

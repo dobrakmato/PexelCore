@@ -49,6 +49,12 @@ public class StorageEngine
 	private static final Map<String, TeleportGate>	gates		= new HashMap<String, TeleportGate>();
 	private static boolean							initialized	= false;
 	
+	/**
+	 * Initializes static obeject of storage engine.
+	 * 
+	 * @param core
+	 *            pexel core
+	 */
 	public static void initialize(final PexelCore core)
 	{
 		if (!StorageEngine.initialized)
@@ -59,7 +65,8 @@ public class StorageEngine
 	 * Returns UUIDs of player's friends.
 	 * 
 	 * @param player
-	 * @return
+	 *            player
+	 * @return lsit of friends
 	 */
 	public static List<UUID> getFriends(final Player player)
 	{
@@ -77,6 +84,11 @@ public class StorageEngine
 		return StorageEngine.profiles.get(player.getUniqueId()).getFoes();
 	}
 	
+	/**
+	 * Returns map of areas.
+	 * 
+	 * @return
+	 */
 	protected static Map<String, ProtectedArea> getAreas()
 	{
 		return StorageEngine.areas;
@@ -93,27 +105,54 @@ public class StorageEngine
 		return profiles.get(player);
 	}
 	
+	/**
+	 * Returns minigame by its name.
+	 * 
+	 * @param name
+	 *            name of minigame
+	 * @return minigame object
+	 */
 	public static Minigame getMinigame(final String name)
 	{
 		return StorageEngine.minigames.get(name);
 	}
 	
+	/**
+	 * Registers minigame.
+	 * 
+	 * @param minigame
+	 */
 	public static void addMinigame(final Minigame minigame)
 	{
 		StorageEngine.minigames.put(minigame.getName(), minigame);
 	}
 	
+	/**
+	 * Registers mingiame's arena.
+	 * 
+	 * @param arena
+	 */
 	public static void addArena(final MinigameArena arena)
 	{
 		StorageEngine.arenas.put(arena.getName(), arena);
 		StorageEngine.areas.put(arena.getName(), arena);
 	}
 	
+	/**
+	 * Returns minigame arenas count.
+	 * 
+	 * @return count of minigame arenas.
+	 */
 	public static int getMinigameArenasCount()
 	{
 		return StorageEngine.arenas.size();
 	}
 	
+	/**
+	 * Returns count of mingiame.
+	 * 
+	 * @return count of minigame
+	 */
 	public static int getMinigamesCount()
 	{
 		return StorageEngine.minigames.size();

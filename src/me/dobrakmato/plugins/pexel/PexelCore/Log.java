@@ -122,7 +122,7 @@ public class Log
 	}
 	
 	/**
-	 * Adds problem to list.
+	 * Adds problem to list. Problem is added to log and reported to all OP on server.
 	 * 
 	 * @param message
 	 */

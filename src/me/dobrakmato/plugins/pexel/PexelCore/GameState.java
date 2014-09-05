@@ -60,11 +60,21 @@ public enum GameState
 		this.canjoin = canjoin;
 	}
 	
+	/**
+	 * Returns whether this state menas that arena is in playing state.
+	 * 
+	 * @return true or false
+	 */
 	public boolean isPlaying()
 	{
 		return this.playing;
 	}
 	
+	/**
+	 * Returns if this state allows joining players.
+	 * 
+	 * @return true or false
+	 */
 	public boolean canJoin()
 	{
 		return this.canjoin;

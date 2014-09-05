@@ -482,15 +482,9 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
 	@EventHandler
 	public void ___onPlayerRespawn(final PlayerRespawnEvent event)
 	{
-		if (this.playersCanRespawn)
-		{
-			//nothing.
-		}
-		else
-		{
+		if (!this.playersCanRespawn)
 			//Kick from arena
 			this.onPlayerLeft(event.getPlayer());
-		}
 	}
 	
 	@EventHandler

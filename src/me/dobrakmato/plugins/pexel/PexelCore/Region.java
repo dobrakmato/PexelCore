@@ -192,13 +192,23 @@ public class Region
 			return (value <= min ? (value >= max ? true : false) : false);
 	}
 	
-	public Location getMinimalLocation()
+	/**
+	 * Retruns first vector.
+	 * 
+	 * @return vector
+	 */
+	public Location getV1Loaction()
 	{
 		return new Location(this.w, this.v1.getX(), this.v1.getY(),
 				this.v1.getZ());
 	}
 	
-	public Location getMaximalLocation()
+	/**
+	 * Returns second vector.
+	 * 
+	 * @return vector
+	 */
+	public Location getV2Location()
 	{
 		return new Location(this.w, this.v2.getX(), this.v2.getY(),
 				this.v2.getZ());
@@ -213,6 +223,11 @@ public class Region
 				+ this.v2.getBlockZ() + ",world:" + this.w.getName() + "}";
 	}
 	
+	/**
+	 * Returns players in XZ region.
+	 * 
+	 * @return list of players.
+	 */
 	public List<Player> getPlayersXZ()
 	{
 		List<Player> players = new ArrayList<Player>();

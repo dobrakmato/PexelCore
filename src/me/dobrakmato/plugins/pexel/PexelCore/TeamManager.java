@@ -45,7 +45,7 @@ public class TeamManager implements Listener
 {
 	private final List<Team>			teams		= new ArrayList<Team>();
 	private final Map<Location, Team>	signs		= new HashMap<Location, Team>();
-	private final int					odchylka	= 1;
+	private final int					varience	= 1;
 	private final MinigameArena			arena;
 	
 	/**
@@ -225,7 +225,7 @@ public class TeamManager implements Listener
 	 */
 	public int getAvarangePlayerCount()
 	{
-		int allPlayers = this.odchylka;
+		int allPlayers = this.varience;
 		for (Team team : this.teams)
 			allPlayers += team.getPlayerCount();
 		return (int) Math.ceil(allPlayers / this.teams.size());

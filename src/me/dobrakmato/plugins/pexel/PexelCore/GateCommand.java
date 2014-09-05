@@ -35,7 +35,6 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
  */
 public class GateCommand implements CommandExecutor
 {
-	
 	private final WorldEditPlugin	we;
 	
 	public GateCommand()

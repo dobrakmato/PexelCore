@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class that turns off all parts when needed.
+ * Class that turns off all parts when needed. Idk what is this...
  * 
  * @author Mato Kormuth
  * 

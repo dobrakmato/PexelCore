@@ -30,6 +30,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * PCMD (internal pexel command) executor.
+ * 
  * @author Mato Kormuth
  * 
  */

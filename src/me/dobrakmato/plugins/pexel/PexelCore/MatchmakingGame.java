@@ -47,15 +47,17 @@ public interface MatchmakingGame
 	/**
 	 * Returns game actual state.
 	 * 
-	 * @return
+	 * @return state of arena
 	 */
 	public GameState getState();
 	
 	/**
 	 * Returns game server locetion.
 	 * 
-	 * @return
+	 * @return server location of this arena
+	 * @deprecated
 	 */
+	@Deprecated
 	public ServerLocation getServerLocation();
 	
 	/**
@@ -68,14 +70,14 @@ public interface MatchmakingGame
 	/**
 	 * Returns number of player in game. Same as calling {@link MatchmakingRequest#getPlayers()}.size().
 	 * 
-	 * @return
+	 * @return number of players in arena
 	 */
 	public int playerCount();
 	
 	/**
 	 * Returns if one player can join game.
 	 * 
-	 * @return
+	 * @return true or false
 	 */
 	public boolean canJoin();
 	
@@ -84,7 +86,7 @@ public interface MatchmakingGame
 	 * 
 	 * @param count
 	 *            amount of players
-	 * @return
+	 * @return true or false
 	 */
 	public boolean canJoin(int count);
 	
@@ -92,6 +94,7 @@ public interface MatchmakingGame
 	 * Called when player joins the game.
 	 * 
 	 * @param player
+	 *            player who joined arena
 	 */
 	public void onPlayerJoin(Player player);
 	
@@ -99,6 +102,7 @@ public interface MatchmakingGame
 	 * Called when player lefts the game.
 	 * 
 	 * @param player
+	 *            player who left arena
 	 */
 	public void onPlayerLeft(Player player);
 }

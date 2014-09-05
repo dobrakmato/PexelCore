@@ -68,16 +68,24 @@ public class TeleportAction implements Action
 	@Override
 	public void load(final String string)
 	{
-		//Split string to elements.
-		String[] elements = string.split("\\|");
-		double x = Double.parseDouble(elements[0]);
-		double y = Double.parseDouble(elements[1]);
-		double z = Double.parseDouble(elements[2]);
-		float pitch = Float.parseFloat(elements[3]);
-		float yaw = Float.parseFloat(elements[4]);
-		String name = elements[5];
-		//Build location from elements.
-		this.location = new Location(Bukkit.getWorld(name), x, y, z, yaw, pitch);
+		try
+		{
+			//Split string to elements.
+			String[] elements = string.split("\\|");
+			double x = Double.parseDouble(elements[0]);
+			double y = Double.parseDouble(elements[1]);
+			double z = Double.parseDouble(elements[2]);
+			float pitch = Float.parseFloat(elements[3]);
+			float yaw = Float.parseFloat(elements[4]);
+			String name = elements[5];
+			//Build location from elements.
+			this.location = new Location(Bukkit.getWorld(name), x, y, z, yaw,
+					pitch);
+		} catch (Exception ex)
+		{
+			Log.warn("Can't deserialize string '" + string
+					+ "' as TeleportAction!");
+		}
 	}
 	
 	@Override
@@ -92,7 +100,7 @@ public class TeleportAction implements Action
 					+ this.location.getWorld().getName();
 		} catch (Exception ex)
 		{
-			return "";
+			return "ERROR_WHILE_SERIALIZING";
 		}
 	}
 	
@@ -108,7 +116,7 @@ public class TeleportAction implements Action
 		{
 			//TODO: Add teleport to location. Perform server-wide teleport
 			
-			//Teleport to other server
+			//Teleport to other server using bungee
 			ByteArrayDataOutput out = ByteStreams.newDataOutput();
 			out.writeUTF("Connect");
 			out.writeUTF(this.server.getBungeeName());

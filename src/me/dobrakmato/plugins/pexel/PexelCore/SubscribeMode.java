@@ -19,7 +19,7 @@
 package me.dobrakmato.plugins.pexel.PexelCore;
 
 /**
- * Channel subscription mode.
+ * Chat channel subscription mode.
  * 
  * @author Mato Kormuth
  * 

@@ -46,7 +46,7 @@ public final class Pexel
 	/**
 	 * Returns the main plugin instance.
 	 * 
-	 * @return
+	 * @return core
 	 */
 	public static final PexelCore getCore()
 	{
@@ -56,7 +56,7 @@ public final class Pexel
 	/**
 	 * Returns Matchmaking class.
 	 * 
-	 * @return
+	 * @return matchmaking
 	 */
 	public static Matchmaking getMatchmaking()
 	{
@@ -66,7 +66,7 @@ public final class Pexel
 	/**
 	 * Returns player freezer.
 	 * 
-	 * @return
+	 * @return player freezer
 	 */
 	public static PlayerFreezer getFreezer()
 	{
@@ -77,8 +77,11 @@ public final class Pexel
 	 * Schedules periodic task. Returns task id.
 	 * 
 	 * @param runnable
+	 *            runnable, that will be executed periodically.
 	 * @param delay
+	 *            delay before first execution in server ticks.
 	 * @param period
+	 *            period in server ticks.
 	 * @return task id
 	 */
 	public static int schedule(final Runnable runnable, final long delay,
@@ -92,6 +95,7 @@ public final class Pexel
 	 * Cancles task.
 	 * 
 	 * @param taskId
+	 *            task id
 	 */
 	public static void cancelTask(final int taskId)
 	{
@@ -102,7 +106,7 @@ public final class Pexel
 	 * Retruns player's profile.
 	 * 
 	 * @param player
-	 * @return
+	 * @return profile of specified player
 	 */
 	public PlayerProfile getProfile(final Player player)
 	{
@@ -113,7 +117,7 @@ public final class Pexel
 	 * Retruns player's profile.
 	 * 
 	 * @param player
-	 * @return
+	 * @return profile of specified player
 	 */
 	public PlayerProfile getProfile(final UUID player)
 	{
@@ -123,7 +127,7 @@ public final class Pexel
 	/**
 	 * Returns instance of {@link Random}.
 	 * 
-	 * @return
+	 * @return pexel's random.
 	 */
 	public static Random getRandom()
 	{

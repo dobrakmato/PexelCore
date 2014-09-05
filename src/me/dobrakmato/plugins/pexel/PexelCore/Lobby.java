@@ -36,7 +36,9 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	 * Creates new lobby object with specified name and region.
 	 * 
 	 * @param name
+	 *            name of lobby
 	 * @param region
+	 *            region of lobby
 	 */
 	public Lobby(final String name, final Region region)
 	{
@@ -53,7 +55,6 @@ public class Lobby extends ProtectedArea implements UpdatedPart
 	 */
 	private Location	lobbySpawn;
 	private int			taskId			= 0;
-	
 	/**
 	 * How often should lobby check for players.
 	 */

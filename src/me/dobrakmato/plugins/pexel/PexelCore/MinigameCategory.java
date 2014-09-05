@@ -35,7 +35,8 @@ public enum MinigameCategory
 	 */
 	SURVIVAL,
 	/**
-	 * Mingiame that is ready for tournaments (ex. Kingdom Wars, Annihilation).
+	 * Mingiame that is ready for tournaments (ex. Kingdom Wars, Annihilation). Minigames in this category have enabled
+	 * negative points for leaving match before match ends.
 	 */
 	TOURNAMENT;
 }

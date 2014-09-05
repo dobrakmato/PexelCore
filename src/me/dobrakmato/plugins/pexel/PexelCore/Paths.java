@@ -28,6 +28,12 @@ import java.util.UUID;
  */
 public class Paths
 {
+	/**
+	 * Returns path for player profile.
+	 * 
+	 * @param uuid
+	 * @return
+	 */
 	public static final String playerProfile(final UUID uuid)
 	{
 		return Pexel.getCore().getDataFolder().getAbsolutePath() + "/profiles/"

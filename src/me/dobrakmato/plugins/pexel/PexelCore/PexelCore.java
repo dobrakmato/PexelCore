@@ -59,16 +59,27 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 	 * Magic clock instance.
 	 */
 	public MagicClock			magicClock;
-	
+	/**
+	 * AutoMessage instance.
+	 */
 	public AutoMessage			message;
-	
+	/**
+	 * Master server instance.
+	 */
 	public PexelMasterServer	pexelserver;
+	/**
+	 * Master server client instance.
+	 */
 	public PexelServerClient	pexelclient;
+	/**
+	 * AsyncWorker object
+	 */
 	public AsyncWorker			asyncWorker;
 	
 	@Override
 	public void onDisable()
 	{
+		Log.partDisable("Core");
 		//Shutdown all updated parts.
 		UpdatedParts.shutdown();
 		
@@ -79,7 +90,6 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 		this.asyncWorker.shutdown();
 		
 		StorageEngine.saveData();
-		
 		Log.partDisable("Core");
 	}
 	
