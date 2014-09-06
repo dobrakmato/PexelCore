@@ -18,8 +18,8 @@
 // @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore.actions;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
 import me.dobrakmato.plugins.pexel.PexelNetworking.Server;
 
 import org.bukkit.Bukkit;

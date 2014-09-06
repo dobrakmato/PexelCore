@@ -18,8 +18,8 @@
 // @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore.commands;
 
+import me.dobrakmato.plugins.pexel.PexelCore.areas.Lobby;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Lobby;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 

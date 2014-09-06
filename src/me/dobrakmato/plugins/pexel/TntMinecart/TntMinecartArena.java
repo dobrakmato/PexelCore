@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.AdvancedMinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.ArenaOption;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.kits.Kit;
 import me.dobrakmato.plugins.pexel.PexelCore.kits.KitInventoryMenu;

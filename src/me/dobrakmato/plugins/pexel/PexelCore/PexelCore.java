@@ -16,12 +16,11 @@
  *
  */
 // @formatter:on
-package me.dobrakmato.plugins.pexel.PexelCore.core;
+package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.util.Arrays;
 import java.util.List;
 
-import me.dobrakmato.plugins.pexel.PexelCore.PexelServer;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.Areas;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.AlternativeCommands;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.ArenaCommand;
@@ -34,9 +33,13 @@ import me.dobrakmato.plugins.pexel.PexelCore.commands.QJCommand;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.SettingsCommand;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.SpawnCommand;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.UnfriendCommand;
+import me.dobrakmato.plugins.pexel.PexelCore.core.AutoMessage;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
+import me.dobrakmato.plugins.pexel.PexelCore.core.MagicClock;
+import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
+import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedParts;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.Matchmaking;
 import me.dobrakmato.plugins.pexel.PexelCore.utils.AsyncWorker;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.AutoMessage;
 import me.dobrakmato.plugins.pexel.PexelCore.utils.PlayerFreezer;
 import me.dobrakmato.plugins.pexel.PexelNetworking.PexelMasterServer;
 import me.dobrakmato.plugins.pexel.PexelNetworking.PexelServerClient;
@@ -60,10 +63,6 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 	 * Pexel matchmaking.
 	 */
 	public Matchmaking			matchmaking;
-	/**
-	 * Pexel TCP server.
-	 */
-	public PexelServer			oldServer;
 	/**
 	 * Player freezer.
 	 */
@@ -89,7 +88,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 	 */
 	public PexelServerClient	pexelclient;
 	/**
-	 * AsyncWorker object
+	 * AsyncWorker object.
 	 */
 	public AsyncWorker			asyncWorker;
 	
@@ -99,8 +98,6 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 		Log.partDisable("Core");
 		//Shutdown all updated parts.
 		UpdatedParts.shutdown();
-		
-		this.oldServer.close();
 		
 		this.pexelserver.close();
 		
@@ -119,9 +116,6 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 		
 		this.freezer = new PlayerFreezer();
 		
-		this.oldServer = new PexelServer();
-		this.oldServer.listen();
-		
 		try
 		{
 			this.pexelserver = new PexelMasterServer(30789);
@@ -138,7 +132,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 		
 		this.magicClock = new MagicClock();
 		
-		this.asyncWorker = new AsyncWorker(4);
+		this.asyncWorker = new AsyncWorker(3);
 		
 		this.eventProcessor = new EventProcessor();
 		
@@ -189,21 +183,6 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
 	public void onPluginMessageReceived(final String channel,
 			final Player player, final byte[] payload)
 	{
-		if (!channel.equals("BungeeCord"))
-		{
-			return;
-		}
-		else
-		{
-			String message = new String(payload);
-			if (message.startsWith("PlayerCoun"))
-			{
-				
-			}
-			else
-			{
-				//Log.info("onPluginMessageReceived: " + new String(message));
-			}
-		}
+		// Nothing for now...
 	}
 }

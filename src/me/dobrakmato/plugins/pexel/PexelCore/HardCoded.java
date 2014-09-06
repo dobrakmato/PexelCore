@@ -16,7 +16,7 @@
  *
  */
 // @formatter:on
-package me.dobrakmato.plugins.pexel.PexelCore.core;
+package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.util.UUID;
 
@@ -24,7 +24,11 @@ import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
 import me.dobrakmato.plugins.pexel.KingdomWars.KingdomWarsMingame;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.TeleportAction;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.AreaFlag;
+import me.dobrakmato.plugins.pexel.PexelCore.areas.Lobby;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.CommandAction;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
+import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
+import me.dobrakmato.plugins.pexel.PexelCore.core.TeleportGate;
 import me.dobrakmato.plugins.pexel.PexelNetworking.Server;
 import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
 
@@ -50,6 +54,7 @@ public class HardCoded
 		//Initialize zabi pitkesa minigame
 		//new ZabiPitkesaMinigame();
 		new TntTagMinigame();
+		
 		new KingdomWarsMingame();
 		
 		//Initialize main gates

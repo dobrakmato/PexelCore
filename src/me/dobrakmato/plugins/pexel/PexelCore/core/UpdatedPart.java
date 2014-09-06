@@ -18,6 +18,8 @@
 // @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore.core;
 
+import me.dobrakmato.plugins.pexel.PexelCore.PexelCore;
+
 
 /**
  * Interface used for starting and stopping tasks.

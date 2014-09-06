@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
+
 import org.bukkit.entity.Player;
 
 /**

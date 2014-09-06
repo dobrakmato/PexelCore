@@ -16,11 +16,14 @@
  *
  */
 // @formatter:on
-package me.dobrakmato.plugins.pexel.PexelCore.core;
+package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.util.Random;
 import java.util.UUID;
 
+import me.dobrakmato.plugins.pexel.PexelCore.core.MagicClock;
+import me.dobrakmato.plugins.pexel.PexelCore.core.PlayerProfile;
+import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.Matchmaking;
 import me.dobrakmato.plugins.pexel.PexelCore.utils.AsyncWorker;
 import me.dobrakmato.plugins.pexel.PexelCore.utils.PlayerFreezer;
@@ -44,7 +47,10 @@ public final class Pexel
 	
 	protected final static void initialize(final PexelCore plugin)
 	{
-		Pexel.plugin = plugin;
+		if (Pexel.plugin == null)
+			Pexel.plugin = plugin;
+		else
+			throw new RuntimeException("Pexel object already initialized!");
 	}
 	
 	/**
@@ -167,9 +173,9 @@ public final class Pexel
 	}
 	
 	/**
-	 * Return's lobby location.
+	 * Return's hub location.
 	 * 
-	 * @return lobby lcoation
+	 * @return hub lcoation
 	 */
 	public static Location getHubLocation()
 	{

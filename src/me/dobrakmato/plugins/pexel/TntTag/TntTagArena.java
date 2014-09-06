@@ -3,15 +3,15 @@ package me.dobrakmato.plugins.pexel.TntTag;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.AreaFlag;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.AdvancedMinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.ArenaOption;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
+import me.dobrakmato.plugins.pexel.PexelCore.core.MatchRecorder;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.GameState;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.MatchRecorder;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

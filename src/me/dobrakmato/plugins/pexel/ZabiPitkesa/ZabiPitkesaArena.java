@@ -1,9 +1,9 @@
 package me.dobrakmato.plugins.pexel.ZabiPitkesa;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.AdvancedMinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.ArenaOption;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.GameState;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;

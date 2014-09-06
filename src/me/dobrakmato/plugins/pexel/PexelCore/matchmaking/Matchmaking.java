@@ -24,9 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.dobrakmato.plugins.pexel.PexelCore.PexelCore;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.MinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
-import me.dobrakmato.plugins.pexel.PexelCore.core.PexelCore;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedPart;
 import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedParts;

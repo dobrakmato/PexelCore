@@ -20,8 +20,8 @@ package me.dobrakmato.plugins.pexel.PexelCore.commands;
 
 import java.util.Arrays;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.MatchmakingRequest;
 

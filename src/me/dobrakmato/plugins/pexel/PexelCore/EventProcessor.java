@@ -16,13 +16,15 @@
  *
  */
 // @formatter:on
-package me.dobrakmato.plugins.pexel.PexelCore.core;
+package me.dobrakmato.plugins.pexel.PexelCore;
 
 import me.dobrakmato.plugins.pexel.PexelCore.areas.AreaFlag;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.Areas;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.ProtectedArea;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.SubscribeMode;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Points;
+import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenu;
 import me.dobrakmato.plugins.pexel.PexelCore.utils.Lang;
 
@@ -53,8 +55,6 @@ import com.google.common.io.ByteStreams;
 
 /**
  * Event processor for pexel.
- * 
- * <b>There will be changes in EVENTS!</b>
  * 
  * @author Mato Kormuth
  * 

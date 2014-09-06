@@ -16,16 +16,13 @@
  *
  */
 // @formatter:on
-package me.dobrakmato.plugins.pexel.PexelCore.utils;
+package me.dobrakmato.plugins.pexel.PexelCore.core;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
-import me.dobrakmato.plugins.pexel.PexelCore.core.PexelCore;
-import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedPart;
-import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedParts;
+import me.dobrakmato.plugins.pexel.PexelCore.PexelCore;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -18,7 +18,7 @@
 // @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore.commands;
 
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

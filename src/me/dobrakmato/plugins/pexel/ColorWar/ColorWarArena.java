@@ -1,10 +1,10 @@
 package me.dobrakmato.plugins.pexel.ColorWar;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.AreaFlag;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.AdvancedMinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.ArenaOption;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.GameState;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;

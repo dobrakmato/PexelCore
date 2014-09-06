@@ -24,11 +24,11 @@ import java.util.List;
 
 import me.dobrakmato.plugins.pexel.ColorWar.ColorWarArena;
 import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.JavaArbitraryAction;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.OpenInventoryMenuAction;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.MinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenu;
 import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenuItem;

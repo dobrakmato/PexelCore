@@ -16,10 +16,13 @@
  *
  */
 // @formatter:on
-package me.dobrakmato.plugins.pexel.PexelCore.core;
+package me.dobrakmato.plugins.pexel.PexelCore.areas;
 
-import me.dobrakmato.plugins.pexel.PexelCore.areas.AreaFlag;
-import me.dobrakmato.plugins.pexel.PexelCore.areas.ProtectedArea;
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
+import me.dobrakmato.plugins.pexel.PexelCore.PexelCore;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
+import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedPart;
+import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedParts;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

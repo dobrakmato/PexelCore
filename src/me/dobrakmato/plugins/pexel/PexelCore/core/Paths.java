@@ -20,6 +20,8 @@ package me.dobrakmato.plugins.pexel.PexelCore.core;
 
 import java.util.UUID;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
+
 /**
  * Class used for generating paths.
  * 

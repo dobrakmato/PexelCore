@@ -20,6 +20,7 @@ package me.dobrakmato.plugins.pexel.PexelCore.core;
 
 import java.util.Arrays;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.JavaArbitraryAction;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.KickAction;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.TeleportAction;

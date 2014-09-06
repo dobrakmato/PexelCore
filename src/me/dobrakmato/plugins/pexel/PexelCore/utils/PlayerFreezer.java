@@ -21,7 +21,7 @@ package me.dobrakmato.plugins.pexel.PexelCore.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

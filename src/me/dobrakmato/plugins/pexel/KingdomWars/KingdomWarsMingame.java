@@ -3,8 +3,8 @@ package me.dobrakmato.plugins.pexel.KingdomWars;
 import java.util.Collection;
 import java.util.List;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.MinigameArena;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.MinigameCategory;

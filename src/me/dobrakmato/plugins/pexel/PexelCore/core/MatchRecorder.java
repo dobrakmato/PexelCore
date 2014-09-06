@@ -16,7 +16,7 @@
  *
  */
 // @formatter:on
-package me.dobrakmato.plugins.pexel.PexelCore.utils;
+package me.dobrakmato.plugins.pexel.PexelCore.core;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,10 +31,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.MinigameArena;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Paths;
-import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
