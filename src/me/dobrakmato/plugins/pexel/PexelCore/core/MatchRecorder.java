@@ -206,7 +206,8 @@ public class MatchRecorder
         {
             try
             {
-                writer.close();
+                if (writer != null)
+                    writer.close();
             } catch (IOException e)
             {
                 e.printStackTrace();

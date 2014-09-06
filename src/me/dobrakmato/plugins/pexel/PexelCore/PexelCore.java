@@ -59,130 +59,131 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
  */
 public class PexelCore extends JavaPlugin implements PluginMessageListener
 {
-	/**
-	 * Pexel matchmaking.
-	 */
-	public Matchmaking			matchmaking;
-	/**
-	 * Player freezer.
-	 */
-	public PlayerFreezer		freezer;
-	/**
-	 * Eent processor.
-	 */
-	public EventProcessor		eventProcessor;
-	/**
-	 * Magic clock instance.
-	 */
-	public MagicClock			magicClock;
-	/**
-	 * AutoMessage instance.
-	 */
-	public AutoMessage			message;
-	/**
-	 * Master server instance.
-	 */
-	public PexelMasterServer	pexelserver;
-	/**
-	 * Master server client instance.
-	 */
-	public PexelServerClient	pexelclient;
-	/**
-	 * AsyncWorker object.
-	 */
-	public AsyncWorker			asyncWorker;
-	
-	@Override
-	public void onDisable()
-	{
-		Log.partDisable("Core");
-		//Shutdown all updated parts.
-		UpdatedParts.shutdown();
-		
-		this.pexelserver.close();
-		
-		this.asyncWorker.shutdown();
-		
-		StorageEngine.saveData();
-		Log.partDisable("Core");
-	}
-	
-	@Override
-	public void onEnable()
-	{
-		Log.partEnable("Core");
-		
-		Pexel.initialize(this);
-		
-		this.freezer = new PlayerFreezer();
-		
-		try
-		{
-			this.pexelserver = new PexelMasterServer(30789);
-		} catch (Exception e)
-		{
-			
-		}
-		
-		this.message = new AutoMessage();
-		this.message.updateStart(this);
-		
-		this.matchmaking = new Matchmaking();
-		this.matchmaking.updateStart(this);
-		
-		this.magicClock = new MagicClock();
-		
-		this.asyncWorker = new AsyncWorker(3);
-		
-		this.eventProcessor = new EventProcessor();
-		
-		this.getCommand("arena").setExecutor(new ArenaCommand());
-		this.getCommand("friend").setExecutor(new FriendCommand());
-		this.getCommand("unfriend").setExecutor(new UnfriendCommand());
-		this.getCommand("settings").setExecutor(new SettingsCommand());
-		this.getCommand("party").setExecutor(new PartyCommand());
-		this.getCommand("lobbyarena").setExecutor(new LobbyCommand());
-		this.getCommand("qj").setExecutor(new QJCommand());
-		this.getCommand("spawn").setExecutor(new SpawnCommand());
-		this.getCommand("gate").setExecutor(new GateCommand());
-		this.getCommand("pcmd").setExecutor(new PCMDCommand());
-		
-		StorageEngine.initialize(this);
-		StorageEngine.loadData();
-		
-		new AlternativeCommands();
-		
-		try
-		{
-			this.pexelclient = new PexelServerClient("127.0.0.1", 30789);
-		} catch (Exception e)
-		{
-		}
-		
-		HardCoded.main();
-		
-		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-		Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord",
-				this);
-	}
-	
-	@Override
-	public List<String> onTabComplete(final CommandSender sender,
-			final Command command, final String alias, final String[] args)
-	{
-		if (command.getName().equalsIgnoreCase("arena"))
-			if (sender instanceof Player)
-				if (args.length == 1)
-					if (args[0] == "edit")
-						return Arrays.asList(Areas.findArea(
-								((Player) sender).getLocation()).getName());
-		return null;
-	}
-	
-	@Override
-	public void onPluginMessageReceived(final String channel,
-			final Player player, final byte[] payload)
-	{
-		// Nothing for now...
-	}
+    /**
+     * Pexel matchmaking.
+     */
+    public Matchmaking       matchmaking;
+    /**
+     * Player freezer.
+     */
+    public PlayerFreezer     freezer;
+    /**
+     * Eent processor.
+     */
+    public EventProcessor    eventProcessor;
+    /**
+     * Magic clock instance.
+     */
+    public MagicClock        magicClock;
+    /**
+     * AutoMessage instance.
+     */
+    public AutoMessage       message;
+    /**
+     * Master server instance.
+     */
+    public PexelMasterServer pexelserver;
+    /**
+     * Master server client instance.
+     */
+    public PexelServerClient pexelclient;
+    /**
+     * AsyncWorker object.
+     */
+    public AsyncWorker       asyncWorker;
+    
+    @Override
+    public void onDisable()
+    {
+        Log.partDisable("Core");
+        //Shutdown all updated parts.
+        UpdatedParts.shutdown();
+        
+        this.pexelserver.close();
+        
+        this.asyncWorker.shutdown();
+        
+        StorageEngine.saveData();
+        Log.partDisable("Core");
+    }
+    
+    @Override
+    public void onEnable()
+    {
+        Log.partEnable("Core");
+        
+        Pexel.initialize(this);
+        
+        this.freezer = new PlayerFreezer();
+        
+        try
+        {
+            this.pexelserver = new PexelMasterServer(30789);
+            this.pexelserver.listen();
+        } catch (Exception e)
+        {
+            
+        }
+        
+        this.message = new AutoMessage();
+        this.message.updateStart(this);
+        
+        this.matchmaking = new Matchmaking();
+        this.matchmaking.updateStart(this);
+        
+        this.magicClock = new MagicClock();
+        
+        this.asyncWorker = new AsyncWorker(3);
+        this.asyncWorker.start();
+        
+        this.eventProcessor = new EventProcessor();
+        
+        this.getCommand("arena").setExecutor(new ArenaCommand());
+        this.getCommand("friend").setExecutor(new FriendCommand());
+        this.getCommand("unfriend").setExecutor(new UnfriendCommand());
+        this.getCommand("settings").setExecutor(new SettingsCommand());
+        this.getCommand("party").setExecutor(new PartyCommand());
+        this.getCommand("lobbyarena").setExecutor(new LobbyCommand());
+        this.getCommand("qj").setExecutor(new QJCommand());
+        this.getCommand("spawn").setExecutor(new SpawnCommand());
+        this.getCommand("gate").setExecutor(new GateCommand());
+        this.getCommand("pcmd").setExecutor(new PCMDCommand());
+        
+        StorageEngine.initialize(this);
+        StorageEngine.loadData();
+        
+        new AlternativeCommands();
+        
+        try
+        {
+            this.pexelclient = new PexelServerClient("127.0.0.1", 30789);
+        } catch (Exception e)
+        {
+        }
+        
+        HardCoded.main();
+        
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
+    }
+    
+    @Override
+    public List<String> onTabComplete(final CommandSender sender, final Command command,
+            final String alias, final String[] args)
+    {
+        if (command.getName().equalsIgnoreCase("arena"))
+            if (sender instanceof Player)
+                if (args.length == 1)
+                    if (args[0] == "edit")
+                        return Arrays.asList(Areas.findArea(
+                                ((Player) sender).getLocation()).getName());
+        return null;
+    }
+    
+    @Override
+    public void onPluginMessageReceived(final String channel, final Player player,
+            final byte[] payload)
+    {
+        // Nothing for now...
+    }
 }

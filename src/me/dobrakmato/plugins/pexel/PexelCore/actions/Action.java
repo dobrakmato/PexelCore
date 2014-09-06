@@ -28,26 +28,26 @@ import org.bukkit.entity.Player;
  */
 public interface Action
 {
-	/**
-	 * Should load menu action from string.
-	 * 
-	 * @param string
-	 *            string that was previously serialized by action class.
-	 */
-	public void load(String string);
-	
-	/**
-	 * Should save menu action to string.
-	 * 
-	 * @return serialized class
-	 */
-	public String save();
-	
-	/**
-	 * Called when action should be executed on the player.
-	 * 
-	 * @param player
-	 *            executor
-	 */
-	public void execute(Player player);
+    /**
+     * Should load menu action from string.
+     * 
+     * @param string
+     *            string that was previously serialized by action class.
+     */
+    public void load(String string);
+    
+    /**
+     * Should save menu action to string.
+     * 
+     * @return serialized class
+     */
+    public String save();
+    
+    /**
+     * Called when action should be executed on the player.
+     * 
+     * @param player
+     *            executor
+     */
+    public void execute(Player player);
 }

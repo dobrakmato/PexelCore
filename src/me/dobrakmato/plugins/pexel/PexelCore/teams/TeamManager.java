@@ -237,7 +237,7 @@ public class TeamManager implements Listener
         int allPlayers = this.varience;
         for (Team team : this.teams)
             allPlayers += team.getPlayerCount();
-        return (int) Math.ceil(allPlayers / this.teams.size());
+        return (int) ((allPlayers / this.teams.size()) + 0.5);
     }
     
     /**
