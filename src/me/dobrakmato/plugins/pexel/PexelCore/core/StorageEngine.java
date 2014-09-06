@@ -209,7 +209,7 @@ public class StorageEngine
     }
     
     @SuppressWarnings("rawtypes")
-    protected static Map<String, Class> getAliases()
+    public static Map<String, Class> getAliases()
     {
         return StorageEngine.aliases;
     }
