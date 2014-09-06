@@ -3,10 +3,10 @@ package me.dobrakmato.plugins.pexel.TntMinecart;
 import java.util.Collection;
 import java.util.List;
 
-import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
-import me.dobrakmato.plugins.pexel.PexelCore.MinigameArena;
-import me.dobrakmato.plugins.pexel.PexelCore.MinigameCategory;
-import me.dobrakmato.plugins.pexel.PexelCore.MinigameType;
+import me.dobrakmato.plugins.pexel.PexelCore.arenas.MinigameArena;
+import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
+import me.dobrakmato.plugins.pexel.PexelCore.minigame.MinigameCategory;
+import me.dobrakmato.plugins.pexel.PexelCore.minigame.MinigameType;
 
 import org.bukkit.Location;
 

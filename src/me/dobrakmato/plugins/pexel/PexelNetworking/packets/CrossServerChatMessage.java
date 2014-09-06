@@ -22,7 +22,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
 import me.dobrakmato.plugins.pexel.PexelNetworking.AbstractPacket;
 
 import org.bukkit.Bukkit;

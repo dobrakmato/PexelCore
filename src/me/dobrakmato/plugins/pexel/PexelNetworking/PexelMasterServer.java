@@ -24,7 +24,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.dobrakmato.plugins.pexel.PexelCore.Log;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
 
 /**
  * Master server.

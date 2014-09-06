@@ -1,15 +1,15 @@
 package me.dobrakmato.plugins.pexel.ZabiPitkesa;
 
-import me.dobrakmato.plugins.pexel.PexelCore.AdvancedMinigameArena;
-import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
-import me.dobrakmato.plugins.pexel.PexelCore.BlockChange;
-import me.dobrakmato.plugins.pexel.PexelCore.BlockRollbacker;
-import me.dobrakmato.plugins.pexel.PexelCore.GameState;
-import me.dobrakmato.plugins.pexel.PexelCore.ItemUtils;
-import me.dobrakmato.plugins.pexel.PexelCore.Log;
-import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
-import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
-import me.dobrakmato.plugins.pexel.PexelCore.Region;
+import me.dobrakmato.plugins.pexel.PexelCore.arenas.AdvancedMinigameArena;
+import me.dobrakmato.plugins.pexel.PexelCore.arenas.ArenaOption;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Pexel;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
+import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.GameState;
+import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
+import me.dobrakmato.plugins.pexel.PexelCore.rollback.BlockChange;
+import me.dobrakmato.plugins.pexel.PexelCore.rollback.BlockRollbacker;
+import me.dobrakmato.plugins.pexel.PexelCore.utils.ItemUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
