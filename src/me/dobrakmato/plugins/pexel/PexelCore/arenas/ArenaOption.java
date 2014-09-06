@@ -35,7 +35,7 @@ public @interface ArenaOption
 	/**
 	 * Name of option.
 	 * 
-	 * @return name
+	 * @return the name
 	 */
 	String name();
 }

@@ -26,7 +26,16 @@ package me.dobrakmato.plugins.pexel.PexelCore.arenas;
  */
 public enum ArenaDisconnectReason
 {
-	PLAYER_LEFT,
-	KICK_PLAYER_LOST,
-	KICK_OTHER,
+    /**
+     * Player has invoked disconnect from arena.
+     */
+    PLAYER_LEFT,
+    /**
+     * Invoked by game (ex. player has lost match).
+     */
+    KICK_PLAYER_GAME,
+    /**
+     * Unknown reason.
+     */
+    KICK_OTHER,
 }

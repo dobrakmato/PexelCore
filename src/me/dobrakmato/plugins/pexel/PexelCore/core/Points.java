@@ -42,7 +42,7 @@ public class Points
 	 * 
 	 * @param player
 	 */
-	protected static void pushPoints(final Player player)
+	public static void pushPoints(final Player player)
 	{
 		PlayerProfile profile = StorageEngine.getProfile(player.getUniqueId());
 		final int points = profile.getPoints();

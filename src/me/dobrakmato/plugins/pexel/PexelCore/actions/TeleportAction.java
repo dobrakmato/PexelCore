@@ -72,7 +72,7 @@ public class TeleportAction implements Action
 	{
 		try
 		{
-			//Split string to elements.
+			// Split string to elements.
 			String[] elements = string.split("\\|");
 			double x = Double.parseDouble(elements[0]);
 			double y = Double.parseDouble(elements[1]);
@@ -80,7 +80,7 @@ public class TeleportAction implements Action
 			float pitch = Float.parseFloat(elements[3]);
 			float yaw = Float.parseFloat(elements[4]);
 			String name = elements[5];
-			//Build location from elements.
+			// Build location from elements.
 			this.location = new Location(Bukkit.getWorld(name), x, y, z, yaw,
 					pitch);
 		} catch (Exception ex)
@@ -93,7 +93,7 @@ public class TeleportAction implements Action
 	@Override
 	public String save()
 	{
-		//Serialize location data to string.
+		// Serialize location data to string.
 		try
 		{
 			return this.location.getX() + "|" + this.location.getY() + "|"
@@ -111,14 +111,14 @@ public class TeleportAction implements Action
 	{
 		if (this.server.isLocalServer())
 		{
-			//Just teleport player to target location.
+			// Just teleport player to target location.
 			player.teleport(this.location);
 		}
 		else
 		{
-			//TODO: Add teleport to location. Perform server-wide teleport
+			// TODO: Add teleport to location. Perform server-wide teleport
 			
-			//Teleport to other server using bungee
+			// Teleport to other server using bungee
 			ByteArrayDataOutput out = ByteStreams.newDataOutput();
 			out.writeUTF("Connect");
 			out.writeUTF(this.server.getBungeeName());

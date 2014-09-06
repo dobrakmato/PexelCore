@@ -47,203 +47,197 @@ import org.bukkit.entity.Player;
  */
 public class MatchRecorder
 {
-	//Arena that this recorder record.
-	private final MinigameArena			arena;
-	//ID of periodic task
-	private int							taskId		= 0;
-	//Interval in ticks
-	private final long					interval	= 2L;
-	//List of frames
-	private final List<Frame>			frames		= new ArrayList<Frame>(600);
-	//Mapping UUID to player name
-	private final Map<UUID, String>		playernames	= new HashMap<UUID, String>();
-	//Mapping UUID to EntityID
-	private final Map<UUID, Integer>	playerids	= new HashMap<UUID, Integer>();
-	
-	/**
-	 * Initializes new instance of record for specified arena
-	 * 
-	 * @param arena
-	 *            arena to initialize recorder to
-	 */
-	public MatchRecorder(final MinigameArena arena)
-	{
-		this.arena = arena;
-	}
-	
-	/**
-	 * Starts periodic process of capturing frames.
-	 */
-	public void startCapturing()
-	{
-		this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
-				+ "Warning, this match is recorded!");
-		this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
-				+ "Recording started!");
-		
-		for (Player p : this.arena.activePlayers)
-		{
-			this.playernames.put(p.getUniqueId(), p.getName());
-			this.playerids.put(p.getUniqueId(), p.getEntityId());
-		}
-		
-		this.taskId = Pexel.schedule(new Runnable() {
-			@Override
-			public void run()
-			{
-				MatchRecorder.this.captureFrame();
-			}
-		}, 0L, this.interval);
-	}
-	
-	/**
-	 * Makes snapshot of player healths and positions ak. records a frame.
-	 */
-	protected void captureFrame()
-	{
-		Frame frame = new Frame();
-		for (Player p : this.arena.activePlayers)
-		{
-			frame.p_locations.put(p.getEntityId(), p.getLocation());
-			frame.p_healths.put(p.getEntityId(), ((CraftPlayer) p).getHealth()); //getHealth fix
-		}
-		this.frames.add(frame);
-	}
-	
-	/**
-	 * Stops capturing process.
-	 */
-	public void stopCapturing()
-	{
-		this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
-				+ "Recording stopped!");
-		Pexel.cancelTask(this.taskId);
-	}
-	
-	/**
-	 * Returns whether is recorder recording or not.
-	 * 
-	 * @return true if is recorder enabled
-	 */
-	public boolean isEnabled()
-	{
-		return this.taskId != 0;
-	}
-	
-	/**
-	 * Saves recorder frames to file.
-	 */
-	public void save()
-	{
-		Log.info("Saving started!");
-		long starttime = System.nanoTime();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss-SS");
-		String name = Paths.matchRecord(sdf.format(new Date()) + "-"
-				+ this.arena.getName().toLowerCase());
-		
-		OutputStreamWriter writer = null;
-		try
-		{
-			writer = new OutputStreamWriter(
-					new FileOutputStream(new File(name)));
-			
-			writer.write("# MATCH RECORD INFO START\n");
-			writer.write("version=1\n");
-			writer.write("interval=" + this.interval + "\n");
-			writer.write("# MATCH RECORD INFO END\n");
-			
-			writer.write("# MINIGAME INFO START\n");
-			writer.write("minigameName=" + this.arena.getMinigame().getName()
-					+ "\n");
-			writer.write("arenaName=" + this.arena.areaName + "\n");
-			writer.write("date=" + System.currentTimeMillis() + "\n");
-			writer.write("# MINIGAME INFO END\n");
-			
-			writer.write("# NAME TRANSLATE MAP START\n");
-			for (Entry<UUID, String> entry : this.playernames.entrySet())
-				writer.write(entry.getKey().toString() + "=" + entry.getValue()
-						+ "\n");
-			writer.write("# NAME TRANSLATE MAP END\n");
-			
-			writer.write("# ID TRANSLATE MAP START\n");
-			for (Entry<UUID, Integer> entry : this.playerids.entrySet())
-				writer.write(entry.getKey().toString() + "=" + entry.getValue()
-						+ "\n");
-			writer.write("# ID TRANSLATE MAP END\n");
-			
-			writer.write("# FRAMES SECTION START\n");
-			
-			List<Frame> frames2 = this.frames;
-			int frameCount = frames2.size();
-			for (int i = 0; i < frameCount; i++)
-			{
-				Frame f = frames2.get(i);
-				writer.write("# FRAME " + i + " START\n");
-				
-				writer.write("# FRAME PLAYER LOCATIONS LIST START\n");
-				for (Entry<Integer, Location> entry : f.p_locations.entrySet())
-				{
-					writer.write(entry.getKey() + "=" + entry.getValue().getX()
-							+ "|" + entry.getValue().getY() + "|"
-							+ entry.getValue().getZ() + "|"
-							+ entry.getValue().getYaw() + "|"
-							+ entry.getValue().getPitch() + "\n");
-				}
-				writer.write("# FRAME PLAYER LOCATIONS LIST END\n");
-				
-				writer.write("# FRAME PLAYER HEALTH LIST START\n");
-				for (Entry<Integer, Double> entry : f.p_healths.entrySet())
-				{
-					writer.write(entry.getKey() + "=" + entry.getValue() + "\n");
-				}
-				writer.write("# FRAME PLAYER HEALTH LIST END\n");
-				
-				writer.write("# FRAME " + i + " END\n");
-			}
-			writer.write("# FRAMES SECTION END\n");
-			
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				writer.close();
-			} catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		Log.info("Saving ended! (took " + (System.nanoTime() - starttime)
-				+ " ns / " + (System.nanoTime() - starttime) / 1000 / 1000
-				+ "ms)");
-	}
-	
-	/**
-	 * Frame.
-	 * 
-	 * @author Mato Kormuth
-	 * 
-	 */
-	public class Frame
-	{
-		//Various mappings.
-		Map<Integer, Location>	p_locations	= new HashMap<Integer, Location>();
-		Map<Integer, Double>	p_healths	= new HashMap<Integer, Double>();
-	}
-	
-	/**
-	 * Resets recorder.
-	 */
-	public void reset()
-	{
-		this.frames.clear();
-		this.playerids.clear();
-		this.playernames.clear();
-		
-		Pexel.cancelTask(this.taskId);
-	}
+    //Arena that this recorder record.
+    private final MinigameArena      arena;
+    //ID of periodic task
+    private int                      taskId      = 0;
+    //Interval in ticks
+    private final long               interval    = 2L;
+    //List of frames
+    private final List<Frame>        frames      = new ArrayList<Frame>(600);
+    //Mapping UUID to player name
+    private final Map<UUID, String>  playernames = new HashMap<UUID, String>();
+    //Mapping UUID to EntityID
+    private final Map<UUID, Integer> playerids   = new HashMap<UUID, Integer>();
+    
+    /**
+     * Initializes new instance of record for specified arena
+     * 
+     * @param arena
+     *            arena to initialize recorder to
+     */
+    public MatchRecorder(final MinigameArena arena)
+    {
+        this.arena = arena;
+    }
+    
+    /**
+     * Starts periodic process of capturing frames.
+     */
+    public void startCapturing()
+    {
+        this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
+                + "Warning, this match is recorded!");
+        this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
+                + "Recording started!");
+        
+        for (Player p : this.arena.getPlayers())
+        {
+            this.playernames.put(p.getUniqueId(), p.getName());
+            this.playerids.put(p.getUniqueId(), p.getEntityId());
+        }
+        
+        this.taskId = Pexel.schedule(new Runnable() {
+            @Override
+            public void run()
+            {
+                MatchRecorder.this.captureFrame();
+            }
+        }, 0L, this.interval);
+    }
+    
+    /**
+     * Makes snapshot of player healths and positions ak. records a frame.
+     */
+    protected void captureFrame()
+    {
+        Frame frame = new Frame();
+        for (Player p : this.arena.getPlayers())
+        {
+            frame.p_locations.put(p.getEntityId(), p.getLocation());
+            frame.p_healths.put(p.getEntityId(), ((CraftPlayer) p).getHealth()); //getHealth fix
+        }
+        this.frames.add(frame);
+    }
+    
+    /**
+     * Stops capturing process.
+     */
+    public void stopCapturing()
+    {
+        this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
+                + "Recording stopped!");
+        Pexel.cancelTask(this.taskId);
+    }
+    
+    /**
+     * Returns whether is recorder recording or not.
+     * 
+     * @return true if is recorder enabled
+     */
+    public boolean isEnabled()
+    {
+        return this.taskId != 0;
+    }
+    
+    /**
+     * Saves recorder frames to file.
+     */
+    public void save()
+    {
+        Log.info("Saving started!");
+        long starttime = System.nanoTime();
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss-SS");
+        String name = Paths.matchRecord(sdf.format(new Date()) + "-"
+                + this.arena.getName().toLowerCase());
+        
+        OutputStreamWriter writer = null;
+        try
+        {
+            writer = new OutputStreamWriter(new FileOutputStream(new File(name)));
+            
+            writer.write("# MATCH RECORD INFO START\n");
+            writer.write("version=1\n");
+            writer.write("interval=" + this.interval + "\n");
+            writer.write("# MATCH RECORD INFO END\n");
+            
+            writer.write("# MINIGAME INFO START\n");
+            writer.write("minigameName=" + this.arena.getMinigame().getName() + "\n");
+            writer.write("arenaName=" + this.arena.getName() + "\n");
+            writer.write("date=" + System.currentTimeMillis() + "\n");
+            writer.write("# MINIGAME INFO END\n");
+            
+            writer.write("# NAME TRANSLATE MAP START\n");
+            for (Entry<UUID, String> entry : this.playernames.entrySet())
+                writer.write(entry.getKey().toString() + "=" + entry.getValue() + "\n");
+            writer.write("# NAME TRANSLATE MAP END\n");
+            
+            writer.write("# ID TRANSLATE MAP START\n");
+            for (Entry<UUID, Integer> entry : this.playerids.entrySet())
+                writer.write(entry.getKey().toString() + "=" + entry.getValue() + "\n");
+            writer.write("# ID TRANSLATE MAP END\n");
+            
+            writer.write("# FRAMES SECTION START\n");
+            
+            List<Frame> frames2 = this.frames;
+            int frameCount = frames2.size();
+            for (int i = 0; i < frameCount; i++)
+            {
+                Frame f = frames2.get(i);
+                writer.write("# FRAME " + i + " START\n");
+                
+                writer.write("# FRAME PLAYER LOCATIONS LIST START\n");
+                for (Entry<Integer, Location> entry : f.p_locations.entrySet())
+                {
+                    writer.write(entry.getKey() + "=" + entry.getValue().getX() + "|"
+                            + entry.getValue().getY() + "|" + entry.getValue().getZ()
+                            + "|" + entry.getValue().getYaw() + "|"
+                            + entry.getValue().getPitch() + "\n");
+                }
+                writer.write("# FRAME PLAYER LOCATIONS LIST END\n");
+                
+                writer.write("# FRAME PLAYER HEALTH LIST START\n");
+                for (Entry<Integer, Double> entry : f.p_healths.entrySet())
+                {
+                    writer.write(entry.getKey() + "=" + entry.getValue() + "\n");
+                }
+                writer.write("# FRAME PLAYER HEALTH LIST END\n");
+                
+                writer.write("# FRAME " + i + " END\n");
+            }
+            writer.write("# FRAMES SECTION END\n");
+            
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                writer.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        Log.info("Saving ended! (took " + (System.nanoTime() - starttime) + " ns / "
+                + (System.nanoTime() - starttime) / 1000 / 1000 + "ms)");
+    }
+    
+    /**
+     * Frame.
+     * 
+     * @author Mato Kormuth
+     * 
+     */
+    public class Frame
+    {
+        //Various mappings.
+        Map<Integer, Location> p_locations = new HashMap<Integer, Location>();
+        Map<Integer, Double>   p_healths   = new HashMap<Integer, Double>();
+    }
+    
+    /**
+     * Resets recorder.
+     */
+    public void reset()
+    {
+        this.frames.clear();
+        this.playerids.clear();
+        this.playernames.clear();
+        
+        Pexel.cancelTask(this.taskId);
+    }
 }
