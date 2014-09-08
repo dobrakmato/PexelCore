@@ -21,6 +21,7 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 import java.util.Random;
 import java.util.UUID;
 
+import me.dobrakmato.plugins.pexel.PexelCore.core.Auth;
 import me.dobrakmato.plugins.pexel.PexelCore.core.MagicClock;
 import me.dobrakmato.plugins.pexel.PexelCore.core.PlayerProfile;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
@@ -40,13 +41,13 @@ import org.bukkit.entity.Player;
  */
 public final class Pexel {
     //Pexel plugin.
-    private static PexelCore plugin;
+    private static PexelCore instance;
     //Instance of random. 
     private static Random    random = new Random();
     
     protected final static void initialize(final PexelCore plugin) {
-        if (Pexel.plugin == null)
-            Pexel.plugin = plugin;
+        if (Pexel.instance == null)
+            Pexel.instance = plugin;
         else
             throw new RuntimeException("Pexel object already initialized!");
     }
@@ -57,7 +58,7 @@ public final class Pexel {
      * @return core
      */
     public static final PexelCore getCore() {
-        return Pexel.plugin;
+        return Pexel.instance;
     }
     
     /**
@@ -66,7 +67,7 @@ public final class Pexel {
      * @return matchmaking
      */
     public static Matchmaking getMatchmaking() {
-        return Pexel.plugin.matchmaking;
+        return Pexel.instance.matchmaking;
     }
     
     /**
@@ -75,7 +76,7 @@ public final class Pexel {
      * @return player freezer
      */
     public static PlayerFreezer getFreezer() {
-        return Pexel.plugin.freezer;
+        return Pexel.instance.freezer;
     }
     
     /**
@@ -91,7 +92,7 @@ public final class Pexel {
      */
     public static int schedule(final Runnable runnable, final long delay,
             final long period) {
-        return Bukkit.getScheduler().scheduleSyncRepeatingTask(Pexel.plugin, runnable,
+        return Bukkit.getScheduler().scheduleSyncRepeatingTask(Pexel.instance, runnable,
                 delay, period);
     }
     
@@ -140,7 +141,7 @@ public final class Pexel {
      * @return {@link EventProcessor} instance.
      */
     public static EventProcessor getEventProcessor() {
-        return Pexel.plugin.eventProcessor;
+        return Pexel.instance.eventProcessor;
     }
     
     /**
@@ -149,7 +150,7 @@ public final class Pexel {
      * @return {@link MagicClock} instance.
      */
     public static MagicClock getMagicClock() {
-        return Pexel.plugin.magicClock;
+        return Pexel.instance.magicClock;
     }
     
     /**
@@ -158,7 +159,7 @@ public final class Pexel {
      * @return {@link AsyncWorker} instance.
      */
     public static AsyncWorker getAsyncWorker() {
-        return Pexel.plugin.asyncWorker;
+        return Pexel.instance.asyncWorker;
     }
     
     /**
@@ -168,5 +169,14 @@ public final class Pexel {
      */
     public static Location getHubLocation() {
         return new Location(Bukkit.getWorld("world"), 9.5, 47.5, 262.5);
+    }
+    
+    /**
+     * Returns pexel's async wokrer instance.
+     * 
+     * @return {@link Auth} instance.
+     */
+    public static Auth getAuth() {
+        return Pexel.instance.auth;
     }
 }

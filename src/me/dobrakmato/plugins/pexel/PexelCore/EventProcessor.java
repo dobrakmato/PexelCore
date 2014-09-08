@@ -45,6 +45,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -193,16 +194,18 @@ public class EventProcessor implements Listener {
     }
     
     @EventHandler
+    private void onPlayerLogin(final PlayerLoginEvent event) {
+        if (event.getHostname().contains("login"))
+            Pexel.getAuth().authenticateIp(event.getPlayer(), event.getHostname());
+    }
+    
+    @EventHandler
     private void onPlayerJoin(final PlayerJoinEvent event) {
         // Load profile to memory or create empty profile.
         StorageEngine.loadProfile(event.getPlayer().getUniqueId());
         // Register chat channels.
         ChatManager.CHANNEL_GLOBAL.subscribe(event.getPlayer(), SubscribeMode.READ);
         ChatManager.CHANNEL_LOBBY.subscribe(event.getPlayer(), SubscribeMode.READ_WRITE);
-        
-        // if (event.getPlayer().isOp())
-        // ChatManager.CHANNEL_OP.subscribe(event.getPlayer(),
-        // SubscribeMode.READ_WRITE);
     }
     
     @EventHandler
