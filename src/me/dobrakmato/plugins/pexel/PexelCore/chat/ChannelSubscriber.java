@@ -24,12 +24,12 @@ package me.dobrakmato.plugins.pexel.PexelCore.chat;
  * @author Mato Kormuth
  * 
  */
-public interface ChannelSubscriber
-{
+public interface ChannelSubscriber {
     /**
      * Sends message to this subscriber.
      * 
      * @param message
+     *            message to be send
      */
     public void sendMessage(String message);
     
@@ -43,7 +43,7 @@ public interface ChannelSubscriber
     /**
      * Returns if is this subscriber online/active.
      * 
-     * @return whether the player is online
+     * @return whether the player is online or not
      */
     public boolean isOnline();
 }

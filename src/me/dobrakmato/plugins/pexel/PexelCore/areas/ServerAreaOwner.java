@@ -18,18 +18,15 @@
 // @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore.areas;
 
-
 /**
  * Server area owner.
  * 
  * @author Mato Kormuth
  * 
  */
-public class ServerAreaOwner implements AreaOwner
-{
-	@Override
-	public String getName()
-	{
-		return "Server";
-	}
+public class ServerAreaOwner implements AreaOwner {
+    @Override
+    public String getName() {
+        return "Server";
+    }
 }

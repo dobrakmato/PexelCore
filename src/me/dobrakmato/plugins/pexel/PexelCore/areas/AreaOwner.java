@@ -24,12 +24,11 @@ package me.dobrakmato.plugins.pexel.PexelCore.areas;
  * @author Mato Kormuth
  * 
  */
-public interface AreaOwner
-{
-	/**
-	 * Returns name of owner.
-	 * 
-	 * @return the name of owner
-	 */
-	public String getName();
+public interface AreaOwner {
+    /**
+     * Returns name of owner.
+     * 
+     * @return the name of owner
+     */
+    public String getName();
 }

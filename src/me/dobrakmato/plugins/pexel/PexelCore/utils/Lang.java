@@ -28,15 +28,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class used for translations.
+ * Class used for translations. Taken from project STARVING.
  * 
  * @see Lang#getTranslation(String);
  * 
- * @author Mato Kormuth
- * 
  */
-public class Lang
-{
+public class Lang {
     /**
      * Default language
      */
@@ -53,41 +50,34 @@ public class Lang
     /**
      * Konstruktor na singleton.
      */
-    private Lang()
-    {
+    private Lang() {
         
     }
     
     /**
      * Loads the translations to memory.
      */
-    public static void loadTranslations(final String dataFolder)
-    {
+    public static void loadTranslations(final String dataFolder) {
         System.out.println("[Translations] Nacitavam preklady...");
         //Get the files with translations.
         File folder = new File(dataFolder + "/lang/");
         File[] listOfFiles = folder.listFiles();
         
         //For each file
-        for (File file : listOfFiles)
-        {
+        for (File file : listOfFiles) {
             //If its a lang file.
-            if (file.isFile() && file.getName().endsWith("lang"))
-            {
-                if (file.getName().contains("."))
-                {
+            if (file.isFile() && file.getName().endsWith("lang")) {
+                if (file.getName().contains(".")) {
                     System.out.println("[Translations] Found translation "
                             + file.getName());
                     //Read the file.
                     String translationLang = file.getName().split("\\.")[0];
                     //Reader
                     BufferedReader reader = null;
-                    try
-                    {
+                    try {
                         reader = new BufferedReader(new FileReader(file));
                         String line;
-                        while ((line = reader.readLine()) != null)
-                        {
+                        while ((line = reader.readLine()) != null) {
                             //Real line, split by = and put into translations map.
                             String[] translation = line.split("=");
                             translations.put(translationLang + "_" + translation[0],
@@ -95,10 +85,8 @@ public class Lang
                         }
                         //Close the reader.
                         reader.close();
-                    } catch (FileNotFoundException e)
-                    {
-                    } catch (IOException e)
-                    {
+                    } catch (FileNotFoundException e) {
+                    } catch (IOException e) {
                     }
                 }
             }
@@ -112,16 +100,12 @@ public class Lang
      *            code (user-specified)
      * @return translated phrase or phrase code if the translation was not found
      */
-    public static String getTranslation(final String phrase)
-    {
-        synchronized (Lang.translations)
-        {
-            if (Lang.translations.containsKey(DEFAULT_LANGUAGE + "_" + phrase))
-            {
+    public static String getTranslation(final String phrase) {
+        synchronized (Lang.translations) {
+            if (Lang.translations.containsKey(DEFAULT_LANGUAGE + "_" + phrase)) {
                 return Lang.translations.get(DEFAULT_LANGUAGE + "_" + phrase);
             }
-            else
-            {
+            else {
                 return DEFAULT_LANGUAGE + "_" + phrase;
             }
         }
@@ -137,18 +121,15 @@ public class Lang
      * @return translated phrase or phrase code if the translation was not found
      */
     public static String getTranslation(final String phrase,
-            final Map<String, String> vars)
-    {
+            final Map<String, String> vars) {
         String translation = "";
-        synchronized (Lang.translations)
-        {
+        synchronized (Lang.translations) {
             //Get translation
             translation = Lang.translations.get(DEFAULT_LANGUAGE + "_" + phrase);
         }
         
         //Replace variabiles
-        for (String variabile : vars.keySet())
-        {
+        for (String variabile : vars.keySet()) {
             translation = translation.replace("{" + variabile + "}", vars.get(variabile));
         }
         
@@ -164,16 +145,12 @@ public class Lang
      *            language code (ISO 3166-1 Alpha-2 standard, two-letter code)
      * @return translated phrase or phrase code if the translation was not found
      */
-    public static String getTranslation(final String phrase, final String language)
-    {
-        synchronized (Lang.translations)
-        {
-            if (Lang.translations.containsKey(language + "_" + phrase))
-            {
+    public static String getTranslation(final String phrase, final String language) {
+        synchronized (Lang.translations) {
+            if (Lang.translations.containsKey(language + "_" + phrase)) {
                 return Lang.translations.get(language + "_" + phrase);
             }
-            else
-            {
+            else {
                 return language + "_" + phrase;
             }
         }
@@ -191,18 +168,15 @@ public class Lang
      * @return translated phrase
      */
     public static String getTranslation(final String phrase, final String language,
-            final Map<String, String> vars)
-    {
+            final Map<String, String> vars) {
         String translation = "";
-        synchronized (Lang.translations)
-        {
+        synchronized (Lang.translations) {
             //Get translation
             translation = Lang.translations.get(language + "_" + phrase);
         }
         
         //Replace variabiles
-        for (String variabile : vars.keySet())
-        {
+        for (String variabile : vars.keySet()) {
             translation = translation.replace("{" + variabile + "}", vars.get(variabile));
         }
         
@@ -214,8 +188,7 @@ public class Lang
      * 
      * @return language code (SO 3166-1 Alpha-2 standard, two-letter code)
      */
-    public static String getLang()
-    {
+    public static String getLang() {
         return "en";
     }
     
@@ -224,8 +197,7 @@ public class Lang
      * 
      * @return
      */
-    public static Lang getInstance()
-    {
+    public static Lang getInstance() {
         if (Lang.instance != null)
             return Lang.instance;
         else

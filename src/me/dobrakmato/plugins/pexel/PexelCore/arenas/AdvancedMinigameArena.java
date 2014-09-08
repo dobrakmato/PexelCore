@@ -45,8 +45,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
  * @author Mato Kormuth
  * 
  */
-public class AdvancedMinigameArena extends MinigameArena implements Listener
-{
+public class AdvancedMinigameArena extends MinigameArena implements Listener {
     /**
      * Amount of players, that is required to start the countdown.
      */
@@ -122,8 +121,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      */
     public AdvancedMinigameArena(final Minigame minigame, final String arenaName,
             final Region region, final int maxPlayers, final int minPlayers,
-            final Location lobbyLocation, final Location gameSpawn)
-    {
+            final Location lobbyLocation, final Location gameSpawn) {
         super(minigame, arenaName, region, maxPlayers);
         
         this.minimalPlayers = minPlayers;
@@ -137,13 +135,12 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * Clear player's inventory, removes effects and set game mode.
      * 
      * @param player
+     *            player to clear inventory
      */
-    public void clearPlayer(final Player player)
-    {
+    public void clearPlayer(final Player player) {
         if (player == null)
             throw new NullArgumentException("player");
-        else
-        {
+        else {
             player.getInventory().clear();
             player.getInventory().setHelmet(null);
             player.getInventory().setChestplate(null);
@@ -159,36 +156,12 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
     }
     
     /**
-     * Teleports player to location by actual game state.
-     * 
-     * @param player
-     */
-    public void teleportPlayer(final Player player)
-    {
-        if (this.state == GameState.WAITING_PLAYERS
-                || this.state == GameState.WAITING_EMPTY)
-        {
-            player.teleport(this.lobbyLocation);
-        }
-        else if (this.state == GameState.PLAYING_CANJOIN
-                || this.state == GameState.PLAYING_CANTJOIN)
-        {
-            player.teleport(this.gameSpawn);
-        }
-        else
-        {
-            throw new RuntimeException(
-                    "Arena is not in state, that supports teleporting players!");
-        }
-    }
-    
-    /**
      * Teleports all players to specified location.
      * 
      * @param location
+     *            destination location
      */
-    public void teleportPlayers(final Location location)
-    {
+    public void teleportPlayers(final Location location) {
         for (Player p : this.activePlayers)
             p.teleport(location);
     }
@@ -196,10 +169,9 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
     /**
      * Returns boolean if is this arena prepeared for playing.
      * 
-     * @return
+     * @return whether is arena ready for playing
      */
-    public boolean isPrepeared()
-    {
+    public boolean isPrepeared() {
         return this.gameSpawn != null && this.lobbyLocation != null
                 && this.minimalPlayers != 0;
     }
@@ -207,8 +179,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
     /**
      * Tries to start countdown.
      */
-    private void tryStartCountdown()
-    {
+    private void tryStartCountdown() {
         if (this.activePlayers.size() >= this.minimalPlayers)
             this.startCountdown();
         else
@@ -218,11 +189,9 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
     /**
      * Tries to stop countdown.
      */
-    private void tryStopCountdown()
-    {
+    private void tryStopCountdown() {
         //Check if we can stop, once the countdown started.
-        if (this.countdownCanCancel)
-        {
+        if (this.countdownCanCancel) {
             Bukkit.getScheduler().cancelTask(this.countdownTaskId);
             this.onCountdownCancelled();
         }
@@ -233,22 +202,18 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * 
      * @return world of this arena
      */
-    public World getWorld()
-    {
+    public World getWorld() {
         return this.gameSpawn.getWorld();
     }
     
-    private void startCountdown()
-    {
-        if (this.countdownTaskId == 0)
-        {
+    private void startCountdown() {
+        if (this.countdownTaskId == 0) {
             //Reset countdown time.
             this.countdownTimeLeft = this.countdownLenght;
             //Start countdown.
             this.countdownTaskId = Pexel.schedule(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     AdvancedMinigameArena.this.countdownTick();
                 }
             }, 0L, 20L);
@@ -257,16 +222,14 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
         }
     }
     
-    private void onCountdownStop()
-    {
+    private void onCountdownStop() {
         Bukkit.getScheduler().cancelTask(this.countdownTaskId);
     }
     
     /**
      * Called once per second while countdown is running.
      */
-    private void countdownTick()
-    {
+    private void countdownTick() {
         //Send a chat message.
         if (this.countdownTimeLeft < 10 || (this.countdownTimeLeft % 10) == 0)
             this.chatAll(ChatManager.minigame(
@@ -281,8 +244,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
                     this.countdownTimeLeft / this.countdownLenght * 100);
         
         //If we reached zero.
-        if (this.countdownTimeLeft <= 0)
-        {
+        if (this.countdownTimeLeft <= 0) {
             //Remove bossbar
             if (this.useBossBar)
                 for (Player p : this.activePlayers)
@@ -303,8 +265,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * @param replace
      *            message (max 40 char.)
      */
-    public void setBossBarAll(final String message)
-    {
+    public void setBossBarAll(final String message) {
         for (Player p : this.activePlayers)
             BarAPI.setMessage(p, message);
     }
@@ -315,8 +276,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * @param replace
      *            message (max 40 char.)
      */
-    public void setBossBarAll(final String message, final float percent)
-    {
+    public void setBossBarAll(final String message, final float percent) {
         for (Player p : this.activePlayers)
             BarAPI.setMessage(p, message, percent);
     }
@@ -325,8 +285,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * Reseta arena basic things. <b>Calls {@link AdvancedMinigameArena#onReset()} at the end of this function!</b></br>
      * If you want to extend reset function, override onReset() function.
      */
-    public final void reset()
-    {
+    public final void reset() {
         this.state = GameState.RESETING;
         Log.info("Resetting arena " + this.getName() + "...");
         this.gameStarted = false;
@@ -341,32 +300,28 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * Called right after the arena resets it's basic things, after {@link AdvancedMinigameArena#reset()} was called.
      * <b>Don't forget to change arena's state to {@link GameState#WAITING_EMPTY} after reset.</b>
      */
-    public void onReset()
-    {
+    public void onReset() {
         
     }
     
     /**
      * Called when countdown starts.
      */
-    public void onCountdownStart()
-    {
+    public void onCountdownStart() {
         
     }
     
     /**
      * Called when countdown stops.
      */
-    public void onCountdownCancelled()
-    {
+    public void onCountdownCancelled() {
         
     }
     
     /**
      * Called each time, a player joins arena and there is not enough players for countdown start.
      */
-    public void onNotEnoughPlayers()
-    {
+    public void onNotEnoughPlayers() {
         
     }
     
@@ -374,8 +329,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * Called when game should start its logic. Called when lobby countdown has reached zero and there is enough
      * players.
      */
-    public void onGameStart()
-    {
+    public void onGameStart() {
         
     }
     
@@ -383,8 +337,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * Called when last player lefts the arena. Should call {@link AdvancedMinigameArena#reset()} function if
      * <code>autoReset</code> is set to <b>false</b> (false by default).
      */
-    public void onGameEnd()
-    {
+    public void onGameEnd() {
         
     }
     
@@ -395,8 +348,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      *            player to check
      * @return true or false
      */
-    public boolean isInArena(final Player player)
-    {
+    public boolean isInArena(final Player player) {
         return this.activePlayers.contains(player);
     }
     
@@ -405,10 +357,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * {@link AdvancedMinigameArena#onGameStart()}. If not, calls {@link AdvancedMinigameArena#onNotEnoughPlayers()}.
      */
     @Override
-    public void onPlayerJoin(final Player player)
-    {
-        if (!this.activePlayers.contains(player))
-        {
+    public void onPlayerJoin(final Player player) {
+        if (!this.activePlayers.contains(player)) {
             super.onPlayerJoin(player);
             
             this.tryStartCountdown();
@@ -424,8 +374,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
             
             player.teleport(this.lobbyLocation);
         }
-        else
-        {
+        else {
             player.sendMessage(ChatManager.error("Alredy playing!"));
         }
     }
@@ -435,8 +384,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * {@link AdvancedMinigameArena#countdownCanCancel} is set to <b>true</b>, stops the countdown.
      */
     @Override
-    public void onPlayerLeft(final Player player)
-    {
+    public void onPlayerLeft(final Player player) {
         super.onPlayerLeft(player);
         
         this.chatAll(ChatManager.minigame(this.getMinigame(),
@@ -454,18 +402,15 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
     }
     
     @EventHandler
-    protected void onPlayerQuit(final PlayerQuitEvent event)
-    {
+    protected void onPlayerQuit(final PlayerQuitEvent event) {
         this.onPlayerLeft(event.getPlayer());
     }
     
     /**
      * Updates game state.
      */
-    private void updateGameState()
-    {
-        if (!this.gameStarted)
-        {
+    private void updateGameState() {
+        if (!this.gameStarted) {
             if (this.playerCount() == 0)
                 this.state = GameState.WAITING_EMPTY;
             else
@@ -477,10 +422,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
      * Checks if there are no players in arena, and if arena is in PLAYING state. If so, the
      * {@link AdvancedMinigameArena#onGameEnd()}
      */
-    private void checkForEnd()
-    {
-        if (this.activePlayers.size() == 0 && this.state.isPlaying())
-        {
+    private void checkForEnd() {
+        if (this.activePlayers.size() == 0 && this.state.isPlaying()) {
             this.onGameEnd();
             if (this.autoReset)
                 this.reset();
@@ -488,114 +431,93 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener
     }
     
     @EventHandler
-    public void ___onPlayerRespawn(final PlayerRespawnEvent event)
-    {
+    public void ___onPlayerRespawn(final PlayerRespawnEvent event) {
         if (!this.playersCanRespawn)
             //Kick from arena
             this.onPlayerLeft(event.getPlayer());
     }
     
     @EventHandler
-    public void onPlayerInventoryClick(final InventoryClickEvent event)
-    {
+    public void onPlayerInventoryClick(final InventoryClickEvent event) {
         if (event.getWhoClicked() instanceof Player)
             if (this.activePlayers.contains(event.getWhoClicked()))
                 if (this.inventoryDisabled)
                     event.setCancelled(true);
     }
     
-    public int getMinimalPlayers()
-    {
+    public int getMinimalPlayers() {
         return this.minimalPlayers;
     }
     
-    public void setMinimalPlayers(final int minimalPlayers)
-    {
+    public void setMinimalPlayers(final int minimalPlayers) {
         this.minimalPlayers = minimalPlayers;
     }
     
-    public int getCountdownLenght()
-    {
+    public int getCountdownLenght() {
         return this.countdownLenght;
     }
     
-    public void setCountdownLenght(final int countdownLenght)
-    {
+    public void setCountdownLenght(final int countdownLenght) {
         this.countdownLenght = countdownLenght;
     }
     
-    public Location getLobbyLocation()
-    {
+    public Location getLobbyLocation() {
         return this.lobbyLocation;
     }
     
-    public void setLobbyLocation(final Location lobbyLocation)
-    {
+    public void setLobbyLocation(final Location lobbyLocation) {
         this.lobbyLocation = lobbyLocation;
     }
     
-    public Location getGameSpawn()
-    {
+    public Location getGameSpawn() {
         return this.gameSpawn;
     }
     
-    public void setGameSpawn(final Location gameSpawn)
-    {
+    public void setGameSpawn(final Location gameSpawn) {
         this.gameSpawn = gameSpawn;
     }
     
-    public boolean countdownCanCancel()
-    {
+    public boolean countdownCanCancel() {
         return this.countdownCanCancel;
     }
     
-    public void setCountdownCanCancel(final boolean countdownCanCancel)
-    {
+    public void setCountdownCanCancel(final boolean countdownCanCancel) {
         this.countdownCanCancel = countdownCanCancel;
     }
     
-    public boolean shouldTeleportPlayers()
-    {
+    public boolean shouldTeleportPlayers() {
         return this.shouldTeleportPlayers;
     }
     
-    public void setShouldTeleportPlayers(final boolean shouldTeleportPlayers)
-    {
+    public void setShouldTeleportPlayers(final boolean shouldTeleportPlayers) {
         this.shouldTeleportPlayers = shouldTeleportPlayers;
     }
     
-    public boolean playersCanRespawn()
-    {
+    public boolean playersCanRespawn() {
         return this.playersCanRespawn;
     }
     
-    public void setPlayersCanRespawn(final boolean playersCanRespawn)
-    {
+    public void setPlayersCanRespawn(final boolean playersCanRespawn) {
         this.playersCanRespawn = playersCanRespawn;
     }
     
-    public int getCountdownTimeLeft()
-    {
+    public int getCountdownTimeLeft() {
         return this.countdownTimeLeft;
     }
     
-    public String getCountdownFormat()
-    {
+    public String getCountdownFormat() {
         return this.countdownFormat;
     }
     
-    public void setCountdownFormat(final String countdownFormat)
-    {
+    public void setCountdownFormat(final String countdownFormat) {
         this.countdownFormat = countdownFormat;
     }
     
-    public boolean isPlayersCanJoinAfterStart()
-    {
+    public boolean isPlayersCanJoinAfterStart() {
         return this.playersCanJoinAfterStart;
     }
     
-    public void setPlayersCanJoinAfterStart(final boolean playersCanJoinAfterStart)
-    {
+    public void setPlayersCanJoinAfterStart(final boolean playersCanJoinAfterStart) {
         this.playersCanJoinAfterStart = playersCanJoinAfterStart;
     }
 }

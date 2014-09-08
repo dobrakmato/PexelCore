@@ -30,12 +30,11 @@ import java.lang.annotation.Target;
  */
 @Target({ java.lang.annotation.ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ArenaOption
-{
-	/**
-	 * Name of option.
-	 * 
-	 * @return the name
-	 */
-	String name();
+public @interface ArenaOption {
+    /**
+     * Name of option.
+     * 
+     * @return the name of option
+     */
+    String name();
 }

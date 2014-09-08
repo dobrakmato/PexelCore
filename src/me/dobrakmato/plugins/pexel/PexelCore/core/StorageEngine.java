@@ -45,8 +45,7 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class StorageEngine
-{
+public class StorageEngine {
     private static final Map<UUID, PlayerProfile>   profiles    = new HashMap<UUID, PlayerProfile>();
     private static final Map<String, Minigame>      minigames   = new HashMap<String, Minigame>();
     private static final Map<String, ProtectedArea> areas       = new HashMap<String, ProtectedArea>();
@@ -63,8 +62,7 @@ public class StorageEngine
      * @param core
      *            pexel core
      */
-    public static void initialize(final PexelCore core)
-    {
+    public static void initialize(final PexelCore core) {
         if (!StorageEngine.initialized)
             StorageEngine.initialized = true;
     }
@@ -76,8 +74,7 @@ public class StorageEngine
      *            player
      * @return lsit of friends
      */
-    public static List<UUID> getFriends(final Player player)
-    {
+    public static List<UUID> getFriends(final Player player) {
         return StorageEngine.profiles.get(player.getUniqueId()).getFriends();
     }
     
@@ -87,8 +84,7 @@ public class StorageEngine
      * @param player
      * @return
      */
-    public static List<UUID> getFoes(final Player player)
-    {
+    public static List<UUID> getFoes(final Player player) {
         return StorageEngine.profiles.get(player.getUniqueId()).getFoes();
     }
     
@@ -97,8 +93,7 @@ public class StorageEngine
      * 
      * @return
      */
-    public static Map<String, ProtectedArea> getAreas()
-    {
+    public static Map<String, ProtectedArea> getAreas() {
         return StorageEngine.areas;
     }
     
@@ -108,8 +103,7 @@ public class StorageEngine
      * @param player
      * @return
      */
-    public static PlayerProfile getProfile(final UUID player)
-    {
+    public static PlayerProfile getProfile(final UUID player) {
         return profiles.get(player);
     }
     
@@ -120,8 +114,7 @@ public class StorageEngine
      *            name of minigame
      * @return minigame object
      */
-    public static Minigame getMinigame(final String name)
-    {
+    public static Minigame getMinigame(final String name) {
         return StorageEngine.minigames.get(name);
     }
     
@@ -130,8 +123,7 @@ public class StorageEngine
      * 
      * @param minigame
      */
-    public static void addMinigame(final Minigame minigame)
-    {
+    public static void addMinigame(final Minigame minigame) {
         StorageEngine.minigames.put(minigame.getName(), minigame);
     }
     
@@ -140,8 +132,7 @@ public class StorageEngine
      * 
      * @param arena
      */
-    public static void addArena(final MinigameArena arena)
-    {
+    public static void addArena(final MinigameArena arena) {
         StorageEngine.arenas.put(arena.getName(), arena);
         StorageEngine.areas.put(arena.getName(), arena);
     }
@@ -151,8 +142,7 @@ public class StorageEngine
      * 
      * @return count of minigame arenas.
      */
-    public static int getMinigameArenasCount()
-    {
+    public static int getMinigameArenasCount() {
         return StorageEngine.arenas.size();
     }
     
@@ -161,67 +151,55 @@ public class StorageEngine
      * 
      * @return count of minigame
      */
-    public static int getMinigamesCount()
-    {
+    public static int getMinigamesCount() {
         return StorageEngine.minigames.size();
     }
     
-    protected static Map<String, Minigame> getMinigames()
-    {
+    protected static Map<String, Minigame> getMinigames() {
         return StorageEngine.minigames;
     }
     
-    public static Map<String, MinigameArena> getArenas()
-    {
+    public static Map<String, MinigameArena> getArenas() {
         return StorageEngine.arenas;
     }
     
-    public static MinigameArena getArena(final String arenaName)
-    {
+    public static MinigameArena getArena(final String arenaName) {
         return StorageEngine.arenas.get(arenaName);
     }
     
-    public static void addGate(final String name, final TeleportGate gate)
-    {
+    public static void addGate(final String name, final TeleportGate gate) {
         StorageEngine.gates.put(name, gate);
     }
     
-    public static TeleportGate getGate(final String name)
-    {
+    public static TeleportGate getGate(final String name) {
         return StorageEngine.gates.get(name);
     }
     
-    public static void removeGate(final String name)
-    {
+    public static void removeGate(final String name) {
         StorageEngine.gates.remove(name);
     }
     
     @SuppressWarnings("rawtypes")
-    public static void registerArenaAlias(final Class arenaClass, final String alias)
-    {
+    public static void registerArenaAlias(final Class arenaClass, final String alias) {
         StorageEngine.aliases.put(alias, arenaClass);
     }
     
     @SuppressWarnings("rawtypes")
-    public static Class getByAlias(final String alias)
-    {
+    public static Class getByAlias(final String alias) {
         return StorageEngine.aliases.get(alias);
     }
     
     @SuppressWarnings("rawtypes")
-    public static Map<String, Class> getAliases()
-    {
+    public static Map<String, Class> getAliases() {
         return StorageEngine.aliases;
     }
     
-    public static void addLobby(final Lobby lobby)
-    {
+    public static void addLobby(final Lobby lobby) {
         StorageEngine.lobbies.put(lobby.getName(), lobby);
         StorageEngine.areas.put(lobby.getName(), lobby);
     }
     
-    public static Lobby getLobby(final String lobbyName)
-    {
+    public static Lobby getLobby(final String lobbyName) {
         return StorageEngine.lobbies.get(lobbyName);
     }
     
@@ -230,8 +208,7 @@ public class StorageEngine
      * 
      * @param uniqueId
      */
-    public static void saveProfile(final UUID uniqueId)
-    {
+    public static void saveProfile(final UUID uniqueId) {
         Log.info("Saving profile for " + uniqueId.toString() + " to disk...");
         StorageEngine.profiles.get(uniqueId).save(Paths.playerProfile(uniqueId));
     }
@@ -241,30 +218,25 @@ public class StorageEngine
      * 
      * @param uniqueId
      */
-    public static void loadProfile(final UUID uniqueId)
-    {
+    public static void loadProfile(final UUID uniqueId) {
         File f = new File(Paths.playerProfile(uniqueId));
-        if (f.exists())
-        {
+        if (f.exists()) {
             Log.info("Load profile for " + uniqueId + "...");
             StorageEngine.profiles.put(uniqueId,
                     PlayerProfile.load(Paths.playerProfile(uniqueId)));
         }
-        else
-        {
+        else {
             Log.info("Creating new profile for " + uniqueId.toString());
             StorageEngine.profiles.put(uniqueId, new PlayerProfile(uniqueId));
         }
     }
     
-    public static void saveData()
-    {
+    public static void saveData() {
         Log.info("Saving data...");
         // Save lobbies.
         YamlConfiguration yaml_lobbies = new YamlConfiguration();
         int i_lobbies = 0;
-        for (Lobby l : StorageEngine.lobbies.values())
-        {
+        for (Lobby l : StorageEngine.lobbies.values()) {
             yaml_lobbies.set("lobbies.lobby" + i_lobbies + ".name", l.getName());
             yaml_lobbies.set("lobbies.lobby" + i_lobbies + ".checkinterval",
                     l.getCheckInterval());
@@ -282,20 +254,17 @@ public class StorageEngine
                     "lobbies.lobby" + i_lobbies + ".region");
             i_lobbies++;
         }
-        try
-        {
+        try {
             yaml_lobbies.save(new File(Paths.lobbiesPath()));
             Log.info("Saved " + i_lobbies + " lobbies!");
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         
         // Save arenas
         YamlConfiguration yaml_arenas = new YamlConfiguration();
         int i_arenas = 0;
-        for (MinigameArena a : StorageEngine.arenas.values())
-        {
+        for (MinigameArena a : StorageEngine.arenas.values()) {
             yaml_arenas.set("arenas.arena" + i_arenas + ".name", a.getName());
             yaml_arenas.set("arenas.arena" + i_arenas + ".type",
                     a.getClass().getSimpleName());
@@ -304,21 +273,17 @@ public class StorageEngine
             yaml_arenas.set("arenas.arena" + i_arenas + ".slots", a.getMaximumSlots());
             // Get options
             for (Field f : a.getClass().getDeclaredFields())
-                if (f.isAnnotationPresent(ArenaOption.class))
-                {
+                if (f.isAnnotationPresent(ArenaOption.class)) {
                     if (!f.isAccessible())
                         f.setAccessible(true);
                     
-                    try
-                    {
-                        if (f.get(a) != null)
-                        {
+                    try {
+                        if (f.get(a) != null) {
                             yaml_arenas.set(
                                     "arenas.arena" + i_arenas + ".options."
                                             + f.getName(), f.get(a).toString());
                         }
-                    } catch (IllegalArgumentException | IllegalAccessException e)
-                    {
+                    } catch (IllegalArgumentException | IllegalAccessException e) {
                         System.out.println("Error while saving arena " + a.getName()
                                 + "!");
                         e.printStackTrace();
@@ -336,20 +301,17 @@ public class StorageEngine
             a.getRegion().serialize(yaml_arenas, "arenas.arena" + i_arenas + ".region");
             i_arenas++;
         }
-        try
-        {
+        try {
             yaml_arenas.save(new File(Paths.arenasPath()));
             Log.info("Saved " + i_arenas + " arenas!");
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         
         // Save gates
         YamlConfiguration yaml_gates = new YamlConfiguration();
         int i_gates = 0;
-        for (String key : StorageEngine.gates.keySet())
-        {
+        for (String key : StorageEngine.gates.keySet()) {
             TeleportGate tg = StorageEngine.gates.get(key);
             yaml_gates.set("gates.gate" + i_gates + ".name", key);
             yaml_gates.set("gates.gate" + i_gates + ".action.type",
@@ -359,27 +321,23 @@ public class StorageEngine
             tg.getRegion().serialize(yaml_gates, "gates.gate" + i_gates + ".region");
             i_gates++;
         }
-        try
-        {
+        try {
             yaml_gates.save(new File(Paths.gatesPath()));
             Log.info("Saved " + i_gates + " gates!");
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    public static void loadData()
-    {
+    public static void loadData() {
         Log.info("Loading data...");
         
     }
     
-    public static void gateEnter(final Player player, final Location location)
-    {
+    public static void gateEnter(final Player player, final Location location) {
         // Find the right gate
         for (TeleportGate gate : StorageEngine.gates.values())
             if (gate.getRegion().intersects(location))
-                gate.execute(player);
+                gate.teleport(player);
     }
 }

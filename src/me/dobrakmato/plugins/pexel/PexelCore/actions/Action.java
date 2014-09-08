@@ -26,8 +26,7 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public interface Action
-{
+public interface Action {
     /**
      * Should load menu action from string.
      * 

@@ -30,81 +30,80 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public interface MatchmakingGame
-{
-	/**
-	 * Returns number of free slots in the game.
-	 * 
-	 * @return free slots count
-	 */
-	public int getFreeSlots();
-	
-	/**
-	 * Returns number of all slots in game.
-	 * 
-	 * @return all slots count.
-	 */
-	public int getMaximumSlots();
-	
-	/**
-	 * Returns game actual state.
-	 * 
-	 * @return state of arena
-	 */
-	public GameState getState();
-	
-	/**
-	 * Returns game server locetion.
-	 * 
-	 * @return server location of this arena
-	 * @deprecated
-	 */
-	@Deprecated
-	public ServerLocation getServerLocation();
-	
-	/**
-	 * Returns list of players in game.
-	 * 
-	 * @return
-	 */
-	public List<Player> getPlayers();
-	
-	/**
-	 * Returns number of player in game. Same as calling {@link MatchmakingRequest#getPlayers()}.size().
-	 * 
-	 * @return number of players in arena
-	 */
-	public int playerCount();
-	
-	/**
-	 * Returns if one player can join game.
-	 * 
-	 * @return true or false
-	 */
-	public boolean canJoin();
-	
-	/**
-	 * Returns if specified amount of players can join game.
-	 * 
-	 * @param count
-	 *            amount of players
-	 * @return true or false
-	 */
-	public boolean canJoin(int count);
-	
-	/**
-	 * Called when player joins the game.
-	 * 
-	 * @param player
-	 *            player who joined arena
-	 */
-	public void onPlayerJoin(Player player);
-	
-	/**
-	 * Called when player lefts the game.
-	 * 
-	 * @param player
-	 *            player who left arena
-	 */
-	public void onPlayerLeft(Player player);
+public interface MatchmakingGame {
+    /**
+     * Returns number of free slots in the game.
+     * 
+     * @return free slots count
+     */
+    public int getFreeSlots();
+    
+    /**
+     * Returns number of all slots in game.
+     * 
+     * @return all slots count.
+     */
+    public int getMaximumSlots();
+    
+    /**
+     * Returns game actual state.
+     * 
+     * @return state of arena
+     */
+    public GameState getState();
+    
+    /**
+     * Returns game server locetion.
+     * 
+     * @return server location of this arena
+     * @deprecated
+     */
+    @Deprecated
+    public ServerLocation getServerLocation();
+    
+    /**
+     * Returns list of players in game.
+     * 
+     * @return
+     */
+    public List<Player> getPlayers();
+    
+    /**
+     * Returns number of player in game. Same as calling {@link MatchmakingRequest#getPlayers()}.size().
+     * 
+     * @return number of players in arena
+     */
+    public int playerCount();
+    
+    /**
+     * Returns if one player can join game.
+     * 
+     * @return true or false
+     */
+    public boolean canJoin();
+    
+    /**
+     * Returns if specified amount of players can join game.
+     * 
+     * @param count
+     *            amount of players
+     * @return true or false
+     */
+    public boolean canJoin(int count);
+    
+    /**
+     * Called when player joins the game.
+     * 
+     * @param player
+     *            player who joined arena
+     */
+    public void onPlayerJoin(Player player);
+    
+    /**
+     * Called when player lefts the game.
+     * 
+     * @param player
+     *            player who left arena
+     */
+    public void onPlayerLeft(Player player);
 }

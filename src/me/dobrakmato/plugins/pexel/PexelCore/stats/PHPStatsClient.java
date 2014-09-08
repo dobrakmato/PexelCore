@@ -29,80 +29,65 @@ import java.net.URL;
  * @author Mato Kormuth
  * 
  */
-public class PHPStatsClient extends StatsClient
-{
-	//kluc a server
-	private final String	apiKey;
-	private final String	server;
-	
-	/**
-	 * Creates new instance of stats client. Connects to specified stats server with specified api key.
-	 * 
-	 * @param apiKey
-	 *            secret api key.
-	 * @param server
-	 *            server path.
-	 */
-	public PHPStatsClient(final String apiKey, final String server)
-	{
-		this.server = server;
-		this.apiKey = apiKey;
-	}
-	
-	@Override
-	public void setStat(final String pid, final String stat, final int value)
-	{
-		this.sendRequestAsync("setStat", "pid=" + pid + "&stat=" + stat
-				+ "&value=" + value);
-	}
-	
-	@Override
-	public void incrementStat(final String pid, final String stat,
-			final int amount)
-	{
-		this.sendRequestAsync("incrementStat", "pid=" + pid + "&stat=" + stat
-				+ "&amount=" + amount);
-	}
-	
-	@Override
-	public void decrementStat(final String pid, final String stat,
-			final int amount)
-	{
-		this.sendRequestAsync("decrementStat", "pid=" + pid + "&stat=" + stat
-				+ "&amount=" + amount);
-	}
-	
-	@Override
-	public void resetStats(final String pid)
-	{
-		this.sendRequestAsync("resetStats", "pid=" + pid);
-	}
-	
-	@Override
-	public void registerUser(final String pid, final String name,
-			final String email)
-	{
-		this.sendRequestAsync("registerUser", "pid=" + pid + "&name=" + name
-				+ "&email=" + email);
-	}
-	
-	private void sendRequestAsync(final String action, final String params)
-	{
-		try
-		{
-			HttpURLConnection connection = (HttpURLConnection) new URL(
-					this.server + "/api.php").openConnection();
-			connection.setRequestMethod("POST");
-			connection.setDoOutput(true);
-			DataOutputStream wr = new DataOutputStream(
-					connection.getOutputStream());
-			wr.writeBytes("apikey=" + this.apiKey + "&action=" + action + "&"
-					+ params);
-			wr.flush();
-			wr.close();
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+public class PHPStatsClient extends StatsClient {
+    //kluc a server
+    private final String apiKey;
+    private final String server;
+    
+    /**
+     * Creates new instance of stats client. Connects to specified stats server with specified api key.
+     * 
+     * @param apiKey
+     *            secret api key.
+     * @param server
+     *            server path.
+     */
+    public PHPStatsClient(final String apiKey, final String server) {
+        this.server = server;
+        this.apiKey = apiKey;
+    }
+    
+    @Override
+    public void setStat(final String pid, final String stat, final int value) {
+        this.sendRequestAsync("setStat", "pid=" + pid + "&stat=" + stat + "&value="
+                + value);
+    }
+    
+    @Override
+    public void incrementStat(final String pid, final String stat, final int amount) {
+        this.sendRequestAsync("incrementStat", "pid=" + pid + "&stat=" + stat
+                + "&amount=" + amount);
+    }
+    
+    @Override
+    public void decrementStat(final String pid, final String stat, final int amount) {
+        this.sendRequestAsync("decrementStat", "pid=" + pid + "&stat=" + stat
+                + "&amount=" + amount);
+    }
+    
+    @Override
+    public void resetStats(final String pid) {
+        this.sendRequestAsync("resetStats", "pid=" + pid);
+    }
+    
+    @Override
+    public void registerUser(final String pid, final String name, final String email) {
+        this.sendRequestAsync("registerUser", "pid=" + pid + "&name=" + name + "&email="
+                + email);
+    }
+    
+    private void sendRequestAsync(final String action, final String params) {
+        try {
+            HttpURLConnection connection = (HttpURLConnection) new URL(this.server
+                    + "/api.php").openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+            wr.writeBytes("apikey=" + this.apiKey + "&action=" + action + "&" + params);
+            wr.flush();
+            wr.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

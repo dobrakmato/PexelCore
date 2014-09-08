@@ -16,9 +16,7 @@
  *
  */
 // @formatter:on
-package me.dobrakmato.plugins.pexel.PexelCore.commands;
-
-import me.dobrakmato.plugins.pexel.PexelCore.actions.Action;
+package me.dobrakmato.plugins.pexel.PexelCore.actions;
 
 import org.bukkit.entity.Player;
 
@@ -28,37 +26,32 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class CommandAction implements Action
-{
-	private String	command	= "";
-	
-	/**
-	 * Creates a new command action. Command should <b> not contain</b> slash. <code>%player%</code> in command will be
-	 * replaced with name of player, that is this command executing for.
-	 * 
-	 * @param command
-	 *            command of this action
-	 */
-	public CommandAction(final String command)
-	{
-		this.command = command;
-	}
-	
-	@Override
-	public void execute(final Player player)
-	{
-		player.performCommand(this.command.replace("%player%", player.getName()));
-	}
-	
-	@Override
-	public void load(final String string)
-	{
-		this.command = string;
-	}
-	
-	@Override
-	public String save()
-	{
-		return this.command;
-	}
+public class CommandAction implements Action {
+    private String command = "";
+    
+    /**
+     * Creates a new command action. Command should <b> not contain</b> slash. <code>%player%</code> in command will be
+     * replaced with name of player, that is this command executing for.
+     * 
+     * @param command
+     *            command of this action
+     */
+    public CommandAction(final String command) {
+        this.command = command;
+    }
+    
+    @Override
+    public void execute(final Player player) {
+        player.performCommand(this.command.replace("%player%", player.getName()));
+    }
+    
+    @Override
+    public void load(final String string) {
+        this.command = string;
+    }
+    
+    @Override
+    public String save() {
+        return this.command;
+    }
 }

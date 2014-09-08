@@ -45,9 +45,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
  * @author Mato Kormuth
  * 
  */
-public class TeamManager implements Listener
-{
+public class TeamManager implements Listener {
+    /**
+     * List of teams
+     */
     private final List<Team>          teams    = new ArrayList<Team>();
+    /**
+     * Caching of sign locations.
+     */
     private final Map<Location, Team> signs    = new HashMap<Location, Team>();
     private final int                 varience = 1;
     private final MinigameArena       arena;
@@ -58,8 +63,7 @@ public class TeamManager implements Listener
      * @param arena
      *            arena in which team manager runs.
      */
-    public TeamManager(final MinigameArena arena)
-    {
+    public TeamManager(final MinigameArena arena) {
         Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
         this.arena = arena;
     }
@@ -67,8 +71,7 @@ public class TeamManager implements Listener
     /**
      * Resets team manager.
      */
-    public void reset()
-    {
+    public void reset() {
         this.teams.clear();
         for (Location loc : this.signs.keySet())
             this.updateSign(loc, this.signs.get(loc));
@@ -81,13 +84,11 @@ public class TeamManager implements Listener
      * @param team
      *            team to add
      */
-    public void addTeam(final Team team)
-    {
+    public void addTeam(final Team team) {
         this.teams.add(team);
     }
     
-    private void updateSignCache(final Team team)
-    {
+    private void updateSignCache(final Team team) {
         for (Location loc : this.signs.keySet())
             if (this.signs.get(loc) == team)
                 this.updateSign(loc, team);
@@ -101,8 +102,7 @@ public class TeamManager implements Listener
      * @param team
      *            team
      */
-    public void updateSign(final Location location, final Team team)
-    {
+    public void updateSign(final Location location, final Team team) {
         this.signs.put(location, team);
         Sign s = (Sign) location.getBlock().getState();
         s.setLine(1, team.getName());
@@ -125,8 +125,7 @@ public class TeamManager implements Listener
     }
     
     @EventHandler
-    private void onPlayerInteract(final PlayerInteractEvent event)
-    {
+    private void onPlayerInteract(final PlayerInteractEvent event) {
         if (event.getAction() == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK
                 || event.getAction() == org.bukkit.event.block.Action.LEFT_CLICK_BLOCK)
             if (event.getClickedBlock().getType() == Material.SIGN_POST
@@ -136,22 +135,19 @@ public class TeamManager implements Listener
     }
     
     @EventHandler
-    private void onPlayerLeft(final PlayerQuitEvent event)
-    {
+    private void onPlayerLeft(final PlayerQuitEvent event) {
         for (Team t : this.teams)
             if (t.contains(event.getPlayer()))
                 t.removePlayer(event.getPlayer());
     }
     
-    private void signClick(final Player player, final Block clickedBlock)
-    {
+    private void signClick(final Player player, final Block clickedBlock) {
         System.out.println("signClick: p: " + player.getName() + ", cb: "
                 + clickedBlock.getLocation().toVector().toString());
         Sign s = (Sign) clickedBlock.getState();
         String teamName = s.getLine(1);
         
-        if (s.getLine(0).contains("[Team]"))
-        {
+        if (s.getLine(0).contains("[Team]")) {
             Team team = null;
             for (Team t : this.teams)
                 if (t.getName().equalsIgnoreCase(teamName))
@@ -161,12 +157,9 @@ public class TeamManager implements Listener
             
             if (team.getPlayerCount() == team.getMaximumPlayers())
                 player.sendMessage(ChatManager.error("This team is full!"));
-            else
-            {
-                if (team.canJoin())
-                {
-                    if (this.playerInTeam(player))
-                    {
+            else {
+                if (team.canJoin()) {
+                    if (this.playerInTeam(player)) {
                         Team oldTeam = this.getTeam(player);
                         oldTeam.removePlayer(player);
                         this.updateSignCache(oldTeam);
@@ -175,8 +168,7 @@ public class TeamManager implements Listener
                     team.addPlayer(player);
                     this.updateSign(clickedBlock.getLocation(), team);
                 }
-                else
-                {
+                else {
                     player.sendMessage(ChatManager.error("You can't join this team at this time!"));
                 }
             }
@@ -190,8 +182,7 @@ public class TeamManager implements Listener
      *            player to find
      * @return team, that specified players is in
      */
-    public Team getTeam(final Player player)
-    {
+    public Team getTeam(final Player player) {
         for (Team t : this.teams)
             if (t.contains(player))
                 return t;
@@ -205,8 +196,7 @@ public class TeamManager implements Listener
      *            player to find
      * @return true or false
      */
-    public boolean playerInTeam(final Player player)
-    {
+    public boolean playerInTeam(final Player player) {
         for (Team t : this.teams)
             if (t.contains(player))
                 return true;
@@ -222,8 +212,7 @@ public class TeamManager implements Listener
      *            specififed player
      * @return true or false
      */
-    public boolean canJoinTeam(final Team team, final Player player)
-    {
+    public boolean canJoinTeam(final Team team, final Player player) {
         return team.getPlayerCount() > this.getAvarangePlayerCount();
     }
     
@@ -232,8 +221,7 @@ public class TeamManager implements Listener
      * 
      * @return avarange player count
      */
-    public int getAvarangePlayerCount()
-    {
+    public int getAvarangePlayerCount() {
         int allPlayers = this.varience;
         for (Team team : this.teams)
             allPlayers += team.getPlayerCount();
@@ -246,8 +234,7 @@ public class TeamManager implements Listener
      * @param p
      *            player, that have no team.
      */
-    public void autoJoinTeam(final Player p)
-    {
+    public void autoJoinTeam(final Player p) {
         Team leastCrowdedTeam = this.teams.get(0);
         
         for (Team t : this.teams)

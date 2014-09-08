@@ -32,58 +32,46 @@ import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
  * @author Mato Kormuth
  * 
  */
-public class PexelMasterServer implements Runnable
-{
+public class PexelMasterServer implements Runnable {
     private ServerSocket                  socket;
     private final List<PexelServerClient> clients = new ArrayList<PexelServerClient>();
     
-    public PexelMasterServer(final int port)
-    {
+    public PexelMasterServer(final int port) {
         Log.partEnable("PMS");
-        try
-        {
+        try {
             this.socket = new ServerSocket(port);
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
             this.socket = null;
         }
     }
     
-    public void listen()
-    {
+    public void listen() {
         new Thread(this).start();
     }
     
-    public void close()
-    {
+    public void close() {
         Log.partDisable("PMS");
-        try
-        {
+        try {
             this.socket.close();
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
     @Override
-    public void run()
-    {
+    public void run() {
         Thread.currentThread().setName("PexelMasterServer-ListenThread");
         
-        while (!this.socket.isClosed())
-        {
-            try
-            {
+        while (!this.socket.isClosed()) {
+            try {
                 final Socket client = this.socket.accept();
                 //Login
                 final String serverName = "";
                 
                 new Thread(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         Log.info("PMS Client " + serverName
                                 + " passed login! Comunicating with him now.");
                         Thread.currentThread().setName(
@@ -95,22 +83,17 @@ public class PexelMasterServer implements Runnable
                         PexelMasterServer.this.processClient(new Server(psc, serverName));
                     }
                 }).start();
-            } catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
     
-    public void processClient(final Server server)
-    {
-        while (!this.socket.isClosed())
-        {
-            try
-            {
+    public void processClient(final Server server) {
+        while (!this.socket.isClosed()) {
+            try {
                 server.getClient().getHandler().handlePacket();
-            } catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -120,8 +103,7 @@ public class PexelMasterServer implements Runnable
     /**
      * @param crossServerChatMessage
      */
-    public void broadcast(final PexelPacket packet)
-    {
+    public void broadcast(final PexelPacket packet) {
         for (PexelServerClient client : this.clients)
             client.sendPacket(packet);
     }

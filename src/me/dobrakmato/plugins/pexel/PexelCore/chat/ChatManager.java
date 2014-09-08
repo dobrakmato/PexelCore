@@ -39,8 +39,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  * @author Mato Kormuth
  * 
  */
-public class ChatManager
-{
+public class ChatManager {
     private static final String                   minigameFormat    = ChatColor.DARK_GREEN
                                                                             + "[%minigame%] "
                                                                             + ChatColor.WHITE
@@ -67,44 +66,36 @@ public class ChatManager
     public static final ChatChannel               CHANNEL_LOBBY     = new ChatChannel(
                                                                             "lobby",
                                                                             ChatColor.GRAY.toString());
-    private static final long                     channelLifeTime   = 1000 * 60 * 60 * 24;               //One day
+    private static final long                     CHANNEL_LIFETIME  = 1000 * 60 * 60 * 24;               //One day
                                                                                                           
-    public static final String error(final String msg)
-    {
+    public static final String error(final String msg) {
         return ChatManager.errorFormat.replace("%msg%", msg);
     }
     
-    public static final String success(final String msg)
-    {
+    public static final String success(final String msg) {
         return ChatManager.successFormat.replace("%msg%", msg);
     }
     
-    public static final String chatPlayer(final String msg, final Player player)
-    {
+    public static final String chatPlayer(final String msg, final Player player) {
         return ChatManager.chatDefaultFormat.replace("%player%", player.getDisplayName()).replace(
                 "%msg%", msg);
     }
     
-    public static final String chatPlayerOp(final String msg, final Player player)
-    {
+    public static final String chatPlayerOp(final String msg, final Player player) {
         return ChatManager.chatOpFormat.replace("%player%", player.getDisplayName()).replace(
                 "%msg%", msg);
     }
     
-    public static final String chatPlayerFriend(final String msg, final Player player)
-    {
+    public static final String chatPlayerFriend(final String msg, final Player player) {
         return ChatColor.BLUE
                 + ChatManager.chatDefaultFormat.replace("%player%",
                         player.getDisplayName()).replace("%msg%", msg);
     }
     
-    public static final String onlinefriends(final List<UUID> players)
-    {
+    public static final String onlinefriends(final List<UUID> players) {
         String string = ChatColor.GOLD + "Online players: ";
-        for (UUID uuid : players)
-        {
-            if (Bukkit.getPlayer(uuid).isOnline())
-            {
+        for (UUID uuid : players) {
+            if (Bukkit.getPlayer(uuid).isOnline()) {
                 ServerLocation location = StorageEngine.getProfile(uuid).getServerLocation();
                 string += Bukkit.getPlayer(uuid).getDisplayName() + " ("
                         + location.toString() + ")";
@@ -122,8 +113,7 @@ public class ChatManager
      *            message to format
      * @return formatted message
      */
-    public static final String minigame(final Minigame minigame, final String msg)
-    {
+    public static final String minigame(final Minigame minigame, final String msg) {
         return ChatManager.minigameFormat.replace("%minigame%",
                 minigame.getDisplayName()).replace("%msg%", msg);
     }
@@ -134,8 +124,7 @@ public class ChatManager
      * @param chatChannel
      *            channel to register
      */
-    public static void registerChannel(final ChatChannel chatChannel)
-    {
+    public static void registerChannel(final ChatChannel chatChannel) {
         if (!ChatManager.channels.containsKey(chatChannel.getName()))
             ChatManager.channels.put(chatChannel.getName(), chatChannel);
         else
@@ -152,8 +141,7 @@ public class ChatManager
      *            player
      */
     public static void unregisterFromChannel(final String channelName,
-            final Player player)
-    {
+            final Player player) {
         if (ChatManager.channels.containsKey(channelName))
             ChatManager.channels.get(channelName).unsubscribe(player);
         else
@@ -163,18 +151,21 @@ public class ChatManager
     /**
      * Removes old, unused channels.
      */
-    public static void cleanUpChannels()
-    {
+    public static void cleanUpChannels() {
         for (ChatChannel channel : ChatManager.channels.values())
-            if (channel.getLastActivity() + ChatManager.channelLifeTime < System.currentTimeMillis())
+            if (channel.getLastActivity() + ChatManager.CHANNEL_LIFETIME < System.currentTimeMillis())
                 ChatManager.channels.remove(channel.getName());
         
     }
     
-    public static void onChat(final AsyncPlayerChatEvent event)
-    {
-        if (event.getMessage().trim().startsWith("@"))
-        {
+    /**
+     * Called when manager should manage chat event.
+     * 
+     * @param event
+     *            chat event
+     */
+    public static void __processChatEvent(final AsyncPlayerChatEvent event) {
+        if (event.getMessage().trim().startsWith("@")) {
             String channelName = event.getMessage().substring(1,
                     event.getMessage().indexOf(" ")).replace(":", "");
             for (ChatChannel channel : ChatManager.channels.values())

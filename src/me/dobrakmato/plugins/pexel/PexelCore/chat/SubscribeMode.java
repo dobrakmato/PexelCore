@@ -24,14 +24,13 @@ package me.dobrakmato.plugins.pexel.PexelCore.chat;
  * @author Mato Kormuth
  * 
  */
-public enum SubscribeMode
-{
-	/**
-	 * Player can only read (receive) messages from channel.
-	 */
-	READ,
-	/**
-	 * Player can read (receive) and write (send) messages to channel.
-	 */
-	READ_WRITE;
+public enum SubscribeMode {
+    /**
+     * Player can only read (receive) messages from channel. (default)
+     */
+    READ,
+    /**
+     * Player can read (receive) and write (send) messages to channel.
+     */
+    READ_WRITE;
 }

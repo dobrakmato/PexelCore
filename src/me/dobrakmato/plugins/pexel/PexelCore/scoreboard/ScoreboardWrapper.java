@@ -26,17 +26,16 @@ import org.bukkit.scoreboard.Scoreboard;
  * @author Mato Kormuth
  * 
  */
-public interface ScoreboardWrapper
-{
-	/**
-	 * Returns scoreboard object.
-	 * 
-	 * @return the scoreboard objects
-	 */
-	public Scoreboard getScoreboard();
-	
-	/**
-	 * Resets scoreboard.
-	 */
-	public void reset();
+public interface ScoreboardWrapper {
+    /**
+     * Returns scoreboard object.
+     * 
+     * @return the scoreboard objects
+     */
+    public Scoreboard getScoreboard();
+    
+    /**
+     * Resets scoreboard.
+     */
+    public void reset();
 }

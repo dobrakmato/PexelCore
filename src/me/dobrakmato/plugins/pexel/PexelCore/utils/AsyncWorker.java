@@ -31,9 +31,14 @@ import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
  * @author Mato Kormuth
  * 
  */
-public class AsyncWorker implements Runnable
-{
+public class AsyncWorker implements Runnable {
+    /**
+     * Tasks that should be done.
+     */
     private final Queue<Runnable> tasks   = new ArrayBlockingQueue<Runnable>(50);
+    /**
+     * List of worker threads.
+     */
     private final List<Thread>    workers = new ArrayList<Thread>(4);
     private boolean               enabled = false;
     private final int             workersCount;
@@ -44,17 +49,14 @@ public class AsyncWorker implements Runnable
      * @param workersCount
      *            count of workers
      */
-    public AsyncWorker(final int workersCount)
-    {
+    public AsyncWorker(final int workersCount) {
         Log.partEnable("AyncWorker");
         this.workersCount = workersCount;
     }
     
-    public void start()
-    {
+    public void start() {
         this.enabled = true;
-        for (int i = 0; i < this.workersCount; i++)
-        {
+        for (int i = 0; i < this.workersCount; i++) {
             Log.info("Setting up worker #" + (i + 1) + "...");
             this.workers.add(new Thread(this));
             this.workers.get(this.workers.size() - 1).setName("AsyncWorker-" + (i + 1));
@@ -68,40 +70,32 @@ public class AsyncWorker implements Runnable
      * @param runnable
      *            taks to be executed from other thread.
      */
-    public void addTask(final Runnable runnable)
-    {
+    public void addTask(final Runnable runnable) {
         this.tasks.add(runnable);
     }
     
     /**
      * Shutdowns the workers and the logic.
      */
-    public void shutdown()
-    {
+    public void shutdown() {
         Log.partDisable("AsyncWorker");
         this.enabled = false;
     }
     
     @Override
-    public void run()
-    {
-        while (this.enabled)
-        {
+    public void run() {
+        while (this.enabled) {
             Runnable r = this.tasks.poll();
             if (r != null)
-                try
-                {
+                try {
                     r.run();
-                } catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     Log.warn("[AsyncWorker] Task generated: " + ex.getMessage());
                 }
             else
-                try
-                {
+                try {
                     Thread.sleep(200);
-                } catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             

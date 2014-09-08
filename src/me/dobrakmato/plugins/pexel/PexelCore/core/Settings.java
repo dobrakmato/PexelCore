@@ -24,10 +24,9 @@ package me.dobrakmato.plugins.pexel.PexelCore.core;
  * @author Mato Kormuth
  * 
  */
-public enum Settings
-{
-	/**
-	 * If the music would be played at the end of music.
-	 */
-	ENDROUND_MUSIC
+public enum Settings {
+    /**
+     * If the music would be played at the end of music.
+     */
+    ENDROUND_MUSIC
 }

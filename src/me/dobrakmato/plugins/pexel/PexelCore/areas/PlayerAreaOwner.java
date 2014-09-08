@@ -26,8 +26,7 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class PlayerAreaOwner implements AreaOwner
-{
+public class PlayerAreaOwner implements AreaOwner {
     /**
      * Player who is owner.
      */
@@ -38,14 +37,12 @@ public class PlayerAreaOwner implements AreaOwner
      * 
      * @param player
      */
-    public PlayerAreaOwner(final Player player)
-    {
+    public PlayerAreaOwner(final Player player) {
         this.owner = player;
     }
     
     @Override
-    public String getName()
-    {
+    public String getName() {
         return this.owner.getName();
     }
 }

@@ -27,47 +27,42 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class ScoreboardManager
-{
-	private final ScoreboardWrapper	scoreboard;
-	
-	/**
-	 * Creates new scoreboard manager, with specified scoreboard.
-	 * 
-	 * @param scoreboard
-	 */
-	public ScoreboardManager(final ScoreboardWrapper scoreboard)
-	{
-		this.scoreboard = scoreboard;
-	}
-	
-	/**
-	 * Adds player to this manager.
-	 * 
-	 * @param p
-	 *            player
-	 */
-	public void addPlayer(final Player p)
-	{
-		p.setScoreboard(this.scoreboard.getScoreboard());
-	}
-	
-	/**
-	 * Removes player from this scoreboard manager.
-	 * 
-	 * @param p
-	 *            player
-	 */
-	public void removePlayer(final Player p)
-	{
-		p.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
-	}
-	
-	/**
-	 * Resets wrapper.
-	 */
-	public void reset()
-	{
-		this.scoreboard.reset();
-	}
+public class ScoreboardManager {
+    private final ScoreboardWrapper scoreboard;
+    
+    /**
+     * Creates new scoreboard manager, with specified scoreboard.
+     * 
+     * @param scoreboard
+     */
+    public ScoreboardManager(final ScoreboardWrapper scoreboard) {
+        this.scoreboard = scoreboard;
+    }
+    
+    /**
+     * Adds player to this manager.
+     * 
+     * @param p
+     *            player
+     */
+    public void addPlayer(final Player p) {
+        p.setScoreboard(this.scoreboard.getScoreboard());
+    }
+    
+    /**
+     * Removes player from this scoreboard manager.
+     * 
+     * @param p
+     *            player
+     */
+    public void removePlayer(final Player p) {
+        p.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
+    }
+    
+    /**
+     * Resets wrapper.
+     */
+    public void reset() {
+        this.scoreboard.reset();
+    }
 }

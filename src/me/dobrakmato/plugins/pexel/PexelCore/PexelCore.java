@@ -33,7 +33,9 @@ import me.dobrakmato.plugins.pexel.PexelCore.commands.QJCommand;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.SettingsCommand;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.SpawnCommand;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.UnfriendCommand;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Auth;
 import me.dobrakmato.plugins.pexel.PexelCore.core.AutoMessage;
+import me.dobrakmato.plugins.pexel.PexelCore.core.License;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
 import me.dobrakmato.plugins.pexel.PexelCore.core.MagicClock;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
@@ -57,8 +59,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
  * @author Mato Kormuth
  * 
  */
-public class PexelCore extends JavaPlugin implements PluginMessageListener
-{
+public class PexelCore extends JavaPlugin implements PluginMessageListener {
     /**
      * Pexel matchmaking.
      */
@@ -91,10 +92,13 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
      * AsyncWorker object.
      */
     public AsyncWorker       asyncWorker;
+    /**
+     * Pexel auth object.
+     */
+    public Auth              auth;
     
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
         Log.partDisable("Core");
         //Shutdown all updated parts.
         UpdatedParts.shutdown();
@@ -108,25 +112,27 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
     }
     
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         Log.partEnable("Core");
+        
+        // Print license to console.
+        License.print();
         
         Pexel.initialize(this);
         
         this.freezer = new PlayerFreezer();
         
-        try
-        {
+        try {
             this.pexelserver = new PexelMasterServer(30789);
             this.pexelserver.listen();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             
         }
         
         this.message = new AutoMessage();
         this.message.updateStart(this);
+        
+        this.auth = new Auth();
         
         this.matchmaking = new Matchmaking();
         this.matchmaking.updateStart(this);
@@ -154,11 +160,9 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
         
         new AlternativeCommands();
         
-        try
-        {
+        try {
             this.pexelclient = new PexelServerClient("127.0.0.1", 30789);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
         }
         
         HardCoded.main();
@@ -169,8 +173,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
     
     @Override
     public List<String> onTabComplete(final CommandSender sender, final Command command,
-            final String alias, final String[] args)
-    {
+            final String alias, final String[] args) {
         if (command.getName().equalsIgnoreCase("arena"))
             if (sender instanceof Player)
                 if (args.length == 1)
@@ -182,8 +185,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener
     
     @Override
     public void onPluginMessageReceived(final String channel, final Player player,
-            final byte[] payload)
-    {
+            final byte[] payload) {
         // Nothing for now...
     }
 }

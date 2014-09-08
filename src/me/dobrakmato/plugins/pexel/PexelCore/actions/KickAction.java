@@ -26,22 +26,18 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class KickAction implements Action
-{
-	@Override
-	public void load(final String string)
-	{
-	}
-	
-	@Override
-	public String save()
-	{
-		return null;
-	}
-	
-	@Override
-	public void execute(final Player player)
-	{
-		player.kickPlayer("Goodbye!");
-	}
+public class KickAction implements Action {
+    @Override
+    public void load(final String string) {
+    }
+    
+    @Override
+    public String save() {
+        return null;
+    }
+    
+    @Override
+    public void execute(final Player player) {
+        player.kickPlayer("Goodbye!");
+    }
 }

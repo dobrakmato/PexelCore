@@ -28,40 +28,32 @@ import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
  * @author Mato Kormuth
  * 
  */
-public class Paths
-{
-	/**
-	 * Returns path for player profile.
-	 * 
-	 * @param uuid
-	 * @return
-	 */
-	public static final String playerProfile(final UUID uuid)
-	{
-		return Pexel.getCore().getDataFolder().getAbsolutePath() + "/profiles/"
-				+ uuid.toString() + ".yml";
-	}
-	
-	public static String lobbiesPath()
-	{
-		return Pexel.getCore().getDataFolder().getAbsolutePath()
-				+ "/lobbies.yml";
-	}
-	
-	public static String arenasPath()
-	{
-		return Pexel.getCore().getDataFolder().getAbsolutePath()
-				+ "/arenas.yml";
-	}
-	
-	public static String gatesPath()
-	{
-		return Pexel.getCore().getDataFolder().getAbsolutePath() + "/gates.yml";
-	}
-	
-	public static String matchRecord(final String name)
-	{
-		return Pexel.getCore().getDataFolder().getAbsolutePath() + "/records/"
-				+ name + ".record";
-	}
+public class Paths {
+    /**
+     * Returns path for player profile.
+     * 
+     * @param uuid
+     * @return
+     */
+    public static final String playerProfile(final UUID uuid) {
+        return Pexel.getCore().getDataFolder().getAbsolutePath() + "/profiles/"
+                + uuid.toString() + ".yml";
+    }
+    
+    public static String lobbiesPath() {
+        return Pexel.getCore().getDataFolder().getAbsolutePath() + "/lobbies.yml";
+    }
+    
+    public static String arenasPath() {
+        return Pexel.getCore().getDataFolder().getAbsolutePath() + "/arenas.yml";
+    }
+    
+    public static String gatesPath() {
+        return Pexel.getCore().getDataFolder().getAbsolutePath() + "/gates.yml";
+    }
+    
+    public static String matchRecord(final String name) {
+        return Pexel.getCore().getDataFolder().getAbsolutePath() + "/records/" + name
+                + ".record";
+    }
 }

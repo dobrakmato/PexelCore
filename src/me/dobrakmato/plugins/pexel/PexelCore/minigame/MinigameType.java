@@ -27,15 +27,12 @@ import java.util.List;
  * @author Mato Kormuth
  * 
  */
-public enum MinigameType
-{
-	TNT,
-	CREEPER,
-	PVP;
-	
-	public static final List<MinigameType> makeTypes(
-			final MinigameType... types)
-	{
-		return Arrays.asList(types);
-	}
+public enum MinigameType {
+    TNT,
+    CREEPER,
+    PVP;
+    
+    public static final List<MinigameType> makeTypes(final MinigameType... types) {
+        return Arrays.asList(types);
+    }
 }

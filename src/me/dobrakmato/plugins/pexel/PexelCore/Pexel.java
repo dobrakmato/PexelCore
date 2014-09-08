@@ -38,147 +38,135 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public final class Pexel
-{
-	//Pexel plugin.
-	private static PexelCore	plugin;
-	//Instance of random.
-	private static Random		random	= new Random();
-	
-	protected final static void initialize(final PexelCore plugin)
-	{
-		if (Pexel.plugin == null)
-			Pexel.plugin = plugin;
-		else
-			throw new RuntimeException("Pexel object already initialized!");
-	}
-	
-	/**
-	 * Returns the main plugin instance.
-	 * 
-	 * @return core
-	 */
-	public static final PexelCore getCore()
-	{
-		return Pexel.plugin;
-	}
-	
-	/**
-	 * Returns Matchmaking class.
-	 * 
-	 * @return matchmaking
-	 */
-	public static Matchmaking getMatchmaking()
-	{
-		return Pexel.plugin.matchmaking;
-	}
-	
-	/**
-	 * Returns player freezer.
-	 * 
-	 * @return player freezer
-	 */
-	public static PlayerFreezer getFreezer()
-	{
-		return Pexel.plugin.freezer;
-	}
-	
-	/**
-	 * Schedules periodic task. Returns task id.
-	 * 
-	 * @param runnable
-	 *            runnable, that will be executed periodically.
-	 * @param delay
-	 *            delay before first execution in server ticks.
-	 * @param period
-	 *            period in server ticks.
-	 * @return task id
-	 */
-	public static int schedule(final Runnable runnable, final long delay,
-			final long period)
-	{
-		return Bukkit.getScheduler().scheduleSyncRepeatingTask(Pexel.plugin,
-				runnable, delay, period);
-	}
-	
-	/**
-	 * Cancles task.
-	 * 
-	 * @param taskId
-	 *            task id
-	 */
-	public static void cancelTask(final int taskId)
-	{
-		Bukkit.getScheduler().cancelTask(taskId);
-	}
-	
-	/**
-	 * Retruns player's profile.
-	 * 
-	 * @param player
-	 * @return profile of specified player
-	 */
-	public PlayerProfile getProfile(final Player player)
-	{
-		return StorageEngine.getProfile(player.getUniqueId());
-	}
-	
-	/**
-	 * Retruns player's profile.
-	 * 
-	 * @param player
-	 * @return profile of specified player
-	 */
-	public PlayerProfile getProfile(final UUID player)
-	{
-		return StorageEngine.getProfile(player);
-	}
-	
-	/**
-	 * Returns instance of {@link Random}.
-	 * 
-	 * @return pexel's random.
-	 */
-	public static Random getRandom()
-	{
-		return Pexel.random;
-	}
-	
-	/**
-	 * Returns event processor.
-	 * 
-	 * @return
-	 */
-	public static EventProcessor getEventProcessor()
-	{
-		return Pexel.plugin.eventProcessor;
-	}
-	
-	/**
-	 * Returns pexel's magic clock class.
-	 * 
-	 * @return
-	 */
-	public static MagicClock getMagicClock()
-	{
-		return Pexel.plugin.magicClock;
-	}
-	
-	/**
-	 * Returns pexel's async wokrer instance.
-	 */
-	public static AsyncWorker getAsyncWorker()
-	{
-		return Pexel.plugin.asyncWorker;
-	}
-	
-	/**
-	 * Return's hub location.
-	 * 
-	 * @return hub lcoation
-	 */
-	public static Location getHubLocation()
-	{
-		return new Location(Bukkit.getWorld("world"), 9.5, 47.5, 262.5);
-	}
+public final class Pexel {
+    //Pexel plugin.
+    private static PexelCore plugin;
+    //Instance of random. 
+    private static Random    random = new Random();
+    
+    protected final static void initialize(final PexelCore plugin) {
+        if (Pexel.plugin == null)
+            Pexel.plugin = plugin;
+        else
+            throw new RuntimeException("Pexel object already initialized!");
+    }
+    
+    /**
+     * Returns the main plugin instance.
+     * 
+     * @return core
+     */
+    public static final PexelCore getCore() {
+        return Pexel.plugin;
+    }
+    
+    /**
+     * Returns Matchmaking class.
+     * 
+     * @return matchmaking
+     */
+    public static Matchmaking getMatchmaking() {
+        return Pexel.plugin.matchmaking;
+    }
+    
+    /**
+     * Returns player freezer.
+     * 
+     * @return player freezer
+     */
+    public static PlayerFreezer getFreezer() {
+        return Pexel.plugin.freezer;
+    }
+    
+    /**
+     * Schedules periodic task. Returns task id.
+     * 
+     * @param runnable
+     *            runnable, that will be executed periodically.
+     * @param delay
+     *            delay before first execution in server ticks.
+     * @param period
+     *            period in server ticks.
+     * @return task id
+     */
+    public static int schedule(final Runnable runnable, final long delay,
+            final long period) {
+        return Bukkit.getScheduler().scheduleSyncRepeatingTask(Pexel.plugin, runnable,
+                delay, period);
+    }
+    
+    /**
+     * Cancles task.
+     * 
+     * @param taskId
+     *            task id
+     */
+    public static void cancelTask(final int taskId) {
+        Bukkit.getScheduler().cancelTask(taskId);
+    }
+    
+    /**
+     * Retruns player's profile.
+     * 
+     * @param player
+     * @return profile of specified player
+     */
+    public PlayerProfile getProfile(final Player player) {
+        return StorageEngine.getProfile(player.getUniqueId());
+    }
+    
+    /**
+     * Retruns player's profile.
+     * 
+     * @param player
+     * @return profile of specified player
+     */
+    public PlayerProfile getProfile(final UUID player) {
+        return StorageEngine.getProfile(player);
+    }
+    
+    /**
+     * Returns instance of {@link Random}.
+     * 
+     * @return pexel's {@link Random}.
+     */
+    public static Random getRandom() {
+        return Pexel.random;
+    }
+    
+    /**
+     * Returns event processor.
+     * 
+     * @return {@link EventProcessor} instance.
+     */
+    public static EventProcessor getEventProcessor() {
+        return Pexel.plugin.eventProcessor;
+    }
+    
+    /**
+     * Returns pexel's magic clock class.
+     * 
+     * @return {@link MagicClock} instance.
+     */
+    public static MagicClock getMagicClock() {
+        return Pexel.plugin.magicClock;
+    }
+    
+    /**
+     * Returns pexel's async wokrer instance.
+     * 
+     * @return {@link AsyncWorker} instance.
+     */
+    public static AsyncWorker getAsyncWorker() {
+        return Pexel.plugin.asyncWorker;
+    }
+    
+    /**
+     * Return's hub location.
+     * 
+     * @return hub lcoation
+     */
+    public static Location getHubLocation() {
+        return new Location(Bukkit.getWorld("world"), 9.5, 47.5, 262.5);
+    }
 }

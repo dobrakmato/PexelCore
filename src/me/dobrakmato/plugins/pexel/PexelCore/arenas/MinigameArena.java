@@ -47,8 +47,7 @@ import org.bukkit.potion.PotionEffectType;
  * @author Mato Kormuth
  * 
  */
-public class MinigameArena extends ProtectedArea implements MatchmakingGame
-{
+public class MinigameArena extends ProtectedArea implements MatchmakingGame {
     /**
      * Number of slots.
      */
@@ -82,8 +81,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
                                                            ServerLocationType.MINIGAME);
     
     public MinigameArena(final Minigame minigame, final String arenaName,
-            final Region region, final int slots)
-    {
+            final Region region, final int slots) {
         super(minigame.getName() + "_" + arenaName, region);
         this.minigame = minigame;
         this.slots = slots;
@@ -94,68 +92,58 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
      * 
      * @param msg
      */
-    public void chatAll(final String msg)
-    {
+    public void chatAll(final String msg) {
         for (Player p : this.activePlayers)
             p.sendMessage(msg);
     }
     
     @Override
-    public int getFreeSlots()
-    {
+    public int getFreeSlots() {
         return this.slots - this.activePlayers.size();
     }
     
     @Override
-    public int getMaximumSlots()
-    {
+    public int getMaximumSlots() {
         return this.slots;
     }
     
     @Override
-    public GameState getState()
-    {
+    public GameState getState() {
         return this.state;
     }
     
     @Override
-    public List<Player> getPlayers()
-    {
+    public List<Player> getPlayers() {
         return this.activePlayers;
     }
     
     @Override
-    public int playerCount()
-    {
+    public int playerCount() {
         return this.activePlayers.size();
     }
     
     @Override
-    public boolean canJoin()
-    {
+    public boolean canJoin() {
         return this.getFreeSlots() >= 1
                 && (this.state == GameState.WAITING_PLAYERS
                         || this.state == GameState.WAITING_EMPTY || this.state == GameState.PLAYING_CANJOIN);
     }
     
     @Override
-    public boolean canJoin(final int count)
-    {
+    public boolean canJoin(final int count) {
         return this.getFreeSlots() >= count
                 && (this.state == GameState.WAITING_PLAYERS
                         || this.state == GameState.WAITING_EMPTY || this.state == GameState.PLAYING_CANJOIN);
     }
     
     @Override
-    public void onPlayerJoin(final Player player)
-    {
+    public void onPlayerJoin(final Player player) {
         this.activePlayers.add(player);
         player.setGameMode(this.defaultGameMode);
     }
     
     @Override
-    public void onPlayerLeft(final Player player)
-    {
+    public void onPlayerLeft(final Player player) {
         this.activePlayers.remove(player);
         //this.setSpectating(player, false);
     }
@@ -170,8 +158,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
      * @param pitch
      *            pitch
      */
-    public void playSoundAll(final Sound sound, final float volume, final float pitch)
-    {
+    public void playSoundAll(final Sound sound, final float volume, final float pitch) {
         for (Player p : this.activePlayers)
             p.playSound(p.getLocation(), sound, volume, pitch);
     }
@@ -184,12 +171,9 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
      * @param spectating
      *            the value if the player should be spectating or not.
      */
-    public void setSpectating(final Player player, final boolean spectating)
-    {
-        if (spectating)
-        {
-            if (!StorageEngine.getProfile(player.getUniqueId()).isSpectating())
-            {
+    public void setSpectating(final Player player, final boolean spectating) {
+        if (spectating) {
+            if (!StorageEngine.getProfile(player.getUniqueId()).isSpectating()) {
                 player.sendMessage(ChatManager.success("You are now spectating!"));
                 StorageEngine.getProfile(player.getUniqueId()).setSpectating(true);
                 player.getInventory().clear();
@@ -205,8 +189,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
                 player.setFlying(true);
                 this.spectatingPlayers.add(player);
             }
-            else
-            {
+            else {
                 //Player is already spectating.
                 Log.warn("Player '" + player.getName()
                         + "' can't be moved to spectating mode by game '"
@@ -214,10 +197,8 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
                         + "': Player is already in spectating mode!");
             }
         }
-        else
-        {
-            if (StorageEngine.getProfile(player.getUniqueId()).isSpectating())
-            {
+        else {
+            if (StorageEngine.getProfile(player.getUniqueId()).isSpectating()) {
                 player.sendMessage(ChatManager.success("You are no longer spectating!"));
                 StorageEngine.getProfile(player.getUniqueId()).setSpectating(false);
                 player.getInventory().clear();
@@ -228,8 +209,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
                 player.setFlying(false);
                 this.spectatingPlayers.remove(player);
             }
-            else
-            {
+            else {
                 //Player is not spectating.
                 Log.warn("Player '" + player.getName()
                         + "' can't be moved from spectating mode by game '"
@@ -244,16 +224,14 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
      * 
      * @return
      */
-    public boolean empty()
-    {
+    public boolean empty() {
         return this.activePlayers.size() == 0;
     }
     
     /**
      * Kicks all players from arena.
      */
-    public void kickAll()
-    {
+    public void kickAll() {
         for (Player p : this.activePlayers)
             this.onPlayerLeft(p);
     }
@@ -264,10 +242,8 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
      * @param message
      *            message to send
      */
-    public void kickAll(final String message)
-    {
-        for (Player p : this.activePlayers)
-        {
+    public void kickAll(final String message) {
+        for (Player p : this.activePlayers) {
             p.sendMessage(message);
             this.onPlayerLeft(p);
         }
@@ -278,32 +254,27 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame
      * 
      * @return
      */
-    public Minigame getMinigame()
-    {
+    public Minigame getMinigame() {
         return this.minigame;
     }
     
     @Override
-    public ServerLocation getServerLocation()
-    {
+    public ServerLocation getServerLocation() {
         return this.serverLocation;
     }
     
-    public void setSlots(final int slots)
-    {
+    public void setSlots(final int slots) {
         this.slots = slots;
     }
     
-    public boolean containsPlayer(final Player player)
-    {
+    public boolean containsPlayer(final Player player) {
         return this.activePlayers.contains(player);
     }
     
     /**
      * @param stateToSet
      */
-    public void setState(final GameState stateToSet)
-    {
+    public void setState(final GameState stateToSet) {
         this.state = stateToSet;
     }
 }

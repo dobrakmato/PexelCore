@@ -43,8 +43,7 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class Matchmaking implements UpdatedPart
-{
+public class Matchmaking implements UpdatedPart {
     /**
      * List of registered minigames.
      */
@@ -79,8 +78,7 @@ public class Matchmaking implements UpdatedPart
      * @param minigame
      *            minigame
      */
-    public void registerMinigame(final Minigame minigame)
-    {
+    public void registerMinigame(final Minigame minigame) {
         Log.info("Matchmaking found a new minigame: " + minigame.getName());
         this.minigames.put(minigame.getName(), minigame);
         StorageEngine.addMinigame(minigame);
@@ -92,24 +90,20 @@ public class Matchmaking implements UpdatedPart
      * @param arena
      *            minigame arena
      */
-    public void registerArena(final MinigameArena arena)
-    {
-        if (this.minigames.containsValue(arena.getMinigame()))
-        {
+    public void registerArena(final MinigameArena arena) {
+        if (this.minigames.containsValue(arena.getMinigame())) {
             Log.info("Matchmaking found a new arena: " + arena.getName() + "-"
                     + arena.getMinigame().getName());
             if (this.arenas.containsKey(arena.getMinigame()))
                 this.arenas.get(arena.getMinigame()).add(arena);
-            else
-            {
+            else {
                 List<MinigameArena> list = new ArrayList<MinigameArena>();
                 list.add(arena);
                 this.arenas.put(arena.getMinigame(), list);
             }
             StorageEngine.addArena(arena);
         }
-        else
-        {
+        else {
             throw new RuntimeException(
                     "Can't register arena of minigame before minigame is registered!");
         }
@@ -121,41 +115,34 @@ public class Matchmaking implements UpdatedPart
      * @param request
      *            the request
      */
-    public void registerRequest(final MatchmakingRequest request)
-    {
+    public void registerRequest(final MatchmakingRequest request) {
         this.requests.add(request);
     }
     
     /**
      * Tries to find ideal matches for requests.
      */
-    public void makeMatches()
-    {
+    public void makeMatches() {
         this.removing.clear();
         
         int iterations = 0;
         int maxIterations = 256;
         
         //Pokus sa sparovat vsetky poziadavky.
-        for (MatchmakingRequest request : this.requests)
-        {
+        for (MatchmakingRequest request : this.requests) {
             //Ak sme neprekrocili limit.
             if (iterations < maxIterations)
                 break;
             
-            if (request.getGame() != null)
-            {
+            if (request.getGame() != null) {
                 this.makeMatchesBySpecifiedMinigameAndMminigameArena(request);
             }
-            else
-            {
+            else {
                 List<MinigameArena> minigame_arenas = this.arenas.get(request.getMinigame());
                 
-                for (MinigameArena arena : minigame_arenas)
-                {
+                for (MinigameArena arena : minigame_arenas) {
                     // If is not empty, and there is a place for them
-                    if (!arena.empty() && arena.canJoin(request.playerCount()))
-                    {
+                    if (!arena.empty() && arena.canJoin(request.playerCount())) {
                         // Connect all of them
                         for (Player player : request.getPlayers())
                             arena.onPlayerJoin(player);
@@ -165,11 +152,9 @@ public class Matchmaking implements UpdatedPart
                     }
                 }
                 
-                for (MinigameArena arena : minigame_arenas)
-                {
+                for (MinigameArena arena : minigame_arenas) {
                     // If is not empty, and there is a place for them
-                    if (arena.canJoin(request.playerCount()))
-                    {
+                    if (arena.canJoin(request.playerCount())) {
                         // Connect all of them
                         for (Player player : request.getPlayers())
                             arena.onPlayerJoin(player);
@@ -184,20 +169,16 @@ public class Matchmaking implements UpdatedPart
         }
         
         //Vymaz spracovane poziadavky zo zoznamu.
-        for (MatchmakingRequest request : this.removing)
-        {
+        for (MatchmakingRequest request : this.removing) {
             this.requests.remove(request);
         }
     }
     
     private void makeMatchesBySpecifiedMinigameAndMminigameArena(
-            final MatchmakingRequest request)
-    {
-        for (MinigameArena arena : this.arenas.get(request.getMinigame()))
-        {
+            final MatchmakingRequest request) {
+        for (MinigameArena arena : this.arenas.get(request.getMinigame())) {
             // If is not empty, and there is a place for them
-            if (!arena.empty() && arena.canJoin(request.playerCount()))
-            {
+            if (!arena.empty() && arena.canJoin(request.playerCount())) {
                 // Connect all of them
                 for (Player player : request.getPlayers())
                     arena.onPlayerJoin(player);
@@ -207,11 +188,9 @@ public class Matchmaking implements UpdatedPart
             }
         }
         
-        for (MinigameArena arena : this.arenas.get(request.getMinigame()))
-        {
+        for (MinigameArena arena : this.arenas.get(request.getMinigame())) {
             // If is not empty, and there is a place for them
-            if (arena.canJoin(request.playerCount()))
-            {
+            if (arena.canJoin(request.playerCount())) {
                 // Connect all of them
                 for (Player player : request.getPlayers())
                     arena.onPlayerJoin(player);
@@ -223,29 +202,25 @@ public class Matchmaking implements UpdatedPart
     }
     
     @Override
-    public void updateStart(final PexelCore plugin)
-    {
+    public void updateStart(final PexelCore plugin) {
         Log.partEnable("Matchmaking");
         UpdatedParts.registerPart(this);
         this.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
                 new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         Matchmaking.this.makeMatches();
                     }
                 }, 0, this.matchMakingInterval);
     }
     
     @Override
-    public void updateStop()
-    {
+    public void updateStop() {
         Log.partDisable("Matchmaking");
         Bukkit.getScheduler().cancelTask(this.taskId);
     }
     
-    public void processSign(final String[] lines, final Player player)
-    {
+    public void processSign(final String[] lines, final Player player) {
         String minigame = lines[1];
         
         // Currently not used.

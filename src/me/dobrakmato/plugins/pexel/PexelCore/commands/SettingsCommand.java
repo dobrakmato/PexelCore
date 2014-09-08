@@ -34,41 +34,33 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class SettingsCommand implements CommandExecutor
-{
-	@Override
-	public boolean onCommand(final CommandSender sender, final Command command,
-			final String paramString, final String[] args)
-	{
-		if (sender instanceof Player)
-		{
-			if (args.length == 2)
-			{
-				try
-				{
-					Settings setting = Settings.valueOf(args[0]);
-					Boolean value = Boolean.parseBoolean(args[1]);
-					
-					StorageEngine.getProfile(((Player) sender).getUniqueId()).setSetting(
-							setting, value);
-					
-				} catch (Exception ex)
-				{
-					sender.sendMessage(ChatManager.error(ex.toString()));
-				}
-			}
-			else
-			{
-				sender.sendMessage(ChatManager.error("/settings <setting> <false/true>"));
-				String avaiable = ChatColor.GOLD + "Avaiable settings: "
-						+ ChatColor.YELLOW;
-				for (Settings s : Settings.values())
-				{
-					avaiable += s.toString() + ", ";
-				}
-				sender.sendMessage(avaiable);
-			}
-		}
-		return false;
-	}
+public class SettingsCommand implements CommandExecutor {
+    @Override
+    public boolean onCommand(final CommandSender sender, final Command command,
+            final String paramString, final String[] args) {
+        if (sender instanceof Player) {
+            if (args.length == 2) {
+                try {
+                    Settings setting = Settings.valueOf(args[0]);
+                    Boolean value = Boolean.parseBoolean(args[1]);
+                    
+                    StorageEngine.getProfile(((Player) sender).getUniqueId()).setSetting(
+                            setting, value);
+                    
+                } catch (Exception ex) {
+                    sender.sendMessage(ChatManager.error(ex.toString()));
+                }
+            }
+            else {
+                sender.sendMessage(ChatManager.error("/settings <setting> <false/true>"));
+                String avaiable = ChatColor.GOLD + "Avaiable settings: "
+                        + ChatColor.YELLOW;
+                for (Settings s : Settings.values()) {
+                    avaiable += s.toString() + ", ";
+                }
+                sender.sendMessage(avaiable);
+            }
+        }
+        return false;
+    }
 }

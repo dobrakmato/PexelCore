@@ -45,8 +45,7 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class MatchRecorder
-{
+public class MatchRecorder {
     //Arena that this recorder record.
     private final MinigameArena      arena;
     //ID of periodic task
@@ -66,31 +65,27 @@ public class MatchRecorder
      * @param arena
      *            arena to initialize recorder to
      */
-    public MatchRecorder(final MinigameArena arena)
-    {
+    public MatchRecorder(final MinigameArena arena) {
         this.arena = arena;
     }
     
     /**
      * Starts periodic process of capturing frames.
      */
-    public void startCapturing()
-    {
+    public void startCapturing() {
         this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
                 + "Warning, this match is recorded!");
         this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
                 + "Recording started!");
         
-        for (Player p : this.arena.getPlayers())
-        {
+        for (Player p : this.arena.getPlayers()) {
             this.playernames.put(p.getUniqueId(), p.getName());
             this.playerids.put(p.getUniqueId(), p.getEntityId());
         }
         
         this.taskId = Pexel.schedule(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 MatchRecorder.this.captureFrame();
             }
         }, 0L, this.interval);
@@ -99,11 +94,9 @@ public class MatchRecorder
     /**
      * Makes snapshot of player healths and positions ak. records a frame.
      */
-    protected void captureFrame()
-    {
+    protected void captureFrame() {
         Frame frame = new Frame();
-        for (Player p : this.arena.getPlayers())
-        {
+        for (Player p : this.arena.getPlayers()) {
             frame.p_locations.put(p.getEntityId(), p.getLocation());
             frame.p_healths.put(p.getEntityId(), ((CraftPlayer) p).getHealth()); //getHealth fix
         }
@@ -113,8 +106,7 @@ public class MatchRecorder
     /**
      * Stops capturing process.
      */
-    public void stopCapturing()
-    {
+    public void stopCapturing() {
         this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
                 + "Recording stopped!");
         Pexel.cancelTask(this.taskId);
@@ -125,16 +117,14 @@ public class MatchRecorder
      * 
      * @return true if is recorder enabled
      */
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         return this.taskId != 0;
     }
     
     /**
      * Saves recorder frames to file.
      */
-    public void save()
-    {
+    public void save() {
         Log.info("Saving started!");
         long starttime = System.nanoTime();
         
@@ -143,8 +133,7 @@ public class MatchRecorder
                 + this.arena.getName().toLowerCase());
         
         OutputStreamWriter writer = null;
-        try
-        {
+        try {
             writer = new OutputStreamWriter(new FileOutputStream(new File(name)));
             
             writer.write("# MATCH RECORD INFO START\n");
@@ -172,14 +161,12 @@ public class MatchRecorder
             
             List<Frame> frames2 = this.frames;
             int frameCount = frames2.size();
-            for (int i = 0; i < frameCount; i++)
-            {
+            for (int i = 0; i < frameCount; i++) {
                 Frame f = frames2.get(i);
                 writer.write("# FRAME " + i + " START\n");
                 
                 writer.write("# FRAME PLAYER LOCATIONS LIST START\n");
-                for (Entry<Integer, Location> entry : f.p_locations.entrySet())
-                {
+                for (Entry<Integer, Location> entry : f.p_locations.entrySet()) {
                     writer.write(entry.getKey() + "=" + entry.getValue().getX() + "|"
                             + entry.getValue().getY() + "|" + entry.getValue().getZ()
                             + "|" + entry.getValue().getYaw() + "|"
@@ -188,8 +175,7 @@ public class MatchRecorder
                 writer.write("# FRAME PLAYER LOCATIONS LIST END\n");
                 
                 writer.write("# FRAME PLAYER HEALTH LIST START\n");
-                for (Entry<Integer, Double> entry : f.p_healths.entrySet())
-                {
+                for (Entry<Integer, Double> entry : f.p_healths.entrySet()) {
                     writer.write(entry.getKey() + "=" + entry.getValue() + "\n");
                 }
                 writer.write("# FRAME PLAYER HEALTH LIST END\n");
@@ -198,18 +184,14 @@ public class MatchRecorder
             }
             writer.write("# FRAMES SECTION END\n");
             
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        finally
-        {
-            try
-            {
+        finally {
+            try {
                 if (writer != null)
                     writer.close();
-            } catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -223,8 +205,7 @@ public class MatchRecorder
      * @author Mato Kormuth
      * 
      */
-    public class Frame
-    {
+    public class Frame {
         //Various mappings.
         Map<Integer, Location> p_locations = new HashMap<Integer, Location>();
         Map<Integer, Double>   p_healths   = new HashMap<Integer, Double>();
@@ -233,8 +214,7 @@ public class MatchRecorder
     /**
      * Resets recorder.
      */
-    public void reset()
-    {
+    public void reset() {
         this.frames.clear();
         this.playerids.clear();
         this.playernames.clear();

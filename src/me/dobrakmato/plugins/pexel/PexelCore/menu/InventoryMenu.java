@@ -38,8 +38,7 @@ import org.bukkit.inventory.InventoryHolder;
  * @author Mato Kormuth
  * 
  */
-public class InventoryMenu implements InventoryHolder
-{
+public class InventoryMenu implements InventoryHolder {
     /**
      * Inventory of this menu.
      */
@@ -64,8 +63,7 @@ public class InventoryMenu implements InventoryHolder
      *            items
      */
     public InventoryMenu(final InventoryType type, final String title,
-            final List<InventoryMenuItem> items)
-    {
+            final List<InventoryMenuItem> items) {
         for (InventoryMenuItem item : items)
             if (!this.items.containsKey(item.getSlot()))
                 this.items.put(item.getSlot(), item);
@@ -92,8 +90,7 @@ public class InventoryMenu implements InventoryHolder
      *            items
      */
     public InventoryMenu(final int size, final String title,
-            final List<InventoryMenuItem> items)
-    {
+            final List<InventoryMenuItem> items) {
         
         for (InventoryMenuItem item : items)
             if (!this.items.containsKey(item.getSlot()))
@@ -115,8 +112,7 @@ public class InventoryMenu implements InventoryHolder
      * @param player
      *            player to show menu to
      */
-    public void showTo(final Player player)
-    {
+    public void showTo(final Player player) {
         player.openInventory(this.getInventory());
     }
     
@@ -128,14 +124,12 @@ public class InventoryMenu implements InventoryHolder
      * @param player
      *            player to show menu to
      */
-    public void openInventory(final Player player)
-    {
+    public void openInventory(final Player player) {
         player.openInventory(this.getInventory());
     }
     
     @Override
-    public Inventory getInventory()
-    {
+    public Inventory getInventory() {
         return this.inventory;
     }
     
@@ -145,8 +139,7 @@ public class InventoryMenu implements InventoryHolder
      * @param slot
      * @return
      */
-    public boolean shouldClose(final int slot)
-    {
+    public boolean shouldClose(final int slot) {
         return this.items.get(slot).isCloseAfterClick();
     }
     
@@ -156,14 +149,11 @@ public class InventoryMenu implements InventoryHolder
      * @param player
      * @param item
      */
-    public void inventoryClick(final Player player, final int slot)
-    {
-        if (this.items.containsKey(slot))
-        {
-            this.items.get(slot).execute(player);
+    public void inventoryClick(final Player player, final int slot) {
+        if (this.items.containsKey(slot)) {
+            this.items.get(slot).executeAction(player);
         }
-        else
-        {
+        else {
             Log.warn("Player '" + player + "' clicked on invalid item at slot '" + slot
                     + "' in inventoryMenu!");
         }
