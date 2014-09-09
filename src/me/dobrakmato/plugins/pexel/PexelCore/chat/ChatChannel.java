@@ -32,8 +32,13 @@ import org.bukkit.entity.Player;
  * 
  */
 public class ChatChannel {
+    public static final String            UNSUBCRIBE_MSG = ChatColor.LIGHT_PURPLE
+                                                                 + "You have left '%name%' chat channel!";
+    public static final String            SUBCRIBE_MSG   = ChatColor.LIGHT_PURPLE
+                                                                 + "You have joined '%name%' chat channel with mode %mode% !";
+    
     //Last "random" channel ID.
-    private static long                   randomId     = 0;
+    private static long                   randomId       = 0;
     
     /**
      * Name of channel.
@@ -42,15 +47,15 @@ public class ChatChannel {
     /**
      * List of subscribers.
      */
-    private final List<ChannelSubscriber> subscribers  = new ArrayList<ChannelSubscriber>();
+    private final List<ChannelSubscriber> subscribers    = new ArrayList<ChannelSubscriber>();
     /**
      * Prefix of this channel.
      */
-    private String                        prefix       = "";
+    private String                        prefix         = "";
     /**
      * Date of last activity in this channel.
      */
-    private long                          lastActivity = Long.MAX_VALUE;
+    private long                          lastActivity   = Long.MAX_VALUE;
     
     /**
      * Creates new chat channel with specified name.
@@ -89,8 +94,8 @@ public class ChatChannel {
     public void subscribe(final Player player, final SubscribeMode mode) {
         this.subscribers.add(new PlayerChannelSubscriber(player, mode));
         
-        player.sendMessage(ChatColor.LIGHT_PURPLE + "You have joined '" + this.getName()
-                + "' chat channel with mode '" + mode.toString() + "'!");
+        player.sendMessage(ChatChannel.SUBCRIBE_MSG.replace("%name%", this.getName()).replace(
+                "%mode%", mode.toString()));
     }
     
     /**
@@ -102,9 +107,8 @@ public class ChatChannel {
     public void subscribe(final ChannelSubscriber subscriber) {
         this.subscribers.add(subscriber);
         
-        subscriber.sendMessage(ChatColor.LIGHT_PURPLE + "You have joined '"
-                + this.getName() + "' chat channel with mode '"
-                + subscriber.getMode().toString() + "'!");
+        subscriber.sendMessage(ChatChannel.SUBCRIBE_MSG.replace("%name%", this.getName()).replace(
+                "%mode%", subscriber.getMode().toString()));
     }
     
     /**
@@ -119,8 +123,7 @@ public class ChatChannel {
                 if (((PlayerChannelSubscriber) subscriber).getPlayer() == player)
                     this.subscribers.remove(subscriber);
         
-        player.sendMessage(ChatColor.LIGHT_PURPLE + "You have left '" + this.getName()
-                + "' chat channel!");
+        player.sendMessage(ChatChannel.UNSUBCRIBE_MSG.replace("%name%", this.getName()));
     }
     
     /**
@@ -133,8 +136,8 @@ public class ChatChannel {
     public void unsubscribe(final ChannelSubscriber subscriber) {
         this.subscribers.remove(subscriber);
         
-        subscriber.sendMessage(ChatColor.LIGHT_PURPLE + "You have left '"
-                + this.getName() + "' chat channel!");
+        subscriber.sendMessage(ChatChannel.UNSUBCRIBE_MSG.replace("%name%",
+                this.getName()));
     }
     
     /**
