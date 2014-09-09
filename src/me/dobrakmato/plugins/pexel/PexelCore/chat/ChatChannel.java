@@ -18,9 +18,9 @@
 // @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore.chat;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -33,24 +33,24 @@ import org.bukkit.entity.Player;
  */
 public class ChatChannel {
     //Last "random" channel ID.
-    private static long                          randomId     = 0;
+    private static long                   randomId     = 0;
     
     /**
      * Name of channel.
      */
-    private final String                         name;
+    private final String                  name;
     /**
-     * Map of subscribers.
+     * List of subscribers.
      */
-    private final Map<Player, ChannelSubscriber> subscribers  = new HashMap<Player, ChannelSubscriber>();
+    private final List<ChannelSubscriber> subscribers  = new ArrayList<ChannelSubscriber>();
     /**
      * Prefix of this channel.
      */
-    private String                               prefix       = "";
+    private String                        prefix       = "";
     /**
      * Date of last activity in this channel.
      */
-    private long                                 lastActivity = Long.MAX_VALUE;
+    private long                          lastActivity = Long.MAX_VALUE;
     
     /**
      * Creates new chat channel with specified name.
@@ -87,10 +87,24 @@ public class ChatChannel {
      *            player
      */
     public void subscribe(final Player player, final SubscribeMode mode) {
-        this.subscribers.put(player, new PlayerChannelSubscriber(player, mode));
+        this.subscribers.add(new PlayerChannelSubscriber(player, mode));
         
         player.sendMessage(ChatColor.LIGHT_PURPLE + "You have joined '" + this.getName()
                 + "' chat channel with mode '" + mode.toString() + "'!");
+    }
+    
+    /**
+     * Subscribes subscriber to this chat channel.
+     * 
+     * @param subscriber
+     *            subscriber to be added to this channel
+     */
+    public void subscribe(final ChannelSubscriber subscriber) {
+        this.subscribers.add(subscriber);
+        
+        subscriber.sendMessage(ChatColor.LIGHT_PURPLE + "You have joined '"
+                + this.getName() + "' chat channel with mode '"
+                + subscriber.getMode().toString() + "'!");
     }
     
     /**
@@ -100,21 +114,37 @@ public class ChatChannel {
      *            specified player
      */
     public void unsubscribe(final Player player) {
-        this.subscribers.remove(player);
+        for (ChannelSubscriber subscriber : this.subscribers)
+            if (subscriber instanceof PlayerChannelSubscriber)
+                if (((PlayerChannelSubscriber) subscriber).getPlayer() == player)
+                    this.subscribers.remove(subscriber);
         
         player.sendMessage(ChatColor.LIGHT_PURPLE + "You have left '" + this.getName()
                 + "' chat channel!");
     }
     
     /**
-     * Retruns true, if player is subscribed.
+     * Unsubscribes specified subscriber from this channel. If the subscriber did not subscribed to this channel,
+     * nothing happens.
      * 
-     * @param player
-     *            player to check
-     * @return state of subscription
+     * @param subscriber
+     *            subscrber to be unregistered
      */
-    public boolean isSubscribed(final Player player) {
-        return this.subscribers.containsKey(player);
+    public void unsubscribe(final ChannelSubscriber subscriber) {
+        this.subscribers.remove(subscriber);
+        
+        subscriber.sendMessage(ChatColor.LIGHT_PURPLE + "You have left '"
+                + this.getName() + "' chat channel!");
+    }
+    
+    /**
+     * Retruns true, if specified subscriber is subscribed.
+     * 
+     * @param subscriber
+     *            subscriber to check
+     */
+    public boolean isSubscribed(final ChannelSubscriber subscriber) {
+        return this.subscribers.contains(subscriber);
     }
     
     /**
@@ -125,7 +155,22 @@ public class ChatChannel {
      * @return true if player can read
      */
     public boolean canRead(final Player player) {
-        return this.subscribers.containsKey(player); // All subscribers in channel can read its contents.
+        for (ChannelSubscriber subscriber : this.subscribers)
+            if (subscriber instanceof PlayerChannelSubscriber)
+                if (((PlayerChannelSubscriber) subscriber).getPlayer() == player)
+                    return this.canRead(subscriber);
+        return false;
+    }
+    
+    /**
+     * Returns whether subscriber can read messages from this channel.
+     * 
+     * @param player
+     *            player to check
+     * @return true if player can read
+     */
+    public boolean canRead(final ChannelSubscriber subscriber) {
+        return this.subscribers.contains(subscriber);
     }
     
     /**
@@ -136,7 +181,7 @@ public class ChatChannel {
      */
     public void broadcastMessage(final String message) {
         this.lastActivity = System.currentTimeMillis();
-        for (Iterator<ChannelSubscriber> iterator = this.subscribers.values().iterator(); iterator.hasNext();) {
+        for (Iterator<ChannelSubscriber> iterator = this.subscribers.iterator(); iterator.hasNext();) {
             ChannelSubscriber p = iterator.next();
             if (p.isOnline())
                 p.sendMessage(this.prefix + message);
@@ -161,13 +206,25 @@ public class ChatChannel {
      * @return true if player can write
      */
     public boolean canWrite(final Player player) {
-        if (!this.subscribers.containsKey(player))
+        for (ChannelSubscriber subscriber : this.subscribers)
+            if (subscriber instanceof PlayerChannelSubscriber)
+                if (((PlayerChannelSubscriber) subscriber).getPlayer() == player)
+                    return this.canWrite(subscriber);
+        return false;
+    }
+    
+    /**
+     * Returns if player can write to this channel.
+     * 
+     * @param subscriber
+     *            specified subscriber
+     * @return true if player can write
+     */
+    public boolean canWrite(final ChannelSubscriber subscriber) {
+        if (!this.subscribers.contains(subscriber))
             return false;
         else {
-            if (this.subscribers.get(player).getMode() == SubscribeMode.READ_WRITE)
-                return true;
-            else
-                return false;
+            return subscriber.getMode() == SubscribeMode.READ_WRITE;
         }
     }
     

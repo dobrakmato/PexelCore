@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import me.dobrakmato.plugins.pexel.PexelCore.PexelCore;
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,7 +33,7 @@ import org.bukkit.ChatColor;
  * @author Mato Kormuth
  * 
  */
-public class AutoMessage implements UpdatedPart {
+public class AutoMessage implements Updatable {
     private static final List<String> strings  = new ArrayList<String>();
     private static final String       prefix   = "";
     private static final long         interval = 20000 / 30;             //each 60 seconds.
@@ -70,11 +70,11 @@ public class AutoMessage implements UpdatedPart {
     }
     
     @Override
-    public void updateStart(final PexelCore plugin) {
+    public void updateStart() {
         Log.partEnable("Automessage");
         UpdatedParts.registerPart(this);
         AutoMessage.enabled = true;
-        AutoMessage.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
+        AutoMessage.taskId = Pexel.getScheduler().scheduleSyncRepeatingTask(
                 new Runnable() {
                     @Override
                     public void run() {
@@ -87,6 +87,6 @@ public class AutoMessage implements UpdatedPart {
     public void updateStop() {
         Log.partDisable("Automessage");
         AutoMessage.enabled = false;
-        Bukkit.getScheduler().cancelTask(AutoMessage.taskId);
+        Pexel.getScheduler().cancelTask(AutoMessage.taskId);
     }
 }

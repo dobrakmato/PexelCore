@@ -19,12 +19,10 @@
 package me.dobrakmato.plugins.pexel.PexelCore.areas;
 
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
-import me.dobrakmato.plugins.pexel.PexelCore.PexelCore;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
-import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedPart;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Updatable;
 import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedParts;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -36,7 +34,7 @@ import org.bukkit.potion.PotionEffectType;
  * @author Mato Kormuth
  * 
  */
-public class Lobby extends ProtectedArea implements UpdatedPart {
+public class Lobby extends ProtectedArea implements Updatable {
     /**
      * Creates new lobby object with specified name and region.
      * 
@@ -51,7 +49,7 @@ public class Lobby extends ProtectedArea implements UpdatedPart {
         this.setGlobalFlag(AreaFlag.BLOCK_PLACE, false);
         this.setGlobalFlag(AreaFlag.PLAYER_GETDAMAGE, false);
         //Wierd call, isn't it?
-        this.updateStart(Pexel.getCore());
+        this.updateStart();
     }
     
     /**
@@ -102,20 +100,19 @@ public class Lobby extends ProtectedArea implements UpdatedPart {
     }
     
     @Override
-    public void updateStart(final PexelCore plugin) {
+    public void updateStart() {
         UpdatedParts.registerPart(this);
-        this.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        Lobby.this.updatePlayers();
-                    }
-                }, 0, this.checkInterval);
+        this.taskId = Pexel.getScheduler().scheduleSyncRepeatingTask(new Runnable() {
+            @Override
+            public void run() {
+                Lobby.this.updatePlayers();
+            }
+        }, 0, this.checkInterval);
     }
     
     @Override
     public void updateStop() {
-        Bukkit.getScheduler().cancelTask(this.taskId);
+        Pexel.getScheduler().cancelTask(this.taskId);
     }
     
     /**

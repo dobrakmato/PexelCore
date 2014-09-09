@@ -24,6 +24,7 @@ import java.util.UUID;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Auth;
 import me.dobrakmato.plugins.pexel.PexelCore.core.MagicClock;
 import me.dobrakmato.plugins.pexel.PexelCore.core.PlayerProfile;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Scheduler;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.Matchmaking;
 import me.dobrakmato.plugins.pexel.PexelCore.utils.AsyncWorker;
@@ -92,8 +93,8 @@ public final class Pexel {
      */
     public static int schedule(final Runnable runnable, final long delay,
             final long period) {
-        return Bukkit.getScheduler().scheduleSyncRepeatingTask(Pexel.instance, runnable,
-                delay, period);
+        return Pexel.instance.scheduler.scheduleSyncRepeatingTask(runnable, delay,
+                period);
     }
     
     /**
@@ -103,7 +104,7 @@ public final class Pexel {
      *            task id
      */
     public static void cancelTask(final int taskId) {
-        Bukkit.getScheduler().cancelTask(taskId);
+        Pexel.instance.scheduler.cancelTask(taskId);
     }
     
     /**
@@ -178,5 +179,14 @@ public final class Pexel {
      */
     public static Auth getAuth() {
         return Pexel.instance.auth;
+    }
+    
+    /**
+     * Returns pexel's scheduler instance.
+     * 
+     * @return {@link Scheduler} instance.
+     */
+    public static Scheduler getScheduler() {
+        return Pexel.instance.scheduler;
     }
 }

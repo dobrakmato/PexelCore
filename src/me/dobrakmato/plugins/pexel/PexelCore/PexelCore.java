@@ -38,6 +38,7 @@ import me.dobrakmato.plugins.pexel.PexelCore.core.AutoMessage;
 import me.dobrakmato.plugins.pexel.PexelCore.core.License;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
 import me.dobrakmato.plugins.pexel.PexelCore.core.MagicClock;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Scheduler;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedParts;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.Matchmaking;
@@ -96,6 +97,10 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
      * Pexel auth object.
      */
     public Auth              auth;
+    /**
+     * Pexel scheduler object.
+     */
+    public Scheduler         scheduler;
     
     @Override
     public void onDisable() {
@@ -130,17 +135,19 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         }
         
         this.message = new AutoMessage();
-        this.message.updateStart(this);
+        this.message.updateStart();
         
         this.auth = new Auth();
         
         this.matchmaking = new Matchmaking();
-        this.matchmaking.updateStart(this);
+        this.matchmaking.updateStart();
         
         this.magicClock = new MagicClock();
         
         this.asyncWorker = new AsyncWorker(3);
         this.asyncWorker.start();
+        
+        this.scheduler = new Scheduler();
         
         this.eventProcessor = new EventProcessor();
         

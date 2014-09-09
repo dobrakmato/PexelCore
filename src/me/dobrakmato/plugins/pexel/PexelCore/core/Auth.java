@@ -8,8 +8,6 @@ import org.bukkit.entity.Player;
 /**
  * Class used for offline mode authentication.
  * 
- * @author Mato Kormuth
- * 
  */
 public class Auth {
     public void authenticateCommand(final Player player, final String password) {

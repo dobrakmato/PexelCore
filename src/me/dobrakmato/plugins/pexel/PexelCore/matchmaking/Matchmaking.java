@@ -24,17 +24,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.dobrakmato.plugins.pexel.PexelCore.PexelCore;
+import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.MinigameArena;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
-import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedPart;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Updatable;
 import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedParts;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.utils.ServerLocation;
 import me.dobrakmato.plugins.pexel.PexelCore.utils.ServerLocationType;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -43,7 +42,7 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class Matchmaking implements UpdatedPart {
+public class Matchmaking implements Updatable {
     /**
      * List of registered minigames.
      */
@@ -202,22 +201,21 @@ public class Matchmaking implements UpdatedPart {
     }
     
     @Override
-    public void updateStart(final PexelCore plugin) {
+    public void updateStart() {
         Log.partEnable("Matchmaking");
         UpdatedParts.registerPart(this);
-        this.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        Matchmaking.this.makeMatches();
-                    }
-                }, 0, this.matchMakingInterval);
+        this.taskId = Pexel.getScheduler().scheduleSyncRepeatingTask(new Runnable() {
+            @Override
+            public void run() {
+                Matchmaking.this.makeMatches();
+            }
+        }, 0, this.matchMakingInterval);
     }
     
     @Override
     public void updateStop() {
         Log.partDisable("Matchmaking");
-        Bukkit.getScheduler().cancelTask(this.taskId);
+        Pexel.getScheduler().cancelTask(this.taskId);
     }
     
     public void processSign(final String[] lines, final Player player) {

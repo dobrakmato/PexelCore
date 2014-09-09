@@ -28,15 +28,15 @@ import java.util.List;
  * 
  */
 public class UpdatedParts {
-    private static List<UpdatedPart> parts = new ArrayList<UpdatedPart>();
+    private static List<Updatable> parts = new ArrayList<Updatable>();
     
     public static void shutdown() {
-        for (UpdatedPart part : UpdatedParts.parts)
+        for (Updatable part : UpdatedParts.parts)
             part.updateStop();
         UpdatedParts.parts.clear();
     }
     
-    public static void registerPart(final UpdatedPart part) {
+    public static void registerPart(final Updatable part) {
         Log.info("[UpdatedParts] Registering: " + part.getClass().getSimpleName());
         UpdatedParts.parts.add(part);
     }

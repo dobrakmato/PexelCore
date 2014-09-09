@@ -149,6 +149,22 @@ public class ChatManager {
     }
     
     /**
+     * Unregisters subscriber from channel.
+     * 
+     * @param channelName
+     *            channel name
+     * @param subscriber
+     *            subscriber
+     */
+    public static void unregisterFromChannel(final String channelName,
+            final ChannelSubscriber subscriber) {
+        if (ChatManager.channels.containsKey(channelName))
+            ChatManager.channels.get(channelName).unsubscribe(subscriber);
+        else
+            throw new RuntimeException("Chat channel not found!");
+    }
+    
+    /**
      * Removes old, unused channels.
      */
     public static void cleanUpChannels() {

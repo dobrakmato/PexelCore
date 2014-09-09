@@ -18,21 +18,14 @@
 // @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore.core;
 
-import me.dobrakmato.plugins.pexel.PexelCore.PexelCore;
-
 /**
- * Interface used for starting and stopping tasks.
- * 
- * @author Mato Kormuth
- * 
+ * Interface that suggests that this call is updatable.
  */
-public interface UpdatedPart {
+public interface Updatable {
     /**
      * Called when part should start it's update logic.
-     * 
-     * @param plugin
      */
-    void updateStart(PexelCore plugin);
+    void updateStart();
     
     /**
      * Called when part should stop it's update logic.
