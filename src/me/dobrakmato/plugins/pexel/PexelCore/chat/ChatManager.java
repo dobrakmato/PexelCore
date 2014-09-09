@@ -26,7 +26,7 @@ import java.util.UUID;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ServerLocation;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocation;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

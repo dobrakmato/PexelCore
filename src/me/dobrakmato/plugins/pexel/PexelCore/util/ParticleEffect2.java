@@ -1,4 +1,4 @@
-package me.dobrakmato.plugins.pexel.PexelCore.utils;
+package me.dobrakmato.plugins.pexel.PexelCore.util;
 
 /**
  * @author Mato Kormuth
@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ReflectionHandler.PackageType;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ReflectionHandler.SubPackageType;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ReflectionHandler.PackageType;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ReflectionHandler.SubPackageType;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -221,7 +221,7 @@ public enum ParticleEffect2 {
             NAME_MAP.put(p.name, p);
         try {
             packetPlayOutWorldParticles = ReflectionHandler.getConstructor(
-                    me.dobrakmato.plugins.pexel.PexelCore.utils.ReflectionHandler.PacketType.PLAY_OUT_WORLD_PARTICLES.getPacket(),
+                    me.dobrakmato.plugins.pexel.PexelCore.util.ReflectionHandler.PacketType.PLAY_OUT_WORLD_PARTICLES.getPacket(),
                     String.class, float.class, float.class, float.class, float.class,
                     float.class, float.class, float.class, int.class);
             getHandle = ReflectionHandler.getMethod("CraftPlayer",

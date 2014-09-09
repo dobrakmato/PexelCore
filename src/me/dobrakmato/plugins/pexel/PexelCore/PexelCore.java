@@ -42,8 +42,8 @@ import me.dobrakmato.plugins.pexel.PexelCore.core.Scheduler;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedParts;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.Matchmaking;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.AsyncWorker;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.PlayerFreezer;
+import me.dobrakmato.plugins.pexel.PexelCore.util.AsyncWorker;
+import me.dobrakmato.plugins.pexel.PexelCore.util.PlayerFreezer;
 import me.dobrakmato.plugins.pexel.PexelNetworking.PexelMasterServer;
 import me.dobrakmato.plugins.pexel.PexelNetworking.PexelServerClient;
 

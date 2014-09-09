@@ -29,9 +29,9 @@ import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.GameState;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.MatchmakingGame;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ItemUtils;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ServerLocation;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ServerLocationType;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ItemUtils;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocation;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocationType;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;

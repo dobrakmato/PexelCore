@@ -12,8 +12,8 @@ import me.dobrakmato.plugins.pexel.PexelCore.scoreboard.ScoreboardManager;
 import me.dobrakmato.plugins.pexel.PexelCore.scoreboard.SimpleScoreboard;
 import me.dobrakmato.plugins.pexel.PexelCore.teams.Team;
 import me.dobrakmato.plugins.pexel.PexelCore.teams.TeamManager;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ItemUtils;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ParticleEffect2;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ItemUtils;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ParticleEffect2;
 import net.minecraft.server.v1_7_R3.PacketPlayOutEntityDestroy;
 
 import org.bukkit.Bukkit;

@@ -16,7 +16,7 @@
  *
  */
 // @formatter:on
-package me.dobrakmato.plugins.pexel.PexelCore.utils;
+package me.dobrakmato.plugins.pexel.PexelCore.util;
 
 import java.util.List;
 

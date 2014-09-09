@@ -20,7 +20,7 @@ package me.dobrakmato.plugins.pexel.PexelCore.matchmaking;
 
 import java.util.List;
 
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ServerLocation;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocation;
 
 import org.bukkit.entity.Player;
 

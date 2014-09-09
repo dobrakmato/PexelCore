@@ -31,8 +31,8 @@ import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Updatable;
 import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedParts;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ServerLocation;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ServerLocationType;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocation;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocationType;
 
 import org.bukkit.entity.Player;
 

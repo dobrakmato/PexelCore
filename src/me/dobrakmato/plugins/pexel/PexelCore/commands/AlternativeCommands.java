@@ -32,9 +32,9 @@ import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenu;
 import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenuItem;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ItemUtils;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ParametrizedRunnable;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ParticleEffect2;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ItemUtils;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ParametrizedRunnable;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ParticleEffect2;
 import me.dobrakmato.plugins.pexel.ZabiPitkesa.ZabiPitkesaMinigame;
 import net.minecraft.util.org.apache.commons.io.IOUtils;
 

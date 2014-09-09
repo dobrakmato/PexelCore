@@ -18,7 +18,7 @@
 // @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore.actions;
 
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ParametrizedRunnable;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ParametrizedRunnable;
 
 import org.bukkit.entity.Player;
 

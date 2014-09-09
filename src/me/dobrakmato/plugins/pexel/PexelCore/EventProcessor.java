@@ -26,7 +26,7 @@ import me.dobrakmato.plugins.pexel.PexelCore.chat.SubscribeMode;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Points;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenu;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.Lang;
+import me.dobrakmato.plugins.pexel.PexelCore.util.Lang;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -24,7 +24,7 @@ import java.util.Map;
 
 import me.dobrakmato.plugins.pexel.PexelCore.actions.Action;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ItemUtils;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ItemUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

@@ -26,9 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ParticleEffect2;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ServerLocation;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ServerLocationType;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ParticleEffect2;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocation;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocationType;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

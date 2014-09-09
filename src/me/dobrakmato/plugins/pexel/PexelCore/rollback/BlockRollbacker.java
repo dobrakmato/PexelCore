@@ -24,7 +24,6 @@ import java.util.List;
 
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 /**
@@ -77,7 +76,7 @@ public class BlockRollbacker {
      */
     public void rollbackAsync(final Runnable onFinished) {
         this.onFinished = onFinished;
-        this.taskId = Pexel.schedule(new Runnable() {
+        this.taskId = Pexel.getScheduler().scheduleSyncRepeatingTask(new Runnable() {
             @Override
             public void run() {
                 BlockRollbacker.this.doRollback();
@@ -101,7 +100,7 @@ public class BlockRollbacker {
      */
     private void doRollback() {
         if (this.changes.size() == 0) {
-            Bukkit.getScheduler().cancelTask(this.taskId);
+            Pexel.getScheduler().cancelTask(this.taskId);
             if (this.onFinished != null)
                 this.onFinished.run();
         }

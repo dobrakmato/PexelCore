@@ -9,7 +9,7 @@ import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.GameState;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.rollback.BlockChange;
 import me.dobrakmato.plugins.pexel.PexelCore.rollback.BlockRollbacker;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ItemUtils;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ItemUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

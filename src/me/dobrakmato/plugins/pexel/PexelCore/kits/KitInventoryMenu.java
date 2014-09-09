@@ -24,7 +24,7 @@ import java.util.List;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.JavaArbitraryAction;
 import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenu;
 import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenuItem;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ParametrizedRunnable;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ParametrizedRunnable;
 
 import org.bukkit.entity.Player;
 

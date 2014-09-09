@@ -1,4 +1,4 @@
-package me.dobrakmato.plugins.pexel.PexelCore.utils;
+package me.dobrakmato.plugins.pexel.PexelCore.util;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

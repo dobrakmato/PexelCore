@@ -15,8 +15,8 @@ import me.dobrakmato.plugins.pexel.PexelCore.kits.KitInventoryMenu;
 import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.teams.Team;
 import me.dobrakmato.plugins.pexel.PexelCore.teams.TeamManager;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ItemUtils;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ParametrizedRunnable;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ItemUtils;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ParametrizedRunnable;
 
 import org.bukkit.Color;
 import org.bukkit.Location;

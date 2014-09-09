@@ -28,8 +28,8 @@ import me.dobrakmato.plugins.pexel.PexelCore.actions.TeleportAction;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
 import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenu;
 import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenuItem;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ItemUtils;
-import me.dobrakmato.plugins.pexel.PexelCore.utils.ParametrizedRunnable;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ItemUtils;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ParametrizedRunnable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

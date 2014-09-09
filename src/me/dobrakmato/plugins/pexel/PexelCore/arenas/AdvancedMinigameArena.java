@@ -192,7 +192,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     private void tryStopCountdown() {
         //Check if we can stop, once the countdown started.
         if (this.countdownCanCancel) {
-            Bukkit.getScheduler().cancelTask(this.countdownTaskId);
+            Pexel.getScheduler().cancelTask(this.countdownTaskId);
             this.onCountdownCancelled();
         }
     }
@@ -211,19 +211,20 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
             //Reset countdown time.
             this.countdownTimeLeft = this.countdownLenght;
             //Start countdown.
-            this.countdownTaskId = Pexel.schedule(new Runnable() {
-                @Override
-                public void run() {
-                    AdvancedMinigameArena.this.countdownTick();
-                }
-            }, 0L, 20L);
+            this.countdownTaskId = Pexel.getScheduler().scheduleSyncRepeatingTask(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            AdvancedMinigameArena.this.countdownTick();
+                        }
+                    }, 0L, 20L);
             
             this.onCountdownStart();
         }
     }
     
     private void onCountdownStop() {
-        Bukkit.getScheduler().cancelTask(this.countdownTaskId);
+        Pexel.getScheduler().cancelTask(this.countdownTaskId);
     }
     
     /**
