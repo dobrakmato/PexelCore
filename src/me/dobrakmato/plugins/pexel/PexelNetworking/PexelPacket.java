@@ -27,7 +27,6 @@ import java.io.IOException;
  * @author Mato Kormuth
  * 
  */
-public interface PexelPacket
-{
-	public void write(DataOutputStream stream) throws IOException;
+public interface PexelPacket {
+    public void write(DataOutputStream stream) throws IOException;
 }

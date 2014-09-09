@@ -1,8 +1,8 @@
 package me.dobrakmato.plugins.pexel.SpellWar;
 
-import me.dobrakmato.plugins.pexel.PexelCore.AdvancedMinigameArena;
-import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
-import me.dobrakmato.plugins.pexel.PexelCore.Region;
+import me.dobrakmato.plugins.pexel.PexelCore.arenas.AdvancedMinigameArena;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
+import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
 
 import org.bukkit.Location;
 

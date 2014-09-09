@@ -23,21 +23,14 @@ import java.io.IOException;
 
 import net.minecraft.util.org.apache.commons.lang3.NotImplementedException;
 
-/**
- * @author Mato Kormuth
- * 
- */
-public abstract class AbstractPacket implements PexelPacket
-{
-	public short	packetId;
-	
-	public abstract void handleClient();
-	
-	public static AbstractPacket read(final DataInputStream stream)
-			throws IOException
-	{
-		throw new NotImplementedException("Read method not implemented!");
-	}
-	
-	public abstract void handleServer();
+public abstract class AbstractPacket implements PexelPacket {
+    public short packetId;
+    
+    public abstract void handleClient();
+    
+    public static AbstractPacket read(final DataInputStream stream) throws IOException {
+        throw new NotImplementedException("Read method not implemented!");
+    }
+    
+    public abstract void handleServer();
 }

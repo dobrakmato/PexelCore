@@ -1,19 +1,19 @@
 package me.dobrakmato.plugins.pexel.ColorWar;
 
-import me.dobrakmato.plugins.pexel.PexelCore.AdvancedMinigameArena;
-import me.dobrakmato.plugins.pexel.PexelCore.AreaFlag;
-import me.dobrakmato.plugins.pexel.PexelCore.ArenaOption;
-import me.dobrakmato.plugins.pexel.PexelCore.ChatManager;
-import me.dobrakmato.plugins.pexel.PexelCore.GameState;
-import me.dobrakmato.plugins.pexel.PexelCore.ItemUtils;
-import me.dobrakmato.plugins.pexel.PexelCore.Minigame;
-import me.dobrakmato.plugins.pexel.PexelCore.ParticleEffect2;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
-import me.dobrakmato.plugins.pexel.PexelCore.Region;
-import me.dobrakmato.plugins.pexel.PexelCore.ScoreboardManager;
-import me.dobrakmato.plugins.pexel.PexelCore.SimpleScoreboard;
-import me.dobrakmato.plugins.pexel.PexelCore.Team;
-import me.dobrakmato.plugins.pexel.PexelCore.TeamManager;
+import me.dobrakmato.plugins.pexel.PexelCore.areas.AreaFlag;
+import me.dobrakmato.plugins.pexel.PexelCore.arenas.AdvancedMinigameArena;
+import me.dobrakmato.plugins.pexel.PexelCore.arenas.ArenaOption;
+import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
+import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.GameState;
+import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
+import me.dobrakmato.plugins.pexel.PexelCore.scoreboard.ScoreboardManager;
+import me.dobrakmato.plugins.pexel.PexelCore.scoreboard.SimpleScoreboard;
+import me.dobrakmato.plugins.pexel.PexelCore.teams.Team;
+import me.dobrakmato.plugins.pexel.PexelCore.teams.TeamManager;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ItemUtils;
+import me.dobrakmato.plugins.pexel.PexelCore.util.ParticleEffect2;
 import net.minecraft.server.v1_7_R3.PacketPlayOutEntityDestroy;
 
 import org.bukkit.Bukkit;

@@ -8,3 +8,8 @@
 /bin/
 /bin/
 /bin/
+/doc/
+.classpath
+.checkstyle
+.project
+.settings
