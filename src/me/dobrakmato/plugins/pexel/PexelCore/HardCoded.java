@@ -20,8 +20,6 @@ package me.dobrakmato.plugins.pexel.PexelCore;
 
 import java.util.UUID;
 
-import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
-import me.dobrakmato.plugins.pexel.KingdomWars.KingdomWarsMingame;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.CommandAction;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.TeleportAction;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.AreaFlag;
@@ -30,7 +28,6 @@ import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.core.TeleportGate;
 import me.dobrakmato.plugins.pexel.PexelNetworking.Server;
-import me.dobrakmato.plugins.pexel.TntTag.TntTagMinigame;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -48,12 +45,12 @@ public class HardCoded {
      */
     public static final void main() {
         //Initialize color war mingiame
-        new ColorWarMinigame();
+        //new ColorWarMinigame();
         //Initialize zabi pitkesa minigame
         //new ZabiPitkesaMinigame();
-        new TntTagMinigame();
+        //new TntTagMinigame();
         
-        new KingdomWarsMingame();
+        //new KingdomWarsMingame();
         
         //Initialize main gates
         StorageEngine.addGate("Lsurvival", new TeleportGate(new Region(new Vector(-7,

@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.dobrakmato.plugins.pexel.ColorWar.ColorWarArena;
-import me.dobrakmato.plugins.pexel.ColorWar.ColorWarMinigame;
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.JavaArbitraryAction;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.OpenInventoryMenuAction;
@@ -35,7 +33,6 @@ import me.dobrakmato.plugins.pexel.PexelCore.menu.InventoryMenuItem;
 import me.dobrakmato.plugins.pexel.PexelCore.util.ItemUtils;
 import me.dobrakmato.plugins.pexel.PexelCore.util.ParametrizedRunnable;
 import me.dobrakmato.plugins.pexel.PexelCore.util.ParticleEffect2;
-import me.dobrakmato.plugins.pexel.ZabiPitkesa.ZabiPitkesaMinigame;
 import net.minecraft.util.org.apache.commons.io.IOUtils;
 
 import org.bukkit.Bukkit;
@@ -183,23 +180,6 @@ public class AlternativeCommands implements Listener {
                 sender.sendMessage(ChatColor.RED
                         + "Error while trying to get version! Check your build!");
             }
-        }
-        else if (command.contains("/cwtest")) {
-            ColorWarArena arena = ((ColorWarMinigame) StorageEngine.getMinigame("colorwar")).trrtrtr();
-            if (arena.canJoin()) {
-                sender.sendMessage(ChatColor.GREEN + "Joining ColorWar...");
-                arena.onPlayerJoin(event.getPlayer());
-            }
-            else {
-                sender.sendMessage(ChatColor.RED + "Arena is in progress now!");
-            }
-            
-        }
-        else if (command.contains("/zptest")) {
-            sender.sendMessage(ChatColor.GREEN
-                    + "((ZabiPitkesaMinigame) StorageEngine.getMinigame(\"zabipitkesa\")).trrtrtr().onPlayerJoin(event.getPlayer());");
-            ((ZabiPitkesaMinigame) StorageEngine.getMinigame("zabipitkesa")).trrtrtr().onPlayerJoin(
-                    event.getPlayer());
         }
         else if (command.contains("/particles")) {
             this.particleEffectMenu.showTo(sender);
