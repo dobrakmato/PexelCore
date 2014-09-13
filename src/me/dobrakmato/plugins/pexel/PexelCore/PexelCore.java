@@ -138,6 +138,8 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         
         this.freezer = new PlayerFreezer();
         
+        this.scheduler = new Scheduler();
+        
         try {
             this.pexelserver = new PexelMasterServer(30789);
             this.pexelserver.listen();
@@ -157,8 +159,6 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         
         this.asyncWorker = new AsyncWorker(3);
         this.asyncWorker.start();
-        
-        this.scheduler = new Scheduler();
         
         this.eventProcessor = new EventProcessor();
         
