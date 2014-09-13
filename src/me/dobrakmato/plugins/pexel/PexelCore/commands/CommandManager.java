@@ -166,7 +166,14 @@ public class CommandManager {
     private void invoke(final Object command, final Method subcommand,
             final Player invoker, final Object... args) {
         try {
-            
+            String argsString = "[";
+            for (Object o : args)
+                argsString += o.toString() + ",";
+            Log.info("Invoking command "
+                    + command.getClass().getAnnotation(CommandHandler.class).name()
+                    + " -> " + subcommand.getAnnotation(SubCommand.class).name()
+                    + " on player " + invoker.getName() + " with args: " + argsString
+                    + "]");
             subcommand.invoke(command, invoker, args);
         } catch (IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
