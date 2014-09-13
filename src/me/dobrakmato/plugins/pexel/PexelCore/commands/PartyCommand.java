@@ -44,6 +44,7 @@ public class PartyCommand implements CommandExecutor {
         return true;
     }
     
+    @SubCommand
     public void main(final Player sender) {
         sender.sendMessage("PartyCommand.main(Player) executing...");
     }

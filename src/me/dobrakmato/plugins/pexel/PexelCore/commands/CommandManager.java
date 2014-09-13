@@ -47,8 +47,7 @@ public class CommandManager {
             this.registerCommand(clazz);
             this.registerAliases(clazz);
             for (Method method : clazz.getDeclaredMethods()) {
-                if (method.isAnnotationPresent(SubCommand.class)
-                        || method.getName().equalsIgnoreCase("main")) {
+                if (method.isAnnotationPresent(SubCommand.class)) {
                     this.registerSubcommand(clazz, method);
                 }
             }
@@ -177,31 +176,26 @@ public class CommandManager {
     }
     
     private void registerSubcommand(final Class<?> clazz, final Method method) {
-        Log.info("  Register subcommand: "
-                + clazz.getAnnotation(CommandHandler.class).name().toLowerCase()
-                + " -> " + method.getAnnotation(SubCommand.class).name().toLowerCase());
+        String baseCommand = clazz.getAnnotation(CommandHandler.class).name().toLowerCase();
+        String subCommand = method.getName().toLowerCase();
+        
+        if (!method.getAnnotation(SubCommand.class).name().equalsIgnoreCase(""))
+            subCommand = method.getAnnotation(SubCommand.class).name().toLowerCase();
+        
+        Log.info("  Register subcommand: " + baseCommand + " -> " + subCommand);
         
         if (!method.isAccessible())
             method.setAccessible(true);
         
-        if (!method.getAnnotation(SubCommand.class).name().equals(""))
-            this.subcommands.get(
-                    clazz.getAnnotation(CommandHandler.class).name().toLowerCase()).put(
-                    method.getAnnotation(SubCommand.class).name().toLowerCase(), method);
-        else
-            this.subcommands.get(
-                    clazz.getAnnotation(CommandHandler.class).name().toLowerCase()).put(
-                    method.getName().toLowerCase(), method);
+        this.subcommands.get(baseCommand).put(subCommand, method);
     }
     
     private void registerCommand(final Class<?> clazz) {
-        Log.info(" Register command: "
-                + clazz.getAnnotation(CommandHandler.class).name().toLowerCase());
-        this.commands.put(
-                clazz.getAnnotation(CommandHandler.class).name().toLowerCase(), clazz);
-        this.subcommands.put(
-                clazz.getAnnotation(CommandHandler.class).name().toLowerCase(),
-                new HashMap<String, Method>());
+        String baseCommand = clazz.getAnnotation(CommandHandler.class).name().toLowerCase();
+        
+        Log.info(" Register command: " + baseCommand);
+        this.commands.put(baseCommand, clazz);
+        this.subcommands.put(baseCommand, new HashMap<String, Method>());
     }
     
     private void registerAliases(final Class<?> clazz) {
