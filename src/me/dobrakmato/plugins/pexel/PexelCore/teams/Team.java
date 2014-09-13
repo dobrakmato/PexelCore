@@ -23,6 +23,7 @@ import java.util.List;
 
 import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatChannel;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.SubscribeMode;
+import me.dobrakmato.plugins.pexel.PexelCore.core.PlayerHolder;
 import me.dobrakmato.plugins.pexel.PexelCore.util.ItemUtils;
 
 import org.bukkit.ChatColor;
@@ -37,7 +38,7 @@ import org.bukkit.entity.Player;
  * @author Mato Kormuth
  * 
  */
-public class Team {
+public class Team implements PlayerHolder {
     /**
      * List of player in team.
      */

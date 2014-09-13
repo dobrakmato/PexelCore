@@ -158,7 +158,7 @@ public class AlternativeCommands implements Listener {
         else if (command.equalsIgnoreCase("/leave")
                 || command.equalsIgnoreCase("/lobby")) {
             for (MinigameArena arena : StorageEngine.getArenas().values())
-                if (arena.containsPlayer(event.getPlayer())) {
+                if (arena.contains(event.getPlayer())) {
                     arena.onPlayerLeft(event.getPlayer());
                     event.getPlayer().teleport(Pexel.getHubLocation());
                 }

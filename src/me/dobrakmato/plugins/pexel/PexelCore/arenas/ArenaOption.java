@@ -23,9 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Specifies that this field represents arena option.
- * 
- * @author Mato Kormuth
+ * Specifies that this field represents arena option. Apply on fields in {@link MinigameArena} or
+ * {@link AdvancedMinigameArena} to flag them as arena 'options'.
  * 
  */
 @Target({ java.lang.annotation.ElementType.FIELD })
@@ -37,4 +36,11 @@ public @interface ArenaOption {
      * @return the name of option
      */
     String name();
+    
+    /**
+     * Whether the option should be persistent (saved and loaded when arena is setting up). Default value is true.
+     * 
+     * @return flag if the value should be persistent
+     */
+    boolean persistent() default true;
 }

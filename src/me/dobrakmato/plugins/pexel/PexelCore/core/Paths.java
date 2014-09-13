@@ -56,4 +56,14 @@ public class Paths {
         return Pexel.getCore().getDataFolder().getAbsolutePath() + "/records/" + name
                 + ".record";
     }
+    
+    public static String arenaPath(final String name) {
+        return Pexel.getCore().getDataFolder().getAbsolutePath() + "/arenas/ " + name
+                + ".xml";
+    }
+    
+    public static String profilePath(final String name) {
+        return Pexel.getCore().getDataFolder().getAbsolutePath() + "/profiles/ " + name
+                + ".xml";
+    }
 }

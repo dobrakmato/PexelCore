@@ -24,6 +24,7 @@ import java.util.List;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.ProtectedArea;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
+import me.dobrakmato.plugins.pexel.PexelCore.core.PlayerHolder;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.matchmaking.GameState;
@@ -47,7 +48,8 @@ import org.bukkit.potion.PotionEffectType;
  * @author Mato Kormuth
  * 
  */
-public class MinigameArena extends ProtectedArea implements MatchmakingGame {
+public class MinigameArena extends ProtectedArea implements MatchmakingGame,
+        PlayerHolder {
     /**
      * Number of slots.
      */
@@ -73,12 +75,6 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame {
      * Reference to minigame.
      */
     protected final Minigame     minigame;
-    /**
-     * Server location.
-     */
-    protected ServerLocation     serverLocation    = new ServerLocation("Arena: "
-                                                           + this.areaName,
-                                                           ServerLocationType.MINIGAME);
     
     public MinigameArena(final Minigame minigame, final String arenaName,
             final Region region, final int slots) {
@@ -91,6 +87,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame {
      * Sends a chat message to all player in arena.
      * 
      * @param msg
+     *            message to be send
      */
     public void chatAll(final String msg) {
         for (Player p : this.activePlayers)
@@ -115,11 +112,6 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame {
     @Override
     public List<Player> getPlayers() {
         return this.activePlayers;
-    }
-    
-    @Override
-    public int playerCount() {
-        return this.activePlayers.size();
     }
     
     @Override
@@ -220,9 +212,9 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame {
     }
     
     /**
-     * Returns whatever is arena empty.
+     * Returns whether is arena empty.
      * 
-     * @return
+     * @return true if arena is empty
      */
     public boolean empty() {
         return this.activePlayers.size() == 0;
@@ -252,29 +244,37 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame {
     /**
      * Return minigame running in this arena.
      * 
-     * @return
+     * @return the minigame
      */
     public Minigame getMinigame() {
         return this.minigame;
     }
     
+    public void save(final String path) {
+        Log.warn("MinigameArena.save() not yet implemented!");
+    }
+    
     @Override
+    @Deprecated
     public ServerLocation getServerLocation() {
-        return this.serverLocation;
+        return new ServerLocation("DEPRECATED", ServerLocationType.UNKNOWN);
     }
     
     public void setSlots(final int slots) {
         this.slots = slots;
     }
     
-    public boolean containsPlayer(final Player player) {
-        return this.activePlayers.contains(player);
-    }
-    
-    /**
-     * @param stateToSet
-     */
     public void setState(final GameState stateToSet) {
         this.state = stateToSet;
+    }
+    
+    @Override
+    public int getPlayerCount() {
+        return this.activePlayers.size();
+    }
+    
+    @Override
+    public boolean contains(final Player player) {
+        return this.activePlayers.contains(player);
     }
 }

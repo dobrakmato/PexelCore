@@ -370,7 +370,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
             
             this.chatAll(ChatManager.minigame(this.getMinigame(),
                     ChatColor.GOLD + "Player '" + player.getName() + "' joined arena! ("
-                            + this.playerCount() + "/" + this.minimalPlayers + " - "
+                            + this.getPlayerCount() + "/" + this.minimalPlayers + " - "
                             + this.slots + ")"));
             
             player.teleport(this.lobbyLocation);
@@ -412,7 +412,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
      */
     private void updateGameState() {
         if (!this.gameStarted) {
-            if (this.playerCount() == 0)
+            if (this.getPlayerCount() == 0)
                 this.state = GameState.WAITING_EMPTY;
             else
                 this.state = GameState.WAITING_PLAYERS;

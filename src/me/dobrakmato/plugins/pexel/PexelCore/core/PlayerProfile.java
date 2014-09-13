@@ -26,6 +26,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import me.dobrakmato.plugins.pexel.PexelCore.util.ParticleEffect2;
 import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocation;
 import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocationType;
@@ -41,22 +45,28 @@ import com.google.common.collect.ImmutableList;
  * @author Mato Kormuth
  * 
  */
+@XmlRootElement
 public class PlayerProfile {
     /**
      * Player's UUID.
      */
+    @XmlID
+    @XmlAttribute
     protected final UUID                   player;
     /**
      * Player's friends.
      */
+    @XmlAttribute
     protected final List<UUID>             friends        = new ArrayList<UUID>();
     /**
      * Player's foes.
      */
+    @XmlAttribute
     protected final List<UUID>             foes           = new ArrayList<UUID>();
     /**
      * Player's settings.
      */
+    @XmlAttribute
     protected final Map<Settings, Boolean> settings       = new HashMap<Settings, Boolean>();
     
     /**
@@ -75,12 +85,20 @@ public class PlayerProfile {
     /**
      * Last known name of this player.
      */
+    @XmlAttribute
     protected String                       lastKnownName  = "";
     /**
      * Amount of player's points (probably in-game currency or whatever).
      */
+    @XmlAttribute
     protected int                          coins          = 0;
+    @XmlAttribute
     protected int                          warnCount      = 0;
+    
+    /**
+     * Represents party, that player is currently in. If is player not in any party, it is null.
+     */
+    protected Party                        party;
     
     /**
      * Creates player profile from Player object.
@@ -295,5 +313,17 @@ public class PlayerProfile {
      */
     public void addPoints(final int points) {
         this.coins += points;
+    }
+    
+    public void saveXML(final String profilePath) {
+        //TODO: Not yet implemented
+    }
+
+    public Party getParty() {
+        return this.party;
+    }
+
+    public void setParty(Party party) {
+        this.party = party;
     }
 }

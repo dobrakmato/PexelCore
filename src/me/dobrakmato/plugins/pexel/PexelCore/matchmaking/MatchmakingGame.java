@@ -73,7 +73,7 @@ public interface MatchmakingGame {
      * 
      * @return number of players in arena
      */
-    public int playerCount();
+    public int getPlayerCount();
     
     /**
      * Returns if one player can join game.

@@ -24,6 +24,8 @@ import java.util.List;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.Areas;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.AlternativeCommands;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.ArenaCommand;
+import me.dobrakmato.plugins.pexel.PexelCore.commands.BukkitCommandManager;
+import me.dobrakmato.plugins.pexel.PexelCore.commands.CommandManager;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.FriendCommand;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.GateCommand;
 import me.dobrakmato.plugins.pexel.PexelCore.commands.LobbyCommand;
@@ -101,6 +103,10 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
      * Pexel scheduler object.
      */
     public Scheduler         scheduler;
+    /**
+     * Pexel command manager.
+     */
+    public CommandManager    commandManager;
     
     @Override
     public void onDisable() {
@@ -110,9 +116,14 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         
         this.pexelserver.close();
         
+        //Save important data.
+        StorageEngine.saveData(); //oldway
+        
+        StorageEngine.saveArenas();
+        StorageEngine.saveProfiles();
+        
         this.asyncWorker.shutdown();
         
-        StorageEngine.saveData();
         Log.partDisable("Core");
     }
     
@@ -151,6 +162,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         
         this.eventProcessor = new EventProcessor();
         
+        // Bukkit way
         this.getCommand("arena").setExecutor(new ArenaCommand());
         this.getCommand("friend").setExecutor(new FriendCommand());
         this.getCommand("unfriend").setExecutor(new UnfriendCommand());
@@ -161,6 +173,10 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         this.getCommand("spawn").setExecutor(new SpawnCommand());
         this.getCommand("gate").setExecutor(new GateCommand());
         this.getCommand("pcmd").setExecutor(new PCMDCommand());
+        
+        // Pexel way
+        this.commandManager = new BukkitCommandManager();
+        this.commandManager.registerCommands(new PartyCommand());
         
         StorageEngine.initialize(this);
         StorageEngine.loadData();

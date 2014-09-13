@@ -340,4 +340,16 @@ public class StorageEngine {
             if (gate.getRegion().intersects(location))
                 gate.teleport(player);
     }
+    
+    public static void saveArenas() {
+        for (MinigameArena arena : StorageEngine.arenas.values()) {
+            arena.save(Paths.arenaPath(arena.getName()));
+        }
+    }
+    
+    public static void saveProfiles() {
+        for (PlayerProfile profile : StorageEngine.profiles.values()) {
+            profile.saveXML(Paths.profilePath(profile.getUniqueId().toString()));
+        }
+    }
 }
