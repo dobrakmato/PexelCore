@@ -48,7 +48,7 @@ public class PartyCommand implements CommandExecutor {
         sender.sendMessage("PartyCommand.main(Player) executing...");
     }
     
-    @SubCommand(description = "Creates a new party")
+    @SubCommand(name = "create", description = "Creates a new party")
     public void create(final Player sender, final String playerName) {
         if (StorageEngine.getProfile(sender.getUniqueId()).getParty() == null) {
             StorageEngine.getProfile(sender.getUniqueId()).setParty(new Party(sender));
@@ -88,7 +88,7 @@ public class PartyCommand implements CommandExecutor {
         }
     }
     
-    @SubCommand(description = "Kicks player from your party")
+    @SubCommand(name = "kick", description = "Kicks player from your party")
     public void kick(final Player sender, final String playerName) {
         if (StorageEngine.getProfile(sender.getUniqueId()).getParty() != null) {
             Party p = StorageEngine.getProfile(sender.getUniqueId()).getParty();
@@ -116,7 +116,7 @@ public class PartyCommand implements CommandExecutor {
         }
     }
     
-    @SubCommand(description = "Leaves current party")
+    @SubCommand(name = "leave", description = "Leaves current party")
     public void leave(final Player sender) {
         if (StorageEngine.getProfile(sender.getUniqueId()).getParty() != null) {
             StorageEngine.getProfile(sender.getUniqueId()).getParty().removePlayer(
