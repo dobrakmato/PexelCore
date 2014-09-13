@@ -163,17 +163,23 @@ public class CommandManager {
      * @param args
      *            args
      */
-    private void invoke(final Object command, final Method subcommand,
+    private void invoke(final Class<?> command, final Method subcommand,
             final Player invoker, final Object... args) {
         try {
             String argsString = "[";
-            for (Object o : args)
-                argsString += o.toString() + ",";
-            Log.info("Invoking command "
-                    + command.getClass().getAnnotation(CommandHandler.class).name()
-                    + " -> " + subcommand.getAnnotation(SubCommand.class).name()
-                    + " on player " + invoker.getName() + " with args: " + argsString
-                    + "]");
+            
+            if (args != null)
+                for (Object o : args)
+                    argsString += o.toString() + ",";
+            
+            Class<?> c = command;
+            CommandHandler ch = c.getAnnotation(CommandHandler.class);
+            String name = ch.name();
+            
+            Log.info("Invoking command " + name + " -> "
+                    + subcommand.getAnnotation(SubCommand.class).name() + " on player "
+                    + invoker.getName() + " with args: " + argsString + "]");
+            
             subcommand.invoke(command, invoker, args);
         } catch (IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
