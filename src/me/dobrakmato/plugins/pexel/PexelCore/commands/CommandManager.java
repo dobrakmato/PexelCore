@@ -2,6 +2,7 @@ package me.dobrakmato.plugins.pexel.PexelCore.commands;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class CommandManager {
     /**
      * Map of commands.
      */
-    private final Map<String, Class<?>>            commands    = new HashMap<String, Class<?>>();
+    private final Map<String, Object>              commands    = new HashMap<String, Object>();
     /**
      * Map of command aliases.
      */
@@ -44,11 +45,11 @@ public class CommandManager {
                 + "#" + command.hashCode());
         Class<?> clazz = command.getClass();
         if (clazz.isAnnotationPresent(CommandHandler.class)) {
-            this.registerCommand(clazz);
+            this.registerCommand(command);
             this.registerAliases(clazz);
             for (Method method : clazz.getDeclaredMethods()) {
                 if (method.isAnnotationPresent(SubCommand.class)) {
-                    this.registerSubcommand(clazz, method);
+                    this.registerSubcommand(command, method);
                 }
             }
         }
@@ -163,7 +164,7 @@ public class CommandManager {
      * @param args
      *            args
      */
-    private void invoke(final Class<?> command, final Method subcommand,
+    private void invoke(final Object command, final Method subcommand,
             final Player invoker, final Object... args) {
         try {
             String argsString = "[";
@@ -172,15 +173,26 @@ public class CommandManager {
                 for (Object o : args)
                     argsString += o.toString() + ",";
             
-            Class<?> c = command;
+            Class<?> c = command.getClass();
             CommandHandler ch = c.getAnnotation(CommandHandler.class);
             String name = ch.name();
             
-            Log.info("Invoking command " + name + " -> "
-                    + subcommand.getAnnotation(SubCommand.class).name() + " on player "
-                    + invoker.getName() + " with args: " + argsString + "]");
+            Log.info("Command (" + c.getSimpleName() + ") hash: " + command.hashCode());
+            Log.info("Method (" + subcommand.getName() + ") hash: "
+                    + subcommand.hashCode());
             
-            subcommand.invoke(command, invoker, args);
+            Log.info("Invoking command '" + name + " -> "
+                    + subcommand.getAnnotation(SubCommand.class).name()
+                    + "' on player '" + invoker.getName() + "' with args: " + argsString
+                    + "]");
+            
+            if (!Arrays.asList(c.getDeclaredMethods()).contains(subcommand))
+                Log.warn("Subcommand is not method of command class.");
+            
+            if (args.length == 0)
+                subcommand.invoke(command, invoker);
+            else
+                subcommand.invoke(command, invoker, args);
         } catch (IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
             e.printStackTrace();
@@ -188,8 +200,8 @@ public class CommandManager {
         }
     }
     
-    private void registerSubcommand(final Class<?> clazz, final Method method) {
-        String baseCommand = clazz.getAnnotation(CommandHandler.class).name().toLowerCase();
+    private void registerSubcommand(final Object command, final Method method) {
+        String baseCommand = command.getClass().getAnnotation(CommandHandler.class).name().toLowerCase();
         String subCommand = method.getName().toLowerCase();
         
         if (!method.getAnnotation(SubCommand.class).name().equalsIgnoreCase(""))
@@ -203,11 +215,11 @@ public class CommandManager {
         this.subcommands.get(baseCommand).put(subCommand, method);
     }
     
-    private void registerCommand(final Class<?> clazz) {
-        String baseCommand = clazz.getAnnotation(CommandHandler.class).name().toLowerCase();
+    private void registerCommand(final Object object) {
+        String baseCommand = object.getClass().getAnnotation(CommandHandler.class).name().toLowerCase();
         
         Log.info(" Register command: " + baseCommand);
-        this.commands.put(baseCommand, clazz);
+        this.commands.put(baseCommand, object);
         this.subcommands.put(baseCommand, new HashMap<String, Method>());
     }
     
