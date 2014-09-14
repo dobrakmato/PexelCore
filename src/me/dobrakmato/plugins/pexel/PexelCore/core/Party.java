@@ -54,7 +54,7 @@ public class Party implements PlayerHolder {
     public void addPlayer(final Player player) {
         this.players.add(player);
         player.sendMessage(ChatManager.success("You have joined "
-                + this.owner.getDisplayName() + " party!"));
+                + this.owner.getDisplayName() + "'s party!"));
     }
     
     /**

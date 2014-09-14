@@ -210,6 +210,13 @@ public class EventProcessor implements Listener {
     
     @EventHandler
     private void onPlayerLeave(final PlayerQuitEvent event) {
+        //Leave party
+        if (StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParty() != null) {
+            StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParty().removePlayer(
+                    event.getPlayer());
+            StorageEngine.getProfile(event.getPlayer().getUniqueId()).setParty(null);
+        }
+        
         // Force save of player's profile.
         StorageEngine.saveProfile(event.getPlayer().getUniqueId());
         // Update points in database.

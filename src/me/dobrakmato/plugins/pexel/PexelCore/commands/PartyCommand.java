@@ -46,7 +46,19 @@ public class PartyCommand implements CommandExecutor {
     
     @SubCommand
     public void main(final Player sender) {
-        sender.sendMessage("PartyCommand.main(Player) executing...");
+        if (StorageEngine.getProfile(sender.getUniqueId()).getParty() == null) {
+            sender.sendMessage(ChatManager.error("You are not in party!"));
+        }
+        else {
+            Party p = StorageEngine.getProfile(sender.getUniqueId()).getParty();
+            String players = "";
+            for (Player player : p.getPlayers())
+                players += player.getName() + ", ";
+            players = players.substring(0, players.length() - 2);
+            
+            sender.sendMessage(ChatManager.success("You are in party with: " + players));
+            sender.sendMessage(ChatManager.success("Type /party leave to leave party."));
+        }
     }
     
     @SubCommand(name = "create", description = "Creates a new party")
@@ -120,8 +132,9 @@ public class PartyCommand implements CommandExecutor {
     @SubCommand(name = "leave", description = "Leaves current party")
     public void leave(final Player sender) {
         if (StorageEngine.getProfile(sender.getUniqueId()).getParty() != null) {
-            StorageEngine.getProfile(sender.getUniqueId()).getParty().removePlayer(
-                    sender);
+            Party party = StorageEngine.getProfile(sender.getUniqueId()).getParty();
+            party.removePlayer(sender);
+            sender.sendMessage(ChatManager.success("You have left party!"));
         }
         else {
             sender.sendMessage(ChatManager.error("You are not in party!"));

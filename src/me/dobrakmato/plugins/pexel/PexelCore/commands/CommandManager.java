@@ -117,9 +117,9 @@ public class CommandManager {
                                     scName = annotation.name();
                                 
                                 sender.sendMessage(ChatColor.BLUE + "/" + baseCommand
-                                        + ChatColor.RED + " " + scName + ChatColor.GOLD
-                                        + scArgs + ChatColor.GREEN + "- "
-                                        + annotation.description());
+                                        + ChatColor.RED + " " + scName + " "
+                                        + ChatColor.GOLD + scArgs + ChatColor.GREEN
+                                        + "- " + annotation.description());
                             }
                         }
                         else {
@@ -143,7 +143,7 @@ public class CommandManager {
             }
         }
         else {
-            sender.sendMessage(ChatManager.error("Unknown command!"));
+            //sender.sendMessage(ChatManager.error("Unknown command!"));
         }
     }
     
@@ -179,7 +179,9 @@ public class CommandManager {
             if (args != null)
                 for (Object o : args)
                     argsString += o.toString() + ",";
-            argsString = argsString.substring(0, argsString.length() - 1);
+            
+            if (argsString.length() > 1)
+                argsString = argsString.substring(0, argsString.length() - 1);
             
             String name = command.getClass().getAnnotation(CommandHandler.class).name();
             
@@ -196,8 +198,10 @@ public class CommandManager {
             if (args.length == 0)
                 subcommand.invoke(command, invoker);
             else {
-                if (this.validParams(subcommand, args))
+                if (this.validParams(subcommand, args)) {
+                    Log.info(" Invoking: Player, " + args.length);
                     subcommand.invoke(command, invoker, args);
+                }
                 else
                     invoker.sendMessage(ChatManager.error("Unknown command: invalid params"));
             }
@@ -216,10 +220,12 @@ public class CommandManager {
     
     private boolean validParams(final Method subcommand, final Object[] args) {
         Class<?>[] parameterTypes = subcommand.getParameterTypes();
-        if (!parameterTypes[0].getClass().equals(Player.class))
+        if (args.length > parameterTypes.length - 1)
             return false;
         for (int i = 1; i < parameterTypes.length; i++) {
             Class<?> parameterType = parameterTypes[i];
+            Log.info(" Validating param #" + i + ": " + parameterType.getSimpleName()
+                    + " == " + args[i - 1].getClass().getSimpleName());
             if (!args[i - 1].getClass().equals(parameterType))
                 return false;
         }

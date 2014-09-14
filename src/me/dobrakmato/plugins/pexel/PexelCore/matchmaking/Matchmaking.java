@@ -26,7 +26,9 @@ import java.util.Map;
 
 import me.dobrakmato.plugins.pexel.PexelCore.Pexel;
 import me.dobrakmato.plugins.pexel.PexelCore.arenas.MinigameArena;
+import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Log;
+import me.dobrakmato.plugins.pexel.PexelCore.core.Party;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Updatable;
 import me.dobrakmato.plugins.pexel.PexelCore.core.UpdatedParts;
@@ -34,6 +36,7 @@ import me.dobrakmato.plugins.pexel.PexelCore.minigame.Minigame;
 import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocation;
 import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocationType;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -224,9 +227,23 @@ public class Matchmaking implements Updatable {
         // Currently not used.
         //String map = lines[2];
         //String arena = lines[3];
-        
-        MatchmakingRequest request = new MatchmakingRequest(Arrays.asList(player),
-                StorageEngine.getMinigame(minigame), null);
-        this.registerRequest(request);
+        if (StorageEngine.getProfile(player.getUniqueId()).getParty() != null) {
+            Party party = StorageEngine.getProfile(player.getUniqueId()).getParty();
+            if (party.isOwner(player)) {
+                for (Player p : party.getPlayers())
+                    p.sendMessage(ChatColor.YELLOW + "Your party joined matchmaking!");
+                this.registerRequest(party.toRequest(
+                        StorageEngine.getMinigame(minigame), null));
+            }
+            else {
+                player.sendMessage(ChatManager.error("You cannot join games while you are in party!"));
+            }
+        }
+        else {
+            player.sendMessage(ChatColor.YELLOW + "Your have joined matchmaking!");
+            MatchmakingRequest request = new MatchmakingRequest(Arrays.asList(player),
+                    StorageEngine.getMinigame(minigame), null);
+            this.registerRequest(request);
+        }
     }
 }
