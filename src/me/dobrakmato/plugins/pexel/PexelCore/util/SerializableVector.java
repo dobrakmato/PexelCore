@@ -1,7 +1,8 @@
 package me.dobrakmato.plugins.pexel.PexelCore.util;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlType;
 
 import org.bukkit.util.Vector;
 
@@ -11,7 +12,7 @@ import org.bukkit.util.Vector;
  * @author Mato Kormuth
  * 
  */
-@XmlType(name = "vector")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class SerializableVector extends Vector {
     @XmlAttribute(name = "x")
     protected double x;
