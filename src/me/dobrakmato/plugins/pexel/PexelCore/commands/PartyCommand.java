@@ -39,8 +39,6 @@ public class PartyCommand implements CommandExecutor {
     public boolean onCommand(final CommandSender sender,
             final org.bukkit.command.Command command, final String arg2,
             final String[] args) {
-        //TODO: Party! 
-        //sender.sendMessage("Hey let's have a party all night long!");
         return true;
     }
     

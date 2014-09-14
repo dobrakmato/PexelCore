@@ -90,7 +90,6 @@ public class AlternativeCommands implements Listener {
                 new ParametrizedRunnable() {
                     @Override
                     public void run(final Object... args) {
-                        // TODO Auto-generated method stub
                         
                     }
                 }), 0, true));
@@ -100,7 +99,6 @@ public class AlternativeCommands implements Listener {
                 new ParametrizedRunnable() {
                     @Override
                     public void run(final Object... args) {
-                        // TODO Auto-generated method stub
                         
                     }
                 }), 1, true));
@@ -110,7 +108,6 @@ public class AlternativeCommands implements Listener {
                 new ParametrizedRunnable() {
                     @Override
                     public void run(final Object... args) {
-                        // TODO Auto-generated method stub
                         
                     }
                 }), 2, true));

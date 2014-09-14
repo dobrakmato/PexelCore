@@ -18,8 +18,19 @@
 // @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore.arenas;
 
+import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import me.dobrakmato.plugins.pexel.PexelCore.areas.ProtectedArea;
 import me.dobrakmato.plugins.pexel.PexelCore.chat.ChatManager;
@@ -41,6 +52,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * Minigame arena.
@@ -75,6 +88,10 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame,
      * Reference to minigame.
      */
     protected final Minigame     minigame;
+    /**
+     * Map that is currenlty played on this arena.
+     */
+    protected ArenaMap           map;
     
     public MinigameArena(final Minigame minigame, final String arenaName,
             final Region region, final int slots) {
@@ -251,7 +268,47 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame,
     }
     
     public void save(final String path) {
-        Log.warn("MinigameArena.save() not yet implemented!");
+        try {
+            Document conf = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+            Element root = conf.createElement("arenaConfig");
+            conf.appendChild(root);
+            
+            Element info = conf.createElement("info");
+            
+            conf.appendChild(info);
+            
+            Element options = conf.createElement("options");
+            
+            for (Field f : this.getClass().getDeclaredFields())
+                if (f.isAnnotationPresent(ArenaOption.class)) {
+                    ArenaOption annotation = f.getAnnotation(ArenaOption.class);
+                    Element option = conf.createElement("option");
+                    option.setAttribute("name", f.getName());
+                    option.setAttribute("type", f.getType().toString());
+                    option.setAttribute("annotation", annotation.name());
+                    option.setAttribute("persistent",
+                            Boolean.toString(annotation.persistent()));
+                    option.setTextContent(f.toString());
+                    
+                    options.appendChild(option);
+                }
+            
+            root.appendChild(options);
+            
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(conf);
+            StreamResult result = new StreamResult(new File(path));
+            
+            transformer.transform(source, result);
+            
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
     }
     
     @Override

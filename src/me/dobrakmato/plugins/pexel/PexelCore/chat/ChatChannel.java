@@ -21,6 +21,7 @@ package me.dobrakmato.plugins.pexel.PexelCore.chat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -38,7 +39,7 @@ public class ChatChannel {
                                                                  + "You have joined '%name%' chat channel with mode %mode% !";
     
     //Last "random" channel ID.
-    private static long                   randomId       = 0;
+    private static AtomicLong             randomId       = new AtomicLong(0L);
     
     /**
      * Name of channel.
@@ -237,8 +238,7 @@ public class ChatChannel {
      * @return random chat channel
      */
     public static ChatChannel createRandom() {
-        ChatChannel.randomId++;
-        return new ChatChannel("r" + ChatChannel.randomId);
+        return new ChatChannel("r" + ChatChannel.randomId.getAndIncrement());
     }
     
     /**
