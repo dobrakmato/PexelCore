@@ -61,6 +61,9 @@ public class Region {
     @XmlTransient
     private final World              w;
     
+    @XmlElement(name = "world")
+    private final String             w_name;
+    
     /**
      * Creates a new region from two locations.
      * 
@@ -73,6 +76,7 @@ public class Region {
         this.v1 = new SerializableVector(loc1.toVector());
         this.v2 = new SerializableVector(loc2.toVector());
         this.w = loc1.getWorld();
+        this.w_name = loc1.getWorld().getName();
     }
     
     /**
@@ -89,6 +93,7 @@ public class Region {
         this.v1 = new SerializableVector(v1);
         this.v2 = new SerializableVector(v2);
         this.w = w;
+        this.w_name = w.getName();
     }
     
     /**
@@ -107,6 +112,7 @@ public class Region {
         this.v2 = new SerializableVector(center.clone().add(
                 new Vector(-size, -size, -size)));
         this.w = w;
+        this.w_name = w.getName();
     }
     
     /**
@@ -119,6 +125,7 @@ public class Region {
         this.v1 = new SerializableVector(selection.getMinimumPoint().toVector());
         this.v2 = new SerializableVector(selection.getMaximumPoint().toVector());
         this.w = selection.getWorld();
+        this.w_name = this.w.getName();
     }
     
     /**
