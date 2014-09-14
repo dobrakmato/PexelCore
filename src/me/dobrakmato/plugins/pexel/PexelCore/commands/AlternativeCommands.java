@@ -169,7 +169,7 @@ public class AlternativeCommands implements Listener {
         else if (command.contains("/version") || command.contains("/pcversion")) {
             try {
                 String version = IOUtils.toString(this.getClass().getResourceAsStream(
-                        "versionFile.txt"));
+                        "../versionFile.txt"));
                 sender.sendMessage(ChatColor.DARK_RED
                         + "This server is running Pexel-Core version " + version);
             } catch (IOException e) {

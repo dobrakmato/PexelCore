@@ -298,7 +298,9 @@ public class StorageEngine {
                             a.getGlobalFlag(flag));
             
             yaml_arenas.set("arenas.arena" + i_arenas + ".owner", a.getOwner());
-            a.getRegion().serialize(yaml_arenas, "arenas.arena" + i_arenas + ".region");
+            if (a.getRegion() != null)
+                a.getRegion().serialize(yaml_arenas,
+                        "arenas.arena" + i_arenas + ".region");
             i_arenas++;
         }
         try {
