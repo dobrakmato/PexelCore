@@ -18,12 +18,16 @@
 // @formatter:on
 package me.dobrakmato.plugins.pexel.PexelCore;
 
+import java.io.File;
 import java.util.UUID;
+
+import javax.xml.bind.JAXBException;
 
 import me.dobrakmato.plugins.pexel.PexelCore.actions.CommandAction;
 import me.dobrakmato.plugins.pexel.PexelCore.actions.TeleportAction;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.AreaFlag;
 import me.dobrakmato.plugins.pexel.PexelCore.areas.Lobby;
+import me.dobrakmato.plugins.pexel.PexelCore.arenas.ArenaMap;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.core.TeleportGate;
@@ -51,6 +55,32 @@ public class HardCoded {
         //new TntTagMinigame();
         
         //new KingdomWarsMingame();
+        
+        // Test XML
+        class SampleArenaMap extends ArenaMap {
+            public SampleArenaMap() {
+                this.name = "sampleMap";
+                this.minigameName = "sampleMInigame";
+                
+                this.locations.put("loc1", Pexel.getHubLocation());
+                this.locations.put("testloc", new Location(Bukkit.getWorld("world"), 16,
+                        32, 64));
+                
+                this.options.put("option1", "yes");
+                this.options.put("option2", "yes");
+                this.options.put("option3", "no");
+                
+                this.regions.put("region_one", new Region(new Vector(5, 10, 88),
+                        new Vector(50, 50, 70), Bukkit.getWorld("world")));
+            }
+        }
+        
+        try {
+            new SampleArenaMap().save(new File(
+                    Pexel.getCore().getDataFolder().getAbsolutePath() + "/sampleMap.xml"));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
         
         //Initialize main gates
         StorageEngine.addGate("Lsurvival", new TeleportGate(new Region(new Vector(-7,
