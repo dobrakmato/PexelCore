@@ -47,11 +47,13 @@ import me.dobrakmato.plugins.pexel.PexelCore.util.ServerLocationType;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -284,11 +286,17 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame,
                     ArenaOption annotation = f.getAnnotation(ArenaOption.class);
                     Element option = conf.createElement("option");
                     option.setAttribute("name", f.getName());
-                    option.setAttribute("type", f.getType().toString());
+                    option.setAttribute("type", f.getType().getCanonicalName());
                     option.setAttribute("annotation", annotation.name());
                     option.setAttribute("persistent",
                             Boolean.toString(annotation.persistent()));
-                    option.setTextContent(f.toString());
+                    
+                    if (f.getType().equals(Location.class)) {
+                        option.setTextContent(f.get(this).toString());
+                    }
+                    else {
+                        option.setTextContent(f.get(this).toString());
+                    }
                     
                     options.appendChild(option);
                 }
@@ -307,6 +315,12 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame,
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
         } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (DOMException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
