@@ -24,7 +24,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlTransient;
 
 import me.dobrakmato.plugins.pexel.PexelCore.util.SerializableVector;
 
@@ -43,7 +43,6 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
  * @author Mato Kormuth
  * 
  */
-@XmlType(name = "region")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Region {
     /**
@@ -59,6 +58,7 @@ public class Region {
     /**
      * World of region.
      */
+    @XmlTransient
     private final World              w;
     
     /**

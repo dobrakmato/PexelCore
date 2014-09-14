@@ -3,7 +3,7 @@ package me.dobrakmato.plugins.pexel.PexelCore.util;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,7 +14,6 @@ import org.bukkit.Location;
  * @author Mato Kormuth
  * 
  */
-@XmlType(name = "location")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SerializableLocation {
     @XmlAttribute(name = "x")
@@ -29,7 +28,7 @@ public class SerializableLocation {
     protected float  pitch;
     @XmlAttribute(name = "world")
     protected String worldName;
-    
+    @XmlTransient
     private Location location;
     
     public SerializableLocation(final double x, final double y, final double z,
