@@ -67,7 +67,7 @@ public class CommandManager {
      *            command
      */
     public void parseCommand(final Player sender, final String command) {
-        String parts[] = command.split("\\s+");
+        String parts[] = command.trim().split("\\s+");
         String baseCommand = parts[0];
         
         if (this.commands.containsKey(baseCommand.toLowerCase())) {
@@ -107,10 +107,18 @@ public class CommandManager {
                                     + baseCommand);
                             for (Method m : this.subcommands.get(baseCommand).values()) {
                                 SubCommand annotation = m.getAnnotation(SubCommand.class);
+                                
+                                String scArgs = "";
+                                for (Class<?> param : m.getParameterTypes())
+                                    scArgs += "<[" + param.getSimpleName() + "]> ";
+                                
+                                String scName = m.getName();
+                                if (annotation.name() != "")
+                                    scName = annotation.name();
+                                
                                 sender.sendMessage(ChatColor.BLUE + "/" + baseCommand
-                                        + ChatColor.RED + " " + annotation.name()
-                                        + ChatColor.GOLD + " <[args...]>"
-                                        + ChatColor.GREEN + " - "
+                                        + ChatColor.RED + " " + scName + ChatColor.GOLD
+                                        + scArgs + ChatColor.GREEN + "- "
                                         + annotation.description());
                             }
                         }
@@ -168,36 +176,54 @@ public class CommandManager {
             final Player invoker, final Object... args) {
         try {
             String argsString = "[";
-            
             if (args != null)
                 for (Object o : args)
                     argsString += o.toString() + ",";
+            argsString = argsString.substring(0, argsString.length() - 1);
             
-            Class<?> c = command.getClass();
-            CommandHandler ch = c.getAnnotation(CommandHandler.class);
-            String name = ch.name();
+            String name = command.getClass().getAnnotation(CommandHandler.class).name();
             
-            Log.info("Command (" + c.getSimpleName() + ") hash: " + command.hashCode());
-            Log.info("Method (" + subcommand.getName() + ") hash: "
-                    + subcommand.hashCode());
+            Log.info("Invoking command '" + name + "("
+                    + command.getClass().getSimpleName() + ") -> "
+                    + subcommand.getAnnotation(SubCommand.class).name() + " ("
+                    + subcommand.getName() + ")' on player '" + invoker.getName()
+                    + "' with args: " + argsString + "]");
             
-            Log.info("Invoking command '" + name + " -> "
-                    + subcommand.getAnnotation(SubCommand.class).name()
-                    + "' on player '" + invoker.getName() + "' with args: " + argsString
-                    + "]");
-            
-            if (!Arrays.asList(c.getDeclaredMethods()).contains(subcommand))
+            if (!Arrays.asList(command.getClass().getDeclaredMethods()).contains(
+                    subcommand))
                 Log.warn("Subcommand is not method of command class.");
             
             if (args.length == 0)
                 subcommand.invoke(command, invoker);
-            else
-                subcommand.invoke(command, invoker, args);
-        } catch (IllegalAccessException | IllegalArgumentException
-                | InvocationTargetException e) {
+            else {
+                if (this.validParams(subcommand, args))
+                    subcommand.invoke(command, invoker, args);
+                else
+                    invoker.sendMessage(ChatManager.error("Unknown command: invalid params"));
+            }
+            
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            invoker.sendMessage(ChatManager.error("Unknown command: " + e.getMessage()));
+            if (invoker.isOp())
+                invoker.sendMessage(ChatManager.error(e.toString()));
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             invoker.sendMessage(ChatManager.error("Internal server error occured while attempting to execute this command!"));
+            throw new RuntimeException(e);
         }
+    }
+    
+    private boolean validParams(final Method subcommand, final Object[] args) {
+        Class<?>[] parameterTypes = subcommand.getParameterTypes();
+        if (!parameterTypes[0].getClass().equals(Player.class))
+            return false;
+        for (int i = 1; i < parameterTypes.length; i++) {
+            Class<?> parameterType = parameterTypes[i];
+            if (!args[i - 1].getClass().equals(parameterType))
+                return false;
+        }
+        return true;
     }
     
     private void registerSubcommand(final Object command, final Method method) {
@@ -207,7 +233,8 @@ public class CommandManager {
         if (!method.getAnnotation(SubCommand.class).name().equalsIgnoreCase(""))
             subCommand = method.getAnnotation(SubCommand.class).name().toLowerCase();
         
-        Log.info("  Register subcommand: " + baseCommand + " -> " + subCommand);
+        Log.info("  Register subcommand: " + baseCommand + " -> " + subCommand + "#"
+                + method.hashCode());
         
         if (!method.isAccessible())
             method.setAccessible(true);

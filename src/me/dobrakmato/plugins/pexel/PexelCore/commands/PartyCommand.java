@@ -40,7 +40,7 @@ public class PartyCommand implements CommandExecutor {
             final org.bukkit.command.Command command, final String arg2,
             final String[] args) {
         //TODO: Party! 
-        sender.sendMessage("Hey let's have a party all night long!");
+        //sender.sendMessage("Hey let's have a party all night long!");
         return true;
     }
     
@@ -50,7 +50,7 @@ public class PartyCommand implements CommandExecutor {
     }
     
     @SubCommand(name = "create", description = "Creates a new party")
-    public void create(final Player sender, final String playerName) {
+    public void create(final Player sender) {
         if (StorageEngine.getProfile(sender.getUniqueId()).getParty() == null) {
             StorageEngine.getProfile(sender.getUniqueId()).setParty(new Party(sender));
             StorageEngine.getProfile(sender.getUniqueId()).getParty().addPlayer(sender);
