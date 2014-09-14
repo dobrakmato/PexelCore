@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
+import me.dobrakmato.plugins.pexel.PexelCore.util.SerializableLocation;
 
 import org.bukkit.Location;
 
@@ -28,16 +29,16 @@ import org.bukkit.Location;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ArenaMap {
     @XmlAttribute(name = "name")
-    protected String                      name;
+    protected String                                  name;
     @XmlAttribute(name = "minigameName")
-    protected String                      minigameName;
+    protected String                                  minigameName;
     
     @XmlElementWrapper(name = "options")
-    protected final Map<String, String>   options   = new HashMap<String, String>();
+    protected final Map<String, String>               options   = new HashMap<String, String>();
     @XmlElementWrapper(name = "locations")
-    protected final Map<String, Location> locations = new HashMap<String, Location>();
+    protected final Map<String, SerializableLocation> locations = new HashMap<String, SerializableLocation>();
     @XmlElementWrapper(name = "regions")
-    protected final Map<String, Region>   regions   = new HashMap<String, Region>();
+    protected final Map<String, Region>               regions   = new HashMap<String, Region>();
     
     public static final ArenaMap load(final File file) throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(ArenaMap.class);
@@ -69,7 +70,7 @@ public class ArenaMap {
     }
     
     public Location getLocation(final String key) {
-        return this.locations.get(key);
+        return this.locations.get(key).getLocation();
     }
     
     public Region getRegion(final String key) {
@@ -80,7 +81,7 @@ public class ArenaMap {
         return this.options;
     }
     
-    public Map<String, Location> getLocations() {
+    public Map<String, SerializableLocation> getLocations() {
         return this.locations;
     }
     

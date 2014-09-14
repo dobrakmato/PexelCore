@@ -31,6 +31,7 @@ import me.dobrakmato.plugins.pexel.PexelCore.arenas.ArenaMap;
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
 import me.dobrakmato.plugins.pexel.PexelCore.core.StorageEngine;
 import me.dobrakmato.plugins.pexel.PexelCore.core.TeleportGate;
+import me.dobrakmato.plugins.pexel.PexelCore.util.SerializableLocation;
 import me.dobrakmato.plugins.pexel.PexelNetworking.Server;
 
 import org.bukkit.Bukkit;
@@ -62,9 +63,11 @@ public class HardCoded {
                 this.name = "sampleMap";
                 this.minigameName = "sampleMInigame";
                 
-                this.locations.put("loc1", Pexel.getHubLocation());
-                this.locations.put("testloc", new Location(Bukkit.getWorld("world"), 16,
-                        32, 64));
+                this.locations.put("loc1",
+                        new SerializableLocation(Pexel.getHubLocation()));
+                this.locations.put("testloc",
+                        SerializableLocation.fromLocation(new Location(
+                                Bukkit.getWorld("world"), 16, 32, 64)));
                 
                 this.options.put("option1", "yes");
                 this.options.put("option2", "yes");

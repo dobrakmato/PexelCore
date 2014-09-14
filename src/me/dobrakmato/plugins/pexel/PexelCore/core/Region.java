@@ -21,6 +21,13 @@ package me.dobrakmato.plugins.pexel.PexelCore.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+import me.dobrakmato.plugins.pexel.PexelCore.util.SerializableVector;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -36,19 +43,23 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
  * @author Mato Kormuth
  * 
  */
+@XmlType(name = "region")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Region {
     /**
      * First vector.
      */
-    private final Vector v1;
+    @XmlElement(name = "vector1")
+    private final SerializableVector v1;
     /**
      * Second vector.
      */
-    private final Vector v2;
+    @XmlElement(name = "vector2")
+    private final SerializableVector v2;
     /**
      * World of region.
      */
-    private final World  w;
+    private final World              w;
     
     /**
      * Creates a new region from two locations.
@@ -59,8 +70,8 @@ public class Region {
      *            second location
      */
     public Region(final Location loc1, final Location loc2) {
-        this.v1 = loc1.toVector();
-        this.v2 = loc2.toVector();
+        this.v1 = new SerializableVector(loc1.toVector());
+        this.v2 = new SerializableVector(loc2.toVector());
         this.w = loc1.getWorld();
     }
     
@@ -75,8 +86,8 @@ public class Region {
      *            world
      */
     public Region(final Vector v1, final Vector v2, final World w) {
-        this.v1 = v1;
-        this.v2 = v2;
+        this.v1 = new SerializableVector(v1);
+        this.v2 = new SerializableVector(v2);
         this.w = w;
     }
     
@@ -91,8 +102,10 @@ public class Region {
      *            size
      */
     public Region(final Vector center, final World w, final int size) {
-        this.v1 = center.clone().add(new Vector(size, size, size));
-        this.v2 = center.clone().add(new Vector(-size, -size, -size));
+        this.v1 = new SerializableVector(
+                center.clone().add(new Vector(size, size, size)));
+        this.v2 = new SerializableVector(center.clone().add(
+                new Vector(-size, -size, -size)));
         this.w = w;
     }
     
@@ -103,8 +116,8 @@ public class Region {
      *            worldedit selection
      */
     public Region(final Selection selection) {
-        this.v1 = selection.getMinimumPoint().toVector();
-        this.v2 = selection.getMaximumPoint().toVector();
+        this.v1 = new SerializableVector(selection.getMinimumPoint().toVector());
+        this.v2 = new SerializableVector(selection.getMaximumPoint().toVector());
         this.w = selection.getWorld();
     }
     
