@@ -81,6 +81,8 @@ public class PartyCommand implements CommandExecutor {
                     if (StorageEngine.getProfile(player.getUniqueId()).getParty() == null) {
                         sender.sendMessage(ChatManager.success("Adding player "
                                 + player.getDisplayName() + " to party!"));
+                        StorageEngine.getProfile(sender.getUniqueId()).getParty().addPlayer(
+                                player);
                         StorageEngine.getProfile(player.getUniqueId()).setParty(
                                 StorageEngine.getProfile(sender.getUniqueId()).getParty());
                     }
@@ -110,6 +112,8 @@ public class PartyCommand implements CommandExecutor {
                 if (player != null) {
                     if (p.contains(player)) {
                         player.sendMessage(ChatManager.success("You have been kicked from the party!"));
+                        sender.sendMessage(ChatManager.success("Player "
+                                + player.getName() + " has been kicked!"));
                         p.removePlayer(player);
                     }
                     else {

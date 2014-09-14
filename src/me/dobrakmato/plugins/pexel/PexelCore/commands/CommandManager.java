@@ -200,7 +200,10 @@ public class CommandManager {
             else {
                 if (this.validParams(subcommand, args)) {
                     Log.info(" Invoking: Player, " + args.length);
-                    subcommand.invoke(command, invoker, args);
+                    Object[] objs = new Object[args.length + 1];
+                    objs[0] = invoker;
+                    System.arraycopy(args, 0, objs, 1, args.length);
+                    subcommand.invoke(command, objs);
                 }
                 else
                     invoker.sendMessage(ChatManager.error("Unknown command: invalid params"));
