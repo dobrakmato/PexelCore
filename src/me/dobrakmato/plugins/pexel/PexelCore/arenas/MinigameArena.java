@@ -291,7 +291,11 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame,
                     option.setAttribute("persistent",
                             Boolean.toString(annotation.persistent()));
                     
+                    if (!f.isAccessible())
+                        f.setAccessible(true);
+                    
                     if (f.getType().equals(Location.class)) {
+                        f.setAccessible(true);
                         option.setTextContent(f.get(this).toString());
                     }
                     else {
