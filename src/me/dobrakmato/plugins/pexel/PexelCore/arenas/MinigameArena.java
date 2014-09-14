@@ -270,12 +270,12 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame,
     public void save(final String path) {
         try {
             Document conf = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-            Element root = conf.createElement("arenaConfig");
+            Element root = conf.createElement("aconfig");
             conf.appendChild(root);
             
             Element info = conf.createElement("info");
             
-            conf.appendChild(info);
+            root.appendChild(info);
             
             Element options = conf.createElement("options");
             
