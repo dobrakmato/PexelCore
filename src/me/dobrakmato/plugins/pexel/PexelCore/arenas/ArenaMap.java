@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import me.dobrakmato.plugins.pexel.PexelCore.core.Region;
@@ -27,6 +28,7 @@ import org.bukkit.Location;
  */
 @XmlType(name = "arenamap")
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class ArenaMap {
     @XmlAttribute(name = "name")
     protected String                                  name;
