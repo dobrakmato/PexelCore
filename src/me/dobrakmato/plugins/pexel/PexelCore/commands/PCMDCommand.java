@@ -36,23 +36,7 @@ public class PCMDCommand implements CommandExecutor {
         if (sender instanceof Player) {
             //Player psender = (Player) sender;
             if (args.length == 1) {
-                String arg_command = args[0];
-                if (arg_command.equalsIgnoreCase("cwtest")) {
-                    /*
-                     * ColorWarArena arena = ((ColorWarMinigame) StorageEngine.getMinigame("colorwar")).trrtrtr(); if
-                     * (arena.canJoin()) { sender.sendMessage(ChatColor.GREEN + "Joining ColorWar...");
-                     * arena.onPlayerJoin(psender); } else { sender.sendMessage(ChatColor.RED +
-                     * "Arena is in progress now!"); }
-                     */
-                }
-                else if (arg_command.equalsIgnoreCase("tnttest")) {
-                    /*
-                     * TntTagArena arena = ((TntTagMinigame) StorageEngine.getMinigame("tnttag")).trrtrtr(); if
-                     * (arena.canJoin()) { sender.sendMessage(ChatColor.GREEN + "Joining TntTag...");
-                     * arena.onPlayerJoin(psender); } else { sender.sendMessage(ChatColor.RED +
-                     * "Arena is in progress now!"); }
-                     */
-                }
+                //String arg_command = args[0];
             }
         }
         return true;

@@ -113,7 +113,7 @@ public class CommandManager {
                                     scArgs += "<[" + param.getSimpleName() + "]> ";
                                 
                                 String scName = m.getName();
-                                if (annotation.name() != "")
+                                if (!annotation.name().equals(""))
                                     scName = annotation.name();
                                 
                                 sender.sendMessage(ChatColor.BLUE + "/" + baseCommand

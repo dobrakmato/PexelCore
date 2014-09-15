@@ -7,9 +7,9 @@
     <property name="source" value="1.7"/>
     <path id="pexel.classpath">
         <pathelement location="bin"/>
-        <pathelement location="libs/WorldEdit.jar"/>
-        <pathelement location="libs/craftbukkit-1.7.9-R0.2.jar"/>
-    	<pathelement location="libs/BarAPI.jar"/>
+    	<fileset dir="/nas/ci/libs/">
+    				<include name="**/*.jar" />
+    	</fileset>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
