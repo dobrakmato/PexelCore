@@ -26,6 +26,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
+
 /**
  * Logger for pexel.
  * 
@@ -51,6 +53,7 @@ public class Log {
      */
     public final static void info(final String msg) {
         Log.log.info("[PEXEL] " + msg);
+        ChatManager.CHANNEL_LOG.broadcastMessage(ChatColor.GRAY + "[INFO] " + msg);
     }
     
     /**
@@ -61,6 +64,7 @@ public class Log {
      */
     public final static void warn(final String msg) {
         Log.log.warning("[PEXEL] " + msg);
+        ChatManager.CHANNEL_LOG.broadcastMessage(ChatColor.GOLD + "[WARN] " + msg);
     }
     
     /**
@@ -71,32 +75,37 @@ public class Log {
      */
     public final static void severe(final String msg) {
         Log.log.severe("[PEXEL] " + msg);
+        ChatManager.CHANNEL_LOG.broadcastMessage(ChatColor.RED + "[ERROR] " + msg);
     }
     
     /**
      * Logs 'partEnable' message.
      * 
-     * @param msg
+     * @param partName
      *            message to log
      */
     public final static void partEnable(final String partName) {
         Log.log.info("[PEXEL] " + "Enabling Pexel-" + partName + "...");
+        ChatManager.CHANNEL_LOG.broadcastMessage(ChatColor.GRAY + "[PARTENABLE] "
+                + partName);
     }
     
     /**
      * Logs 'parnDisable' message.
      * 
-     * @param msg
+     * @param partName
      *            message to log
      */
     public final static void partDisable(final String partName) {
         Log.log.info("[PEXEL] " + "Disabling Pexel-" + partName + "...");
+        ChatManager.CHANNEL_LOG.broadcastMessage(ChatColor.GRAY + "[PARTDISABLE] "
+                + partName);
     }
     
     /**
      * Logs 'gameEnable' message.
      * 
-     * @param msg
+     * @param gameName
      *            message to log
      */
     public final static void gameEnable(final String gameName) {
@@ -106,7 +115,7 @@ public class Log {
     /**
      * Logs 'gameDisable' message.
      * 
-     * @param msg
+     * @param gameName
      *            message to log
      */
     public final static void gameDisable(final String gameName) {

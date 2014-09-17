@@ -18,6 +18,8 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore.util;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -33,21 +35,23 @@ import org.bukkit.Location;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SerializableLocation {
+public class SerializableLocation implements Serializable {
+    private static final long  serialVersionUID = -7108270886650549653L;
+    
     @XmlAttribute(name = "x")
-    protected double X;
+    protected double           X;
     @XmlAttribute(name = "y")
-    protected double Y;
+    protected double           Y;
     @XmlAttribute(name = "z")
-    protected double Z;
+    protected double           Z;
     @XmlAttribute(name = "yaw")
-    protected float  yaw;
+    protected float            yaw;
     @XmlAttribute(name = "pitch")
-    protected float  pitch;
+    protected float            pitch;
     @XmlAttribute(name = "world")
-    protected String worldName;
+    protected String           worldName;
     @XmlTransient
-    private Location location;
+    private transient Location location;
     
     public SerializableLocation(final double x, final double y, final double z,
             final float yaw, final float pitch, final String worldName) {

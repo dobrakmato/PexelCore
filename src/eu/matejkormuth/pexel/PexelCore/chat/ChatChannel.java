@@ -254,4 +254,16 @@ public class ChatChannel {
     public long getLastActivity() {
         return this.lastActivity;
     }
+    
+    /**
+     * @param player
+     * @return
+     */
+    public boolean isSubscribed(final Player player) {
+        for (ChannelSubscriber subscriber : this.subscribers)
+            if (subscriber instanceof PlayerChannelSubscriber)
+                if (((PlayerChannelSubscriber) subscriber).getPlayer() == player)
+                    return true;
+        return false;
+    }
 }

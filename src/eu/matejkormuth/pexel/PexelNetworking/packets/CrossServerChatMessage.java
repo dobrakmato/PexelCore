@@ -30,6 +30,11 @@ import eu.matejkormuth.pexel.PexelNetworking.AbstractPacket;
 public class CrossServerChatMessage extends AbstractPacket {
     public String message;
     
+    public CrossServerChatMessage(final String message) {
+        super();
+        this.message = message;
+    }
+    
     @Override
     public void write(final DataOutputStream stream) throws IOException {
         stream.writeUTF(this.message);
@@ -37,7 +42,7 @@ public class CrossServerChatMessage extends AbstractPacket {
     
     public static CrossServerChatMessage read(final DataInputStream stream)
             throws IOException {
-        CrossServerChatMessage packet = new CrossServerChatMessage();
+        CrossServerChatMessage packet = new CrossServerChatMessage("");
         
         packet.message = stream.readUTF();
         

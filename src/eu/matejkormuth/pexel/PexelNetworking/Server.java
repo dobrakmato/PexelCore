@@ -76,4 +76,9 @@ public class Server {
     public String getBungeeName() {
         return this.bungeeName;
     }
+    
+    @Override
+    public int hashCode() {
+        return this.bungeeName.hashCode();
+    }
 }

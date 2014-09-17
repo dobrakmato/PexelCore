@@ -66,4 +66,9 @@ public class Paths {
         return Pexel.getCore().getDataFolder().getAbsolutePath() + "/profiles/ " + name
                 + ".xml";
     }
+    
+    public static String cache(final String name) {
+        return Pexel.getCore().getDataFolder().getAbsolutePath() + "/cache/ " + name
+                + ".cache";
+    }
 }

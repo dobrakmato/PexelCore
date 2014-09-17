@@ -18,6 +18,7 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore.chat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,10 @@ public class ChatManager {
     public static final ChatChannel               CHANNEL_OP        = new ChatChannel(
                                                                             "op",
                                                                             "[OP] ");
+    public static final ChatChannel               CHANNEL_LOG       = new ChatChannel(
+                                                                            "log",
+                                                                            ChatColor.GRAY
+                                                                                    + "[LOG] ");
     public static final ChatChannel               CHANNEL_LOBBY     = new ChatChannel(
                                                                             "lobby",
                                                                             ChatColor.GRAY.toString());
@@ -197,5 +202,33 @@ public class ChatManager {
         
         Log.chat(event.getPlayer().getName() + ": " + event.getMessage());
         event.setCancelled(true);
+    }
+    
+    /**
+     * Returns channel by name or null.
+     * 
+     * @param channelName
+     *            name of channel
+     */
+    public static ChatChannel getChannel(final String channelName) {
+        if (ChatManager.channels.containsKey(channelName))
+            return ChatManager.channels.get(channelName);
+        else
+            return null;
+    }
+    
+    /**
+     * Returns channels that player is in.
+     * 
+     * @param player
+     *            player to look for
+     * @return list of channels
+     */
+    public static List<ChatChannel> getChannelsByPlayer(final Player player) {
+        List<ChatChannel> list = new ArrayList<ChatChannel>();
+        for (ChatChannel cch : ChatManager.channels.values())
+            if (cch.isSubscribed(player))
+                list.add(cch);
+        return list;
     }
 }

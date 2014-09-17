@@ -31,6 +31,11 @@ import eu.matejkormuth.pexel.PexelCore.Pexel;
  * Class used for voting.
  */
 public abstract class Voting {
+    /**
+     * Amount of ticks in one second.
+     */
+    private static final long       ONE_SECOND      = 20L;
+    
     private List<Player>            voters;
     private final Map<Player, Vote> votes           = new HashMap<Player, Vote>();
     private final String            voteSubject;
@@ -58,7 +63,7 @@ public abstract class Voting {
             public void run() {
                 Voting.this.timeout();
             }
-        }, 0L, 20L);
+        }, 0L, Voting.ONE_SECOND);
         this.startVote(invoker);
         this.lastInteraction = System.currentTimeMillis();
     }

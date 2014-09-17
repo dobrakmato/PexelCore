@@ -18,6 +18,8 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore.util;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -31,13 +33,14 @@ import org.bukkit.util.Vector;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SerializableVector extends Vector {
+public class SerializableVector extends Vector implements Serializable {
+    private static final long serialVersionUID = -5438305359697297397L;
     @XmlAttribute(name = "x")
-    protected double x;
+    protected double          x;
     @XmlAttribute(name = "y")
-    protected double y;
+    protected double          y;
     @XmlAttribute(name = "z")
-    protected double z;
+    protected double          z;
     
     public SerializableVector(final Vector vector) {
         super(vector.getX(), vector.getY(), vector.getZ());

@@ -166,6 +166,7 @@ public class TeamManager implements Listener {
                     }
                     
                     team.addPlayer(player);
+                    team.applyArmor(player);
                     this.updateSign(clickedBlock.getLocation(), team);
                 }
                 else {

@@ -32,6 +32,7 @@ import eu.matejkormuth.pexel.PexelCore.areas.Areas;
 import eu.matejkormuth.pexel.PexelCore.commands.AlternativeCommands;
 import eu.matejkormuth.pexel.PexelCore.commands.ArenaCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.BukkitCommandManager;
+import eu.matejkormuth.pexel.PexelCore.commands.ChannelCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.CommandManager;
 import eu.matejkormuth.pexel.PexelCore.commands.FriendCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.GateCommand;
@@ -177,6 +178,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         // Pexel way
         this.commandManager = new BukkitCommandManager();
         this.commandManager.registerCommands(new PartyCommand());
+        this.commandManager.registerCommands(new ChannelCommand());
         
         StorageEngine.initialize(this);
         StorageEngine.loadData();
