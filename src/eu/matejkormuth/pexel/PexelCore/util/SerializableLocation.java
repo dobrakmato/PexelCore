@@ -23,7 +23,6 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlTransient;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -50,7 +49,6 @@ public class SerializableLocation implements Serializable {
     protected float            pitch;
     @XmlAttribute(name = "world")
     protected String           worldName;
-    @XmlTransient
     private transient Location location;
     
     public SerializableLocation(final double x, final double y, final double z,
