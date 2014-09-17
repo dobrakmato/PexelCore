@@ -84,7 +84,7 @@ public class CommandManager {
      * @param command
      *            command
      */
-    public void parseCommand(final Player sender, final String command) {
+    public boolean parseCommand(final Player sender, final String command) {
         String parts[] = command.trim().split("\\s+");
         String baseCommand = parts[0];
         
@@ -94,6 +94,7 @@ public class CommandManager {
                 if (parts.length == 1) {
                     this.invoke(this.commands.get(baseCommand),
                             this.subcommands.get(baseCommand).get("main"), sender);
+                    return true;
                 }
                 else {
                     String subCommand = parts[1];
@@ -105,6 +106,7 @@ public class CommandManager {
                                         this.commands.get(baseCommand),
                                         this.subcommands.get(baseCommand).get(subCommand),
                                         sender);
+                                return true;
                             }
                             else {
                                 Object[] args = new String[parts.length - 2];
@@ -113,10 +115,12 @@ public class CommandManager {
                                         this.commands.get(baseCommand),
                                         this.subcommands.get(baseCommand).get(subCommand),
                                         sender, args);
+                                return true;
                             }
                         }
                         else {
                             sender.sendMessage(ChatManager.error("You don't have permission!"));
+                            return true;
                         }
                     }
                     else {
@@ -138,6 +142,7 @@ public class CommandManager {
                                         + ChatColor.RED + " " + scName + " "
                                         + ChatColor.GOLD + scArgs + ChatColor.GREEN
                                         + "- " + annotation.description());
+                                return true;
                             }
                         }
                         else {
@@ -148,9 +153,11 @@ public class CommandManager {
                                 this.invoke(this.commands.get(baseCommand),
                                         this.subcommands.get(baseCommand).get("main"),
                                         sender, args);
+                                return true;
                             }
                             else {
                                 sender.sendMessage(ChatManager.error("You don't have permission!"));
+                                return true;
                             }
                         }
                     }
@@ -158,11 +165,14 @@ public class CommandManager {
             }
             else {
                 sender.sendMessage(ChatManager.error("You don't have permission!"));
+                return true;
             }
         }
         else {
             //sender.sendMessage(ChatManager.error("Unknown command!"));
+            return false;
         }
+        return false;
     }
     
     /**

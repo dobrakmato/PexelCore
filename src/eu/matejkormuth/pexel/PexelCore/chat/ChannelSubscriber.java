@@ -46,4 +46,11 @@ public interface ChannelSubscriber {
      * @return whether the player is online or not
      */
     public boolean isOnline();
+    
+    /**
+     * Returns name of channel subscriber.
+     * 
+     * @return name of subscriber
+     */
+    public String getName();
 }

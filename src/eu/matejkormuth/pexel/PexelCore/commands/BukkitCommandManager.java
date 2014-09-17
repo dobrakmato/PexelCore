@@ -39,10 +39,15 @@ public class BukkitCommandManager extends CommandManager implements Listener {
     @EventHandler
     public void onCommandPreprocess(final PlayerCommandPreprocessEvent event) {
         if (event.getMessage().startsWith("/")) {
-            this.parseCommand(event.getPlayer(), event.getMessage().substring(1));
+            boolean success = this.parseCommand(event.getPlayer(),
+                    event.getMessage().substring(1));
+            if (success)
+                event.setCancelled(true);
         }
         else {
-            this.parseCommand(event.getPlayer(), event.getMessage());
+            boolean success = this.parseCommand(event.getPlayer(), event.getMessage());
+            if (success)
+                event.setCancelled(true);
         }
     }
 }

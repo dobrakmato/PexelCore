@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 /**
@@ -57,6 +58,10 @@ public class ChatChannel {
      * Date of last activity in this channel.
      */
     private long                          lastActivity   = Long.MAX_VALUE;
+    /**
+     * Specifies if channel is visible to everyone.
+     */
+    private boolean                       isPublic       = true;
     
     /**
      * Creates new chat channel with specified name.
@@ -119,10 +124,12 @@ public class ChatChannel {
      *            specified player
      */
     public void unsubscribe(final Player player) {
-        for (ChannelSubscriber subscriber : this.subscribers)
+        for (Iterator<ChannelSubscriber> iterator = this.subscribers.iterator(); iterator.hasNext();) {
+            ChannelSubscriber subscriber = iterator.next();
             if (subscriber instanceof PlayerChannelSubscriber)
                 if (((PlayerChannelSubscriber) subscriber).getPlayer() == player)
-                    this.subscribers.remove(subscriber);
+                    iterator.remove();
+        }
         
         player.sendMessage(ChatChannel.UNSUBCRIBE_MSG.replace("%name%", this.getName()));
     }
@@ -188,7 +195,16 @@ public class ChatChannel {
         for (Iterator<ChannelSubscriber> iterator = this.subscribers.iterator(); iterator.hasNext();) {
             ChannelSubscriber p = iterator.next();
             if (p.isOnline())
-                p.sendMessage(this.prefix + message);
+                if (message.toLowerCase().contains(p.getName().toLowerCase())) {
+                    p.sendMessage(this.prefix + ChatColor.BLUE + message);
+                    if (p instanceof PlayerChannelSubscriber)
+                        ((PlayerChannelSubscriber) p).getPlayer().playSound(
+                                ((PlayerChannelSubscriber) p).getPlayer().getLocation(),
+                                Sound.CLICK, 1, 1);
+                }
+                else {
+                    p.sendMessage(this.prefix + message);
+                }
             else
                 iterator.remove();
         }
@@ -265,5 +281,22 @@ public class ChatChannel {
                 if (((PlayerChannelSubscriber) subscriber).getPlayer() == player)
                     return true;
         return false;
+    }
+    
+    /**
+     * Returns whether this channel is public.
+     * 
+     * @return
+     */
+    public boolean isPublic() {
+        return this.isPublic;
+    }
+    
+    /**
+     * @param isPublic
+     *            the isPublic to set
+     */
+    public void setPublic(final boolean isPublic) {
+        this.isPublic = isPublic;
     }
 }

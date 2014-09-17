@@ -77,4 +77,9 @@ public class PlayerChannelSubscriber implements ChannelSubscriber {
     public Player getPlayer() {
         return this.player;
     }
+    
+    @Override
+    public String getName() {
+        return this.player.getName();
+    }
 }
