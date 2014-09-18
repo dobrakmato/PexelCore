@@ -405,7 +405,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     
     @EventHandler
     protected void onPlayerQuit(final PlayerQuitEvent event) {
-        this.onPlayerLeft(event.getPlayer());
+        if (this.contains(event.getPlayer()))
+            this.onPlayerLeft(event.getPlayer());
     }
     
     /**
@@ -434,9 +435,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     
     @EventHandler
     public void ___onPlayerRespawn(final PlayerRespawnEvent event) {
-        if (!this.playersCanRespawn)
-            //Kick from arena
-            this.onPlayerLeft(event.getPlayer());
+        if (this.contains(event.getPlayer()))
+            if (!this.playersCanRespawn)
+                //Kick from arena
+                this.onPlayerLeft(event.getPlayer());
     }
     
     @EventHandler

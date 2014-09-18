@@ -27,6 +27,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import eu.matejkormuth.pexel.PexelCore.core.Settings;
+
 /**
  * Class specifing chat channel.
  * 
@@ -195,12 +197,14 @@ public class ChatChannel {
         for (Iterator<ChannelSubscriber> iterator = this.subscribers.iterator(); iterator.hasNext();) {
             ChannelSubscriber p = iterator.next();
             if (p.isOnline())
-                if (message.toLowerCase().contains(p.getName().toLowerCase())) {
+                if (message.toLowerCase().contains(p.getName().toLowerCase())
+                        && !message.startsWith(p.getName().toLowerCase())) {
                     p.sendMessage(this.prefix + ChatColor.BLUE + message);
                     if (p instanceof PlayerChannelSubscriber)
-                        ((PlayerChannelSubscriber) p).getPlayer().playSound(
-                                ((PlayerChannelSubscriber) p).getPlayer().getLocation(),
-                                Sound.CLICK, 1, 1);
+                        if (Settings.CHAT_SOUNDS.hasEnabled(((PlayerChannelSubscriber) p).getPlayer()))
+                            ((PlayerChannelSubscriber) p).getPlayer().playSound(
+                                    ((PlayerChannelSubscriber) p).getPlayer().getLocation(),
+                                    Sound.NOTE_STICKS, 0.5F, 1);
                 }
                 else {
                     p.sendMessage(this.prefix + message);

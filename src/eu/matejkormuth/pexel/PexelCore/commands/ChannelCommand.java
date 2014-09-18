@@ -25,7 +25,7 @@ public class ChannelCommand {
     
     @SubCommand(description = "Lists all avaiable chat channels.")
     public void list(final Player sender) {
-        sender.sendMessage(ChatColor.GOLD + "Avaiable channels: ");
+        sender.sendMessage(ChatColor.GREEN + "Avaiable channels: ");
         for (ChatChannel channel : ChatManager.getChannelsByPlayer(sender)) {
             if (channel.isPublic())
                 sender.sendMessage(channel.getName());

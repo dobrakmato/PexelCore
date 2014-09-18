@@ -18,6 +18,7 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -136,6 +137,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         License.print();
         
         Pexel.initialize(this);
+        this.createDirectoryStructure();
         
         this.freezer = new PlayerFreezer();
         
@@ -194,6 +196,16 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
+    }
+    
+    private void createDirectoryStructure() {
+        boolean created = false;
+        String path = this.getDataFolder().getAbsolutePath();
+        created |= new File(path + "/arenas").mkdirs();
+        created |= new File(path + "/cache").mkdirs();
+        created |= new File(path + "/profiles").mkdirs();
+        if (created)
+            Log.info("Directory structure expanded!");
     }
     
     @Override

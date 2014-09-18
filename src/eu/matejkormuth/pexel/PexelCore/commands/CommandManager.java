@@ -142,8 +142,8 @@ public class CommandManager {
                                         + ChatColor.RED + " " + scName + " "
                                         + ChatColor.GOLD + scArgs + ChatColor.GREEN
                                         + "- " + annotation.description());
-                                return true;
                             }
+                            return true;
                         }
                         else {
                             if (this.hasPermission(sender, baseCommand + "."
@@ -172,7 +172,6 @@ public class CommandManager {
             //sender.sendMessage(ChatManager.error("Unknown command!"));
             return false;
         }
-        return false;
     }
     
     /**
