@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="pexel">
+<project basedir="." default="build" name="pexel">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="D:/Programs/Eclipse/eclipse2"/>
     <property name="debuglevel" value="source,lines,vars"/>
@@ -11,8 +7,12 @@
     <property name="source" value="1.7"/>
     <path id="pexel.classpath">
         <pathelement location="bin"/>
-        <pathelement location="libs/WorldEdit.jar"/>
-        <pathelement location="libs/craftbukkit-1.7.9-R0.2.jar"/>
+    	<fileset dir="libs/">
+    	    		<include name="**/*.jar" />
+    	</fileset>
+    	<fileset dir="/nas/ci/libs/">
+    				<include name="**/*.jar" />
+    	</fileset>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -24,16 +24,20 @@
     </target>
     <target name="clean">
         <delete dir="bin"/>
+    	<delete dir="build"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+        <javac encoding="UTF-8" debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
             <classpath refid="pexel.classpath"/>
         </javac>
+        <copy file="plugin.yml" todir="bin"/>
+    	<echo file="bin/eu/matejkormuth/pexel/PexelCore/versionFile.txt">Pexel-Core ci-build-${env.BUILD_NUMBER}</echo>
+    	<jar jarfile="build/PexelCore-${env.BUILD_NUMBER}.jar" basedir="bin"/>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
     <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">

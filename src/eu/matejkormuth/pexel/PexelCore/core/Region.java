@@ -245,4 +245,46 @@ public class Region {
                 players.add(player);
         return players;
     }
+    
+    public double getMaxX() {
+        if (this.v1.getX() > this.v2.getX())
+            return this.v1.getX();
+        else
+            return this.v2.getX();
+    }
+    
+    public double getMaxY() {
+        if (this.v1.getY() > this.v2.getY())
+            return this.v1.getY();
+        else
+            return this.v2.getY();
+    }
+    
+    public double getMaxZ() {
+        if (this.v1.getZ() > this.v2.getZ())
+            return this.v1.getZ();
+        else
+            return this.v2.getZ();
+    }
+    
+    public double getMinX() {
+        if (this.v1.getX() > this.v2.getX())
+            return this.v2.getX();
+        else
+            return this.v1.getX();
+    }
+    
+    public double getMinY() {
+        if (this.v1.getY() > this.v2.getY())
+            return this.v2.getY();
+        else
+            return this.v1.getY();
+    }
+    
+    public double getMinZ() {
+        if (this.v1.getZ() > this.v2.getZ())
+            return this.v2.getZ();
+        else
+            return this.v1.getZ();
+    }
 }
