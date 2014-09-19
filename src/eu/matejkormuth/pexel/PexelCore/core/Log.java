@@ -156,7 +156,7 @@ public class Log {
                     p.sendMessage(ChatColor.RED + "[Problem]" + message);
     }
     
-    static {
+    public static void ___prblm_stp() {
         Pexel.getScheduler().scheduleSyncDelayedTask(new Runnable() {
             @Override
             public void run() {
