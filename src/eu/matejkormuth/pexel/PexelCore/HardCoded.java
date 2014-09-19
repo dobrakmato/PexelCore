@@ -61,7 +61,7 @@ public class HardCoded {
         class SampleArenaMap extends ArenaMap {
             public SampleArenaMap() {
                 this.name = "sampleMap";
-                this.minigameName = "sampleMInigame";
+                this.minigameName = "sampleMinigame";
                 
                 this.locations.put("loc1",
                         new SerializableLocation(Pexel.getHubLocation()));
