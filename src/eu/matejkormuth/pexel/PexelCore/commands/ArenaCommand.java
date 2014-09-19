@@ -377,6 +377,31 @@ public class ArenaCommand implements CommandExecutor {
                                 + ex.toString()));
                     }
                 }
+                else if (editAction.equalsIgnoreCase("invokeMethod")) {
+                    if (args.length >= 4) {
+                        String methodName = args[3];
+                        try {
+                            if (StorageEngine.getArena(arenaName) != null) {
+                                sender.sendMessage("Invoking...");
+                                StorageEngine.getArena(arenaName).getClass().getDeclaredMethod(
+                                        methodName, (Class<?>[]) null).invoke(
+                                        StorageEngine.getArena(arenaName),
+                                        (Object[]) null);
+                            }
+                            else {
+                                throw new RuntimeException("Arena not found: "
+                                        + arenaName);
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            sender.sendMessage(ChatManager.error("State command failed: "
+                                    + ex.toString()));
+                        }
+                    }
+                    else {
+                        sender.sendMessage("Wrong use!");
+                    }
+                }
                 else if (editAction.equalsIgnoreCase("state")) {
                     if (args.length >= 4) {
                         String state = args[3];

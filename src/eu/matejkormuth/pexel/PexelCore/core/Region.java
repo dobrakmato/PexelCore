@@ -287,4 +287,8 @@ public class Region {
         else
             return this.v1.getZ();
     }
+    
+    public World getWorld() {
+        return this.w;
+    }
 }

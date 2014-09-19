@@ -25,6 +25,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 /**
  * Class that contains many useful functions for working with InventoryMenus.
@@ -103,5 +104,13 @@ public class ItemUtils {
         lam.setColor(color);
         larmor.setItemMeta(lam);
         return larmor;
+    }
+    
+    public static ItemStack skull(final String name) {
+        ItemStack skull = new ItemStack(Material.SKULL_ITEM);
+        SkullMeta meta = (SkullMeta) skull.getItemMeta();
+        meta.setOwner(name);
+        skull.setItemMeta(meta);
+        return skull;
     }
 }

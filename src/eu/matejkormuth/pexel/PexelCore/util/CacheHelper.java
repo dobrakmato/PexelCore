@@ -19,15 +19,21 @@ import eu.matejkormuth.pexel.PexelCore.core.Paths;
 public class CacheHelper {
     private Map<String, Object> cache = new HashMap<>();
     private final String        name;
+    private boolean             nr    = false;
     
     public CacheHelper(final String name) {
         this.name = name;
         try {
             this.load();
         } catch (ClassNotFoundException | IOException e) {
+            this.nr = true;
             Log.severe("Cache broken!");
             e.printStackTrace();
         }
+    }
+    
+    public boolean needsRebuild() {
+        return this.nr;
     }
     
     @SuppressWarnings("unchecked")

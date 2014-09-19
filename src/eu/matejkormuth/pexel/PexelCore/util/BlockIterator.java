@@ -12,11 +12,30 @@ import org.bukkit.block.BlockFace;
  */
 public class BlockIterator implements Iterator<Block> {
     private final Location location;
-    private BlockFace      direction;
+    private int            directionX;
+    private int            directionY;
+    private int            directionZ;
     
+    /**
+     * Creates new instance of <b>BlockIterator</b>. This class should be used for iterating over blocks in specified
+     * direction and should not be used to detect block patterns.
+     * 
+     * @param startBlock
+     * @param direction
+     */
     public BlockIterator(final Block startBlock, final BlockFace direction) {
         this.location = startBlock.getLocation();
-        this.direction = direction;
+        this.directionX = direction.getModX();
+        this.directionY = direction.getModY();
+        this.directionZ = direction.getModZ();
+    }
+    
+    public BlockIterator(final Block startBlock, final int modX, final int modY,
+            final int modZ) {
+        this.location = startBlock.getLocation();
+        this.directionX = modX;
+        this.directionY = modY;
+        this.directionZ = modZ;
     }
     
     @Override
@@ -26,8 +45,7 @@ public class BlockIterator implements Iterator<Block> {
     
     @Override
     public Block next() {
-        return this.location.add(this.direction.getModX(), this.direction.getModY(),
-                this.direction.getModZ()).getBlock();
+        return this.location.add(this.directionX, this.directionY, this.directionZ).getBlock();
     }
     
     /**
@@ -50,17 +68,18 @@ public class BlockIterator implements Iterator<Block> {
     }
     
     /**
-     * @return the direction
-     */
-    public BlockFace getDirection() {
-        return this.direction;
-    }
-    
-    /**
      * @param direction
      *            the direction to set
      */
     public void setDirection(final BlockFace direction) {
-        this.direction = direction;
+        this.directionX = direction.getModX();
+        this.directionY = direction.getModY();
+        this.directionZ = direction.getModZ();
+    }
+    
+    public void setDirection(final int modX, final int modY, final int modZ) {
+        this.directionX = modX;
+        this.directionY = modY;
+        this.directionZ = modZ;
     }
 }

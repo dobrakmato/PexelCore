@@ -26,6 +26,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 
 /**
@@ -127,7 +128,7 @@ public class Log {
      * 
      * @param message
      */
-    protected final static void addProblem(final String message) {
+    public final static void addProblem(final String message) {
         Log.problems.add(message);
         
         for (Player p : Bukkit.getOnlinePlayers())
@@ -146,5 +147,21 @@ public class Log {
     
     public static void chat(final String msg) {
         Log.log.info("[CHAT] " + msg);
+    }
+    
+    private static void prblm_rpt_msg() {
+        for (String message : Log.getProblems())
+            for (Player p : Bukkit.getOnlinePlayers())
+                if (p.isOp())
+                    p.sendMessage(ChatColor.RED + "[Problem]" + message);
+    }
+    
+    static {
+        Pexel.getScheduler().scheduleSyncDelayedTask(new Runnable() {
+            @Override
+            public void run() {
+                Log.prblm_rpt_msg();
+            }
+        }, 200L);
     }
 }
