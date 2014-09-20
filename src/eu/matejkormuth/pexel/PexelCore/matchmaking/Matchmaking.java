@@ -129,11 +129,17 @@ public class Matchmaking implements Updatable {
         
         int iterations = 0;
         int maxIterations = 256;
+        int playercount = 0;
+        int matchcount = 0;
         
         //Pokus sa sparovat vsetky poziadavky.
         for (MatchmakingRequest request : this.requests) {
+            for (Player p : request.getPlayers()) {
+                p.sendMessage(ChatColor.GOLD
+                        + "Finding best matches... Please, be patient!");
+            }
             //Ak sme neprekrocili limit.
-            if (iterations < maxIterations)
+            if (iterations > maxIterations)
                 break;
             
             if (request.getGame() != null) {
@@ -172,8 +178,14 @@ public class Matchmaking implements Updatable {
         
         //Vymaz spracovane poziadavky zo zoznamu.
         for (MatchmakingRequest request : this.removing) {
+            playercount += request.playerCount();
+            matchcount++;
             this.requests.remove(request);
         }
+        
+        if (playercount != 0)
+            Log.info("[MM] Processed " + playercount + " players in " + matchcount
+                    + " matches! " + this.requests.size() + " requests left.");
     }
     
     private void makeMatchesBySpecifiedMinigameAndMminigameArena(

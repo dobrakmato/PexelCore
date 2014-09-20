@@ -38,6 +38,7 @@ import eu.matejkormuth.pexel.PexelCore.commands.CommandManager;
 import eu.matejkormuth.pexel.PexelCore.commands.FriendCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.GateCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.LobbyCommand;
+import eu.matejkormuth.pexel.PexelCore.commands.MatchmakingCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.PCMDCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.PartyCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.QJCommand;
@@ -181,6 +182,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         this.commandManager = new BukkitCommandManager();
         this.commandManager.registerCommands(new PartyCommand());
         this.commandManager.registerCommands(new ChannelCommand());
+        this.commandManager.registerCommands(new MatchmakingCommand());
         
         StorageEngine.initialize(this);
         StorageEngine.loadData();
