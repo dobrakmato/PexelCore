@@ -244,4 +244,15 @@ public class TeamManager implements Listener {
         
         leastCrowdedTeam.addPlayer(p);
     }
+    
+    /**
+     * Removes player from team and team chat.
+     * 
+     * @param player
+     */
+    public void removePlayer(final Player player) {
+        if (this.playerInTeam(player)) {
+            this.getTeam(player).removePlayer(player);
+        }
+    }
 }
