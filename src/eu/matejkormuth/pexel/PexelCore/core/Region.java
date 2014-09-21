@@ -35,6 +35,7 @@ import org.bukkit.util.Vector;
 
 import com.sk89q.worldedit.bukkit.selections.Selection;
 
+import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.util.SerializableVector;
 
 /**
@@ -290,5 +291,15 @@ public class Region {
     
     public World getWorld() {
         return this.w;
+    }
+    
+    public Location getRandomLocation() {
+        return new Location(this.w, Pexel.getRandom().nextInt(
+                (int) (this.getMaxX() - this.getMinX()))
+                + this.getMinX(), Pexel.getRandom().nextInt(
+                (int) (this.getMaxY() - this.getMinY()))
+                + this.getMinY(), Pexel.getRandom().nextInt(
+                (int) (this.getMaxZ() - this.getMinZ()))
+                + this.getMinZ());
     }
 }
