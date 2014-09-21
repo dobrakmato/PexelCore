@@ -139,7 +139,7 @@ public class HardCoded {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Pexel.getCore(), new Runnable() {
             @Override
             public void run() {
-                for (Entity e : w.getEntities()) {
+                for (Entity e : Bukkit.getWorld("space").getEntities()) {
                     if (!e.isOnGround()) {
                         e.setVelocity(antiGravity);
                     }
