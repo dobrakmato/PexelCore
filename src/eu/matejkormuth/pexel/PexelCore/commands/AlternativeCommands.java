@@ -36,7 +36,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.util.Vector;
 
+import eu.matejkormuth.pexel.PexelCore.HardCoded;
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.actions.JavaArbitraryAction;
 import eu.matejkormuth.pexel.PexelCore.actions.OpenInventoryMenuAction;
@@ -152,6 +154,9 @@ public class AlternativeCommands implements Listener {
         
         if (command.contains("/getcock")) {
             sender.getInventory().addItem(Pexel.getMagicClock().getClock());
+        }
+        else if (command.contains("/gravity")) {
+            HardCoded.antigravity = new Vector(0, Float.parseFloat(args.get(0)), 0);
         }
         else if (command.equalsIgnoreCase("/leave")
                 || command.equalsIgnoreCase("/lobby")) {

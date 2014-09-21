@@ -25,7 +25,6 @@ import javax.xml.bind.JAXBException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
@@ -47,6 +46,8 @@ import eu.matejkormuth.pexel.PexelNetworking.Server;
  * 
  */
 public class HardCoded {
+    public static Vector antigravity = new Vector(0, 0.2F, 0);
+    
     /**
      * Main method called from Plugin.onEnable()
      */
@@ -134,14 +135,12 @@ public class HardCoded {
                 true, UUID.fromString("966ad920-d45e-3fe5-8956-bf7a7a877ab4"));
         
         // Gravity change
-        final Vector antiGravity = new Vector(0, 0.8F, 0);
-        final World w = Bukkit.getWorld("space");
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Pexel.getCore(), new Runnable() {
             @Override
             public void run() {
                 for (Entity e : Bukkit.getWorld("space").getEntities()) {
                     if (!e.isOnGround()) {
-                        e.setVelocity(antiGravity);
+                        e.setVelocity(HardCoded.antigravity);
                     }
                 }
             }
