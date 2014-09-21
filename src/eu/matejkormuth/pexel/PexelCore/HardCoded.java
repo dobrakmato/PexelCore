@@ -26,6 +26,7 @@ import javax.xml.bind.JAXBException;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import eu.matejkormuth.pexel.PexelCore.actions.CommandAction;
@@ -140,7 +141,12 @@ public class HardCoded {
             public void run() {
                 for (Entity e : Bukkit.getWorld("space").getEntities()) {
                     if (!e.isOnGround()) {
-                        e.setVelocity(HardCoded.antigravity);
+                        if (e instanceof Player) {
+                            if (!((Player) e).isFlying()) {
+                                e.setVelocity(e.getVelocity().add(HardCoded.antigravity));
+                            }
+                        }
+                        e.setVelocity(e.getVelocity().add(HardCoded.antigravity));
                     }
                 }
             }
