@@ -211,6 +211,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         try {
             new PNBroadcastServer();
         } catch (Exception e) {
+            e.printStackTrace();
             Log.severe("PNB-Service: " + e.toString());
         }
         
@@ -227,6 +228,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         
         for (File f : new File(this.getDataFolder().getAbsolutePath() + "/libs").listFiles()) {
             try {
+                Log.info("[P-LIBLOAD] Loading " + f.getAbsolutePath());
                 Method method = sysclass.getDeclaredMethod("addURL", parameters);
                 method.setAccessible(true);
                 method.invoke(sysloader, new Object[] { f.toURI().toURL() });
