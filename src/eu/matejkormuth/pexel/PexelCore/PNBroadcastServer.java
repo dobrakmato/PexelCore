@@ -83,14 +83,21 @@ public class PNBroadcastServer {
         
         @Override
         public void onMessage(final WebSocket arg0, final String arg1) {
+            Log.info("Received message from "
+                    + arg0.getRemoteSocketAddress().getHostString() + "; cont: " + arg1);
             if (arg1.equalsIgnoreCase("command requestall")) {
                 
+            }
+            else {
+                arg0.send("Bad request! Can't respond!");
             }
         }
         
         @Override
         public void onOpen(final WebSocket arg0, final ClientHandshake arg1) {
             //does nothing
+            Log.info("[PNBWS] Client " + arg0.getRemoteSocketAddress().getHostString()
+                    + " has connected!");
             arg0.send("Welcome! Current time: " + System.currentTimeMillis());
         }
         
