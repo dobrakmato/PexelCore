@@ -34,7 +34,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
-import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.GameState;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
@@ -294,7 +293,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
      */
     public final void reset() {
         this.state = GameState.RESETING;
-        Log.info("Resetting arena " + this.getName() + "...");
+        
+        NetworkCCFormatter.send(NetworkCCFormatter.MSG_TYPE_ARENA_STATE, this,
+                this.state.toString());
+        
         this.gameStarted = false;
         this.countdownTaskId = 0;
         //Not many things happeing here. Leaving method for future.
