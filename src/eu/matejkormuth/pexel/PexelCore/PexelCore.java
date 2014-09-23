@@ -198,6 +198,12 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         
         HardCoded.main();
         
+        try {
+            new PNBroadcastServer();
+        } catch (Exception e) {
+            Log.severe("PNB-Service: " + e.toString());
+        }
+        
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
     }
