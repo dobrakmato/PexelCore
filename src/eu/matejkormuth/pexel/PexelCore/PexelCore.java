@@ -19,6 +19,10 @@
 package eu.matejkormuth.pexel.PexelCore;
 
 import java.io.File;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -134,6 +138,12 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
     public void onEnable() {
         Log.partEnable("Core");
         
+        try {
+            this.loadLibs();
+        } catch (MalformedURLException | ClassNotFoundException e1) {
+            e1.printStackTrace();
+        }
+        
         // Print license to console.
         License.print();
         
@@ -206,6 +216,26 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
+    }
+    
+    private void loadLibs() throws MalformedURLException, ClassNotFoundException {
+        Log.info("Loading external libraries...");
+        
+        URLClassLoader sysloader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+        Class<?>[] parameters = new Class[] { URL.class };
+        Class<?> sysclass = URLClassLoader.class;
+        
+        for (File f : new File(this.getDataFolder().getAbsolutePath() + "/libs").listFiles()) {
+            try {
+                Method method = sysclass.getDeclaredMethod("addURL", parameters);
+                method.setAccessible(true);
+                method.invoke(sysloader, new Object[] { f.toURI().toURL() });
+            } catch (Throwable t) {
+                t.printStackTrace();
+                Log.severe("Error, could not add URL (" + f.getAbsolutePath()
+                        + ") to system classloader");
+            }
+        }
     }
     
     private void createDirectoryStructure() {
