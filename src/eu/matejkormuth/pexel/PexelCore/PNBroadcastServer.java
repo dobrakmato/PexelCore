@@ -30,8 +30,12 @@ public class PNBroadcastServer {
     }
     
     public void broadcast(final String message) {
-        for (WebSocket ws : this.websockserv.connections()) {
-            ws.send(message);
+        try {
+            for (WebSocket ws : this.websockserv.connections()) {
+                ws.send(message);
+            }
+        } catch (Exception e) {
+            Log.severe("[PNB] Cannot broadcast: " + e.toString());
         }
     }
     
