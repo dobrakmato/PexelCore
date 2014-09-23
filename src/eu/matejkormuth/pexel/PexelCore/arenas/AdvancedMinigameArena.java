@@ -38,6 +38,7 @@ import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.GameState;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
+import eu.matejkormuth.pexel.PexelCore.util.NetworkCCFormatter;
 
 /**
  * Arena that has built-in support for pre-game lobby and stuff... Also implements {@link Listener} and calls
@@ -129,6 +130,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
         this.lobbyLocation = lobbyLocation;
         this.gameSpawn = gameSpawn;
         
+        NetworkCCFormatter.sendConstructor(this);
+        
         Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
     }
     
@@ -209,6 +212,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     
     private void startCountdown() {
         if (this.countdownTaskId == 0) {
+            NetworkCCFormatter.sendCDstart(this);
             //Reset countdown time.
             this.countdownTimeLeft = this.countdownLenght;
             //Start countdown.
@@ -226,6 +230,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     
     private void onCountdownStop() {
         Pexel.getScheduler().cancelTask(this.countdownTaskId);
+        NetworkCCFormatter.sendCDstop(this);
     }
     
     /**
@@ -363,6 +368,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
         if (!this.activePlayers.contains(player)) {
             super.onPlayerJoin(player);
             
+            NetworkCCFormatter.sendPlayerJoin(this, player);
+            
             this.tryStartCountdown();
             
             this.updateGameState();
@@ -391,6 +398,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
         
         this.chatAll(ChatManager.minigame(this.getMinigame(),
                 "Player '" + player.getName() + "' has left arena!"));
+        
+        NetworkCCFormatter.sendPlayerLeft(this, player);
         
         this.tryStopCountdown();
         

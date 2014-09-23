@@ -40,7 +40,8 @@ public class PlayerFreezer implements Listener {
      * List of frozen textures. <br/>
      * FIXME: Remove 'dead' disconnected player objects.
      */
-    private final List<Player> frozen = new ArrayList<Player>();
+    private final List<Player> frozen_movement = new ArrayList<Player>();
+    private final List<Player> frozen_rotation = new ArrayList<Player>();
     
     public PlayerFreezer() {
         Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
@@ -53,7 +54,13 @@ public class PlayerFreezer implements Listener {
      *            player to freeze
      */
     public void freeze(final Player player) {
-        this.frozen.add(player);
+        this.freeze(player, false);
+    }
+    
+    public void freeze(final Player player, final boolean rotation) {
+        this.frozen_movement.add(player);
+        if (rotation)
+            this.frozen_rotation.add(player);
     }
     
     /**
@@ -63,12 +70,13 @@ public class PlayerFreezer implements Listener {
      *            player to unfreeze
      */
     public void unfreeze(final Player player) {
-        this.frozen.remove(player);
+        this.frozen_movement.remove(player);
+        this.frozen_rotation.remove(player);
     }
     
     @EventHandler
     private void onPlayerMove(final PlayerMoveEvent event) {
-        if (this.frozen.contains(event.getPlayer()))
+        if (this.frozen_movement.contains(event.getPlayer()))
             event.setTo(event.getFrom());
     }
 }

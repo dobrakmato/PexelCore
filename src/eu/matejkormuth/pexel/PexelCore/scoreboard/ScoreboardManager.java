@@ -28,14 +28,14 @@ import org.bukkit.entity.Player;
  * 
  */
 public class ScoreboardManager {
-    private final ScoreboardWrapper scoreboard;
+    private final ScoreboardView scoreboard;
     
     /**
      * Creates new scoreboard manager, with specified scoreboard.
      * 
      * @param scoreboard
      */
-    public ScoreboardManager(final ScoreboardWrapper scoreboard) {
+    public ScoreboardManager(final ScoreboardView scoreboard) {
         this.scoreboard = scoreboard;
     }
     

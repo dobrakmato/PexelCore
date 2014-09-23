@@ -26,7 +26,7 @@ import org.bukkit.scoreboard.Scoreboard;
  * @author Mato Kormuth
  * 
  */
-public interface ScoreboardWrapper {
+public interface ScoreboardView {
     /**
      * Returns scoreboard object.
      * 

@@ -68,6 +68,11 @@ public class ChatManager {
                                                                             "log",
                                                                             ChatColor.GRAY
                                                                                     + "[LOG] ");
+    public static final ChatChannel               CHANNEL_NETWORK   = new ChatChannel(
+                                                                            "network",
+                                                                            ChatColor.GRAY.toString()
+                                                                                    + ChatColor.ITALIC
+                                                                                    + "[NET] ");
     public static final ChatChannel               CHANNEL_LOBBY     = new ChatChannel(
                                                                             "lobby",
                                                                             ChatColor.GRAY.toString());

@@ -34,7 +34,7 @@ import org.bukkit.scoreboard.Scoreboard;
  * @author Mato Kormuth
  * 
  */
-public class SimpleScoreboard implements ScoreboardWrapper {
+public class SimpleScoreboard implements ScoreboardView {
     /**
      * Mapping scores.
      */

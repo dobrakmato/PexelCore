@@ -207,6 +207,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         String path = this.getDataFolder().getAbsolutePath();
         created |= new File(path + "/arenas").mkdirs();
         created |= new File(path + "/cache").mkdirs();
+        created |= new File(path + "/records").mkdirs();
         created |= new File(path + "/profiles").mkdirs();
         if (created)
             Log.info("Directory structure expanded!");
