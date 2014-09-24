@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -293,6 +294,11 @@ public class Region {
         return this.w;
     }
     
+    /**
+     * Returns random location from this region.
+     * 
+     * @return random location in bounds of this region
+     */
     public Location getRandomLocation() {
         return new Location(this.w, Pexel.getRandom().nextInt(
                 (int) (this.getMaxX() - this.getMinX()))
@@ -301,5 +307,25 @@ public class Region {
                 + this.getMinY(), Pexel.getRandom().nextInt(
                 (int) (this.getMaxZ() - this.getMinZ()))
                 + this.getMinZ());
+    }
+    
+    /**
+     * Returns list of blocks in this region. <b>Notice: can be slow on big regions.</b>
+     * 
+     * @return list of region's blocks
+     */
+    public List<Block> getBlocks() {
+        List<Block> blocks = new ArrayList<Block>(500);
+        int maxX = (int) this.getMaxX();
+        int maxY = (int) this.getMaxY();
+        int maxZ = (int) this.getMaxZ();
+        for (int x = (int) this.getMinX(); x < maxX; x++) {
+            for (int y = (int) this.getMinY(); y < maxY; y++) {
+                for (int z = (int) this.getMinZ(); z < maxZ; z++) {
+                    blocks.add(this.w.getBlockAt(x, y, z));
+                }
+            }
+        }
+        return blocks;
     }
 }
