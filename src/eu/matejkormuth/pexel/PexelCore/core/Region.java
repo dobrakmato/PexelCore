@@ -319,9 +319,9 @@ public class Region {
         int maxX = (int) this.getMaxX();
         int maxY = (int) this.getMaxY();
         int maxZ = (int) this.getMaxZ();
-        for (int x = (int) this.getMinX(); x < maxX; x++) {
-            for (int y = (int) this.getMinY(); y < maxY; y++) {
-                for (int z = (int) this.getMinZ(); z < maxZ; z++) {
+        for (int x = (int) this.getMinX(); x <= maxX; x++) {
+            for (int y = (int) this.getMinY(); y <= maxY; y++) {
+                for (int z = (int) this.getMinZ(); z <= maxZ; z++) {
                     blocks.add(this.w.getBlockAt(x, y, z));
                 }
             }

@@ -1,6 +1,5 @@
 package eu.matejkormuth.pexel.PexelCore.particles;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -9,7 +8,11 @@ import org.bukkit.Location;
 import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect2;
 
 public class ParticleFrame implements Frame, Collection<ParticleFrame.Particle> {
-    private final Collection<ParticleFrame.Particle> particles = new ArrayList<ParticleFrame.Particle>();
+    private final Collection<ParticleFrame.Particle> particles;
+    
+    public ParticleFrame(final Collection<ParticleFrame.Particle> particles) {
+        this.particles = particles;
+    }
     
     public class Particle {
         public double          relX;
