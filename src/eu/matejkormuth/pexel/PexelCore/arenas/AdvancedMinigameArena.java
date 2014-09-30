@@ -374,6 +374,11 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
             
             this.tryStartCountdown();
             
+            if (this.getPlayerCount() == this.slots) {
+                if (this.countdownTimeLeft > 10)
+                    this.countdownTimeLeft = 10;
+            }
+            
             this.updateGameState();
             
             this.clearPlayer(player);
