@@ -120,7 +120,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
      * Pexel Ban storage.
      */
     public BanStorage        banStorage;
-    public BanListServer           banListServer;
+    public BanListServer     banListServer;
     
     @Override
     public void onDisable() {
@@ -261,6 +261,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         created |= new File(path + "/cache").mkdirs();
         created |= new File(path + "/records").mkdirs();
         created |= new File(path + "/profiles").mkdirs();
+        created |= new File(path + "/clips").mkdirs();
         if (created)
             Log.info("Directory structure expanded!");
     }

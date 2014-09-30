@@ -71,4 +71,8 @@ public class Paths {
         return Pexel.getCore().getDataFolder().getAbsolutePath() + "/cache/" + name
                 + ".cache";
     }
+    
+    public static String clips() {
+        return Pexel.getCore().getDataFolder().getAbsolutePath() + "/clips/";
+    }
 }
