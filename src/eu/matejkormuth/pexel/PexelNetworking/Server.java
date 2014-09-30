@@ -18,13 +18,15 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelNetworking;
 
+import eu.matejkormuth.pexel.PexelCore.bans.Bannable;
+
 /**
  * Class specifing pexel compactibile server.
  * 
  * @author Mato Kormuth
  * 
  */
-public class Server {
+public class Server implements Bannable {
     public static final Server      THIS_SERVER = new Server(null, "$#__THIS__#$");
     
     private final PexelServerClient client;
@@ -80,5 +82,15 @@ public class Server {
     @Override
     public int hashCode() {
         return this.bungeeName.hashCode();
+    }
+    
+    @Override
+    public String getBannableName() {
+        return this.name;
+    }
+    
+    @Override
+    public String getBannableID() {
+        return "SRV-" + this.bungeeName;
     }
 }

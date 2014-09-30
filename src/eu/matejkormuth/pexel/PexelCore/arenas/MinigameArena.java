@@ -44,7 +44,10 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
+import eu.matejkormuth.pexel.PexelCore.bans.BanUtils;
+import eu.matejkormuth.pexel.PexelCore.bans.Bannable;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.PlayerHolder;
@@ -64,7 +67,7 @@ import eu.matejkormuth.pexel.PexelCore.util.ServerLocationType;
  * 
  */
 public class MinigameArena extends ProtectedArea implements MatchmakingGame,
-        PlayerHolder {
+        PlayerHolder, Bannable {
     /**
      * Number of slots.
      */
@@ -149,8 +152,14 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame,
     
     @Override
     public void onPlayerJoin(final Player player) {
-        this.activePlayers.add(player);
-        player.setGameMode(this.defaultGameMode);
+        if (Pexel.getBans().isBanned(player, this)) {
+            player.sendMessage(ChatManager.error(BanUtils.formatBannedMessage(Pexel.getBans().getBan(
+                    player, this))));
+        }
+        else {
+            this.activePlayers.add(player);
+            player.setGameMode(this.defaultGameMode);
+        }
     }
     
     @Override
@@ -351,5 +360,15 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame,
     @Override
     public boolean contains(final Player player) {
         return this.activePlayers.contains(player);
+    }
+    
+    @Override
+    public String getBannableID() {
+        return "MA-" + this.areaName;
+    }
+    
+    @Override
+    public String getBannableName() {
+        return this.getMinigame().getDisplayName() + " - " + this.areaName;
     }
 }

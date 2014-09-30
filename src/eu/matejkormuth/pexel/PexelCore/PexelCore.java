@@ -34,6 +34,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import eu.matejkormuth.pexel.PexelCore.areas.Areas;
+import eu.matejkormuth.pexel.PexelCore.bans.BanListServer;
+import eu.matejkormuth.pexel.PexelCore.bans.BanStorage;
 import eu.matejkormuth.pexel.PexelCore.commands.AlternativeCommands;
 import eu.matejkormuth.pexel.PexelCore.commands.ArenaCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.BukkitCommandManager;
@@ -114,6 +116,11 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
      * Pexel command manager.
      */
     public CommandManager    commandManager;
+    /**
+     * Pexel Ban storage.
+     */
+    public BanStorage        banStorage;
+    public BanListServer           banListServer;
     
     @Override
     public void onDisable() {
@@ -122,6 +129,8 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         UpdatedParts.shutdown();
         
         this.pexelserver.close();
+        this.banListServer.stop();
+        this.banStorage.save();
         
         //Save important data.
         StorageEngine.saveData(); //oldway
@@ -157,12 +166,17 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         try {
             this.pexelserver = new PexelMasterServer(30789);
             this.pexelserver.listen();
+            
+            this.banListServer = new BanListServer();
         } catch (Exception e) {
             
         }
         
         this.message = new AutoMessage();
         this.message.updateStart();
+        
+        this.banStorage = new BanStorage();
+        this.banStorage.load();
         
         this.auth = new Auth();
         

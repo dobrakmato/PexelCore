@@ -346,7 +346,7 @@ public class StorageEngine {
     
     public static void saveArenas() {
         for (MinigameArena arena : StorageEngine.arenas.values()) {
-            arena.save(Paths.arenaPath(arena.getName()));
+            arena.save(Paths.arenaPath(arena.getBannableName()));
         }
     }
     

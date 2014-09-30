@@ -36,6 +36,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -47,12 +48,14 @@ import com.google.common.io.ByteStreams;
 import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.Areas;
 import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
+import eu.matejkormuth.pexel.PexelCore.bans.BanUtils;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.chat.SubscribeMode;
 import eu.matejkormuth.pexel.PexelCore.core.Points;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenu;
 import eu.matejkormuth.pexel.PexelCore.util.Lang;
+import eu.matejkormuth.pexel.PexelNetworking.Server;
 
 /**
  * Event processor for pexel.
@@ -195,6 +198,14 @@ public class EventProcessor implements Listener {
     
     @EventHandler
     private void onPlayerLogin(final PlayerLoginEvent event) {
+        // Check for ban
+        if (Pexel.getBans().isBanned(event.getPlayer(), Server.THIS_SERVER)) {
+            event.disallow(
+                    Result.KICK_BANNED,
+                    BanUtils.formatBannedMessage(Pexel.getBans().getBan(
+                            event.getPlayer(), Server.THIS_SERVER)));
+        }
+        
         if (event.getHostname().contains("login"))
             Pexel.getAuth().authenticateIp(event.getPlayer(), event.getHostname());
     }

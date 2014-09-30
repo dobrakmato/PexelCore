@@ -25,6 +25,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import eu.matejkormuth.pexel.PexelCore.bans.BanStorage;
 import eu.matejkormuth.pexel.PexelCore.core.Auth;
 import eu.matejkormuth.pexel.PexelCore.core.MagicClock;
 import eu.matejkormuth.pexel.PexelCore.core.PlayerProfile;
@@ -188,5 +189,12 @@ public final class Pexel {
      */
     public static Scheduler getScheduler() {
         return Pexel.instance.scheduler;
+    }
+    
+    /**
+     * @return
+     */
+    public static BanStorage getBans() {
+        return Pexel.instance.banStorage;
     }
 }

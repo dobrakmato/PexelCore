@@ -24,6 +24,7 @@ import java.util.List;
 import org.bukkit.Location;
 
 import eu.matejkormuth.pexel.PexelCore.arenas.MinigameArena;
+import eu.matejkormuth.pexel.PexelCore.bans.Bannable;
 
 /**
  * Interface for minigame.
@@ -31,7 +32,7 @@ import eu.matejkormuth.pexel.PexelCore.arenas.MinigameArena;
  * @author Mato Kormuth
  * 
  */
-public interface Minigame {
+public interface Minigame extends Bannable {
     /**
      * Returns display name of minigame.
      * 
