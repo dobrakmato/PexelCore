@@ -29,7 +29,7 @@ public class TimeBomb {
         Validate.notNull(tntblock);
         Validate.notNull(sign);
         
-        this.sign = (Sign) sign;
+        this.sign = (Sign) sign.getState();
         this.tntBlock = tntblock;
         this.timeLeft = timeLeft;
         this.sign.setLine(0, "====================");
