@@ -3,6 +3,7 @@ package eu.matejkormuth.pexel.PexelCore.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -24,6 +25,9 @@ public class TimeBomb {
             }
         });
         this.timer.start();
+        
+        Validate.notNull(tntblock);
+        Validate.notNull(sign);
         
         this.sign = (Sign) sign;
         this.tntBlock = tntblock;
