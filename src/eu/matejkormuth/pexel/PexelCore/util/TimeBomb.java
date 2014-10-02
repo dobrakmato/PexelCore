@@ -37,12 +37,11 @@ public class TimeBomb {
     }
     
     protected void tick() {
-        this.update(this.timeLeft);
         this.timeLeft--;
+        this.update(this.timeLeft);
     }
     
     public void update(final int timeLeft) {
-        this.timeLeft = timeLeft;
         if (this.timeLeft < 10) {
             this.sign.setLine(1, ChatColor.RED + this.sdf.format(new Date(timeLeft))
                     + "." + ChatColor.MAGIC + "00");
