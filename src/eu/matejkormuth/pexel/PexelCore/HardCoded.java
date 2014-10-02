@@ -34,8 +34,6 @@ import eu.matejkormuth.pexel.PexelCore.actions.TeleportAction;
 import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.Lobby;
 import eu.matejkormuth.pexel.PexelCore.arenas.ArenaMap;
-import eu.matejkormuth.pexel.PexelCore.bans.BanBase;
-import eu.matejkormuth.pexel.PexelCore.bans.NamedBanAuthor;
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.core.TeleportGate;
@@ -54,7 +52,6 @@ public class HardCoded {
     /**
      * Main method called from Plugin.onEnable()
      */
-    @SuppressWarnings("deprecation")
     public static final void main() {
         //Initialize color war mingiame
         //new ColorWarMinigame();
@@ -64,17 +61,16 @@ public class HardCoded {
         
         //new KingdomWarsMingame();
         
-        Pexel.getBans().addBan(
-                new BanBase("nemam sa rad", new NamedBanAuthor("dobrakmato"),
-                        Bukkit.getPlayer("dobrakmato"), Server.THIS_SERVER));
-        
-        Pexel.getBans().addBan(
-                new BanBase(100000, "dementy dvodod", new NamedBanAuthor("dement"),
-                        Bukkit.getPlayer("pitkes22"), Server.THIS_SERVER));
-        
-        Pexel.getBans().addBan(
-                new BanBase(45000, "test", new NamedBanAuthor("dobrakmato"),
-                        Bukkit.getPlayer("test"), Server.THIS_SERVER));
+        /*
+         * Pexel.getBans().addBan( new BanBase("nemam sa rad", new NamedBanAuthor("dobrakmato"),
+         * Bukkit.getPlayer("dobrakmato"), Server.THIS_SERVER));
+         * 
+         * Pexel.getBans().addBan( new BanBase(100000, "dementy dvodod", new NamedBanAuthor("dement"),
+         * Bukkit.getPlayer("pitkes22"), Server.THIS_SERVER));
+         * 
+         * Pexel.getBans().addBan( new BanBase(45000, "test", new NamedBanAuthor("dobrakmato"),
+         * Bukkit.getPlayer("test"), Server.THIS_SERVER));
+         */
         
         // Test XML
         class SampleArenaMap extends ArenaMap {
