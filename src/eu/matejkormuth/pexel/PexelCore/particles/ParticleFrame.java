@@ -1,5 +1,6 @@
 package eu.matejkormuth.pexel.PexelCore.particles;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -7,7 +8,10 @@ import org.bukkit.Location;
 
 import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect2;
 
-public class ParticleFrame implements Frame, Collection<ParticleFrame.Particle> {
+public class ParticleFrame implements Frame, Collection<ParticleFrame.Particle>,
+        Serializable {
+    private static final long                        serialVersionUID = 9092949433218439382L;
+    
     private final Collection<ParticleFrame.Particle> particles;
     
     public ParticleFrame(final Collection<ParticleFrame.Particle> particles) {
@@ -34,6 +38,7 @@ public class ParticleFrame implements Frame, Collection<ParticleFrame.Particle> 
         }
     }
     
+    @Override
     public void play(final Location loc) {
         for (Particle p : this.particles) {
             p.play(loc);

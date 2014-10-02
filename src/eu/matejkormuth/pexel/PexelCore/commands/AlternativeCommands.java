@@ -36,6 +36,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.material.Sign;
 import org.bukkit.util.Vector;
 
 import eu.matejkormuth.pexel.PexelCore.HardCoded;
@@ -50,6 +51,7 @@ import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenuItem;
 import eu.matejkormuth.pexel.PexelCore.util.ItemUtils;
 import eu.matejkormuth.pexel.PexelCore.util.ParametrizedRunnable;
 import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect2;
+import eu.matejkormuth.pexel.PexelCore.util.TimeBomb;
 
 /**
  * Alternate method of handling commands. I'm lazy to do this in plugin.yml.
@@ -186,6 +188,13 @@ public class AlternativeCommands implements Listener {
         }
         else if (command.contains("/particles")) {
             this.particleEffectMenu.showTo(sender);
+        }
+        else if (command.contains("/timebomb")) {
+            sender.getLocation().getBlock().setType(Material.TNT);
+            Block b = sender.getLocation().getBlock().getRelative(BlockFace.NORTH);
+            b.setType(Material.WALL_SIGN);
+            ((Sign) b.getState()).setData((byte) 2);
+            new TimeBomb(sender.getLocation().getBlock(), b, 60);
         }
         else if (command.contains("/grassgen")) {
             int i = 3;
