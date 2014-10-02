@@ -37,7 +37,8 @@ public class TimeBomb {
     }
     
     protected void tick() {
-        this.update(this.timeLeft--);
+        this.update(this.timeLeft);
+        this.timeLeft--;
     }
     
     public void update(final int timeLeft) {
