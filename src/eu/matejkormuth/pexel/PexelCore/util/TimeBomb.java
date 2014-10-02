@@ -45,10 +45,12 @@ public class TimeBomb {
         if (this.timeLeft < 10) {
             this.sign.setLine(1, ChatColor.RED + this.sdf.format(new Date(timeLeft))
                     + "." + ChatColor.MAGIC + "00");
+            this.sign.update();
         }
         else {
             this.sign.setLine(1, this.sdf.format(new Date(timeLeft)) + "."
                     + ChatColor.MAGIC + "00");
+            this.sign.update();
         }
         this.sign.update();
         if (this.timeLeft <= 0) {
