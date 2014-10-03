@@ -25,7 +25,6 @@ import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 
 /**
  * Class used for offline mode authentication.
- * 
  */
 public class Auth {
     public void authenticateCommand(final Player player, final String password) {

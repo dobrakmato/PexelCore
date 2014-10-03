@@ -30,8 +30,6 @@ import eu.matejkormuth.pexel.PexelCore.Pexel;
 /**
  * AutoMessage.
  * 
- * @author Mato Kormuth
- * 
  */
 public class AutoMessage implements Updatable {
     private static final List<String> strings  = new ArrayList<String>();

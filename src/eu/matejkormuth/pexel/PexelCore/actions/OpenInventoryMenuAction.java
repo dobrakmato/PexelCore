@@ -29,7 +29,7 @@ import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenu;
  * 
  */
 public class OpenInventoryMenuAction implements Action {
-    private final InventoryMenu im;
+    private final InventoryMenu inventoryMenu;
     
     /**
      * Creates new action that opens specified inventory menu when player clicks icon.
@@ -38,7 +38,7 @@ public class OpenInventoryMenuAction implements Action {
      *            another InventoryMenu
      */
     public OpenInventoryMenuAction(final InventoryMenu im) {
-        this.im = im;
+        this.inventoryMenu = im;
     }
     
     @Override
@@ -53,6 +53,6 @@ public class OpenInventoryMenuAction implements Action {
     
     @Override
     public void execute(final Player player) {
-        this.im.showTo(player);
+        this.inventoryMenu.showTo(player);
     }
 }

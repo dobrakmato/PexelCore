@@ -50,8 +50,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     /**
      * Amount of players, that is required to start the countdown.
      */
-    @ArenaOption(name = "minimalPlayers")
-    public int      minimalPlayers           = 0;
+    @ArenaOption(name = "minimumPlayers")
+    public int      minimumPlayers           = 0;
     /**
      * Lenght of countdown in seconds.
      */
@@ -76,14 +76,17 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     /**
      * Specifies if the players should be teleported to gameSpawn and lobbyLocation automaticaly.
      */
+    @ArenaOption(name = "shouldTeleportPlayers")
     public boolean  shouldTeleportPlayers    = true;
     /**
      * Specifies if players can respawn in this arena, or not.
      */
+    @ArenaOption(name = "playersCanRespawn")
     public boolean  playersCanRespawn        = true;
     /**
      * Specifies if players can join the game after the game was started.
      */
+    @ArenaOption(name = "playersCanJoinAfterStart")
     public boolean  playersCanJoinAfterStart = false;
     /**
      * Spcifies if the boss bar should be used for displaying time to start.
@@ -125,7 +128,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
             final Location lobbyLocation, final Location gameSpawn) {
         super(minigame, arenaName, region, maxPlayers);
         
-        this.minimalPlayers = minPlayers;
+        this.minimumPlayers = minPlayers;
         this.lobbyLocation = lobbyLocation;
         this.gameSpawn = gameSpawn;
         
@@ -150,12 +153,6 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
             player.getInventory().setLeggings(null);
             player.getInventory().setBoots(null);
         }
-        
-        /*
-         * for (PotionEffectType effect : PotionEffectType.values()) try { if (player.hasPotionEffect(effect))
-         * player.removePotionEffect(effect); } catch (Exception ex) { Log.warn("PlayerClearing_Error: " +
-         * ex.getMessage()); }
-         */
     }
     
     /**
@@ -176,14 +173,14 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
      */
     public boolean isPrepeared() {
         return this.gameSpawn != null && this.lobbyLocation != null
-                && this.minimalPlayers != 0;
+                && this.minimumPlayers != 0;
     }
     
     /**
      * Tries to start countdown.
      */
     private void tryStartCountdown() {
-        if (this.activePlayers.size() >= this.minimalPlayers)
+        if (this.activePlayers.size() >= this.minimumPlayers)
             this.startCountdown();
         else
             this.onNotEnoughPlayers();
@@ -351,17 +348,6 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     }
     
     /**
-     * Returns whether collection of activePlayers containts specified player.
-     * 
-     * @param player
-     *            player to check
-     * @return true or false
-     */
-    public boolean isInArena(final Player player) {
-        return this.activePlayers.contains(player);
-    }
-    
-    /**
      * Called when players join the arena. Also checks if there are enough players, if so, calls
      * {@link AdvancedMinigameArena#onGameStart()}. If not, calls {@link AdvancedMinigameArena#onNotEnoughPlayers()}.
      */
@@ -385,7 +371,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
             
             this.chatAll(ChatManager.minigame(this.getMinigame(),
                     ChatColor.GOLD + "Player '" + player.getName() + "' joined arena! ("
-                            + this.getPlayerCount() + "/" + this.minimalPlayers + " - "
+                            + this.getPlayerCount() + "/" + this.minimumPlayers + " - "
                             + this.slots + ")"));
             
             player.teleport(this.lobbyLocation);
@@ -466,11 +452,11 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     }
     
     public int getMinimalPlayers() {
-        return this.minimalPlayers;
+        return this.minimumPlayers;
     }
     
     public void setMinimalPlayers(final int minimalPlayers) {
-        this.minimalPlayers = minimalPlayers;
+        this.minimumPlayers = minimalPlayers;
     }
     
     public int getCountdownLenght() {
@@ -487,6 +473,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     
     public void setLobbyLocation(final Location lobbyLocation) {
         this.lobbyLocation = lobbyLocation;
+    }
+    
+    public void setGameState(final GameState state) {
+        this.state = state;
     }
     
     public Location getGameSpawn() {

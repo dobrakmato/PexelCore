@@ -96,7 +96,7 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame,
     /**
      * Map that is currenlty played on this arena.
      */
-    protected ArenaMap           map;
+    protected MapData           map;
     
     public MinigameArena(final Minigame minigame, final String arenaName,
             final Region region, final int slots) {

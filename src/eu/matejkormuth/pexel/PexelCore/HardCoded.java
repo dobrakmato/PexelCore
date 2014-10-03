@@ -33,7 +33,7 @@ import eu.matejkormuth.pexel.PexelCore.actions.CommandAction;
 import eu.matejkormuth.pexel.PexelCore.actions.TeleportAction;
 import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.Lobby;
-import eu.matejkormuth.pexel.PexelCore.arenas.ArenaMap;
+import eu.matejkormuth.pexel.PexelCore.arenas.MapData;
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.core.TeleportGate;
@@ -73,7 +73,7 @@ public class HardCoded {
          */
         
         // Test XML
-        class SampleArenaMap extends ArenaMap {
+        class SampleArenaMap extends MapData {
             public SampleArenaMap() {
                 this.name = "sampleMap";
                 this.minigameName = "sampleMinigame";

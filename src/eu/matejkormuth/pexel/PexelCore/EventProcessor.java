@@ -51,7 +51,6 @@ import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
 import eu.matejkormuth.pexel.PexelCore.bans.BanUtils;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.chat.SubscribeMode;
-import eu.matejkormuth.pexel.PexelCore.core.Points;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenu;
 import eu.matejkormuth.pexel.PexelCore.util.Lang;
@@ -230,8 +229,6 @@ public class EventProcessor implements Listener {
         
         // Force save of player's profile.
         StorageEngine.saveProfile(event.getPlayer().getUniqueId());
-        // Update points in database.
-        Points.pushPoints(event.getPlayer());
     }
     
     private boolean hasPermission(final Location location, final Player player,

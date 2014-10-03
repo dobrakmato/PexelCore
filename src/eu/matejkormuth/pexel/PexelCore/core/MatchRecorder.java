@@ -126,6 +126,7 @@ public class MatchRecorder {
      */
     public void save() {
         Log.info("Saving started!");
+        //TODO: FIXME: Please, make this thing normal...
         long starttime = System.nanoTime();
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss-SS");

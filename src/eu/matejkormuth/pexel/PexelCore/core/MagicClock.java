@@ -51,7 +51,7 @@ import eu.matejkormuth.pexel.PexelCore.util.ParametrizedRunnable;
  * 
  */
 public class MagicClock implements Listener {
-    private InventoryMenu im;
+    private InventoryMenu iventoryMenu;
     
     public void buildInventoryMenu() {
         InventoryMenuItem everybodyItem = new InventoryMenuItem(
@@ -110,7 +110,7 @@ public class MagicClock implements Listener {
                     }
                 }), 5, false);
         
-        this.im = new InventoryMenu(InventoryType.CHEST, "Player visibility",
+        this.iventoryMenu = new InventoryMenu(InventoryType.CHEST, "Player visibility",
                 Arrays.asList(everybodyItem, nobodyItem, kickItem, teleportItem,
                         commandItem, soundItem));
     }
@@ -124,7 +124,7 @@ public class MagicClock implements Listener {
     private void onPlayerInteract(final PlayerInteractEvent event) {
         if (event.getPlayer().getItemInHand() != null)
             if (event.getPlayer().getItemInHand().getType() == Material.WATCH)
-                this.im.showTo(event.getPlayer());
+                this.iventoryMenu.showTo(event.getPlayer());
         
         /*
          * if (event.getPlayer().getItemInHand() != null) if (event.getPlayer().getItemInHand().getType() ==

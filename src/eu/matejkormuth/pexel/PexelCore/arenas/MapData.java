@@ -29,7 +29,7 @@ import eu.matejkormuth.pexel.PexelCore.util.SerializableLocation;
 @XmlType(name = "arenamap")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class ArenaMap {
+public class MapData {
     @XmlAttribute(name = "name")
     protected String                                  name;
     @XmlAttribute(name = "minigameName")
@@ -42,14 +42,14 @@ public class ArenaMap {
     @XmlElementWrapper(name = "regions")
     protected final Map<String, Region>               regions   = new HashMap<String, Region>();
     
-    public static final ArenaMap load(final File file) throws JAXBException {
-        JAXBContext jc = JAXBContext.newInstance(ArenaMap.class);
+    public static final MapData load(final File file) throws JAXBException {
+        JAXBContext jc = JAXBContext.newInstance(MapData.class);
         Unmarshaller un = jc.createUnmarshaller();
-        return (ArenaMap) un.unmarshal(file);
+        return (MapData) un.unmarshal(file);
     }
     
     public void save(final File file) throws JAXBException {
-        JAXBContext jc = JAXBContext.newInstance(ArenaMap.class);
+        JAXBContext jc = JAXBContext.newInstance(MapData.class);
         Marshaller m = jc.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         m.marshal(this, file);

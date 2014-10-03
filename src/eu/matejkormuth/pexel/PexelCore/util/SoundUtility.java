@@ -7,7 +7,6 @@ package eu.matejkormuth.pexel.PexelCore.util;
 
 import net.minecraft.server.v1_7_R3.PacketPlayOutNamedSoundEffect;
 
-import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -23,24 +22,6 @@ public class SoundUtility {
     public static final String MUSIC_LOBBY = "music_lobby";
     
     /**
-     * Prehra zvuk sadenia wallminy.
-     * 
-     * @param p
-     */
-    public final static void playWallminePlant(final Player p) {
-        p.playSound(p.getLocation(), Sound.STEP_WOOL, 1, 2);
-    }
-    
-    /**
-     * Prehra zvuk lopaty.
-     * 
-     * @param p
-     */
-    public final static void playLopata(final Player p) {
-        p.playSound(p.getLocation(), Sound.ANVIL_USE, 1, 2);
-    }
-    
-    /**
      * Prehra vlastsny zvuk podla mena.
      * 
      * @param p
@@ -53,8 +34,6 @@ public class SoundUtility {
             final float volume, final float pitch, final boolean worldwide) {
         System.out.println("CustomSound: " + p.getName() + ", " + soundName + ", "
                 + volume + ", " + pitch + ", " + worldwide);
-        //if (!soundName.startsWith("as"))
-        //MfApi.broadcastMessage("[spam] " + p.getName() + ", " + soundName);
         if (worldwide) {
             PacketPlayOutNamedSoundEffect packet = new PacketPlayOutNamedSoundEffect(
                     soundName, p.getLocation().getX(), p.getLocation().getY(),
