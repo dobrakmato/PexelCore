@@ -193,7 +193,7 @@ public class AlternativeCommands implements Listener {
             sender.getLocation().getBlock().setType(Material.TNT);
             Block b = sender.getLocation().getBlock().getRelative(BlockFace.NORTH);
             b.setType(Material.WALL_SIGN);
-            ((Sign) b.getState().getData()).setData((byte) 2);
+            ((Sign) b.getState().getData()).setFacingDirection(BlockFace.NORTH.getOppositeFace());
             new TimeBomb(sender.getLocation().getBlock(), b, 60);
         }
         else if (command.contains("/grassgen")) {
