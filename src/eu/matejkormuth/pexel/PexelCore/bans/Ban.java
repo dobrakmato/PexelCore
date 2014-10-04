@@ -71,7 +71,7 @@ public interface Ban {
      * 
      * @return timestamp of time at creation.
      */
-    public long getCreationTime();
+    public long getCreated();
     
     /**
      * Returns time, when ban expiries or -1, if is ban permanent.

@@ -108,7 +108,7 @@ public class BanBase implements Ban {
     }
     
     @Override
-    public long getCreationTime() {
+    public long getCreated() {
         return this.creationTime;
     }
     

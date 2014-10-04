@@ -64,6 +64,15 @@ public final class Pexel {
     }
     
     /**
+     * Returns the main plugin instance.
+     * 
+     * @return core
+     */
+    public static final PexelCore getInstance() {
+        return Pexel.instance;
+    }
+    
+    /**
      * Returns Matchmaking class.
      * 
      * @return matchmaking
