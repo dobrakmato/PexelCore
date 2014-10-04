@@ -118,6 +118,7 @@ public class Matchmaking implements Updatable {
      *            the request
      */
     public void registerRequest(final MatchmakingRequest request) {
+        request.tries = 0;
         this.requests.add(request);
     }
     
@@ -138,12 +139,18 @@ public class Matchmaking implements Updatable {
                 p.sendMessage(ChatColor.GOLD
                         + "Finding best matches... Please, be patient!");
             }
+            request.tries++;
+            if (request.tries > 20) {
+                this.removing.add(request);
+            }
+            
             //Ak sme neprekrocili limit.
             if (iterations > maxIterations)
                 break;
             
             if (request.getGame() != null) {
-                this.makeMatchesBySpecifiedMinigameAndMminigameArena(request);
+                //The best function.
+                this.makeMatchesBySpecifiedMinigameAndMminigameArenaFromMatchMakingRequest_Version_1_0_0_0_1(request);
             }
             else {
                 List<MinigameArena> minigame_arenas = this.arenas.get(request.getMinigame());
@@ -188,7 +195,7 @@ public class Matchmaking implements Updatable {
                     + " matches! " + this.requests.size() + " requests left.");
     }
     
-    private void makeMatchesBySpecifiedMinigameAndMminigameArena(
+    private void makeMatchesBySpecifiedMinigameAndMminigameArenaFromMatchMakingRequest_Version_1_0_0_0_1(
             final MatchmakingRequest request) {
         for (MinigameArena arena : this.arenas.get(request.getMinigame())) {
             // If is not empty, and there is a place for them

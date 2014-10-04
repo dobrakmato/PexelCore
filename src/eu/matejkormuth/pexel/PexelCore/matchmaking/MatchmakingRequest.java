@@ -46,6 +46,10 @@ public class MatchmakingRequest {
      * Arena that players want to play.
      */
     private final MatchmakingGame game;
+    /**
+     * Number of tries to find match.
+     */
+    public int                    tries = 0;
     
     public MatchmakingRequest(final List<Player> players, final Minigame minigame,
             final MatchmakingGame game) {
