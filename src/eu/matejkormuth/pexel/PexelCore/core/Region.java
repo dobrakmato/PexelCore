@@ -328,4 +328,19 @@ public class Region {
         }
         return blocks;
     }
+    
+    /**
+     * Creates region around specified location with specified size.
+     * 
+     * @param center
+     *            center
+     * @param size
+     *            size
+     * @return region
+     */
+    public static Region createAroundBox(final Location center, final int size) {
+        return new Region(center.toVector().add(new Vector(size, size, size)),
+                center.toVector().subtract(new Vector(size, size, size)),
+                center.getWorld());
+    }
 }

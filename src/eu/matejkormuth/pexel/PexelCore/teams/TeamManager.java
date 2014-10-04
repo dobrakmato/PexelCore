@@ -249,10 +249,20 @@ public class TeamManager implements Listener {
      * Removes player from team and team chat.
      * 
      * @param player
+     *            player to remove
      */
     public void removePlayer(final Player player) {
         if (this.playerInTeam(player)) {
             this.getTeam(player).removePlayer(player);
         }
+    }
+    
+    /**
+     * Returns list of managed teams.
+     * 
+     * @return list of managed teams
+     */
+    public List<Team> getTeams() {
+        return this.teams;
     }
 }
