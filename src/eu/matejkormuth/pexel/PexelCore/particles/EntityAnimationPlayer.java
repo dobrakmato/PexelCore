@@ -25,7 +25,7 @@ import eu.matejkormuth.pexel.PexelCore.util.BukkitTimer;
 public class EntityAnimationPlayer implements Runnable {
     private final Animation animation;
     private int             currentFrame = 0;
-    private final int       frameCount   = 0;
+    private int             frameCount   = 0;
     private BukkitTimer     timer;
     private final Entity    entity;
     private boolean         repeating    = false;
@@ -35,6 +35,7 @@ public class EntityAnimationPlayer implements Runnable {
         this.repeating = repeating;
         this.animation = animation;
         this.entity = entity;
+        this.frameCount = animation.getFrameCount();
     }
     
     public void play() {

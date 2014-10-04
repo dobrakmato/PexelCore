@@ -57,6 +57,7 @@ import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
 import eu.matejkormuth.pexel.PexelCore.bans.BanUtils;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.chat.SubscribeMode;
+import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenu;
 import eu.matejkormuth.pexel.PexelCore.particles.EntityAnimationPlayer;
@@ -247,10 +248,11 @@ public class EventProcessor implements Listener {
             double x = 0;
             double y = 0;
             for (int i = 0; i < 20; i++) {
-                x = Math.sin(i / 20F);
-                y = Math.cos(i / 20F);
+                x = Math.sin(i / 3.14F);
+                y = Math.cos(i / 3.14F);
+                Log.info("Generated frame X:" + x + ", Y:" + y);
                 animation.addFrame(new ParticleFrame(
-                        Arrays.asList(new ParticleFrame.Particle(x, 0, y,
+                        Arrays.asList(new ParticleFrame.Particle(x, 2.5, y,
                                 ParticleEffect2.HEART))));
             }
             
