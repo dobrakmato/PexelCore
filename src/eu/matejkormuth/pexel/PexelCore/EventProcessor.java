@@ -23,7 +23,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -41,6 +44,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.util.Vector;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -165,6 +169,25 @@ public class EventProcessor implements Listener {
                             else
                                 event.getPlayer().teleport(w.getSpawnLocation());
                         }
+                    }
+                }
+            }
+            
+            if (event.getItem() != null) {
+                if (event.getItem().hasItemMeta()
+                        && event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(
+                                "gun")) {
+                    Vector direction = event.getPlayer().getEyeLocation().getDirection();
+                    Snowball projectile = (Snowball) event.getPlayer().getWorld().spawnEntity(
+                            event.getPlayer().getEyeLocation().add(direction.multiply(2)),
+                            EntityType.SNOWBALL);
+                    projectile.setVelocity(direction.multiply(2));
+                    for (int i = 0; i < 25; i++) {
+                        Firework fw = (Firework) event.getPlayer().getWorld().spawnEntity(
+                                direction.add(direction).toLocation(
+                                        event.getPlayer().getWorld()),
+                                EntityType.FIREWORK);
+                        fw.setTicksLived(2);
                     }
                 }
             }
