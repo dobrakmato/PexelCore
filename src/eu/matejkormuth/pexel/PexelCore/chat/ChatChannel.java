@@ -192,8 +192,10 @@ public class ChatChannel {
      * @param message
      *            message to be send
      */
-    public void broadcastMessage(final String message) {
+    public void broadcastMessage(String message) {
         this.lastActivity = System.currentTimeMillis();
+        // Support for colored messages
+        message = ChatColor.translateAlternateColorCodes("&".toCharArray()[0], message);
         for (Iterator<ChannelSubscriber> iterator = this.subscribers.iterator(); iterator.hasNext();) {
             ChannelSubscriber p = iterator.next();
             if (p.isOnline())
