@@ -144,9 +144,9 @@ public class Matchmaking implements Updatable {
         }
         else {
             for (Player p : request.getPlayers()) {
-                p.sendMessage(ChatManager.error("Matchmaking failed! Player(s) "
+                p.sendMessage(ChatManager.error("Matchmaking failed! Player(s) '"
                         + playername + ChatColor.RED
-                        + " are in another matchmaking request!"));
+                        + "' are in another matchmaking request!"));
             }
         }
     }
@@ -168,8 +168,12 @@ public class Matchmaking implements Updatable {
                 p.sendMessage(ChatColor.GOLD + "Finding best matches ("
                         + (request.tries + 1) + ")... Please, be patient!");
             }
+            
             request.tries++;
-            if (request.tries > 20) {
+            if (request.tries >= 20) {
+                for (Player p : request.getPlayers()) {
+                    p.sendMessage(ChatManager.error("Matchmaking failed!"));
+                }
                 this.removing.add(request);
             }
             
