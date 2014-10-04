@@ -97,7 +97,8 @@ public class PartyCommand implements CommandExecutor {
             }
         }
         else {
-            sender.sendMessage(ChatManager.error("You have to create party first! Type /party create!"));
+            this.create(sender);
+            this.add(sender, playerName);
         }
     }
     
