@@ -54,6 +54,10 @@ public class Matchmaking implements Updatable {
      * List of registered arenas.
      */
     private final Map<Minigame, List<MinigameArena>> arenas              = new HashMap<Minigame, List<MinigameArena>>();
+    /**
+     * List of players in matchmaking.
+     */
+    private final List<Player>                       players             = new ArrayList<Player>();
     private int                                      taskId              = 0;
     /**
      * Matchmaking server location.
@@ -118,8 +122,33 @@ public class Matchmaking implements Updatable {
      *            the request
      */
     public void registerRequest(final MatchmakingRequest request) {
-        request.tries = 0;
-        this.requests.add(request);
+        boolean safe = true;
+        String playername = null;
+        for (Player p : request.getPlayers()) {
+            if (this.players.contains(p)) {
+                p.sendMessage(ChatManager.error("Can't register matchmaking request while in queue with another one! Type /leave to leave all requests."));
+                safe = false;
+                if (playername == null) {
+                    playername = p.getDisplayName();
+                }
+                else {
+                    playername += ", " + p.getDisplayName();
+                }
+            }
+        }
+        
+        if (safe) {
+            request.tries = 0;
+            this.requests.add(request);
+            this.players.addAll(request.getPlayers());
+        }
+        else {
+            for (Player p : request.getPlayers()) {
+                p.sendMessage(ChatManager.error("Matchmaking failed! Player(s) "
+                        + playername + ChatColor.RED
+                        + " are in another matchmaking request!"));
+            }
+        }
     }
     
     /**
@@ -136,8 +165,8 @@ public class Matchmaking implements Updatable {
         //Pokus sa sparovat vsetky poziadavky.
         for (MatchmakingRequest request : this.requests) {
             for (Player p : request.getPlayers()) {
-                p.sendMessage(ChatColor.GOLD
-                        + "Finding best matches... Please, be patient!");
+                p.sendMessage(ChatColor.GOLD + "Finding best matches ("
+                        + (request.tries + 1) + ")... Please, be patient!");
             }
             request.tries++;
             if (request.tries > 20) {
@@ -187,6 +216,7 @@ public class Matchmaking implements Updatable {
         for (MatchmakingRequest request : this.removing) {
             playercount += request.playerCount();
             matchcount++;
+            this.players.removeAll(request.getPlayers());
             this.requests.remove(request);
         }
         

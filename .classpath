@@ -5,5 +5,9 @@
 	<classpathentry kind="lib" path="libs/BarAPI.jar"/>
 	<classpathentry kind="lib" path="libs/craftbukkit-1.7.9-R0.2.jar"/>
 	<classpathentry kind="lib" path="libs/WorldEdit.jar"/>
+	<classpathentry kind="lib" path="libs/java_websocket.jar"/>
+	<classpathentry kind="lib" path="C:/Users/M/Downloads/ProtocolLib-3.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/M/Downloads/LibsDisguises (1).jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

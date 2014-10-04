@@ -165,8 +165,9 @@ public class AlternativeCommands implements Listener {
             for (MinigameArena arena : StorageEngine.getArenas().values())
                 if (arena.contains(event.getPlayer())) {
                     arena.onPlayerLeft(event.getPlayer());
-                    event.getPlayer().teleport(Pexel.getHubLocation());
                 }
+            
+            event.getPlayer().teleport(Pexel.getHubLocation());
         }
         else if (command.equalsIgnoreCase("list_arena_aliases")) {
             for (String key : StorageEngine.getAliases().keySet()) {
