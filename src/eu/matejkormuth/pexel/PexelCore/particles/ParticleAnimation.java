@@ -20,6 +20,7 @@ package eu.matejkormuth.pexel.PexelCore.particles;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class ParticleAnimation implements Animation, Serializable {
     private static final long              serialVersionUID = 5147694021142531376L;
@@ -40,5 +41,13 @@ public class ParticleAnimation implements Animation, Serializable {
     @Override
     public int getFrameCount() {
         return this.frames.size();
+    }
+    
+    public void addFrame(final ParticleFrame frame) {
+        this.frames.add(frame);
+    }
+    
+    public void addFrames(final Collection<? extends ParticleFrame> frames) {
+        this.frames.addAll(frames);
     }
 }

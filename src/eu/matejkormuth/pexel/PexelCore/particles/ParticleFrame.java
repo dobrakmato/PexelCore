@@ -36,7 +36,7 @@ public class ParticleFrame implements Frame, Collection<ParticleFrame.Particle>,
         this.particles = particles;
     }
     
-    public class Particle {
+    public static class Particle {
         public double          relX;
         public double          relY;
         public double          relZ;

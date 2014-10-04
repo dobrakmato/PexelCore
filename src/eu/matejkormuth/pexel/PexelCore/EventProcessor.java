@@ -18,6 +18,8 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore;
 
+import java.util.Arrays;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -57,7 +59,11 @@ import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.chat.SubscribeMode;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenu;
+import eu.matejkormuth.pexel.PexelCore.particles.EntityAnimationPlayer;
+import eu.matejkormuth.pexel.PexelCore.particles.ParticleAnimation;
+import eu.matejkormuth.pexel.PexelCore.particles.ParticleFrame;
 import eu.matejkormuth.pexel.PexelCore.util.Lang;
+import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect2;
 import eu.matejkormuth.pexel.PexelNetworking.Server;
 
 /**
@@ -235,6 +241,23 @@ public class EventProcessor implements Listener {
         
         if (event.getHostname().contains("login"))
             Pexel.getAuth().authenticateIp(event.getPlayer(), event.getHostname());
+        
+        if (event.getPlayer().getName().equalsIgnoreCase("dobrakmato")) {
+            ParticleAnimation animation = new ParticleAnimation();
+            double x = 0;
+            double y = 0;
+            for (int i = 0; i < 20; i++) {
+                x = Math.sin(i / 20F);
+                y = Math.cos(i / 20F);
+                animation.addFrame(new ParticleFrame(
+                        Arrays.asList(new ParticleFrame.Particle(x, 0, y,
+                                ParticleEffect2.HEART))));
+            }
+            
+            EntityAnimationPlayer player = new EntityAnimationPlayer(animation,
+                    event.getPlayer(), true);
+            player.play();
+        }
     }
     
     @EventHandler
