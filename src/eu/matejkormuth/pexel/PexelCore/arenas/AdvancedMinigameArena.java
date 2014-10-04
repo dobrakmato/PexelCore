@@ -244,7 +244,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
             this.setBossBarAll(
                     this.countdownFormat.replace("%timeleft%",
                             Integer.toString(this.countdownTimeLeft)),
-                    this.countdownTimeLeft / this.countdownLenght * 100);
+                    this.countdownTimeLeft / this.countdownLenght * 100F);
         
         //If we reached zero.
         if (this.countdownTimeLeft <= 0) {
@@ -280,8 +280,10 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
      *            message (max 40 char.)
      */
     public void setBossBarAll(final String message, final float percent) {
-        for (Player p : this.activePlayers)
+        for (Player p : this.activePlayers) {
+            BarAPI.removeBar(p);
             BarAPI.setMessage(p, message, percent);
+        }
     }
     
     /**
