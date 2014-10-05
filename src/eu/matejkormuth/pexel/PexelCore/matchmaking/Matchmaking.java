@@ -34,7 +34,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
-import eu.matejkormuth.pexel.PexelCore.arenas.MinigameArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.Party;
@@ -59,7 +59,7 @@ public class Matchmaking implements Updatable {
     /**
      * List of registered arenas.
      */
-    private final Map<Minigame, List<MinigameArena>> arenas              = new HashMap<Minigame, List<MinigameArena>>();
+    private final Map<Minigame, List<SimpleArena>> arenas              = new HashMap<Minigame, List<SimpleArena>>();
     /**
      * List of players in matchmaking.
      */
@@ -102,14 +102,14 @@ public class Matchmaking implements Updatable {
      * @param arena
      *            minigame arena
      */
-    public void registerArena(final MinigameArena arena) {
+    public void registerArena(final SimpleArena arena) {
         if (this.minigames.containsValue(arena.getMinigame())) {
             Log.info("Matchmaking found a new arena: " + arena.getName() + "-"
                     + arena.getMinigame().getName());
             if (this.arenas.containsKey(arena.getMinigame()))
                 this.arenas.get(arena.getMinigame()).add(arena);
             else {
-                List<MinigameArena> list = new ArrayList<MinigameArena>();
+                List<SimpleArena> list = new ArrayList<SimpleArena>();
                 list.add(arena);
                 this.arenas.put(arena.getMinigame(), list);
             }
@@ -192,9 +192,9 @@ public class Matchmaking implements Updatable {
                 this.makeMatchesBySpecifiedMinigameAndMminigameArenaFromMatchMakingRequest_Version_1_0_0_0_1(request);
             }
             else {
-                List<MinigameArena> minigame_arenas = this.arenas.get(request.getMinigame());
+                List<SimpleArena> minigame_arenas = this.arenas.get(request.getMinigame());
                 
-                for (MinigameArena arena : minigame_arenas) {
+                for (SimpleArena arena : minigame_arenas) {
                     // If is not empty, and there is a place for them
                     if (!arena.empty() && arena.canJoin(request.playerCount())) {
                         // Connect all of them
@@ -206,7 +206,7 @@ public class Matchmaking implements Updatable {
                     }
                 }
                 
-                for (MinigameArena arena : minigame_arenas) {
+                for (SimpleArena arena : minigame_arenas) {
                     // If is not empty, and there is a place for them
                     if (arena.canJoin(request.playerCount())) {
                         // Connect all of them
@@ -237,7 +237,7 @@ public class Matchmaking implements Updatable {
     
     private void makeMatchesBySpecifiedMinigameAndMminigameArenaFromMatchMakingRequest_Version_1_0_0_0_1(
             final MatchmakingRequest request) {
-        for (MinigameArena arena : this.arenas.get(request.getMinigame())) {
+        for (SimpleArena arena : this.arenas.get(request.getMinigame())) {
             // If is not empty, and there is a place for them
             if (!arena.empty() && arena.canJoin(request.playerCount())) {
                 // Connect all of them
@@ -249,7 +249,7 @@ public class Matchmaking implements Updatable {
             }
         }
         
-        for (MinigameArena arena : this.arenas.get(request.getMinigame())) {
+        for (SimpleArena arena : this.arenas.get(request.getMinigame())) {
             // If is not empty, and there is a place for them
             if (arena.canJoin(request.playerCount())) {
                 // Connect all of them
@@ -318,7 +318,7 @@ public class Matchmaking implements Updatable {
         @Override
         public void handle(final HttpExchange conn) throws IOException {
             List<JSONArena> arenas = new ArrayList<JSONArena>();
-            for (MinigameArena arena : StorageEngine.getArenas().values()) {
+            for (SimpleArena arena : StorageEngine.getArenas().values()) {
                 JSONArena a = new JSONArena();
                 a.name = arena.getName();
                 a.minigame = arena.getMinigame().getName();
@@ -330,8 +330,9 @@ public class Matchmaking implements Updatable {
                     a.players[i] = p.getName() + "/" + p.getUniqueId().toString();
                     i++;
                 }
+                arenas.add(a);
             }
-            String response = new Gson().toJson(arenas.toArray());
+            String response = new Gson().toJson(arenas);
             
             conn.sendResponseHeaders(200, response.length());
             conn.getResponseBody().write(response.getBytes());

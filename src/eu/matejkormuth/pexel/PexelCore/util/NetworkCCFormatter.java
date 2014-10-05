@@ -20,7 +20,7 @@ package eu.matejkormuth.pexel.PexelCore.util;
 
 import org.bukkit.entity.Player;
 
-import eu.matejkormuth.pexel.PexelCore.arenas.AdvancedMinigameArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.AdvancedArena;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 
 /**
@@ -38,13 +38,13 @@ public class NetworkCCFormatter {
     public static final int     MSG_TYPE_ARENA_STATE       = 6;
     
     public static final void sendArenaMsg(final int type,
-            final AdvancedMinigameArena arena, final String msg) {
+            final AdvancedArena arena, final String msg) {
         ChatManager.CHANNEL_NETWORK.broadcastMessage("ARENA-" + type
                 + NetworkCCFormatter.SEPARATOR + NetworkCCFormatter.formatArena(arena)
                 + NetworkCCFormatter.SEPARATOR + msg);
     }
     
-    private static String formatArena(final AdvancedMinigameArena arena) {
+    private static String formatArena(final AdvancedArena arena) {
         return arena.getName();
     }
     
@@ -58,27 +58,27 @@ public class NetworkCCFormatter {
      * @param msg
      *            message to send
      */
-    public static final void send(final int type, final AdvancedMinigameArena arena,
+    public static final void send(final int type, final AdvancedArena arena,
             final String msg) {
         NetworkCCFormatter.sendArenaMsg(type, arena, msg);
     }
     
-    public static void sendConstructor(final AdvancedMinigameArena advancedMinigameArena) {
+    public static void sendConstructor(final AdvancedArena advancedMinigameArena) {
         NetworkCCFormatter.sendArenaMsg(MSG_TYPE_ARENA_CONSTRUCTOR,
                 advancedMinigameArena, "Construct");
     }
     
-    public static void sendCDstart(final AdvancedMinigameArena advancedMinigameArena) {
+    public static void sendCDstart(final AdvancedArena advancedMinigameArena) {
         NetworkCCFormatter.sendArenaMsg(MSG_TYPE_ARENA_CD_START, advancedMinigameArena,
                 Long.toString(System.currentTimeMillis()));
     }
     
-    public static void sendCDstop(final AdvancedMinigameArena advancedMinigameArena) {
+    public static void sendCDstop(final AdvancedArena advancedMinigameArena) {
         NetworkCCFormatter.sendArenaMsg(MSG_TYPE_ARENA_CD_STOP, advancedMinigameArena,
                 Long.toString(System.currentTimeMillis()));
     }
     
-    public static void sendPlayerJoin(final AdvancedMinigameArena advancedMinigameArena,
+    public static void sendPlayerJoin(final AdvancedArena advancedMinigameArena,
             final Player player) {
         NetworkCCFormatter.sendArenaMsg(MSG_TYPE_ARENA_PLAYERJOIN,
                 advancedMinigameArena,
@@ -87,7 +87,7 @@ public class NetworkCCFormatter {
                 Integer.toString(advancedMinigameArena.getPlayerCount()));
     }
     
-    public static void sendPlayerLeft(final AdvancedMinigameArena advancedMinigameArena,
+    public static void sendPlayerLeft(final AdvancedArena advancedMinigameArena,
             final Player player) {
         NetworkCCFormatter.sendArenaMsg(MSG_TYPE_ARENA_PLAYERLEAVE,
                 advancedMinigameArena,

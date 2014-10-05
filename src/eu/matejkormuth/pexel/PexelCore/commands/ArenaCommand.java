@@ -36,7 +36,7 @@ import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
 import eu.matejkormuth.pexel.PexelCore.arenas.ArenaOption;
-import eu.matejkormuth.pexel.PexelCore.arenas.MinigameArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
@@ -114,7 +114,7 @@ public class ArenaCommand implements CommandExecutor {
                             else
                                 c = classType;
                             //Create instance
-                            MinigameArena newArena = (MinigameArena) c.getDeclaredConstructor(
+                            SimpleArena newArena = (SimpleArena) c.getDeclaredConstructor(
                                     Minigame.class, String.class, Region.class,
                                     int.class).newInstance(
                                     StorageEngine.getMinigame(minigameName), arenaName,
@@ -229,7 +229,7 @@ public class ArenaCommand implements CommandExecutor {
                         try {
                             if (StorageEngine.getArena(arenaName) != null) {
                                 boolean set = false;
-                                MinigameArena arena = StorageEngine.getArena(arenaName);
+                                SimpleArena arena = StorageEngine.getArena(arenaName);
                                 
                                 Field[] fields = arena.getClass().getDeclaredFields();
                                 for (Field f : fields) {
@@ -336,7 +336,7 @@ public class ArenaCommand implements CommandExecutor {
                         if (StorageEngine.getArena(arenaName) != null) {
                             sender.sendMessage(ChatColor.GOLD
                                     + "======= OPTIONS =======");
-                            MinigameArena arena = StorageEngine.getArena(arenaName);
+                            SimpleArena arena = StorageEngine.getArena(arenaName);
                             
                             for (Field f : arena.getClass().getDeclaredFields()) {
                                 if (f.isAccessible())
@@ -446,7 +446,7 @@ public class ArenaCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.YELLOW + "PA:" + a.getName());
                 }
                 
-                for (MinigameArena a : StorageEngine.getArenas().values()) {
+                for (SimpleArena a : StorageEngine.getArenas().values()) {
                     sender.sendMessage(ChatColor.GREEN + "MA:" + a.getName());
                 }
             }

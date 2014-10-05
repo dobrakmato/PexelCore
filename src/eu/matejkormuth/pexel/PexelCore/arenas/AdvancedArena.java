@@ -46,7 +46,7 @@ import eu.matejkormuth.pexel.PexelCore.util.NetworkCCFormatter;
  * @author Mato Kormuth
  * 
  */
-public class AdvancedMinigameArena extends MinigameArena implements Listener {
+public abstract class AdvancedArena extends SimpleArena implements Listener {
     /**
      * Amount of players, that is required to start the countdown.
      */
@@ -123,7 +123,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
      * @param region
      * @param maxPlayers
      */
-    public AdvancedMinigameArena(final Minigame minigame, final String arenaName,
+    public AdvancedArena(final Minigame minigame, final String arenaName,
             final Region region, final int maxPlayers, final int minPlayers,
             final Location lobbyLocation, final Location gameSpawn) {
         super(minigame, arenaName, region, maxPlayers);
@@ -216,7 +216,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
                     new Runnable() {
                         @Override
                         public void run() {
-                            AdvancedMinigameArena.this.countdownTick();
+                            AdvancedArena.this.countdownTick();
                         }
                     }, 0L, 20L);
             
@@ -287,8 +287,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     }
     
     /**
-     * Reseta arena basic things. <b>Calls {@link AdvancedMinigameArena#onReset()} at the end of this function!</b></br>
-     * If you want to extend reset function, override onReset() function.
+     * Reseta arena basic things. <b>Calls {@link AdvancedArena#onReset()} at the end of this function!</b></br> If you
+     * want to extend reset function, override onReset() function.
      */
     public final void reset() {
         this.state = GameState.RESETING;
@@ -305,8 +305,8 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     }
     
     /**
-     * Called right after the arena resets it's basic things, after {@link AdvancedMinigameArena#reset()} was called.
-     * <b>Don't forget to change arena's state to {@link GameState#WAITING_EMPTY} after reset.</b>
+     * Called right after the arena resets it's basic things, after {@link AdvancedArena#reset()} was called. <b>Don't
+     * forget to change arena's state to {@link GameState#WAITING_EMPTY} after reset.</b>
      */
     public void onReset() {
         
@@ -342,7 +342,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     }
     
     /**
-     * Called when last player lefts the arena. Should call {@link AdvancedMinigameArena#reset()} function if
+     * Called when last player lefts the arena. Should call {@link AdvancedArena#reset()} function if
      * <code>autoReset</code> is set to <b>false</b> (false by default).
      */
     public void onGameEnd() {
@@ -351,7 +351,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     
     /**
      * Called when players join the arena. Also checks if there are enough players, if so, calls
-     * {@link AdvancedMinigameArena#onGameStart()}. If not, calls {@link AdvancedMinigameArena#onNotEnoughPlayers()}.
+     * {@link AdvancedArena#onGameStart()}. If not, calls {@link AdvancedArena#onNotEnoughPlayers()}.
      */
     @Override
     public void onPlayerJoin(final Player player) {
@@ -385,7 +385,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     
     /**
      * Called when player left the arena. If is arena in LOBBY/WAITING_PLAYERS state, and flag
-     * {@link AdvancedMinigameArena#countdownCanCancel} is set to <b>true</b>, stops the countdown.
+     * {@link AdvancedArena#countdownCanCancel} is set to <b>true</b>, stops the countdown.
      */
     @Override
     public void onPlayerLeft(final Player player) {
@@ -427,7 +427,7 @@ public class AdvancedMinigameArena extends MinigameArena implements Listener {
     
     /**
      * Checks if there are no players in arena, and if arena is in PLAYING state. If so, the
-     * {@link AdvancedMinigameArena#onGameEnd()}
+     * {@link AdvancedArena#onGameEnd()}
      */
     private void checkForEnd() {
         if (this.activePlayers.size() == 0 && this.state.isPlaying()) {

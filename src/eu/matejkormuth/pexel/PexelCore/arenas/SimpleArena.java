@@ -66,7 +66,7 @@ import eu.matejkormuth.pexel.PexelCore.util.ServerLocationType;
  * @author Mato Kormuth
  * 
  */
-public class MinigameArena extends ProtectedArea implements MatchmakingGame,
+public abstract class SimpleArena extends ProtectedArea implements MatchmakingGame,
         PlayerHolder, Bannable {
     /**
      * Number of slots.
@@ -96,9 +96,9 @@ public class MinigameArena extends ProtectedArea implements MatchmakingGame,
     /**
      * Map that is currenlty played on this arena.
      */
-    protected MapData           map;
+    protected MapData            map;
     
-    public MinigameArena(final Minigame minigame, final String arenaName,
+    public SimpleArena(final Minigame minigame, final String arenaName,
             final Region region, final int slots) {
         super(minigame.getName() + "_" + arenaName, region);
         this.minigame = minigame;

@@ -23,8 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Specifies that this field represents arena option. Apply on fields in {@link MinigameArena} or
- * {@link AdvancedMinigameArena} to flag them as arena 'options'.
+ * Specifies that this field represents arena option. Apply on fields in {@link SimpleArena} or
+ * {@link AdvancedArena} to flag them as arena 'options'.
  * 
  */
 @Target({ java.lang.annotation.ElementType.FIELD })

@@ -76,7 +76,7 @@ public class MapData {
         m.marshal(this, file);
     }
     
-    public boolean validate(final MinigameArena arena) {
+    public boolean validate(final SimpleArena arena) {
         return arena.getMinigame().getName().equals(this.minigameName);
     }
     

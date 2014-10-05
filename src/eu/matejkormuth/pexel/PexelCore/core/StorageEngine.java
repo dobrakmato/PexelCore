@@ -36,7 +36,7 @@ import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.Lobby;
 import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
 import eu.matejkormuth.pexel.PexelCore.arenas.ArenaOption;
-import eu.matejkormuth.pexel.PexelCore.arenas.MinigameArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
 
 /**
@@ -49,7 +49,7 @@ public class StorageEngine {
     private static final Map<UUID, PlayerProfile>   profiles    = new HashMap<UUID, PlayerProfile>();
     private static final Map<String, Minigame>      minigames   = new HashMap<String, Minigame>();
     private static final Map<String, ProtectedArea> areas       = new HashMap<String, ProtectedArea>();
-    private static final Map<String, MinigameArena> arenas      = new HashMap<String, MinigameArena>();
+    private static final Map<String, SimpleArena> arenas      = new HashMap<String, SimpleArena>();
     @SuppressWarnings("rawtypes")
     private static final Map<String, Class>         aliases     = new HashMap<String, Class>();
     private static final Map<String, Lobby>         lobbies     = new HashMap<String, Lobby>();
@@ -132,7 +132,7 @@ public class StorageEngine {
      * 
      * @param arena
      */
-    public static void addArena(final MinigameArena arena) {
+    public static void addArena(final SimpleArena arena) {
         StorageEngine.arenas.put(arena.getName(), arena);
         StorageEngine.areas.put(arena.getName(), arena);
     }
@@ -159,11 +159,11 @@ public class StorageEngine {
         return StorageEngine.minigames;
     }
     
-    public static Map<String, MinigameArena> getArenas() {
+    public static Map<String, SimpleArena> getArenas() {
         return StorageEngine.arenas;
     }
     
-    public static MinigameArena getArena(final String arenaName) {
+    public static SimpleArena getArena(final String arenaName) {
         return StorageEngine.arenas.get(arenaName);
     }
     
@@ -264,7 +264,7 @@ public class StorageEngine {
         // Save arenas
         YamlConfiguration yaml_arenas = new YamlConfiguration();
         int i_arenas = 0;
-        for (MinigameArena a : StorageEngine.arenas.values()) {
+        for (SimpleArena a : StorageEngine.arenas.values()) {
             yaml_arenas.set("arenas.arena" + i_arenas + ".name", a.getName());
             yaml_arenas.set("arenas.arena" + i_arenas + ".type",
                     a.getClass().getSimpleName());
@@ -345,7 +345,7 @@ public class StorageEngine {
     }
     
     public static void saveArenas() {
-        for (MinigameArena arena : StorageEngine.arenas.values()) {
+        for (SimpleArena arena : StorageEngine.arenas.values()) {
             arena.save(Paths.arenaPath(arena.getBannableName()));
         }
     }

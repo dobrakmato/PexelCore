@@ -36,7 +36,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
-import eu.matejkormuth.pexel.PexelCore.arenas.MinigameArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 
 /**
@@ -55,7 +55,7 @@ public class TeamManager implements Listener {
      */
     private final Map<Location, Team> signs    = new HashMap<Location, Team>();
     private final int                 varience = 1;
-    private final MinigameArena       arena;
+    private final SimpleArena       arena;
     
     /**
      * Creates new Team manager
@@ -63,7 +63,7 @@ public class TeamManager implements Listener {
      * @param arena
      *            arena in which team manager runs.
      */
-    public TeamManager(final MinigameArena arena) {
+    public TeamManager(final SimpleArena arena) {
         Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
         this.arena = arena;
     }

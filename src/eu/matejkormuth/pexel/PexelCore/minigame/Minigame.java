@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.bukkit.Location;
 
-import eu.matejkormuth.pexel.PexelCore.arenas.MinigameArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
 import eu.matejkormuth.pexel.PexelCore.bans.Bannable;
 
 /**
@@ -69,7 +69,7 @@ public interface Minigame extends Bannable {
      * @return
      */
     @Deprecated
-    public MinigameArena getArena(String name);
+    public SimpleArena getArena(String name);
     
     /**
      * Returns all arenas of this minigame.
@@ -77,7 +77,7 @@ public interface Minigame extends Bannable {
      * @return collection of arenas
      */
     @Deprecated
-    public Collection<MinigameArena> getArenas();
+    public Collection<SimpleArena> getArenas();
     
     /**
      * Returns the minigame lobby location.

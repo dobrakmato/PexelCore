@@ -36,7 +36,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.actions.CommandAction;
 import eu.matejkormuth.pexel.PexelCore.actions.JavaArbitraryAction;
-import eu.matejkormuth.pexel.PexelCore.actions.KickAction;
 import eu.matejkormuth.pexel.PexelCore.actions.TeleportAction;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenu;
@@ -83,8 +82,8 @@ public class MagicClock implements Listener {
                     }
                 }), 1, true);
         
-        InventoryMenuItem kickItem = new InventoryMenuItem(ItemUtils.namedItemStack(
-                Material.APPLE, "Kick me", null), new KickAction(), 2, true);
+        //InventoryMenuItem kickItem = new InventoryMenuItem(ItemUtils.namedItemStack(
+        //        Material.APPLE, "Kick me", null), new KickAction(), 2, true);
         
         InventoryMenuItem teleportItem = new InventoryMenuItem(ItemUtils.namedItemStack(
                 Material.BED, "Teleport to 0 255 0", null), new TeleportAction(
@@ -111,8 +110,8 @@ public class MagicClock implements Listener {
                 }), 5, false);
         
         this.iventoryMenu = new InventoryMenu(InventoryType.CHEST, "Player visibility",
-                Arrays.asList(everybodyItem, nobodyItem, kickItem, teleportItem,
-                        commandItem, soundItem));
+                Arrays.asList(everybodyItem, nobodyItem, teleportItem, commandItem,
+                        soundItem));
     }
     
     public MagicClock() {

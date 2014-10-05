@@ -43,7 +43,7 @@ import eu.matejkormuth.pexel.PexelCore.HardCoded;
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.actions.JavaArbitraryAction;
 import eu.matejkormuth.pexel.PexelCore.actions.OpenInventoryMenuAction;
-import eu.matejkormuth.pexel.PexelCore.arenas.MinigameArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
@@ -163,7 +163,7 @@ public class AlternativeCommands implements Listener {
         }
         else if (command.equalsIgnoreCase("/leave")
                 || command.equalsIgnoreCase("/lobby")) {
-            for (MinigameArena arena : StorageEngine.getArenas().values()) {
+            for (SimpleArena arena : StorageEngine.getArenas().values()) {
                 if (arena.contains(event.getPlayer())) {
                     arena.onPlayerLeft(event.getPlayer());
                     sender.sendMessage(ChatManager.error("Left "
