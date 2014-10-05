@@ -318,19 +318,17 @@ public class Matchmaking implements Updatable {
         @Override
         public void handle(final HttpExchange conn) throws IOException {
             List<JSONArena> arenas = new ArrayList<JSONArena>();
-            for (List<MinigameArena> minigameArenas : Pexel.getMatchmaking().arenas.values()) {
-                for (MinigameArena arena : minigameArenas) {
-                    JSONArena a = new JSONArena();
-                    a.name = arena.getName();
-                    a.minigame = arena.getMinigame().getName();
-                    a.maxPlayers = arena.getMaximumSlots();
-                    a.state = arena.getState().name();
-                    a.players = new String[arena.getPlayerCount()];
-                    int i = 0;
-                    for (Player p : arena.getPlayers()) {
-                        a.players[i] = p.getName() + "/" + p.getUniqueId().toString();
-                        i++;
-                    }
+            for (MinigameArena arena : StorageEngine.getArenas().values()) {
+                JSONArena a = new JSONArena();
+                a.name = arena.getName();
+                a.minigame = arena.getMinigame().getName();
+                a.maxPlayers = arena.getMaximumSlots();
+                a.state = arena.getState().name();
+                a.players = new String[arena.getPlayerCount()];
+                int i = 0;
+                for (Player p : arena.getPlayers()) {
+                    a.players[i] = p.getName() + "/" + p.getUniqueId().toString();
+                    i++;
                 }
             }
             String response = new Gson().toJson(arenas.toArray());
