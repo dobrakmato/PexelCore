@@ -83,6 +83,7 @@ public class Matchmaking implements Updatable {
      * List of request being removed in this iteration.
      */
     private final List<MatchmakingRequest>           removing            = new ArrayList<MatchmakingRequest>();
+    private HttpHandler                              httphandler;
     
     /**
      * Registers minigame to Pexel matchmaking.
@@ -316,31 +317,34 @@ public class Matchmaking implements Updatable {
             public int      maxPlayers;
         }
         
-        return new HttpHandler() {
-            @Override
-            public void handle(final HttpExchange arg0) throws IOException {
-                List<JSONArena> arenas = new ArrayList<JSONArena>();
-                for (List<MinigameArena> minigameArenas : Matchmaking.this.arenas.values()) {
-                    for (MinigameArena arena : minigameArenas) {
-                        JSONArena a = new JSONArena();
-                        a.name = arena.getName();
-                        a.minigame = arena.getMinigame().getName();
-                        a.maxPlayers = arena.getMaximumSlots();
-                        a.state = arena.getState().name();
-                        a.players = new String[arena.getPlayerCount()];
-                        int i = 0;
-                        for (Player p : arena.getPlayers()) {
-                            a.players[i] = p.getName() + "/"
-                                    + p.getUniqueId().toString();
-                            i++;
+        if (this.httphandler == null) {
+            this.httphandler = new HttpHandler() {
+                @Override
+                public void handle(final HttpExchange conn) throws IOException {
+                    List<JSONArena> arenas = new ArrayList<JSONArena>();
+                    for (List<MinigameArena> minigameArenas : Matchmaking.this.arenas.values()) {
+                        for (MinigameArena arena : minigameArenas) {
+                            JSONArena a = new JSONArena();
+                            a.name = arena.getName();
+                            a.minigame = arena.getMinigame().getName();
+                            a.maxPlayers = arena.getMaximumSlots();
+                            a.state = arena.getState().name();
+                            a.players = new String[arena.getPlayerCount()];
+                            int i = 0;
+                            for (Player p : arena.getPlayers()) {
+                                a.players[i] = p.getName() + "/"
+                                        + p.getUniqueId().toString();
+                                i++;
+                            }
                         }
                     }
+                    String response = new Gson().toJson(arenas.toArray());
+                    conn.sendResponseHeaders(200, response.length());
+                    conn.getResponseBody().write(response.getBytes());
+                    conn.close();
                 }
-                String response = new Gson().toJson(arenas.toArray());
-                arg0.sendResponseHeaders(200, response.length());
-                arg0.getResponseBody().write(response.getBytes());
-                arg0.close();
-            }
-        };
+            };
+        }
+        return this.httphandler;
     }
 }
