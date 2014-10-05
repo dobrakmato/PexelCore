@@ -177,6 +177,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
             this.serv = HttpServer.create(new InetSocketAddress(11223), 50);
             this.serv.createContext("/games", this.matchmaking.getHttpHandler());
             this.serv.setExecutor(null);
+            this.serv.start();
         } catch (Exception e) {
             
         }
