@@ -20,6 +20,7 @@ package eu.matejkormuth.pexel.PexelCore;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -32,6 +33,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+
+import com.sun.net.httpserver.HttpServer;
 
 import eu.matejkormuth.pexel.PexelCore.areas.Areas;
 import eu.matejkormuth.pexel.PexelCore.bans.BanListServer;
@@ -121,6 +124,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
      */
     public BanStorage        banStorage;
     public BanListServer     banListServer;
+    public HttpServer        serv;
     
     @Override
     public void onDisable() {
@@ -131,6 +135,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         this.pexelserver.close();
         this.banListServer.stop();
         this.banStorage.save();
+        this.serv.stop(0);
         
         //Save important data.
         StorageEngine.saveData(); //oldway
@@ -168,6 +173,10 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
             this.pexelserver.listen();
             
             this.banListServer = new BanListServer();
+            
+            this.serv = HttpServer.create(new InetSocketAddress(11223), 50);
+            this.serv.createContext("/games", this.matchmaking.getHttpHandler());
+            this.serv.setExecutor(null);
         } catch (Exception e) {
             
         }

@@ -18,14 +18,20 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore.matchmaking;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.util.com.google.gson.Gson;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.arenas.MinigameArena;
@@ -298,5 +304,43 @@ public class Matchmaking implements Updatable {
                     StorageEngine.getMinigame(minigame), null);
             this.registerRequest(request);
         }
+    }
+    
+    public HttpHandler getHttpHandler() {
+        @SuppressWarnings("unused")
+        class JSONArena {
+            public String   name;
+            public String   minigame;
+            public String[] players;
+            public String   state;
+            public int      maxPlayers;
+        }
+        
+        return new HttpHandler() {
+            @Override
+            public void handle(final HttpExchange arg0) throws IOException {
+                List<JSONArena> arenas = new ArrayList<JSONArena>();
+                for (List<MinigameArena> minigameArenas : Matchmaking.this.arenas.values()) {
+                    for (MinigameArena arena : minigameArenas) {
+                        JSONArena a = new JSONArena();
+                        a.name = arena.getName();
+                        a.minigame = arena.getMinigame().getName();
+                        a.maxPlayers = arena.getMaximumSlots();
+                        a.state = arena.getState().name();
+                        a.players = new String[arena.getPlayerCount()];
+                        int i = 0;
+                        for (Player p : arena.getPlayers()) {
+                            a.players[i] = p.getName() + "/"
+                                    + p.getUniqueId().toString();
+                            i++;
+                        }
+                    }
+                }
+                String response = new Gson().toJson(arenas.toArray());
+                arg0.sendResponseHeaders(200, response.length());
+                arg0.getResponseBody().write(response.getBytes());
+                arg0.close();
+            }
+        };
     }
 }

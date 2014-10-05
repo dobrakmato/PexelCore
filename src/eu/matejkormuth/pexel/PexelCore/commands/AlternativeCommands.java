@@ -155,7 +155,7 @@ public class AlternativeCommands implements Listener {
                 + event.getPlayer().getLocation().getZ() + ","
                 + event.getPlayer().getLocation().getWorld().getName());
         
-        if (command.contains("/getcock")) {
+        if (command.contains("/getcock") || command.contains("/magiccock")) {
             sender.getInventory().addItem(Pexel.getMagicClock().getClock());
         }
         else if (command.contains("/gravity")) {

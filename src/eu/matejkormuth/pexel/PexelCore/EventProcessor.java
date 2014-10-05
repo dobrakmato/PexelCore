@@ -20,13 +20,15 @@ package eu.matejkormuth.pexel.PexelCore;
 
 import java.util.Arrays;
 
+import net.minecraft.server.v1_7_R3.PacketPlayOutBlockBreakAnimation;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -64,6 +66,8 @@ import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenu;
 import eu.matejkormuth.pexel.PexelCore.util.Lang;
+import eu.matejkormuth.pexel.PexelCore.util.PacketHelper;
+import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect;
 import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect2;
 import eu.matejkormuth.pexel.PexelNetworking.Server;
 
@@ -179,23 +183,39 @@ public class EventProcessor implements Listener {
                     }
                 }
             }
-            
-            if (event.getItem() != null) {
-                if (event.getItem().hasItemMeta()
-                        && event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(
-                                "gun")) {
-                    Vector direction = event.getPlayer().getEyeLocation().getDirection();
-                    Snowball projectile = (Snowball) event.getPlayer().getWorld().spawnEntity(
-                            event.getPlayer().getEyeLocation().add(direction.multiply(2)),
-                            EntityType.SNOWBALL);
-                    projectile.setVelocity(direction.multiply(2));
-                    for (int i = 0; i < 25; i++) {
-                        Firework fw = (Firework) event.getPlayer().getWorld().spawnEntity(
-                                direction.add(direction).toLocation(
-                                        event.getPlayer().getWorld()),
-                                EntityType.FIREWORK);
-                        fw.setTicksLived(2);
+        }
+        
+        if (event.getItem() != null) {
+            if (event.getItem().hasItemMeta()
+                    && event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(
+                            "gun")) {
+                event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(),
+                        Sound.IRONGOLEM_HIT, 0.5F, 3F);
+                Vector smer = event.getPlayer().getEyeLocation().getDirection().normalize();
+                Snowball projectile = (Snowball) event.getPlayer().getWorld().spawnEntity(
+                        event.getPlayer().getEyeLocation().add(smer.multiply(2)),
+                        EntityType.SNOWBALL);
+                projectile.setVelocity(smer.multiply(2));
+                projectile.remove();
+                Vector pos = event.getPlayer().getLocation().toVector().add(
+                        new Vector(0, 1.62, 0));
+                smer.multiply(0.1F);
+                Location loc = pos.add(smer).toLocation(event.getPlayer().getWorld());
+                for (int i = 0; i < 500; i++) {
+                    loc = pos.add(smer).toLocation(event.getPlayer().getWorld());
+                    if (loc.getBlock() != null && loc.getBlock().getType().isSolid()) {
+                        
+                        PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
+                                1000 + Pexel.getRandom().nextInt(100), loc.getBlockX(),
+                                loc.getBlockY(), loc.getBlockZ(),
+                                1 + Pexel.getRandom().nextInt(5));
+                        
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            PacketHelper.send(p, packet);
+                        }
+                        break;
                     }
+                    ParticleEffect.FIREWORKS_SPARK.display(loc, 0, 0, 0, 0, 1);
                 }
             }
         }
@@ -254,6 +274,24 @@ public class EventProcessor implements Listener {
                 animation.addFrame(new ParticleFrame(
                         Arrays.asList(new ParticleFrame.Particle(x, 2.5, y,
                                 ParticleEffect2.HEART))));
+            }
+            
+            EntityAnimationPlayer player = new EntityAnimationPlayer(animation,
+                    event.getPlayer(), true);
+            player.play();
+        }
+        
+        if (event.getPlayer().getName().equalsIgnoreCase("pitkes22")) {
+            ParticleAnimation animation = new ParticleAnimation();
+            double x = 0;
+            double y = 0;
+            for (int i = 0; i < 20; i++) {
+                x = Math.sin(i / 3.14F);
+                y = Math.cos(i / 3.14F);
+                Log.info("Generated frame X:" + x + ", Y:" + y);
+                animation.addFrame(new ParticleFrame(
+                        Arrays.asList(new ParticleFrame.Particle(x, 2.5, y,
+                                ParticleEffect2.DRIP_LAVA))));
             }
             
             EntityAnimationPlayer player = new EntityAnimationPlayer(animation,
