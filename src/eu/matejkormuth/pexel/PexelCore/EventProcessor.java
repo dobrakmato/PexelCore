@@ -147,6 +147,7 @@ public class EventProcessor implements Listener {
                 event.setCancelled(true);
     }
     
+    @SuppressWarnings("deprecation")
     @EventHandler
     private void onPlayerInteract(final PlayerInteractEvent event) {
         if (event.getClickedBlock() != null) {
@@ -213,6 +214,10 @@ public class EventProcessor implements Listener {
                         for (Player p : Bukkit.getOnlinePlayers()) {
                             PacketHelper.send(p, packet);
                         }
+                        ParticleEffect.displayBlockCrack(loc,
+                                loc.getBlock().getTypeId(), loc.getBlock().getData(),
+                                0.3F, 0.3F, 0.3F, 1, 50);
+                        
                         break;
                     }
                     ParticleEffect.FIREWORKS_SPARK.display(loc, 0, 0, 0, 0, 1);
