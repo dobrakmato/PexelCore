@@ -16,7 +16,7 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.PexelCore.particles;
+package eu.matejkormuth.pexel.PexelCore.animations;
 
 import java.io.Serializable;
 import java.util.ArrayList;

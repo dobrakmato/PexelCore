@@ -16,25 +16,25 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.PexelCore.particles;
+package eu.matejkormuth.pexel.PexelCore.animations;
 
-import org.bukkit.entity.Entity;
+import org.bukkit.Location;
 
 import eu.matejkormuth.pexel.PexelCore.util.BukkitTimer;
 
-public class EntityAnimationPlayer implements Runnable {
+public class MovingAnimationPlayer implements Runnable {
     private final Animation animation;
     private int             currentFrame = 0;
     private int             frameCount   = 0;
     private BukkitTimer     timer;
-    private final Entity    entity;
+    private Location        location;
     private boolean         repeating    = false;
     
-    public EntityAnimationPlayer(final Animation animation, final Entity entity,
+    public MovingAnimationPlayer(final Animation animation, final Location startLoc,
             final boolean repeating) {
         this.repeating = repeating;
         this.animation = animation;
-        this.entity = entity;
+        this.location = startLoc;
         this.frameCount = animation.getFrameCount();
     }
     
@@ -44,12 +44,9 @@ public class EntityAnimationPlayer implements Runnable {
     }
     
     private void animate() {
-        if (this.entity.isDead()) {
-            this.timer.stop();
-        }
         
         if (this.currentFrame < this.frameCount) {
-            this.animation.getFrame(this.currentFrame).play(this.entity.getLocation());
+            this.animation.getFrame(this.currentFrame).play(this.location);
             this.currentFrame++;
         }
         else {
@@ -60,6 +57,10 @@ public class EntityAnimationPlayer implements Runnable {
                 this.currentFrame = 0;
             }
         }
+    }
+    
+    public void setLocation(final Location location) {
+        this.location = location;
     }
     
     @Override

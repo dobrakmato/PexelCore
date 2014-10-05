@@ -16,22 +16,13 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.PexelCore.particles;
+package eu.matejkormuth.pexel.PexelCore.animations;
+
+import org.bukkit.Location;
 
 /**
- * Class that specifies animation.
+ * Frame in {@link Animation}.
  */
-public interface Animation {
-    /**
-     * Get frame by number.
-     * 
-     * @param number
-     *            id of frame
-     * @return
-     */
-    public Frame getFrame(int number);
-    
-    public int getFramerate();
-    
-    public int getFrameCount();
+public interface Frame {
+    public void play(Location loc);
 }
