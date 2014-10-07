@@ -200,7 +200,7 @@ public class EventProcessor implements Listener {
                 projectile.remove();
                 Vector pos = event.getPlayer().getLocation().toVector().add(
                         new Vector(0, 1.62, 0));
-                smer.multiply(0.1F);
+                smer.multiply(2.5F);
                 Location loc = pos.add(smer).toLocation(event.getPlayer().getWorld());
                 for (int i = 0; i < 500; i++) {
                     loc = pos.add(smer).toLocation(event.getPlayer().getWorld());
@@ -323,7 +323,7 @@ public class EventProcessor implements Listener {
             StorageEngine.getProfile(event.getPlayer().getUniqueId()).setParty(null);
         }
         
-        StorageEngine.__redirectEvent("leave", event);
+        StorageEngine.__redirectEvent("PlayerQuitEvent", event);
         
         // Force save of player's profile.
         StorageEngine.saveProfile(event.getPlayer().getUniqueId());

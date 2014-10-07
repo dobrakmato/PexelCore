@@ -43,6 +43,7 @@ import eu.matejkormuth.pexel.PexelCore.HardCoded;
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.actions.JavaArbitraryAction;
 import eu.matejkormuth.pexel.PexelCore.actions.OpenInventoryMenuAction;
+import eu.matejkormuth.pexel.PexelCore.arenas.AdvancedArena;
 import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Log;
@@ -160,6 +161,27 @@ public class AlternativeCommands implements Listener {
         }
         else if (command.contains("/gravity")) {
             HardCoded.antigravity = new Vector(0, Float.parseFloat(args.get(0)), 0);
+        }
+        else if (command.contains("/forcestart")) {
+            for (SimpleArena arena : StorageEngine.getArenas().values()) {
+                if (arena instanceof AdvancedArena) {
+                    if (arena.contains(sender)) {
+                        sender.sendMessage(ChatColor.LIGHT_PURPLE
+                                + "Forcing onGameStart()...");
+                        ((AdvancedArena) arena).onGameStart();
+                    }
+                }
+            }
+        }
+        else if (command.contains("/forcereset")) {
+            for (SimpleArena arena : StorageEngine.getArenas().values()) {
+                if (arena instanceof AdvancedArena) {
+                    if (arena.contains(sender)) {
+                        sender.sendMessage(ChatColor.LIGHT_PURPLE + "Forcing reset()...");
+                        ((AdvancedArena) arena).reset();
+                    }
+                }
+            }
         }
         else if (command.equalsIgnoreCase("/leave")
                 || command.equalsIgnoreCase("/lobby")) {

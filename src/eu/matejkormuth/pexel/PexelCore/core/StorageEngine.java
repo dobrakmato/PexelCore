@@ -359,7 +359,7 @@ public class StorageEngine {
     }
     
     public static void __redirectEvent(final String string, final Event event) {
-        if (string.equalsIgnoreCase("leave")) {
+        if (string.equalsIgnoreCase("PlayerQuitEvent")) {
             PlayerQuitEvent quitevent = (PlayerQuitEvent) event;
             for (SimpleArena arena : StorageEngine.arenas.values()) {
                 if (arena.contains(quitevent.getPlayer())) {
