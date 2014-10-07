@@ -323,6 +323,8 @@ public class EventProcessor implements Listener {
             StorageEngine.getProfile(event.getPlayer().getUniqueId()).setParty(null);
         }
         
+        StorageEngine.__redirectEvent("leave", event);
+        
         // Force save of player's profile.
         StorageEngine.saveProfile(event.getPlayer().getUniqueId());
     }

@@ -30,6 +30,8 @@ import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import eu.matejkormuth.pexel.PexelCore.PexelCore;
 import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
@@ -49,7 +51,7 @@ public class StorageEngine {
     private static final Map<UUID, PlayerProfile>   profiles    = new HashMap<UUID, PlayerProfile>();
     private static final Map<String, Minigame>      minigames   = new HashMap<String, Minigame>();
     private static final Map<String, ProtectedArea> areas       = new HashMap<String, ProtectedArea>();
-    private static final Map<String, SimpleArena> arenas      = new HashMap<String, SimpleArena>();
+    private static final Map<String, SimpleArena>   arenas      = new HashMap<String, SimpleArena>();
     @SuppressWarnings("rawtypes")
     private static final Map<String, Class>         aliases     = new HashMap<String, Class>();
     private static final Map<String, Lobby>         lobbies     = new HashMap<String, Lobby>();
@@ -353,6 +355,17 @@ public class StorageEngine {
     public static void saveProfiles() {
         for (PlayerProfile profile : StorageEngine.profiles.values()) {
             profile.saveXML(Paths.profilePath(profile.getUniqueId().toString()));
+        }
+    }
+    
+    public static void __redirectEvent(final String string, final Event event) {
+        if (string.equalsIgnoreCase("leave")) {
+            PlayerQuitEvent quitevent = (PlayerQuitEvent) event;
+            for (SimpleArena arena : StorageEngine.arenas.values()) {
+                if (arena.contains(quitevent.getPlayer())) {
+                    arena.onPlayerLeft(quitevent.getPlayer());
+                }
+            }
         }
     }
 }
