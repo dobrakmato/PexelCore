@@ -61,7 +61,7 @@ public class MapData {
     protected final Map<String, Region>               regions      = new HashMap<String, Region>();
     
     @XmlAttribute(name = "locationType")
-    protected LocationType                            locationType = LocationType.ABSOLUTE;
+    protected LocationType                            locationsType = LocationType.ABSOLUTE;
     
     public static final MapData load(final File file) throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(MapData.class);

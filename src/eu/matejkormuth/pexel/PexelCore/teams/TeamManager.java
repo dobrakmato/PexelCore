@@ -55,7 +55,7 @@ public class TeamManager implements Listener {
      */
     private final Map<Location, Team> signs    = new HashMap<Location, Team>();
     private final int                 varience = 1;
-    private final SimpleArena       arena;
+    private final SimpleArena         arena;
     
     /**
      * Creates new Team manager
@@ -234,8 +234,9 @@ public class TeamManager implements Listener {
      * 
      * @param p
      *            player, that have no team.
+     * @return team, that player joined
      */
-    public void autoJoinTeam(final Player p) {
+    public Team autoJoinTeam(final Player p) {
         Team leastCrowdedTeam = this.teams.get(0);
         
         for (Team t : this.teams)
@@ -243,6 +244,7 @@ public class TeamManager implements Listener {
                 leastCrowdedTeam = t;
         
         leastCrowdedTeam.addPlayer(p);
+        return leastCrowdedTeam;
     }
     
     /**
