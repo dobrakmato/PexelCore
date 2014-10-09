@@ -200,7 +200,7 @@ public class EventProcessor implements Listener {
                 projectile.remove();
                 Vector pos = event.getPlayer().getLocation().toVector().add(
                         new Vector(0, 1.62, 0));
-                smer.multiply(2.5F);
+                smer.multiply(1.1F);
                 Location loc = pos.add(smer).toLocation(event.getPlayer().getWorld());
                 for (int i = 0; i < 500; i++) {
                     loc = pos.add(smer).toLocation(event.getPlayer().getWorld());
@@ -217,6 +217,7 @@ public class EventProcessor implements Listener {
                         ParticleEffect.displayBlockCrack(loc,
                                 loc.getBlock().getTypeId(), loc.getBlock().getData(),
                                 0.3F, 0.3F, 0.3F, 1, 50);
+                        ParticleEffect.FIREWORKS_SPARK.display(loc, 0, 0, 0, 1, 1);
                         
                         break;
                     }

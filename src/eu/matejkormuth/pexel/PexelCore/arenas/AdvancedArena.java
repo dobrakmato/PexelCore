@@ -34,6 +34,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
+import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.GameState;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
@@ -79,10 +80,10 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
     @ArenaOption(name = "shouldTeleportPlayers")
     public boolean  shouldTeleportPlayers    = true;
     /**
-     * Specifies if players can respawn in this arena, or not.
+     * Specifies if players can respawn in this arena, or not (default true).
      */
-    @ArenaOption(name = "playersCanRespawn")
-    public boolean  playersCanRespawn        = true;
+    @ArenaOption(name = "respawnAllowed")
+    public boolean  respawnAllowed           = true;
     /**
      * Specifies if players can join the game after the game was started.
      */
@@ -269,8 +270,10 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
      *            message (max 40 char.)
      */
     public void setBossBarAll(final String message) {
-        for (Player p : this.activePlayers)
+        for (Player p : this.activePlayers) {
+            BarAPI.removeBar(p);
             BarAPI.setMessage(p, message);
+        }
     }
     
     /**
@@ -292,6 +295,8 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
      */
     public final void reset() {
         this.state = GameState.RESETING;
+        
+        Log.info("Resetting arena " + this.areaName + "...");
         
         NetworkCCFormatter.send(NetworkCCFormatter.MSG_TYPE_ARENA_STATE, this,
                 this.state.toString());
@@ -440,7 +445,7 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
     @EventHandler
     public void ___onPlayerRespawn(final PlayerRespawnEvent event) {
         if (this.contains(event.getPlayer()))
-            if (!this.playersCanRespawn)
+            if (!this.respawnAllowed)
                 //Kick from arena
                 this.onPlayerLeft(event.getPlayer());
     }
@@ -506,11 +511,11 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
     }
     
     public boolean playersCanRespawn() {
-        return this.playersCanRespawn;
+        return this.respawnAllowed;
     }
     
     public void setPlayersCanRespawn(final boolean playersCanRespawn) {
-        this.playersCanRespawn = playersCanRespawn;
+        this.respawnAllowed = playersCanRespawn;
     }
     
     public int getCountdownTimeLeft() {

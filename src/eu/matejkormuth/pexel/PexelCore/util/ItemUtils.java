@@ -22,10 +22,12 @@ import java.util.List;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.material.MaterialData;
 
 /**
  * Class that contains many useful functions for working with InventoryMenus.
@@ -112,5 +114,60 @@ public class ItemUtils {
         meta.setOwner(name);
         skull.setItemMeta(meta);
         return skull;
+    }
+    
+    public static Builder builder(final Material material) {
+        return new ItemUtils.Builder(material);
+    }
+    
+    public static class Builder {
+        private final ItemStack is;
+        
+        public Builder(final Material material) {
+            this.is = new ItemStack(material);
+        }
+        
+        public ItemStack build() {
+            return this.is;
+        }
+        
+        public Builder amount(final int amount) {
+            this.is.setAmount(amount);
+            return this;
+        }
+        
+        public Builder durability(final short durability) {
+            this.is.setDurability(durability);
+            return this;
+        }
+        
+        public Builder data(final MaterialData data) {
+            this.is.setData(data);
+            return this;
+        }
+        
+        public Builder enchant(final Enchantment enchantment, final int level) {
+            this.is.addEnchantment(enchantment, level);
+            return this;
+        }
+        
+        public Builder unsafeEnchant(final Enchantment enchantment, final int level) {
+            this.is.addUnsafeEnchantment(enchantment, level);
+            return this;
+        }
+        
+        public Builder lore(final List<String> lore) {
+            ItemMeta im = this.is.getItemMeta();
+            im.setLore(lore);
+            this.is.setItemMeta(im);
+            return this;
+        }
+        
+        public Builder name(final String displayName) {
+            ItemMeta im = this.is.getItemMeta();
+            im.setDisplayName(displayName);
+            this.is.setItemMeta(im);
+            return this;
+        }
     }
 }
