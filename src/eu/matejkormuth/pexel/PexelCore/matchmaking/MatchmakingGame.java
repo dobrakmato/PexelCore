@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 
+import eu.matejkormuth.pexel.PexelCore.arenas.DisconnectReason;
 import eu.matejkormuth.pexel.PexelCore.util.ServerLocation;
 
 /**
@@ -105,5 +106,5 @@ public interface MatchmakingGame {
      * @param player
      *            player who left arena
      */
-    public void onPlayerLeft(Player player);
+    public void onPlayerLeft(Player player, DisconnectReason reason);
 }

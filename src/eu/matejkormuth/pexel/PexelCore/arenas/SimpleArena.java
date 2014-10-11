@@ -163,9 +163,8 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
     }
     
     @Override
-    public void onPlayerLeft(final Player player) {
+    public void onPlayerLeft(final Player player, final DisconnectReason reason) {
         this.activePlayers.remove(player);
-        //this.setSpectating(player, false);
     }
     
     /**
@@ -249,23 +248,25 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
     }
     
     /**
-     * Kicks all players from arena.
+     * Kicks all players from arena. Uses KICK_BY_GAME as {@link DisconnectReason}
      */
     public void kickAll() {
+        //TODO: Iteration problem, pls fix.
         for (Player p : this.activePlayers)
-            this.onPlayerLeft(p);
+            this.onPlayerLeft(p, DisconnectReason.LEAVE_BY_GAME);
     }
     
     /**
-     * Sends a message to all players and kicks them.
+     * Sends a message to all players and kicks them. Uses KICK_BY_GAME as {@link DisconnectReason}
      * 
      * @param message
      *            message to send
      */
     public void kickAll(final String message) {
+        //TODO: Iteration problem, pls fix.
         for (Player p : this.activePlayers) {
             p.sendMessage(message);
-            this.onPlayerLeft(p);
+            this.onPlayerLeft(p, DisconnectReason.LEAVE_BY_GAME);
         }
     }
     

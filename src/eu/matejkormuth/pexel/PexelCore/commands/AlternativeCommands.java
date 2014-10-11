@@ -44,6 +44,7 @@ import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.actions.JavaArbitraryAction;
 import eu.matejkormuth.pexel.PexelCore.actions.OpenInventoryMenuAction;
 import eu.matejkormuth.pexel.PexelCore.arenas.AdvancedArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.DisconnectReason;
 import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Log;
@@ -187,7 +188,7 @@ public class AlternativeCommands implements Listener {
                 || command.equalsIgnoreCase("/lobby")) {
             for (SimpleArena arena : StorageEngine.getArenas().values()) {
                 if (arena.contains(event.getPlayer())) {
-                    arena.onPlayerLeft(event.getPlayer());
+                    arena.onPlayerLeft(event.getPlayer(), DisconnectReason.PLAYER_LEAVE);
                     sender.sendMessage(ChatManager.error("Left "
                             + arena.getMinigame().getDisplayName() + " arena!"));
                 }

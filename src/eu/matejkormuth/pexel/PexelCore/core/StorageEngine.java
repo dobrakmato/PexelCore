@@ -38,6 +38,7 @@ import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.Lobby;
 import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
 import eu.matejkormuth.pexel.PexelCore.arenas.ArenaOption;
+import eu.matejkormuth.pexel.PexelCore.arenas.DisconnectReason;
 import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
 
@@ -363,7 +364,8 @@ public class StorageEngine {
             PlayerQuitEvent quitevent = (PlayerQuitEvent) event;
             for (SimpleArena arena : StorageEngine.arenas.values()) {
                 if (arena.contains(quitevent.getPlayer())) {
-                    arena.onPlayerLeft(quitevent.getPlayer());
+                    arena.onPlayerLeft(quitevent.getPlayer(),
+                            DisconnectReason.PLAYER_DISCONNECT);
                 }
             }
         }

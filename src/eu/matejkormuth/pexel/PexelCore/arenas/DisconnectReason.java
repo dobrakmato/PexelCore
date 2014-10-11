@@ -21,12 +21,10 @@ package eu.matejkormuth.pexel.PexelCore.arenas;
 /**
  * Reasons for disconnecting from arena.
  * 
- * @author Mato Kormuth
- * 
  */
-public enum ArenaDisconnectReason {
+public enum DisconnectReason {
     /**
-     * Player has invoked disconnect from arena.
+     * Player has invoked disconnect from server.
      */
     PLAYER_DISCONNECT,
     /**
@@ -34,11 +32,19 @@ public enum ArenaDisconnectReason {
      */
     PLAYER_CONNECTION_LOST,
     /**
-     * Invoked by game (ex. player has lost match).
+     * Player has used /leave command or left by his decision.
      */
-    KICK_PLAYER_GAME,
+    PLAYER_LEAVE,
+    /**
+     * Invoked by game (eg. player has lost match).
+     */
+    LEAVE_BY_GAME,
+    /**
+     * Invoked by admin (eg. kicked for violating rules).
+     */
+    KICK_BY_SERVER,
     /**
      * Unknown or other reason. (Avoid using this one)
      */
-    UNKNOWN_OTHER,
+    UNKNOWN,
 }

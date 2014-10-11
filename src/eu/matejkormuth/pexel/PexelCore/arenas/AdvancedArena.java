@@ -104,7 +104,7 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
      */
     public boolean  autoReset                = true;
     /**
-     * Specifies, if inventory actions are enabled in this arena.
+     * Specifies, if inventory actions are enabled in this arena (default: true).
      */
     public boolean  inventoryDisabled        = true;
     /**
@@ -393,11 +393,12 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
      * {@link AdvancedArena#countdownCanCancel} is set to <b>true</b>, stops the countdown.
      */
     @Override
-    public void onPlayerLeft(final Player player) {
-        super.onPlayerLeft(player);
+    public void onPlayerLeft(final Player player, final DisconnectReason reason) {
+        super.onPlayerLeft(player, reason);
         
         this.chatAll(ChatManager.minigame(this.getMinigame(),
-                "Player '" + player.getName() + "' has left arena!"));
+                "Player '" + player.getName() + "' has left arena (" + reason.name()
+                        + ")!"));
         
         NetworkCCFormatter.sendPlayerLeft(this, player);
         
@@ -405,9 +406,12 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
         
         this.checkForEnd();
         
-        //BarApi fix
+        // BarApi fix.
         if (BarAPI.hasBar(player))
             BarAPI.removeBar(player);
+        
+        // Alway remove from spectating mode.
+        this.setSpectating(player, false);
         
         this.updateGameState();
     }
@@ -415,7 +419,7 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
     @EventHandler
     protected void onPlayerQuit(final PlayerQuitEvent event) {
         if (this.contains(event.getPlayer()))
-            this.onPlayerLeft(event.getPlayer());
+            this.onPlayerLeft(event.getPlayer(), DisconnectReason.PLAYER_DISCONNECT);
     }
     
     /**
@@ -447,7 +451,7 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
         if (this.contains(event.getPlayer()))
             if (!this.respawnAllowed)
                 //Kick from arena
-                this.onPlayerLeft(event.getPlayer());
+                this.onPlayerLeft(event.getPlayer(), DisconnectReason.LEAVE_BY_GAME);
     }
     
     @EventHandler
