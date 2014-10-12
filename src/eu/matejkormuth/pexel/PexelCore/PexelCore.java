@@ -63,6 +63,7 @@ import eu.matejkormuth.pexel.PexelCore.core.Scheduler;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.core.UpdatedParts;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.Matchmaking;
+import eu.matejkormuth.pexel.PexelCore.matchmaking.MatchmakingSignUpdater;
 import eu.matejkormuth.pexel.PexelCore.util.AsyncWorker;
 import eu.matejkormuth.pexel.PexelCore.util.PlayerFreezer;
 import eu.matejkormuth.pexel.PexelNetworking.PexelMasterServer;
@@ -78,53 +79,57 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
     /**
      * Pexel matchmaking.
      */
-    public Matchmaking       matchmaking;
+    public Matchmaking             matchmaking;
     /**
      * Player freezer.
      */
-    public PlayerFreezer     freezer;
+    public PlayerFreezer           freezer;
     /**
      * Eent processor.
      */
-    public EventProcessor    eventProcessor;
+    public EventProcessor          eventProcessor;
     /**
      * Magic clock instance.
      */
-    public MagicClock        magicClock;
+    public MagicClock              magicClock;
     /**
      * AutoMessage instance.
      */
-    public AutoMessage       message;
+    public AutoMessage             message;
     /**
      * Master server instance.
      */
-    public PexelMasterServer pexelserver;
+    public PexelMasterServer       pexelserver;
     /**
      * Master server client instance.
      */
-    public PexelServerClient pexelclient;
+    public PexelServerClient       pexelclient;
     /**
      * AsyncWorker object.
      */
-    public AsyncWorker       asyncWorker;
+    public AsyncWorker             asyncWorker;
     /**
      * Pexel auth object.
      */
-    public Auth              auth;
+    public Auth                    auth;
     /**
      * Pexel scheduler object.
      */
-    public Scheduler         scheduler;
+    public Scheduler               scheduler;
     /**
      * Pexel command manager.
      */
-    public CommandManager    commandManager;
+    public CommandManager          commandManager;
     /**
      * Pexel Ban storage.
      */
-    public BanStorage        banStorage;
-    public BanListServer     banListServer;
-    public HttpServer        serv;
+    public BanStorage              banStorage;
+    public BanListServer           banListServer;
+    public HttpServer              serv;
+    /**
+     * Pexel matchmaking sign updater.
+     */
+    private MatchmakingSignUpdater matchmakingSignUpdater;
     
     @Override
     public void onDisable() {
@@ -136,6 +141,8 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         this.banListServer.stop();
         this.banStorage.save();
         this.serv.stop(0);
+        
+        this.matchmakingSignUpdater.stop();
         
         //Save important data.
         StorageEngine.saveData(); //oldway
@@ -192,6 +199,8 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         
         this.matchmaking = new Matchmaking();
         this.matchmaking.updateStart();
+        
+        this.matchmakingSignUpdater = new MatchmakingSignUpdater();
         
         this.magicClock = new MagicClock();
         

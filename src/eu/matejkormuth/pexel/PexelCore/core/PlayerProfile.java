@@ -91,7 +91,7 @@ public class PlayerProfile {
      * Amount of player's points (probably in-game currency or whatever).
      */
     @XmlAttribute
-    protected int                          coins          = 0;
+    protected int                          points          = 0;
     @XmlAttribute
     protected int                          warnCount      = 0;
     
@@ -249,7 +249,7 @@ public class PlayerProfile {
         YamlConfiguration yaml = new YamlConfiguration();
         
         yaml.set("player.uuid", this.player.toString());
-        yaml.set("player.points", this.coins);
+        yaml.set("player.points", this.points);
         yaml.set("player.warnCount", this.warnCount);
         yaml.set("player.lastKnownName", this.lastKnownName);
         yaml.set("player.friends", this.friends);
@@ -275,7 +275,7 @@ public class PlayerProfile {
         
         PlayerProfile profile = new PlayerProfile(uuid);
         
-        profile.coins = yaml.getInt("player.points");
+        profile.points = yaml.getInt("player.points");
         profile.lastKnownName = yaml.getString("player.lastKnownName");
         
         List<?> friends = yaml.getList("player.friends");
@@ -303,7 +303,7 @@ public class PlayerProfile {
      * @return
      */
     public int getPoints() {
-        return this.coins;
+        return this.points;
     }
     
     /**
@@ -312,7 +312,7 @@ public class PlayerProfile {
      * @param points
      */
     public void addPoints(final int points) {
-        this.coins += points;
+        this.points += points;
     }
     
     public void saveXML(final String profilePath) {

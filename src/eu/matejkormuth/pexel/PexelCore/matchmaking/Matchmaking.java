@@ -55,16 +55,16 @@ public class Matchmaking implements Updatable {
     /**
      * List of registered minigames.
      */
-    private final Map<String, Minigame>              minigames           = new HashMap<String, Minigame>();
+    protected final Map<String, Minigame>            minigames           = new HashMap<String, Minigame>();
     /**
      * List of registered arenas.
      */
-    private final Map<Minigame, List<SimpleArena>> arenas              = new HashMap<Minigame, List<SimpleArena>>();
+    protected final Map<Minigame, List<SimpleArena>> arenas              = new HashMap<Minigame, List<SimpleArena>>();
     /**
      * List of players in matchmaking.
      */
-    private final List<Player>                       players             = new ArrayList<Player>();
-    private int                                      taskId              = 0;
+    protected final List<Player>                     players             = new ArrayList<Player>();
+    protected int                                    taskId              = 0;
     /**
      * Matchmaking server location.
      */
@@ -74,15 +74,15 @@ public class Matchmaking implements Updatable {
     /**
      * How often should server try to find match.
      */
-    private final long                               matchMakingInterval = 40L;                                         //40 ticks = 2 second
+    protected final long                             matchMakingInterval = 40L;                                       //40 ticks = 2 second
     /**
      * Pending matchmaking request.
      */
-    private final List<MatchmakingRequest>           requests            = new ArrayList<MatchmakingRequest>();
+    protected final List<MatchmakingRequest>         requests            = new ArrayList<MatchmakingRequest>();
     /**
      * List of request being removed in this iteration.
      */
-    private final List<MatchmakingRequest>           removing            = new ArrayList<MatchmakingRequest>();
+    protected final List<MatchmakingRequest>         removing            = new ArrayList<MatchmakingRequest>();
     
     /**
      * Registers minigame to Pexel matchmaking.

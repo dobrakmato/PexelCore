@@ -36,7 +36,7 @@ public class BanListServer {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.info("Pozdrav zo stredomoria!");
+                Log.info("Starting BAN-Server...");
                 try {
                     BanListServer.this.server = HttpServer.create(new InetSocketAddress(
                             45198), 20);
@@ -54,7 +54,7 @@ public class BanListServer {
     }
     
     public void stop() {
-        Log.info("Stredomorie sa s vami luci :(");
+        Log.info("Stopping BAN-SERVER...");
         this.server.stop(0);
     }
     
