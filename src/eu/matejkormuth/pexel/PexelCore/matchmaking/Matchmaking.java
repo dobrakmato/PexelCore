@@ -130,29 +130,36 @@ public class Matchmaking implements Updatable {
     public void registerRequest(final MatchmakingRequest request) {
         boolean safe = true;
         String playername = null;
-        for (Player p : request.getPlayers()) {
-            if (this.players.contains(p)) {
-                p.sendMessage(ChatManager.error("Can't register matchmaking request while in queue with another one! Type /leave to leave all requests."));
-                safe = false;
-                if (playername == null) {
-                    playername = p.getDisplayName();
+        if (request.getMinigame() != null) {
+            for (Player p : request.getPlayers()) {
+                if (this.players.contains(p)) {
+                    p.sendMessage(ChatManager.error("Can't register matchmaking request while in queue with another one! Type /leave to leave all requests."));
+                    safe = false;
+                    if (playername == null) {
+                        playername = p.getDisplayName();
+                    }
+                    else {
+                        playername += ", " + p.getDisplayName();
+                    }
                 }
-                else {
-                    playername += ", " + p.getDisplayName();
+            }
+            
+            if (safe) {
+                request.tries = 0;
+                this.requests.add(request);
+                this.players.addAll(request.getPlayers());
+            }
+            else {
+                for (Player p : request.getPlayers()) {
+                    p.sendMessage(ChatManager.error("Matchmaking failed! Player(s) '"
+                            + playername + ChatColor.RED
+                            + "' are in another matchmaking request!"));
                 }
             }
         }
-        
-        if (safe) {
-            request.tries = 0;
-            this.requests.add(request);
-            this.players.addAll(request.getPlayers());
-        }
         else {
             for (Player p : request.getPlayers()) {
-                p.sendMessage(ChatManager.error("Matchmaking failed! Player(s) '"
-                        + playername + ChatColor.RED
-                        + "' are in another matchmaking request!"));
+                p.sendMessage(ChatManager.error("Matchmaking failed! Invalid request!"));
             }
         }
     }

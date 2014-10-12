@@ -134,12 +134,12 @@ public class MatchmakingSignUpdater implements Runnable {
                     sign.setLine(3, ChatColor.RED + "All arenas full!");
                 }
                 else {
-                    sign.setLine(3, ChatColor.GREEN + "Join! (00:00)");
+                    sign.setLine(3, ChatColor.GREEN + "Click to join!");
                 }
                 
                 sign.setLine(2, arenasColor.toString() + arenaCountJoinable + "/"
-                        + arenaCountTotal + "A " + ChatColor.BLUE + playersTotalOnline
-                        + "(" + playersTotalOnlineWaiting + ")/" + playersTotal + "P");
+                        + arenaCountTotal + "" + ChatColor.BLUE + playersTotalOnline
+                        + "/" + playersTotalOnlineWaiting + "/" + playersTotal);
             }
             else {
                 sign.setLine(2, ChatColor.RED + "invalid minigame");
