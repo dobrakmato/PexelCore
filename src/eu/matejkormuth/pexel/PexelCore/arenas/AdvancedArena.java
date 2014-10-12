@@ -411,7 +411,9 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
             BarAPI.removeBar(player);
         
         // Alway remove from spectating mode.
-        this.setSpectating(player, false);
+        if (this.isSpectating(player)) {
+            this.setSpectating(player, false);
+        }
         
         this.updateGameState();
     }
@@ -439,7 +441,7 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
      * {@link AdvancedArena#onGameEnd()}
      */
     private void checkForEnd() {
-        if (this.activePlayers.size() == 0 && this.state.isPlaying()) {
+        if (this.activePlayers.size() <= 1 && this.state.isPlaying()) {
             this.onGameEnd();
             if (this.autoReset)
                 this.reset();

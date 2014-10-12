@@ -239,6 +239,17 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
     }
     
     /**
+     * Returns whether is specified player in spectator mode or not.
+     * 
+     * @param player
+     *            player to check
+     * @return true or false
+     */
+    public boolean isSpectating(final Player player) {
+        return StorageEngine.getProfile(player.getUniqueId()).isSpectating() || false;
+    }
+    
+    /**
      * Returns whether is arena empty.
      * 
      * @return true if arena is empty
