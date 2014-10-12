@@ -79,57 +79,57 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
     /**
      * Pexel matchmaking.
      */
-    public Matchmaking             matchmaking;
+    public Matchmaking            matchmaking;
     /**
      * Player freezer.
      */
-    public PlayerFreezer           freezer;
+    public PlayerFreezer          freezer;
     /**
      * Eent processor.
      */
-    public EventProcessor          eventProcessor;
+    public EventProcessor         eventProcessor;
     /**
      * Magic clock instance.
      */
-    public MagicClock              magicClock;
+    public MagicClock             magicClock;
     /**
      * AutoMessage instance.
      */
-    public AutoMessage             message;
+    public AutoMessage            message;
     /**
      * Master server instance.
      */
-    public PexelMasterServer       pexelserver;
+    public PexelMasterServer      pexelserver;
     /**
      * Master server client instance.
      */
-    public PexelServerClient       pexelclient;
+    public PexelServerClient      pexelclient;
     /**
      * AsyncWorker object.
      */
-    public AsyncWorker             asyncWorker;
+    public AsyncWorker            asyncWorker;
     /**
      * Pexel auth object.
      */
-    public Auth                    auth;
+    public Auth                   auth;
     /**
      * Pexel scheduler object.
      */
-    public Scheduler               scheduler;
+    public Scheduler              scheduler;
     /**
      * Pexel command manager.
      */
-    public CommandManager          commandManager;
+    public CommandManager         commandManager;
     /**
      * Pexel Ban storage.
      */
-    public BanStorage              banStorage;
-    public BanListServer           banListServer;
-    public HttpServer              serv;
+    public BanStorage             banStorage;
+    public BanListServer          banListServer;
+    public HttpServer             serv;
     /**
      * Pexel matchmaking sign updater.
      */
-    private MatchmakingSignUpdater matchmakingSignUpdater;
+    public MatchmakingSignUpdater matchmakingSignUpdater;
     
     @Override
     public void onDisable() {
@@ -200,7 +200,11 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         this.matchmaking = new Matchmaking();
         this.matchmaking.updateStart();
         
-        this.matchmakingSignUpdater = new MatchmakingSignUpdater();
+        try {
+            this.matchmakingSignUpdater = new MatchmakingSignUpdater();
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
         
         this.magicClock = new MagicClock();
         

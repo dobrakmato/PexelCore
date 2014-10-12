@@ -32,6 +32,7 @@ import eu.matejkormuth.pexel.PexelCore.core.PlayerProfile;
 import eu.matejkormuth.pexel.PexelCore.core.Scheduler;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.Matchmaking;
+import eu.matejkormuth.pexel.PexelCore.matchmaking.MatchmakingSignUpdater;
 import eu.matejkormuth.pexel.PexelCore.util.AsyncWorker;
 import eu.matejkormuth.pexel.PexelCore.util.PlayerFreezer;
 
@@ -205,5 +206,12 @@ public final class Pexel {
      */
     public static BanStorage getBans() {
         return Pexel.instance.banStorage;
+    }
+    
+    /**
+     * 
+     */
+    public static MatchmakingSignUpdater getMatchmakingSignUpdater() {
+        return Pexel.instance.matchmakingSignUpdater;
     }
 }

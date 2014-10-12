@@ -171,6 +171,8 @@ public class EventProcessor implements Listener {
                             event.getPlayer().performCommand("warp " + lines[1]);
                         }
                         else if (command.equalsIgnoreCase("[Matchmaking]")) {
+                            Pexel.getMatchmakingSignUpdater().addSign(
+                                    event.getClickedBlock());
                             Pexel.getMatchmaking().processSign(lines, event.getPlayer());
                         }
                         else if (command.equalsIgnoreCase("[World]")) {

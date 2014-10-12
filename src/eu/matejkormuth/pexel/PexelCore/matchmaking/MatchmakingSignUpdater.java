@@ -62,6 +62,10 @@ public class MatchmakingSignUpdater implements Runnable {
         }
     }
     
+    public void addSign(final Block b) {
+        this.cachedSigns.add(b);
+    }
+    
     private void loadCache() {
         Log.info("[MatchmakingSignUpdater] Loading cache...");
         try {
