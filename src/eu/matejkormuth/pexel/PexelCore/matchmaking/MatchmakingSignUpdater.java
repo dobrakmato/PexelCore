@@ -50,8 +50,9 @@ public class MatchmakingSignUpdater implements Runnable {
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
                     Paths.msuCache())));
             for (Block b : this.cachedSigns) {
-                bw.append(b.getLocation().getWorld() + "|" + b.getLocation().getBlockX()
-                        + "|" + b.getLocation().getBlockY() + "|"
+                bw.append(b.getLocation().getWorld().getName() + "|"
+                        + b.getLocation().getBlockX() + "|"
+                        + b.getLocation().getBlockY() + "|"
                         + b.getLocation().getBlockZ() + "\n");
             }
             Log.info("[MatchmakingSignUpdater] Saved " + this.cachedSigns.size()
