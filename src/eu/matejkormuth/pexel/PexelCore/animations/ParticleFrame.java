@@ -36,11 +36,12 @@ public class ParticleFrame implements Frame, Collection<ParticleFrame.Particle>,
         this.particles = particles;
     }
     
-    public static class Particle {
-        public double          relX;
-        public double          relY;
-        public double          relZ;
-        public ParticleEffect2 type;
+    public static class Particle implements Serializable {
+        private static final long serialVersionUID = -2811955923388046769L;
+        public double             relX;
+        public double             relY;
+        public double             relZ;
+        public ParticleEffect2    type;
         
         public Particle(final double relX, final double relY, final double relZ,
                 final ParticleEffect2 type) {

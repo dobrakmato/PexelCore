@@ -289,7 +289,6 @@ public class Matchmaking implements Updatable {
     
     public void processSign(final String[] lines, final Player player) {
         String minigame = lines[1];
-        
         // Currently not used.
         //String map = lines[2];
         //String arena = lines[3];

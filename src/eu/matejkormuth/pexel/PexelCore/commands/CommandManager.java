@@ -222,8 +222,9 @@ public class CommandManager {
                     subcommand))
                 Log.warn("Subcommand is not method of command class.");
             
-            if (args.length == 0)
+            if (args.length == 0) {
                 subcommand.invoke(command, invoker);
+            }
             else {
                 if (this.validParams(subcommand, args)) {
                     Log.info(" Invoking: Player, " + args.length);

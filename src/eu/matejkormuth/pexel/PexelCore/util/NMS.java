@@ -127,7 +127,9 @@ public class NMS {
      */
     public static void relMoveEntity(final LivingEntity entity, final double movX,
             final double movY, final double movZ) {
-        ((EntityLiving) entity).move(movX, movY, movZ);
+        if (entity instanceof EntityLiving) {
+            ((EntityLiving) entity).move(movX, movY, movZ);
+        }
     }
     
     /**

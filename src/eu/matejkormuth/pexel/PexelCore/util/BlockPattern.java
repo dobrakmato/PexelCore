@@ -72,7 +72,8 @@ public class BlockPattern {
                     int absZ = location.getBlockZ() - this.anchorZ + z;
                     
                     if (this.pattern[x][y][z] != null) {
-                        if (location.getWorld().getBlockAt(absX, absY, absZ) != this.pattern[x][y][z]) { return false; }
+                        if (!location.getWorld().getBlockAt(absX, absY, absZ).equals(
+                                this.pattern[x][y][z])) { return false; }
                     }
                 }
             }

@@ -155,6 +155,7 @@ public class V3CameraClip {
                 }
                 
             }
+            reader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -64,7 +64,13 @@ public class MatchmakingSignUpdater implements Runnable {
     }
     
     public void addSign(final Block b) {
-        this.cachedSigns.add(b);
+        if (((Sign) b.getState()).getLine(2).equalsIgnoreCase("")) {
+            this.cachedSigns.add(b);
+        }
+        else {
+            Log.severe("Can't register block " + b.toString()
+                    + " as matchmaking sign. Line 3 (2) is not empty.");
+        }
     }
     
     private void loadCache() {
