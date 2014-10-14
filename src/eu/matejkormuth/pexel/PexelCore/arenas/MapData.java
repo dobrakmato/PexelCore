@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.bukkit.Location;
 
 import eu.matejkormuth.pexel.PexelCore.core.Region;
+import eu.matejkormuth.pexel.PexelCore.core.RegionTransformer;
 import eu.matejkormuth.pexel.PexelCore.util.SerializableLocation;
 
 /**
@@ -54,14 +55,18 @@ public class MapData {
     protected String                                  minigameName;
     
     @XmlElementWrapper(name = "options")
-    protected final Map<String, String>               options      = new HashMap<String, String>();
+    protected final Map<String, String>               options       = new HashMap<String, String>();
     @XmlElementWrapper(name = "locations")
-    protected final Map<String, SerializableLocation> locations    = new HashMap<String, SerializableLocation>();
+    protected final Map<String, SerializableLocation> locations     = new HashMap<String, SerializableLocation>();
     @XmlElementWrapper(name = "regions")
-    protected final Map<String, Region>               regions      = new HashMap<String, Region>();
+    protected final Map<String, Region>               regions       = new HashMap<String, Region>();
     
     @XmlAttribute(name = "locationType")
     protected LocationType                            locationsType = LocationType.ABSOLUTE;
+    
+    @XmlAttribute(name = "anchor")
+    // Used only if locationsType is RELATIVE.
+    protected Location                                anchor        = null;
     
     public static final MapData load(final File file) throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(MapData.class);
@@ -93,11 +98,27 @@ public class MapData {
     }
     
     public Location getLocation(final String key) {
-        return this.locations.get(key).getLocation();
+        if (this.locationsType == LocationType.ABSOLUTE) {
+            return this.locations.get(key).getLocation();
+        }
+        else {
+            if (this.anchor != null) {
+                return this.anchor.add(this.locations.get(key).getLocation());
+            }
+            else {
+                throw new InvalidMapDataException(
+                        "Can't return relatiive location when anchor is null.");
+            }
+        }
     }
     
     public Region getRegion(final String key) {
-        return this.regions.get(key);
+        if (this.locationsType == LocationType.ABSOLUTE) {
+            return this.regions.get(key);
+        }
+        else {
+            return RegionTransformer.toAbsolute(this.regions.get(key), this.anchor);
+        }
     }
     
     public Map<String, String> getOptions() {

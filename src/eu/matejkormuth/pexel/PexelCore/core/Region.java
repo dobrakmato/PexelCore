@@ -51,20 +51,20 @@ public class Region {
      * First vector.
      */
     @XmlElement(name = "vector1")
-    private final SerializableVector v1;
+    protected final SerializableVector v1;
     /**
      * Second vector.
      */
     @XmlElement(name = "vector2")
-    private final SerializableVector v2;
+    protected final SerializableVector v2;
     /**
      * World of region.
      */
     @XmlTransient
-    private final World              w;
+    protected final World              w;
     
     @XmlElement(name = "world")
-    private final String             w_name;
+    protected final String             w_name;
     
     /**
      * Creates a new region from two locations.
