@@ -26,6 +26,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import eu.matejkormuth.pexel.PexelCore.bans.BanStorage;
+import eu.matejkormuth.pexel.PexelCore.core.Achievements;
 import eu.matejkormuth.pexel.PexelCore.core.Auth;
 import eu.matejkormuth.pexel.PexelCore.core.MagicClock;
 import eu.matejkormuth.pexel.PexelCore.core.PlayerProfile;
@@ -78,8 +79,17 @@ public final class Pexel {
      * 
      * @return matchmaking
      */
-    public static Matchmaking getMatchmaking() {
+    public static final Matchmaking getMatchmaking() {
         return Pexel.instance.matchmaking;
+    }
+    
+    /**
+     * Returns {@link Achievements} class.
+     * 
+     * @return achievements
+     */
+    public static final Achievements getAchievements() {
+        return Pexel.instance.achievementsClient;
     }
     
     /**
@@ -87,7 +97,7 @@ public final class Pexel {
      * 
      * @return player freezer
      */
-    public static PlayerFreezer getFreezer() {
+    public static final PlayerFreezer getFreezer() {
         return Pexel.instance.freezer;
     }
     
@@ -102,7 +112,7 @@ public final class Pexel {
      *            period in server ticks.
      * @return task id
      */
-    public static int schedule(final Runnable runnable, final long delay,
+    public static final int schedule(final Runnable runnable, final long delay,
             final long period) {
         return Pexel.instance.scheduler.scheduleSyncRepeatingTask(runnable, delay,
                 period);
@@ -114,7 +124,7 @@ public final class Pexel {
      * @param taskId
      *            task id
      */
-    public static void cancelTask(final int taskId) {
+    public static final void cancelTask(final int taskId) {
         Pexel.instance.scheduler.cancelTask(taskId);
     }
     
@@ -143,7 +153,7 @@ public final class Pexel {
      * 
      * @return pexel's {@link Random}.
      */
-    public static Random getRandom() {
+    public final static Random getRandom() {
         return Pexel.random;
     }
     
@@ -152,7 +162,7 @@ public final class Pexel {
      * 
      * @return {@link EventProcessor} instance.
      */
-    public static EventProcessor getEventProcessor() {
+    public final static EventProcessor getEventProcessor() {
         return Pexel.instance.eventProcessor;
     }
     
@@ -161,7 +171,7 @@ public final class Pexel {
      * 
      * @return {@link MagicClock} instance.
      */
-    public static MagicClock getMagicClock() {
+    public final static MagicClock getMagicClock() {
         return Pexel.instance.magicClock;
     }
     
@@ -170,7 +180,7 @@ public final class Pexel {
      * 
      * @return {@link AsyncWorker} instance.
      */
-    public static AsyncWorker getAsyncWorker() {
+    public final static AsyncWorker getAsyncWorker() {
         return Pexel.instance.asyncWorker;
     }
     
@@ -179,7 +189,7 @@ public final class Pexel {
      * 
      * @return hub lcoation
      */
-    public static Location getHubLocation() {
+    public final static Location getHubLocation() {
         return new Location(Bukkit.getWorld("world"), 9.5, 47.5, 262.5);
     }
     
@@ -188,7 +198,7 @@ public final class Pexel {
      * 
      * @return {@link Auth} instance.
      */
-    public static Auth getAuth() {
+    public final static Auth getAuth() {
         return Pexel.instance.auth;
     }
     
@@ -197,14 +207,14 @@ public final class Pexel {
      * 
      * @return {@link Scheduler} instance.
      */
-    public static Scheduler getScheduler() {
+    public final static Scheduler getScheduler() {
         return Pexel.instance.scheduler;
     }
     
     /**
      * @return
      */
-    public static BanStorage getBans() {
+    public final static BanStorage getBans() {
         return Pexel.instance.banStorage;
     }
     

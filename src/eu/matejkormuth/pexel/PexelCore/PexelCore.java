@@ -54,6 +54,7 @@ import eu.matejkormuth.pexel.PexelCore.commands.QJCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.SettingsCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.SpawnCommand;
 import eu.matejkormuth.pexel.PexelCore.commands.UnfriendCommand;
+import eu.matejkormuth.pexel.PexelCore.core.Achievements;
 import eu.matejkormuth.pexel.PexelCore.core.Auth;
 import eu.matejkormuth.pexel.PexelCore.core.AutoMessage;
 import eu.matejkormuth.pexel.PexelCore.core.License;
@@ -126,6 +127,8 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
     public BanStorage             banStorage;
     public BanListServer          banListServer;
     public HttpServer             serv;
+    public Achievements           achievementsClient;
+    
     /**
      * Pexel matchmaking sign updater.
      */
@@ -199,6 +202,8 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         
         this.matchmaking = new Matchmaking();
         this.matchmaking.updateStart();
+        
+        this.achievementsClient = new Achievements();
         
         try {
             this.matchmakingSignUpdater = new MatchmakingSignUpdater();
