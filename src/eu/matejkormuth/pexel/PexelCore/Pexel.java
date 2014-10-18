@@ -34,6 +34,7 @@ import eu.matejkormuth.pexel.PexelCore.core.Scheduler;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.Matchmaking;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.MatchmakingSignUpdater;
+import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
 import eu.matejkormuth.pexel.PexelCore.util.AsyncWorker;
 import eu.matejkormuth.pexel.PexelCore.util.PlayerFreezer;
 
@@ -223,5 +224,32 @@ public final class Pexel {
      */
     public static MatchmakingSignUpdater getMatchmakingSignUpdater() {
         return Pexel.instance.matchmakingSignUpdater;
+    }
+    
+    /**
+     * Registers minigame to Pexel.
+     * 
+     * @param minigame
+     *            specififed minigame to register.
+     */
+    public static final void registerMinigame(final Minigame minigame) {
+        ValidityChecker.checkMinigame(minigame);
+        StorageEngine.addMinigame(minigame);
+        Pexel.getMatchmaking().registerMinigame(minigame);
+    }
+    
+    /**
+     * Tries to register specified object to Pexel. If can't register object, throws RuntimeException.
+     * 
+     * @param obj
+     */
+    public static final void register(final Object obj) {
+        if (obj instanceof Minigame) {
+            Pexel.registerMinigame((Minigame) obj);
+        }
+        else {
+            throw new IllegalArgumentException("Type " + obj.getClass().getSimpleName()
+                    + " is not type, that is supported by Pexel.");
+        }
     }
 }

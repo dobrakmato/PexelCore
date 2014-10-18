@@ -41,7 +41,8 @@ public interface Minigame extends Bannable {
     public String getDisplayName();
     
     /**
-     * Returns code safe name of minigame.
+     * Returns code safe name of minigame. <b>Must return name that is all lowercase and contains only characters a-z
+     * and number 0-9, should not be longer than 20 characters (better keep name on about 12 characters)</b>.
      * 
      * @return code safe name
      */
