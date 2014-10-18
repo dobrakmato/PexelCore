@@ -53,6 +53,8 @@ public class MapData {
     protected String                                  name;
     @XmlAttribute(name = "minigameName")
     protected String                                  minigameName;
+    @XmlAttribute(name = "author")
+    protected String                                  author;
     
     @XmlElementWrapper(name = "options")
     protected final Map<String, String>               options       = new HashMap<String, String>();
@@ -95,6 +97,10 @@ public class MapData {
     
     public String getName() {
         return this.name;
+    }
+    
+    public String getAuthor() {
+        return this.author;
     }
     
     public Location getLocation(final String key) {
