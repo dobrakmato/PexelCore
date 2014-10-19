@@ -34,6 +34,7 @@ import eu.matejkormuth.pexel.PexelCore.actions.TeleportAction;
 import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.Lobby;
 import eu.matejkormuth.pexel.PexelCore.arenas.MapData;
+import eu.matejkormuth.pexel.PexelCore.core.Achievement;
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.core.TeleportGate;
@@ -101,29 +102,39 @@ public class HardCoded {
         }
         
         //Initialize main gates
-        StorageEngine.addGate("Lsurvival", new TeleportGate(new Region(new Vector(-7,
-                50, 258), new Vector(-9, 54, 264), Bukkit.getWorld("world")),
-                new TeleportAction(null, new Server(null, "survival", "survival"))));
-        
-        StorageEngine.addGate("Lstarving", new TeleportGate(new Region(new Vector(26,
-                50, 266), new Vector(28, 55, 260), Bukkit.getWorld("world")),
-                new TeleportAction(null, new Server(null, "starving", "starving"))));
-        
-        StorageEngine.addGate("Lminigame", new TeleportGate(new Region(new Vector(7, 50,
-                280), new Vector(13, 55, 282), Bukkit.getWorld("world")),
-                new TeleportAction(new Location(Bukkit.getWorld("world"), 1972.5, 147.5,
-                        2492.5), Server.THIS_SERVER)));
-        
-        //Initialize gates
-        StorageEngine.addGate("mg_colorwar", new TeleportGate(
-                new Region(new Vector(1976, 147, 2532), new Vector(1972, 153, 2534),
-                        Bukkit.getWorld("world")), new CommandAction("pcmd cwtest")));
-        
-        StorageEngine.addGate("mg_tnttag", new TeleportGate(new Region(new Vector(1962,
-                147, 2532), new Vector(1967, 153, 2534), Bukkit.getWorld("world")),
-                new CommandAction("pcmd tnttest")));
+        initGates();
         
         //Initialize lobbies
+        initLobbies();
+        
+        //Initialize achievements
+        initAchievements();
+        
+        // Gravity change
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(Pexel.getCore(), new Runnable() {
+            @Override
+            public void run() {
+                for (Entity e : Bukkit.getWorld("space").getEntities()) {
+                    if (!e.isOnGround()) {
+                        if (e instanceof Player) {
+                            if (!((Player) e).isFlying()) {
+                                e.setVelocity(e.getVelocity().add(HardCoded.antigravity));
+                            }
+                        }
+                        e.setVelocity(e.getVelocity().add(HardCoded.antigravity));
+                    }
+                }
+            }
+        }, 0L, 1L);
+    }
+    
+    private static void initAchievements() {
+        Pexel.getAchievements().registerAchievement(
+                Achievement.global("allgames", "Tester",
+                        "Play all minigames on network!", 1));
+    }
+    
+    private static void initLobbies() {
         StorageEngine.addLobby(new Lobby("hub", new Region(new Vector(52, 107, 226),
                 new Vector(-30, 1, 303), Bukkit.getWorld("world"))));
         
@@ -145,22 +156,29 @@ public class HardCoded {
                 true, UUID.fromString("966ad920-d45e-3fe5-8956-bf7a7a877ab4"));
         StorageEngine.getLobby("minigamelobby").setPlayerFlag(AreaFlag.BLOCK_PLACE,
                 true, UUID.fromString("966ad920-d45e-3fe5-8956-bf7a7a877ab4"));
+    }
+    
+    private static void initGates() {
+        StorageEngine.addGate("Lsurvival", new TeleportGate(new Region(new Vector(-7,
+                50, 258), new Vector(-9, 54, 264), Bukkit.getWorld("world")),
+                new TeleportAction(null, new Server(null, "survival", "survival"))));
         
-        // Gravity change
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(Pexel.getCore(), new Runnable() {
-            @Override
-            public void run() {
-                for (Entity e : Bukkit.getWorld("space").getEntities()) {
-                    if (!e.isOnGround()) {
-                        if (e instanceof Player) {
-                            if (!((Player) e).isFlying()) {
-                                e.setVelocity(e.getVelocity().add(HardCoded.antigravity));
-                            }
-                        }
-                        e.setVelocity(e.getVelocity().add(HardCoded.antigravity));
-                    }
-                }
-            }
-        }, 0L, 1L);
+        StorageEngine.addGate("Lstarving", new TeleportGate(new Region(new Vector(26,
+                50, 266), new Vector(28, 55, 260), Bukkit.getWorld("world")),
+                new TeleportAction(null, new Server(null, "starving", "starving"))));
+        
+        StorageEngine.addGate("Lminigame", new TeleportGate(new Region(new Vector(7, 50,
+                280), new Vector(13, 55, 282), Bukkit.getWorld("world")),
+                new TeleportAction(new Location(Bukkit.getWorld("world"), 1972.5, 147.5,
+                        2492.5), Server.THIS_SERVER)));
+        
+        //Initialize gates
+        StorageEngine.addGate("mg_colorwar", new TeleportGate(
+                new Region(new Vector(1976, 147, 2532), new Vector(1972, 153, 2534),
+                        Bukkit.getWorld("world")), new CommandAction("pcmd cwtest")));
+        
+        StorageEngine.addGate("mg_tnttag", new TeleportGate(new Region(new Vector(1962,
+                147, 2532), new Vector(1967, 153, 2534), Bukkit.getWorld("world")),
+                new CommandAction("pcmd tnttest")));
     }
 }

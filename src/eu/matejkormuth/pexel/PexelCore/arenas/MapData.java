@@ -68,7 +68,7 @@ public class MapData {
     
     @XmlAttribute(name = "anchor")
     // Used only if locationsType is RELATIVE.
-    protected Location                                anchor        = null;
+    protected SerializableLocation                    anchor        = null;
     
     public static final MapData load(final File file) throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(MapData.class);
@@ -109,7 +109,8 @@ public class MapData {
         }
         else {
             if (this.anchor != null) {
-                return this.anchor.add(this.locations.get(key).getLocation());
+                return this.anchor.getLocation().add(
+                        this.locations.get(key).getLocation());
             }
             else {
                 throw new InvalidMapDataException(
@@ -123,7 +124,8 @@ public class MapData {
             return this.regions.get(key);
         }
         else {
-            return RegionTransformer.toAbsolute(this.regions.get(key), this.anchor);
+            return RegionTransformer.toAbsolute(this.regions.get(key),
+                    this.anchor.getLocation());
         }
     }
     
