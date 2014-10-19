@@ -71,6 +71,19 @@ public class MapData {
     // Used only if locationsType is RELATIVE.
     protected SerializableLocation                    anchor        = null;
     
+    /**
+     * Creates a new MapData with specified author and name.
+     * 
+     * @param name
+     *            name of map
+     * @param author
+     *            author of map
+     */
+    public MapData(final String name, final String author) {
+        this.name = name;
+        this.author = author;
+    }
+    
     public static final MapData load(final File file) throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(MapData.class);
         Unmarshaller un = jc.createUnmarshaller();

@@ -126,8 +126,8 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
      */
     public AdvancedArena(final Minigame minigame, final String arenaName,
             final Region region, final int maxPlayers, final int minPlayers,
-            final Location lobbyLocation, final Location gameSpawn) {
-        super(minigame, arenaName, region, maxPlayers);
+            final Location lobbyLocation, final Location gameSpawn, final MapData mapData) {
+        super(minigame, arenaName, region, maxPlayers, mapData);
         
         this.minimumPlayers = minPlayers;
         this.lobbyLocation = lobbyLocation;
@@ -256,6 +256,9 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
             //Stop the countdown task.
             this.onCountdownStop();
             //Start game.
+            this.chatAll(ChatManager.minigame(this.getMinigame(),
+                    "You are playing map: " + ChatColor.GOLD + this.map.getName()
+                            + " by " + ChatColor.RED + this.map.getAuthor()));
             this.onGameStart();
             this.gameStarted = true;
         }

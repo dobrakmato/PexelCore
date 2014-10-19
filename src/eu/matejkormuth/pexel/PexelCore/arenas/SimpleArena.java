@@ -99,10 +99,11 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
     protected MapData            map;
     
     public SimpleArena(final Minigame minigame, final String arenaName,
-            final Region region, final int slots) {
+            final Region region, final int slots, final MapData mapData) {
         super(minigame.getName() + "_" + arenaName, region);
         this.minigame = minigame;
         this.slots = slots;
+        this.map = mapData;
     }
     
     /**
