@@ -76,6 +76,7 @@ public class HardCoded {
         // Test XML
         class SampleArenaMap extends MapData {
             public SampleArenaMap() {
+                super("Sample map", "dobrakmato");
                 this.name = "sampleMap";
                 this.minigameName = "sampleMinigame";
                 
