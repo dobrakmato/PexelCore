@@ -24,6 +24,7 @@ import org.apache.commons.lang.NullArgumentException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -235,11 +236,16 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
      */
     private void countdownTick() {
         //Send a chat message.
-        if (this.countdownTimeLeft < 10 || (this.countdownTimeLeft % 10) == 0)
+        if (this.countdownTimeLeft < 10 || (this.countdownTimeLeft % 10) == 0) {
             this.chatAll(ChatManager.minigame(
                     this.minigame,
                     this.countdownFormat.replace("%timeleft%",
                             Integer.toString(this.countdownTimeLeft))));
+            for (Player p : this.getPlayers()) {
+                p.playSound(p.getLocation(), Sound.WOLF_GROWL, 1F, 1F);
+            }
+        }
+        
         //If we are using boss bar.
         if (this.useBossBar)
             this.setBossBarAll(
@@ -256,12 +262,18 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
             //Stop the countdown task.
             this.onCountdownStop();
             //Start game.
-            this.chatAll(ChatManager.minigame(this.getMinigame(),
-                    "You are playing map: " + ChatColor.GOLD + this.map.getName()
-                            + " by " + ChatColor.RED + this.map.getAuthor()));
+            this.chatAll(ChatManager.minigame(this.getMinigame(), ChatColor.GREEN
+                    + "Map: " + ChatColor.WHITE + this.map.getName() + ChatColor.WHITE
+                    + " by " + ChatColor.RED + this.map.getAuthor()));
             this.onGameStart();
             this.gameStarted = true;
         }
+        
+        // Set food level.
+        for (Player p : this.getPlayers()) {
+            p.setFoodLevel(20);
+        }
+        
         //Decrement the time.
         this.countdownTimeLeft -= 1;
     }

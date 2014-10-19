@@ -194,6 +194,7 @@ public class AlternativeCommands implements Listener {
                 }
             }
             
+            event.getPlayer().setFoodLevel(20);
             event.getPlayer().teleport(Pexel.getHubLocation());
         }
         else if (command.equalsIgnoreCase("list_arena_aliases")) {
