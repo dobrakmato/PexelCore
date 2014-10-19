@@ -29,6 +29,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -66,7 +67,7 @@ public class MapData {
     @XmlAttribute(name = "locationType")
     protected LocationType                            locationsType = LocationType.ABSOLUTE;
     
-    @XmlAttribute(name = "anchor")
+    @XmlElement(name = "anchor")
     // Used only if locationsType is RELATIVE.
     protected SerializableLocation                    anchor        = null;
     
