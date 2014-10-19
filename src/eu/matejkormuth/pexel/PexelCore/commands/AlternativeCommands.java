@@ -194,6 +194,9 @@ public class AlternativeCommands implements Listener {
                 }
             }
             
+            event.getPlayer().getInventory().clear();
+            event.getPlayer().setMaxHealth(20D);
+            event.getPlayer().setHealth(20D);
             event.getPlayer().setFoodLevel(20);
             event.getPlayer().teleport(Pexel.getHubLocation());
         }
