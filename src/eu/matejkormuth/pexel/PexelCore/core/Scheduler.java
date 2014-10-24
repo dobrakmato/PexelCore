@@ -18,6 +18,9 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
@@ -26,8 +29,17 @@ import eu.matejkormuth.pexel.PexelCore.Pexel;
  * Scheduler class for pexel to be used when porting from Bukkit to Sponge..
  */
 public class Scheduler {
+    private final List<ScheduledTask> tasks = new ArrayList<ScheduledTask>();
+    private long                      elapsed;
+    
     public Scheduler() {
         Log.partEnable("Scheduler");
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(Pexel.getCore(), new Runnable() {
+            @Override
+            public void run() {
+                Scheduler.this.tick();
+            }
+        }, 1L, 0L);
     }
     
     public int scheduleSyncRepeatingTask(final Runnable runnable, final long delay,
@@ -41,11 +53,42 @@ public class Scheduler {
                 delay);
     }
     
+    public void delay(final long delay, final Runnable runnable) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Pexel.getCore(), runnable, delay);
+    }
+    
+    public ScheduledTask each(final long period, final Runnable runnable) {
+        return new ScheduledTask(period, runnable);
+    }
+    
+    public void cancel(final ScheduledTask task) {
+        this.tasks.remove(task);
+    }
+    
     public void cancelTask(final int taskId) {
         Bukkit.getScheduler().cancelTask(taskId);
     }
     
     public void tick() {
-        // TODO: Try to complete tasks.
+        for (ScheduledTask task : this.tasks) {
+            if (this.elapsed % task.period == 0) {
+                try {
+                    task.runnable.run();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        this.elapsed++;
+    }
+    
+    public static final class ScheduledTask {
+        public ScheduledTask(final long period2, final Runnable runnable2) {
+            this.period = period2;
+            this.runnable = runnable2;
+        }
+        
+        public final Runnable runnable;
+        public final long     period;
     }
 }
