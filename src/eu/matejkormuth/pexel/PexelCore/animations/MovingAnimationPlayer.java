@@ -20,15 +20,16 @@ package eu.matejkormuth.pexel.PexelCore.animations;
 
 import org.bukkit.Location;
 
-import eu.matejkormuth.pexel.PexelCore.util.BukkitTimer;
+import eu.matejkormuth.pexel.PexelCore.Pexel;
+import eu.matejkormuth.pexel.PexelCore.core.Scheduler.ScheduledTask;
+import eu.matejkormuth.pexel.PexelCore.util.MovingObject;
 
-public class MovingAnimationPlayer implements Runnable {
-    private final Animation animation;
-    private int             currentFrame = 0;
-    private int             frameCount   = 0;
-    private BukkitTimer     timer;
-    private Location        location;
-    private boolean         repeating    = false;
+public class MovingAnimationPlayer extends MovingObject implements Runnable {
+    protected Animation     animation;
+    protected int           currentFrame = 0;
+    protected int           frameCount   = 0;
+    protected ScheduledTask task;
+    protected boolean       repeating    = false;
     
     public MovingAnimationPlayer(final Animation animation, final Location startLoc,
             final boolean repeating) {
@@ -39,19 +40,29 @@ public class MovingAnimationPlayer implements Runnable {
     }
     
     public void play() {
-        this.timer = new BukkitTimer(1, this);
-        this.timer.start();
+        this.task = Pexel.getScheduler().each(1L, this);
     }
     
-    private void animate() {
-        
+    public Animation getAnimation() {
+        return this.animation;
+    }
+    
+    public int getCurrentFrame() {
+        return this.currentFrame;
+    }
+    
+    public boolean isRepeating() {
+        return this.repeating;
+    }
+    
+    protected void animateFrame() {
         if (this.currentFrame < this.frameCount) {
             this.animation.getFrame(this.currentFrame).play(this.location);
             this.currentFrame++;
         }
         else {
             if (!this.repeating) {
-                this.timer.stop();
+                Pexel.getScheduler().cancel(this.task);
             }
             else {
                 this.currentFrame = 0;
@@ -59,12 +70,8 @@ public class MovingAnimationPlayer implements Runnable {
         }
     }
     
-    public void setLocation(final Location location) {
-        this.location = location;
-    }
-    
     @Override
     public void run() {
-        this.animate();
+        this.animateFrame();
     }
 }
