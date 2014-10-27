@@ -170,4 +170,24 @@ public class ItemUtils {
             return this;
         }
     }
+    
+    /**
+     * Returns display name or null.
+     * 
+     * @param weapon
+     * @return display name or null
+     */
+    public static String getDisplayName(final ItemStack weapon) {
+        ItemMeta meta = weapon.getItemMeta();
+        return meta.getDisplayName();
+    }
+    
+    /**
+     * @param weapon
+     * @param laserPistol
+     * @return
+     */
+    public static boolean sameName(final ItemStack first, final ItemStack second) {
+        return ItemUtils.getDisplayName(first).equals(ItemUtils.getDisplayName(second));
+    }
 }
