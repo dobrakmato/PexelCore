@@ -31,6 +31,7 @@ import eu.matejkormuth.pexel.PexelCore.Pexel;
 public class Scheduler {
     private final List<ScheduledTask> tasks = new ArrayList<ScheduledTask>();
     private long                      elapsed;
+    private ArrayList<ScheduledTask>  temptasks;
     
     public Scheduler() {
         Log.partEnable("Scheduler");
@@ -72,7 +73,8 @@ public class Scheduler {
     }
     
     public void tick() {
-        for (ScheduledTask task : this.tasks) {
+        this.temptasks = new ArrayList<ScheduledTask>(this.tasks);
+        for (ScheduledTask task : this.temptasks) {
             if (this.elapsed % task.period == 0) {
                 try {
                     task.runnable.run();
