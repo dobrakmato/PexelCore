@@ -79,10 +79,10 @@ public class Kit {
         player.getInventory().clear();
         
         //FIX: If kit contains no armor, the armor from previous kit would be preserved.
-        player.getInventory().setHelmet(null);
-        player.getInventory().setChestplate(null);
-        player.getInventory().setLeggings(null);
-        player.getInventory().setBoots(null);
+        //player.getInventory().setHelmet(null);
+        //player.getInventory().setChestplate(null);
+        //player.getInventory().setLeggings(null);
+        //player.getInventory().setBoots(null);
         
         if (this.helmet != null)
             player.getInventory().setHelmet(this.helmet);
