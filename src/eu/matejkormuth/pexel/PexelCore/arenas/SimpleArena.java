@@ -264,8 +264,9 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
      */
     public void kickAll() {
         //TODO: Iteration problem, pls fix.
-        for (Player p : this.activePlayers)
+        for (Player p : new ArrayList<Player>(this.activePlayers)) {
             this.onPlayerLeft(p, DisconnectReason.LEAVE_BY_GAME);
+        }
     }
     
     /**
@@ -275,8 +276,8 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
      *            message to send
      */
     public void kickAll(final String message) {
-        //TODO: Iteration problem, pls fix.
-        for (Player p : this.activePlayers) {
+        // Iteration problem, pls fix. -31.10.2014 fixed /mato
+        for (Player p : new ArrayList<Player>(this.activePlayers)) {
             p.sendMessage(message);
             this.onPlayerLeft(p, DisconnectReason.LEAVE_BY_GAME);
         }
