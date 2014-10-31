@@ -102,4 +102,11 @@ public class TextScoreboard implements ScoreboardView {
     public Scoreboard getScoreboard() {
         return this.board;
     }
+    
+    /**
+     * Clears scoreboard.
+     */
+    public void clear() {
+        this.reset();
+    }
 }
