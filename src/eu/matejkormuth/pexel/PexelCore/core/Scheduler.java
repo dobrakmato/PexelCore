@@ -58,7 +58,9 @@ public class Scheduler {
     }
     
     public ScheduledTask each(final long period, final Runnable runnable) {
-        return new ScheduledTask(period, runnable);
+        ScheduledTask task = new ScheduledTask(period, runnable);
+        this.tasks.add(task);
+        return task;
     }
     
     public void cancel(final ScheduledTask task) {
