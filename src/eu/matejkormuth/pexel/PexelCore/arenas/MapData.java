@@ -84,6 +84,10 @@ public class MapData {
         this.author = author;
     }
     
+    public MapData() {
+        
+    }
+    
     public static final MapData load(final File file) throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(MapData.class);
         Unmarshaller un = jc.createUnmarshaller();
