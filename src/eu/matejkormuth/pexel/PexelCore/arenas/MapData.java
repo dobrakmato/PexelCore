@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.core.RegionTransformer;
@@ -50,6 +52,19 @@ import eu.matejkormuth.pexel.PexelCore.util.SerializableLocation;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class MapData {
+    /**
+     * Minimum number of players required to start arena.
+     */
+    public static transient final String              KEY_MINIMAL_PLAYERS  = "minimalplayers";
+    /**
+     * Length of countdown in seconds, when minimal amount of players joined arena.
+     */
+    public static transient final String              KEY_COUNTDOWN_LENGHT = "countdownlength";
+    /**
+     * Length of countdown in seconds, when minimal amount of players joined arena.
+     */
+    public static transient final String              KEY_ARENA_SPAWN      = "spawn";
+    
     @XmlAttribute(name = "name")
     protected String                                  name;
     @XmlAttribute(name = "minigameName")
@@ -57,19 +72,30 @@ public class MapData {
     @XmlAttribute(name = "author")
     protected String                                  author;
     
-    @XmlElementWrapper(name = "options")
-    protected final Map<String, String>               options       = new HashMap<String, String>();
+    @XmlElementWrapper(name = "options_text")
+    protected final Map<String, String>               options_string       = new HashMap<String, String>();
+    @XmlElementWrapper(name = "options_number")
+    protected final Map<String, Integer>              options_int          = new HashMap<String, Integer>();
     @XmlElementWrapper(name = "locations")
-    protected final Map<String, SerializableLocation> locations     = new HashMap<String, SerializableLocation>();
+    protected final Map<String, SerializableLocation> locations            = new HashMap<String, SerializableLocation>();
     @XmlElementWrapper(name = "regions")
-    protected final Map<String, Region>               regions       = new HashMap<String, Region>();
+    protected final Map<String, Region>               regions              = new HashMap<String, Region>();
     
     @XmlAttribute(name = "locationType")
-    protected LocationType                            locationsType = LocationType.ABSOLUTE;
+    protected LocationType                            locationsType        = LocationType.ABSOLUTE;
+    
+    @XmlAttribute(name = "maxPlayers")
+    protected int                                     maxPlayers           = 16;                                         // Default value of 16.
+                                                                                                                          
+    @XmlAttribute(name = "protectedRegion")
+    protected Region                                  protectedRegion;
+    
+    @XmlAttribute(name = "world")
+    protected String                                  worldName;
     
     @XmlElement(name = "anchor")
     // Used only if locationsType is RELATIVE.
-    protected SerializableLocation                    anchor        = null;
+    protected SerializableLocation                    anchor               = null;
     
     /**
      * Creates a new MapData with specified author and name.
@@ -101,12 +127,16 @@ public class MapData {
         m.marshal(this, file);
     }
     
-    public boolean validate(final SimpleArena arena) {
+    public boolean validate(final AbstractArena arena) {
         return arena.getMinigame().getName().equals(this.minigameName);
     }
     
-    public String getOption(final String key) {
-        return this.options.get(key);
+    public String getOption_String(final String key) {
+        return this.options_string.get(key);
+    }
+    
+    public int getOption_Integer(final String key) {
+        return this.options_int.get(key);
     }
     
     public String getMinigameName() {
@@ -147,8 +177,12 @@ public class MapData {
         }
     }
     
-    public Map<String, String> getOptions() {
-        return this.options;
+    public Map<String, String> getOptionsString() {
+        return this.options_string;
+    }
+    
+    public Map<String, Integer> getOptionsNumber() {
+        return this.options_int;
     }
     
     public Map<String, SerializableLocation> getLocations() {
@@ -157,5 +191,22 @@ public class MapData {
     
     public Map<String, Region> getRegions() {
         return this.regions;
+    }
+    
+    public Region getProtectedRegion() {
+        return this.protectedRegion;
+    }
+    
+    public String getWorldName() {
+        return this.worldName;
+    }
+    
+    // Bukkit impl; will take care of it later.
+    public World getWorld() {
+        return Bukkit.getWorld(this.worldName);
+    }
+    
+    public int getMaxPlayers() {
+        return this.maxPlayers;
     }
 }

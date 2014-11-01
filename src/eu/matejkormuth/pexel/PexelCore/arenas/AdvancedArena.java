@@ -32,11 +32,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Log;
-import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.GameState;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
 import eu.matejkormuth.pexel.PexelCore.util.NetworkCCFormatter;
@@ -48,76 +48,54 @@ import eu.matejkormuth.pexel.PexelCore.util.NetworkCCFormatter;
  * @author Mato Kormuth
  * 
  */
-public abstract class AdvancedArena extends SimpleArena implements Listener {
+public abstract class AdvancedArena extends AbstractArena implements Listener {
     /**
      * Amount of players, that is required to start the countdown.
      */
-    @ArenaOption(name = "minimumPlayers")
-    public int      minimumPlayers           = 0;
+    public int      minimumPlayers     = 0;
     /**
      * Lenght of countdown in seconds.
      */
-    @ArenaOption(name = "countdownLenght")
-    public int      countdownLenght          = 10;
-    /**
-     * Location of this arena lobby.
-     */
-    @ArenaOption(name = "lobbyLocation")
-    public Location lobbyLocation;
+    public int      countdownLenght    = 10;
     /**
      * Location of this arena game spawn.
      */
-    @ArenaOption(name = "gameSpawn")
     public Location gameSpawn;
     /**
      * Specifies if the countdown should be canceled, if a player leaves arena and there is not enough players to start
      * game, but the countdown is alredy running.
      */
-    @ArenaOption(name = "countdownCanCancel")
-    public boolean  countdownCanCancel       = true;
-    /**
-     * Specifies if the players should be teleported to gameSpawn and lobbyLocation automaticaly.
-     */
-    @ArenaOption(name = "shouldTeleportPlayers")
-    public boolean  shouldTeleportPlayers    = true;
+    public boolean  countdownCanCancel = true;
     /**
      * Specifies if players can respawn in this arena, or not (default true).
      */
-    @ArenaOption(name = "respawnAllowed")
-    public boolean  respawnAllowed           = true;
-    /**
-     * Specifies if players can join the game after the game was started.
-     */
-    @ArenaOption(name = "playersCanJoinAfterStart")
-    public boolean  playersCanJoinAfterStart = false;
+    public boolean  respawnAllowed     = true;
     /**
      * Spcifies if the boss bar should be used for displaying time to start.
      */
-    @ArenaOption(name = "useBossBar")
-    public boolean  useBossBar               = true;
+    public boolean  useBossBar         = true;
     /**
      * Time left to game start.
      */
-    @ArenaOption(name = "countdownTimeLeft")
-    public int      countdownTimeLeft        = 30;
+    public int      countdownTimeLeft  = this.countdownLenght;
     /**
      * Specifies, if the arena should call <code>reset()</code> function automaticaly when game ends.
      */
-    public boolean  autoReset                = true;
+    public boolean  autoReset          = true;
     /**
      * Specifies, if inventory actions are enabled in this arena (default: true).
      */
-    public boolean  inventoryDisabled        = true;
+    public boolean  inventoryDisabled  = true;
     /**
      * Chat format for countdown message.
      */
-    public String   countdownFormat          = "%timeleft% seconds to game start!";
-    
-    public int      countdownTaskId          = 0;
+    public String   countdownFormat    = "%timeleft% seconds to game start!";
+    // Bukkit task id of countdown.
+    protected int   countdownTaskId    = 0;
     /**
      * Identifies if the game has started.
      */
-    private boolean gameStarted              = false;
+    private boolean gameStarted        = false;
     
     /**
      * @param minigame
@@ -126,28 +104,30 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
      * @param maxPlayers
      */
     public AdvancedArena(final Minigame minigame, final String arenaName,
-            final Region region, final int maxPlayers, final int minPlayers,
-            final Location lobbyLocation, final Location gameSpawn, final MapData mapData) {
-        super(minigame, arenaName, region, maxPlayers, mapData);
+            final MapData mapData) {
+        super(minigame, arenaName, mapData);
         
-        this.minimumPlayers = minPlayers;
-        this.lobbyLocation = lobbyLocation;
-        this.gameSpawn = gameSpawn;
+        this.minimumPlayers = mapData.getOption_Integer(MapData.KEY_MINIMAL_PLAYERS);
+        this.countdownLenght = mapData.getOption_Integer(MapData.KEY_COUNTDOWN_LENGHT);
+        
+        this.gameSpawn = mapData.getLocation(MapData.KEY_ARENA_SPAWN);
         
         NetworkCCFormatter.sendConstructor(this);
         
+        // TODO: Registers events in bukkit. Needs to be reworked.
         Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
     }
     
     /**
-     * Clear player's inventory, removes effects and set game mode.
+     * Clear player's inventory including armor slots.
      * 
      * @param player
      *            player to clear inventory
      */
-    public void clearPlayer(final Player player) {
-        if (player == null)
+    public void clearPlayerInventory(final Player player) {
+        if (player == null) {
             throw new NullArgumentException("player");
+        }
         else {
             player.getInventory().clear();
             player.getInventory().setHelmet(null);
@@ -174,8 +154,7 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
      * @return whether is arena ready for playing
      */
     public boolean isPrepeared() {
-        return this.gameSpawn != null && this.lobbyLocation != null
-                && this.minimumPlayers != 0;
+        return this.gameSpawn != null && this.minimumPlayers != 0;
     }
     
     /**
@@ -262,9 +241,11 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
             //Stop the countdown task.
             this.onCountdownStop();
             //Start game.
-            this.chatAll(ChatManager.minigame(this.getMinigame(), ChatColor.GREEN
-                    + "Map: " + ChatColor.WHITE + this.map.getName() + ChatColor.WHITE
-                    + " by " + ChatColor.RED + this.map.getAuthor()));
+            this.chatAll(ChatManager.minigame(
+                    this.getMinigame(),
+                    ChatColor.GREEN + "Map: " + ChatColor.WHITE + this.mapData.getName()
+                            + ChatColor.WHITE + " by " + ChatColor.RED
+                            + this.mapData.getAuthor()));
             this.onGameStart();
             this.gameStarted = true;
         }
@@ -382,6 +363,7 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
             
             this.tryStartCountdown();
             
+            // If enough players, start the game soon.
             if (this.getPlayerCount() == this.slots) {
                 if (this.countdownTimeLeft > 10)
                     this.countdownTimeLeft = 10;
@@ -389,14 +371,20 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
             
             this.updateGameState();
             
-            this.clearPlayer(player);
+            this.clearPlayerInventory(player);
             
+            // Remove effects from lobbies.
+            player.removePotionEffect(PotionEffectType.SPEED);
+            player.removePotionEffect(PotionEffectType.JUMP);
+            
+            // TODO: Should use template instead of hardcoding message style.
             this.chatAll(ChatManager.minigame(this.getMinigame(),
                     ChatColor.GOLD + "Player '" + player.getName() + "' joined arena! ("
                             + this.getPlayerCount() + "/" + this.minimumPlayers + " - "
                             + this.slots + ")"));
             
-            player.teleport(this.lobbyLocation);
+            // Teleport player to arena spawn location.
+            player.teleport(this.gameSpawn);
         }
         else {
             player.sendMessage(ChatManager.error("Alredy playing!"));
@@ -431,6 +419,9 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
         }
         
         this.updateGameState();
+        
+        // Clear player's inventory.
+        this.clearPlayerInventory(player);
     }
     
     @EventHandler
@@ -466,17 +457,21 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
     @EventHandler
     public void ___onPlayerRespawn(final PlayerRespawnEvent event) {
         if (this.contains(event.getPlayer()))
-            if (!this.respawnAllowed)
+            if (!this.respawnAllowed) {
                 //Kick from arena
                 this.onPlayerLeft(event.getPlayer(), DisconnectReason.LEAVE_BY_GAME);
+            }
     }
     
     @EventHandler
     public void onPlayerInventoryClick(final InventoryClickEvent event) {
-        if (event.getWhoClicked() instanceof Player)
-            if (this.activePlayers.contains(event.getWhoClicked()))
-                if (this.inventoryDisabled)
+        if (event.getWhoClicked() instanceof Player) {
+            if (this.activePlayers.contains(event.getWhoClicked())) {
+                if (this.inventoryDisabled) {
                     event.setCancelled(true);
+                }
+            }
+        }
     }
     
     public int getMinimalPlayers() {
@@ -495,12 +490,24 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
         this.countdownLenght = countdownLenght;
     }
     
+    /**
+     * @deprecated Deprecated and removed, now returns only {@link Pexel#getHubLocation()}.
+     * @return
+     */
+    @Deprecated
     public Location getLobbyLocation() {
-        return this.lobbyLocation;
+        return Pexel.getHubLocation();
     }
     
+    /**
+     * Does nothing now.
+     * 
+     * @deprecated Deprecated and removed. see {@link AdvancedArena#getLobbyLocation()} for explanamination.
+     * @param lobbyLocation
+     */
+    @Deprecated
     public void setLobbyLocation(final Location lobbyLocation) {
-        this.lobbyLocation = lobbyLocation;
+        //this.lobbyLocation = lobbyLocation;
     }
     
     public void setGameState(final GameState state) {
@@ -523,14 +530,6 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
         this.countdownCanCancel = countdownCanCancel;
     }
     
-    public boolean shouldTeleportPlayers() {
-        return this.shouldTeleportPlayers;
-    }
-    
-    public void setShouldTeleportPlayers(final boolean shouldTeleportPlayers) {
-        this.shouldTeleportPlayers = shouldTeleportPlayers;
-    }
-    
     public boolean playersCanRespawn() {
         return this.respawnAllowed;
     }
@@ -549,13 +548,5 @@ public abstract class AdvancedArena extends SimpleArena implements Listener {
     
     public void setCountdownFormat(final String countdownFormat) {
         this.countdownFormat = countdownFormat;
-    }
-    
-    public boolean isPlayersCanJoinAfterStart() {
-        return this.playersCanJoinAfterStart;
-    }
-    
-    public void setPlayersCanJoinAfterStart(final boolean playersCanJoinAfterStart) {
-        this.playersCanJoinAfterStart = playersCanJoinAfterStart;
     }
 }

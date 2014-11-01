@@ -51,7 +51,6 @@ import eu.matejkormuth.pexel.PexelCore.bans.Bannable;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.PlayerHolder;
-import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.GameState;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.MatchmakingGame;
@@ -66,12 +65,12 @@ import eu.matejkormuth.pexel.PexelCore.util.ServerLocationType;
  * @author Mato Kormuth
  * 
  */
-public abstract class SimpleArena extends ProtectedArea implements MatchmakingGame,
+public abstract class AbstractArena extends ProtectedArea implements MatchmakingGame,
         PlayerHolder, Bannable {
     /**
-     * Number of slots.
+     * Number of actual maximum number of players. May be changed at runtime, so it does not reflect max. player from
+     * {@link MapData}.
      */
-    @ArenaOption(name = "maximumPlayers")
     protected int                slots;
     /**
      * The actual state of the arena.
@@ -94,16 +93,16 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
      */
     protected final Minigame     minigame;
     /**
-     * Map that is currenlty played on this arena.
+     * {@link MapData} that is currenlty played on this arena.
      */
-    protected MapData            map;
+    protected MapData            mapData;
     
-    public SimpleArena(final Minigame minigame, final String arenaName,
-            final Region region, final int slots, final MapData mapData) {
-        super(minigame.getName() + "_" + arenaName, region);
+    public AbstractArena(final Minigame minigame, final String arenaName,
+            final MapData mapData) {
+        super(minigame.getName() + "_" + arenaName, mapData.getProtectedRegion());
         this.minigame = minigame;
-        this.slots = slots;
-        this.map = mapData;
+        this.slots = mapData.getMaxPlayers();
+        this.mapData = mapData;
     }
     
     /**
@@ -113,8 +112,9 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
      *            message to be send
      */
     public void chatAll(final String msg) {
-        for (Player p : this.activePlayers)
+        for (Player p : this.activePlayers) {
             p.sendMessage(msg);
+        }
     }
     
     @Override
@@ -263,7 +263,7 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
      * Kicks all players from arena. Uses KICK_BY_GAME as {@link DisconnectReason}
      */
     public void kickAll() {
-        //TODO: Iteration problem, pls fix.
+        // Iteration problem, pls fix. - fixed.
         for (Player p : new ArrayList<Player>(this.activePlayers)) {
             this.onPlayerLeft(p, DisconnectReason.LEAVE_BY_GAME);
         }
@@ -284,7 +284,7 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
     }
     
     /**
-     * Return minigame running in this arena.
+     * Return minigame that is played in this arena.
      * 
      * @return the minigame
      */
@@ -292,6 +292,11 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
         return this.minigame;
     }
     
+    /**
+     * @deprecated Use {@link MapData} and its saving / loading for saving or loading arena data.
+     * @param path
+     */
+    @Deprecated
     public void save(final String path) {
         try {
             Document conf = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
@@ -358,10 +363,21 @@ public abstract class SimpleArena extends ProtectedArea implements MatchmakingGa
         return new ServerLocation("DEPRECATED", ServerLocationType.UNKNOWN);
     }
     
+    /**
+     * Set's number of slots at runtime. Does not reflect / or change value in {@link MapData} config.
+     * 
+     * @param slots
+     *            new number of slots
+     */
     public void setSlots(final int slots) {
         this.slots = slots;
     }
     
+    /**
+     * Set's current state to specified state.
+     * 
+     * @param stateToSet
+     */
     public void setState(final GameState stateToSet) {
         this.state = stateToSet;
     }
