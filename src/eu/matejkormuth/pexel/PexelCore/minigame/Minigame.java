@@ -18,12 +18,10 @@
 // @formatter:on-
 package eu.matejkormuth.pexel.PexelCore.minigame;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.bukkit.Location;
 
-import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
 import eu.matejkormuth.pexel.PexelCore.bans.Bannable;
 
 /**
@@ -61,24 +59,6 @@ public interface Minigame extends Bannable {
      * @return all minigame types.
      */
     public List<MinigameType> getTypes();
-    
-    /**
-     * Returns arena by name.
-     * 
-     * @param name
-     *            arena's name
-     * @return
-     */
-    @Deprecated
-    public SimpleArena getArena(String name);
-    
-    /**
-     * Returns all arenas of this minigame.
-     * 
-     * @return collection of arenas
-     */
-    @Deprecated
-    public Collection<SimpleArena> getArenas();
     
     /**
      * Returns the minigame lobby location.
