@@ -106,6 +106,20 @@ public class MapData {
         this.author = author;
     }
     
+    /**
+     * Initialization method for {@link AdvancedArena} classes.
+     */
+    public void init(final int maxPlayers, final int minPlayers,
+            final int countdownLength, final Location spawnLocation,
+            final Region protectedRegion) {
+        this.maxPlayers = maxPlayers;
+        this.options_int.put(MapData.KEY_COUNTDOWN_LENGHT, countdownLength);
+        this.options_int.put(MapData.KEY_MINIMAL_PLAYERS, minPlayers);
+        this.locations.put(MapData.KEY_ARENA_SPAWN, new SerializableLocation(
+                spawnLocation));
+        this.protectedRegion = protectedRegion;
+    }
+    
     public MapData() {
         
     }
