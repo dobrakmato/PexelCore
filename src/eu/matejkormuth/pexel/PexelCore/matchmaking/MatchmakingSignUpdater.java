@@ -18,7 +18,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
-import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.AbstractArena;
 import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.Paths;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
@@ -119,7 +119,7 @@ public class MatchmakingSignUpdater implements Runnable {
                 int playersTotalOnline = 0;
                 int playersTotalOnlineWaiting = 0;
                 int playersTotal = 0;
-                for (SimpleArena arena : Pexel.getMatchmaking().arenas.get(minigame)) {
+                for (AbstractArena arena : Pexel.getMatchmaking().arenas.get(minigame)) {
                     if (arena.canJoin()) {
                         arenaCountJoinable++;
                         arenaCountTotal++;

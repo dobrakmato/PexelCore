@@ -37,7 +37,7 @@ import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
-import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.AbstractArena;
 
 /**
  * Recording device for matches.
@@ -46,8 +46,10 @@ import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
  * 
  */
 public class MatchRecorder {
+    // TODO: FIXME: XXX: Need re-writing...
+    
     //Arena that this recorder record.
-    private final SimpleArena      arena;
+    private final AbstractArena      arena;
     //ID of periodic task
     private int                      taskId      = 0;
     //Interval in ticks
@@ -65,7 +67,7 @@ public class MatchRecorder {
      * @param arena
      *            arena to initialize recorder to
      */
-    public MatchRecorder(final SimpleArena arena) {
+    public MatchRecorder(final AbstractArena arena) {
         this.arena = arena;
     }
     

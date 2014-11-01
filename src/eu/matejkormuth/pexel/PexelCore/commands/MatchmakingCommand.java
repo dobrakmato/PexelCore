@@ -24,7 +24,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
-import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.AbstractArena;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Party;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
@@ -39,7 +39,7 @@ public class MatchmakingCommand {
     
     @SubCommand(description = "joins specified arena")
     public void joinarena(final Player sender, final String arenaname) {
-        SimpleArena arena = StorageEngine.getArena(arenaname);
+        AbstractArena arena = StorageEngine.getArena(arenaname);
         if (arena != null) {
             if (StorageEngine.getProfile(sender.getUniqueId()).getParty() != null) {
                 Party party = StorageEngine.getProfile(sender.getUniqueId()).getParty();

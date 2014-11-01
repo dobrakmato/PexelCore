@@ -37,9 +37,10 @@ import eu.matejkormuth.pexel.PexelCore.PexelCore;
 import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.Lobby;
 import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
+import eu.matejkormuth.pexel.PexelCore.arenas.AbstractArena;
 import eu.matejkormuth.pexel.PexelCore.arenas.ArenaOption;
 import eu.matejkormuth.pexel.PexelCore.arenas.DisconnectReason;
-import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.MapData;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
 
 /**
@@ -48,13 +49,14 @@ import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
  * @author Mato Kormuth
  * 
  */
+@SuppressWarnings("deprecation")
+// SuppressWarning - Because of ArenaOption.
 public class StorageEngine {
     private static final Map<UUID, PlayerProfile>   profiles    = new HashMap<UUID, PlayerProfile>();
     private static final Map<String, Minigame>      minigames   = new HashMap<String, Minigame>();
     private static final Map<String, ProtectedArea> areas       = new HashMap<String, ProtectedArea>();
-    private static final Map<String, SimpleArena>   arenas      = new HashMap<String, SimpleArena>();
-    @SuppressWarnings("rawtypes")
-    private static final Map<String, Class>         aliases     = new HashMap<String, Class>();
+    private static final Map<String, AbstractArena> arenas      = new HashMap<String, AbstractArena>();
+    private static final Map<String, Class<?>>      aliases     = new HashMap<String, Class<?>>();
     private static final Map<String, Lobby>         lobbies     = new HashMap<String, Lobby>();
     private static final Map<String, TeleportGate>  gates       = new HashMap<String, TeleportGate>();
     private static boolean                          initialized = false;
@@ -135,7 +137,7 @@ public class StorageEngine {
      * 
      * @param arena
      */
-    public static void addArena(final SimpleArena arena) {
+    public static void addArena(final AbstractArena arena) {
         StorageEngine.arenas.put(arena.getName(), arena);
         StorageEngine.areas.put(arena.getName(), arena);
     }
@@ -162,11 +164,11 @@ public class StorageEngine {
         return StorageEngine.minigames;
     }
     
-    public static Map<String, SimpleArena> getArenas() {
+    public static Map<String, AbstractArena> getArenas() {
         return StorageEngine.arenas;
     }
     
-    public static SimpleArena getArena(final String arenaName) {
+    public static AbstractArena getArena(final String arenaName) {
         return StorageEngine.arenas.get(arenaName);
     }
     
@@ -192,8 +194,7 @@ public class StorageEngine {
         return StorageEngine.aliases.get(alias);
     }
     
-    @SuppressWarnings("rawtypes")
-    public static Map<String, Class> getAliases() {
+    public static Map<String, Class<?>> getAliases() {
         return StorageEngine.aliases;
     }
     
@@ -234,6 +235,10 @@ public class StorageEngine {
         }
     }
     
+    /**
+     * @deprecated deprecated and WILL be removed in future. Use {@link MapData}.
+     */
+    @Deprecated
     public static void saveData() {
         Log.info("Saving data...");
         // Save lobbies.
@@ -267,7 +272,7 @@ public class StorageEngine {
         // Save arenas
         YamlConfiguration yaml_arenas = new YamlConfiguration();
         int i_arenas = 0;
-        for (SimpleArena a : StorageEngine.arenas.values()) {
+        for (AbstractArena a : StorageEngine.arenas.values()) {
             yaml_arenas.set("arenas.arena" + i_arenas + ".name", a.getName());
             yaml_arenas.set("arenas.arena" + i_arenas + ".type",
                     a.getClass().getSimpleName());
@@ -348,7 +353,8 @@ public class StorageEngine {
     }
     
     public static void saveArenas() {
-        for (SimpleArena arena : StorageEngine.arenas.values()) {
+        for (AbstractArena arena : StorageEngine.arenas.values()) {
+            // Will be removed.
             arena.save(Paths.arenaPath(arena.getBannableName()));
         }
     }
@@ -362,7 +368,7 @@ public class StorageEngine {
     public static void __redirectEvent(final String string, final Event event) {
         if (string.equalsIgnoreCase("PlayerQuitEvent")) {
             PlayerQuitEvent quitevent = (PlayerQuitEvent) event;
-            for (SimpleArena arena : StorageEngine.arenas.values()) {
+            for (AbstractArena arena : StorageEngine.arenas.values()) {
                 if (arena.contains(quitevent.getPlayer())) {
                     arena.onPlayerLeft(quitevent.getPlayer(),
                             DisconnectReason.PLAYER_DISCONNECT);

@@ -134,6 +134,7 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
      */
     public MatchmakingSignUpdater matchmakingSignUpdater;
     
+    @SuppressWarnings("deprecation")
     @Override
     public void onDisable() {
         Log.partDisable("Core");

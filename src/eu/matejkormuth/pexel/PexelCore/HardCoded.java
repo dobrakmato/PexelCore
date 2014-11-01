@@ -86,9 +86,9 @@ public class HardCoded {
                         SerializableLocation.fromLocation(new Location(
                                 Bukkit.getWorld("world"), 16, 32, 64)));
                 
-                this.options.put("option1", "yes");
-                this.options.put("option2", "yes");
-                this.options.put("option3", "no");
+                this.options_string.put("option1", "yes");
+                this.options_string.put("option2", "yes");
+                this.options_string.put("option3", "no");
                 
                 this.regions.put("region_one", new Region(new Vector(5, 10, 88),
                         new Vector(50, 50, 70), Bukkit.getWorld("world")));
