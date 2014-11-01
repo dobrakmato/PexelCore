@@ -23,12 +23,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Specifies that this field represents arena option. Apply on fields in {@link SimpleArena} or
- * {@link AdvancedArena} to flag them as arena 'options'.
+ * Specifies that this field represents arena option. Apply on fields in {@link AbstractArena} or {@link AdvancedArena}
+ * to flag them as arena 'options'.
  * 
+ * @deprecated Replaced by {@link MapData}. Try to use {@link MapData} where possible. May be removed in future.
  */
 @Target({ java.lang.annotation.ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
+@Deprecated
 public @interface ArenaOption {
     /**
      * Name of option.
