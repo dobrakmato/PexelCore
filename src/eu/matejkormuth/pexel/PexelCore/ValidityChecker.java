@@ -1,5 +1,8 @@
 package eu.matejkormuth.pexel.PexelCore;
 
+import org.apache.commons.lang.StringUtils;
+
+import eu.matejkormuth.pexel.PexelCore.arenas.MapData;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
 
 /**
@@ -11,6 +14,22 @@ public final class ValidityChecker {
                 "Minigame name does not match pattern '[a-zA-Z0-9]'!"); }
         if (minigame.getCategory() == null) { throw new ValidationException(
                 "Minigame must return category!"); }
+    }
+    
+    public static void checkMapData(final MapData mapData) {
+        if (StringUtils.isBlank(mapData.getAuthor())) { throw new ValidationException(
+                "Map author can't be blank!"); }
+        if (StringUtils.isBlank(mapData.getName())) { throw new ValidationException(
+                "Map name can't be blank!"); }
+        if (mapData.getMaxPlayers() < 1) {
+            System.out.println("Max players should probably be more than one!");
+        }
+        if (mapData.getProtectedRegion() == null) { throw new ValidationException(
+                "Protected region can't be null!"); }
+        if (StringUtils.isBlank(mapData.getWorldName())) { throw new ValidationException(
+                "World name must be specified!"); }
+        if (mapData.getWorld() == null) { throw new ValidationException(
+                "World not found on server!"); }
     }
     
     public static class ValidationException extends RuntimeException {

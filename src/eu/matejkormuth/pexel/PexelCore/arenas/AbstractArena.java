@@ -45,6 +45,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
+import eu.matejkormuth.pexel.PexelCore.ValidityChecker;
 import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
 import eu.matejkormuth.pexel.PexelCore.bans.BanUtils;
 import eu.matejkormuth.pexel.PexelCore.bans.Bannable;
@@ -103,6 +104,9 @@ public abstract class AbstractArena extends ProtectedArea implements Matchmaking
         this.minigame = minigame;
         this.slots = mapData.getMaxPlayers();
         this.mapData = mapData;
+        
+        // Check MapData
+        ValidityChecker.checkMapData(mapData);
     }
     
     /**
