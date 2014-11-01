@@ -26,8 +26,6 @@ public final class ValidityChecker {
         }
         if (mapData.getProtectedRegion() == null) { throw new ValidationException(
                 "Protected region can't be null!"); }
-        if (StringUtils.isBlank(mapData.getWorldName())) { throw new ValidationException(
-                "World name must be specified!"); }
         if (mapData.getWorld() == null) { throw new ValidationException(
                 "World not found on server!"); }
     }

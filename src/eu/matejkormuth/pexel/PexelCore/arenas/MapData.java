@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -89,9 +88,6 @@ public class MapData {
                                                                                                                           
     @XmlAttribute(name = "protectedRegion")
     protected Region                                  protectedRegion;
-    
-    @XmlAttribute(name = "world")
-    protected String                                  worldName;
     
     @XmlElement(name = "anchor")
     // Used only if locationsType is RELATIVE.
@@ -197,13 +193,9 @@ public class MapData {
         return this.protectedRegion;
     }
     
-    public String getWorldName() {
-        return this.worldName;
-    }
-    
     // Bukkit impl; will take care of it later.
     public World getWorld() {
-        return Bukkit.getWorld(this.worldName);
+        return this.protectedRegion.getWorld();
     }
     
     public int getMaxPlayers() {
