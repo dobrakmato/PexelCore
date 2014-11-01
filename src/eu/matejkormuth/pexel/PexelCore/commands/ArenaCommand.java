@@ -35,8 +35,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
-import eu.matejkormuth.pexel.PexelCore.arenas.ArenaOption;
-import eu.matejkormuth.pexel.PexelCore.arenas.SimpleArena;
+import eu.matejkormuth.pexel.PexelCore.arenas.AbstractArena;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
@@ -114,7 +113,7 @@ public class ArenaCommand implements CommandExecutor {
                             else
                                 c = classType;
                             //Create instance
-                            SimpleArena newArena = (SimpleArena) c.getDeclaredConstructor(
+                            AbstractArena newArena = (AbstractArena) c.getDeclaredConstructor(
                                     Minigame.class, String.class, Region.class,
                                     int.class).newInstance(
                                     StorageEngine.getMinigame(minigameName), arenaName,
@@ -229,86 +228,76 @@ public class ArenaCommand implements CommandExecutor {
                         try {
                             if (StorageEngine.getArena(arenaName) != null) {
                                 boolean set = false;
-                                SimpleArena arena = StorageEngine.getArena(arenaName);
+                                AbstractArena arena = StorageEngine.getArena(arenaName);
                                 
                                 Field[] fields = arena.getClass().getDeclaredFields();
                                 for (Field f : fields) {
-                                    if (f.isAnnotationPresent(ArenaOption.class)) {
-                                        if (f.getAnnotation(ArenaOption.class).name().equalsIgnoreCase(
-                                                optionName)
-                                                || f.getName().equalsIgnoreCase(
-                                                        optionName)) {
-                                            Class<?> type = f.getType();
-                                            
-                                            if (!f.isAccessible())
-                                                f.setAccessible(true);
-                                            
-                                            if (type.equals(Integer.class)
-                                                    || type.equals(int.class)) {
-                                                f.set(arena,
-                                                        Integer.parseInt(optionValue));
-                                                sender.sendMessage(ChatManager.success("Type: Integer"));
-                                                set = true;
-                                            }
-                                            else if (type.equals(Double.class)
-                                                    || type.equals(double.class)) {
-                                                f.set(arena,
-                                                        Double.parseDouble(optionValue));
-                                                sender.sendMessage(ChatManager.success("Type: Double"));
-                                                set = true;
-                                            }
-                                            else if (type.equals(Float.class)
-                                                    || type.equals(float.class)) {
-                                                f.set(arena,
-                                                        Float.parseFloat(optionValue));
-                                                sender.sendMessage(ChatManager.success("Type: Float"));
-                                                set = true;
-                                            }
-                                            else if (type.equals(Long.class)
-                                                    || type.equals(long.class)) {
-                                                f.set(arena, Long.parseLong(optionValue));
-                                                sender.sendMessage(ChatManager.success("Type: Long"));
-                                                set = true;
-                                            }
-                                            else if (type.equals(Short.class)
-                                                    || type.equals(short.class)) {
-                                                f.set(arena,
-                                                        Short.parseShort(optionValue));
-                                                sender.sendMessage(ChatManager.success("Type: Short"));
-                                                set = true;
-                                            }
-                                            else if (type.equals(Byte.class)
-                                                    || type.equals(byte.class)) {
-                                                f.set(arena, Byte.parseByte(optionValue));
-                                                sender.sendMessage(ChatManager.success("Type: Byte"));
-                                                set = true;
-                                            }
-                                            else if (type.equals(Boolean.class)
-                                                    || type.equals(boolean.class)) {
-                                                f.set(arena,
-                                                        Boolean.parseBoolean(optionValue));
-                                                sender.sendMessage(ChatManager.success("Type: Boolean"));
-                                                set = true;
-                                            }
-                                            else if (type.equals(String.class)) {
-                                                f.set(arena, optionValue);
-                                                sender.sendMessage(ChatManager.success("Type: String"));
-                                                set = true;
-                                            }
-                                            else if (type.equals(Location.class)) {
-                                                f.set(arena, sender.getLocation());
-                                                sender.sendMessage(ChatManager.success("Type: Location. Taking your location as argument!"));
-                                                set = true;
-                                            }
-                                            else {
-                                                sender.sendMessage(ChatManager.error("I don't know how to set type '"
-                                                        + type.getName() + "'!"));
-                                                sender.sendMessage(ChatManager.error("If you believe, this is an error, create bug tickes at http://bugs.mertex.eu."));
-                                            }
-                                            
-                                            break;
-                                        }
+                                    
+                                    Class<?> type = f.getType();
+                                    
+                                    if (!f.isAccessible())
+                                        f.setAccessible(true);
+                                    
+                                    if (type.equals(Integer.class)
+                                            || type.equals(int.class)) {
+                                        f.set(arena, Integer.parseInt(optionValue));
+                                        sender.sendMessage(ChatManager.success("Type: Integer"));
+                                        set = true;
                                     }
+                                    else if (type.equals(Double.class)
+                                            || type.equals(double.class)) {
+                                        f.set(arena, Double.parseDouble(optionValue));
+                                        sender.sendMessage(ChatManager.success("Type: Double"));
+                                        set = true;
+                                    }
+                                    else if (type.equals(Float.class)
+                                            || type.equals(float.class)) {
+                                        f.set(arena, Float.parseFloat(optionValue));
+                                        sender.sendMessage(ChatManager.success("Type: Float"));
+                                        set = true;
+                                    }
+                                    else if (type.equals(Long.class)
+                                            || type.equals(long.class)) {
+                                        f.set(arena, Long.parseLong(optionValue));
+                                        sender.sendMessage(ChatManager.success("Type: Long"));
+                                        set = true;
+                                    }
+                                    else if (type.equals(Short.class)
+                                            || type.equals(short.class)) {
+                                        f.set(arena, Short.parseShort(optionValue));
+                                        sender.sendMessage(ChatManager.success("Type: Short"));
+                                        set = true;
+                                    }
+                                    else if (type.equals(Byte.class)
+                                            || type.equals(byte.class)) {
+                                        f.set(arena, Byte.parseByte(optionValue));
+                                        sender.sendMessage(ChatManager.success("Type: Byte"));
+                                        set = true;
+                                    }
+                                    else if (type.equals(Boolean.class)
+                                            || type.equals(boolean.class)) {
+                                        f.set(arena, Boolean.parseBoolean(optionValue));
+                                        sender.sendMessage(ChatManager.success("Type: Boolean"));
+                                        set = true;
+                                    }
+                                    else if (type.equals(String.class)) {
+                                        f.set(arena, optionValue);
+                                        sender.sendMessage(ChatManager.success("Type: String"));
+                                        set = true;
+                                    }
+                                    else if (type.equals(Location.class)) {
+                                        f.set(arena, sender.getLocation());
+                                        sender.sendMessage(ChatManager.success("Type: Location. Taking your location as argument!"));
+                                        set = true;
+                                    }
+                                    else {
+                                        sender.sendMessage(ChatManager.error("I don't know how to set type '"
+                                                + type.getName() + "'!"));
+                                        sender.sendMessage(ChatManager.error("If you believe, this is an error, create bug tickes at http://bugs.mertex.eu."));
+                                    }
+                                    
+                                    break;
+                                    
                                 }
                                 if (set)
                                     sender.sendMessage(ChatManager.success("Value of '"
@@ -336,35 +325,32 @@ public class ArenaCommand implements CommandExecutor {
                         if (StorageEngine.getArena(arenaName) != null) {
                             sender.sendMessage(ChatColor.GOLD
                                     + "======= OPTIONS =======");
-                            SimpleArena arena = StorageEngine.getArena(arenaName);
+                            AbstractArena arena = StorageEngine.getArena(arenaName);
                             
                             for (Field f : arena.getClass().getDeclaredFields()) {
                                 if (f.isAccessible())
                                     f.setAccessible(true);
                                 
-                                if (f.isAnnotationPresent(ArenaOption.class)) {
-                                    if (Modifier.isFinal(f.getModifiers()))
-                                        sender.sendMessage(ChatColor.RED + "[READONLY]"
-                                                + ChatColor.YELLOW + f.getName()
+                                if (Modifier.isFinal(f.getModifiers()))
+                                    sender.sendMessage(ChatColor.RED + "[READONLY]"
+                                            + ChatColor.YELLOW + f.getName()
+                                            + ChatColor.WHITE + " = " + ChatColor.GREEN
+                                            + f.get(arena).toString());
+                                else {
+                                    if (f.get(arena) != null)
+                                        sender.sendMessage(ChatColor.AQUA + "["
+                                                + f.getType().getSimpleName() + "] "
+                                                + ChatColor.GREEN + f.getName()
                                                 + ChatColor.WHITE + " = "
                                                 + ChatColor.GREEN
                                                 + f.get(arena).toString());
-                                    else {
-                                        if (f.get(arena) != null)
-                                            sender.sendMessage(ChatColor.AQUA + "["
-                                                    + f.getType().getSimpleName() + "] "
-                                                    + ChatColor.GREEN + f.getName()
-                                                    + ChatColor.WHITE + " = "
-                                                    + ChatColor.GREEN
-                                                    + f.get(arena).toString());
-                                        else
-                                            sender.sendMessage(ChatColor.AQUA + "["
-                                                    + f.getType().getSimpleName() + "] "
-                                                    + ChatColor.GREEN + f.getName()
-                                                    + ChatColor.WHITE + " = "
-                                                    + ChatColor.GREEN + "null");
-                                        
-                                    }
+                                    else
+                                        sender.sendMessage(ChatColor.AQUA + "["
+                                                + f.getType().getSimpleName() + "] "
+                                                + ChatColor.GREEN + f.getName()
+                                                + ChatColor.WHITE + " = "
+                                                + ChatColor.GREEN + "null");
+                                    
                                 }
                             }
                         }
@@ -446,7 +432,7 @@ public class ArenaCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.YELLOW + "PA:" + a.getName());
                 }
                 
-                for (SimpleArena a : StorageEngine.getArenas().values()) {
+                for (AbstractArena a : StorageEngine.getArenas().values()) {
                     sender.sendMessage(ChatColor.GREEN + "MA:" + a.getName());
                 }
             }
