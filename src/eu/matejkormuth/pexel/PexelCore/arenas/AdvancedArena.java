@@ -18,6 +18,8 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore.arenas;
 
+import java.util.ArrayList;
+
 import me.confuser.barapi.BarAPI;
 
 import org.apache.commons.lang.NullArgumentException;
@@ -293,6 +295,10 @@ public abstract class AdvancedArena extends AbstractArena implements Listener {
         this.state = GameState.RESETING;
         
         Log.info("Resetting arena " + this.areaName + "...");
+        
+        for (Player p : new ArrayList<Player>(this.activePlayers)) {
+            this.onPlayerLeft(p, DisconnectReason.KICK_BY_SERVER);
+        }
         
         NetworkCCFormatter.send(NetworkCCFormatter.MSG_TYPE_ARENA_STATE, this,
                 this.state.toString());

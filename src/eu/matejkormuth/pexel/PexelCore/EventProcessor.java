@@ -297,24 +297,6 @@ public class EventProcessor implements Listener {
                     event.getPlayer(), true);
             player.play();
         }
-        
-        if (event.getPlayer().getName().equalsIgnoreCase("pitkes22")) {
-            ParticleAnimation animation = new ParticleAnimation();
-            double x = 0;
-            double y = 0;
-            for (int i = 0; i < 20; i++) {
-                x = Math.sin(i / 3.14F);
-                y = Math.cos(i / 3.14F);
-                Log.info("Generated frame X:" + x + ", Y:" + y);
-                animation.addFrame(new ParticleFrame(
-                        Arrays.asList(new ParticleFrame.Particle(x, 2.5, y,
-                                ParticleEffect2.DRIP_LAVA))));
-            }
-            
-            EntityAnimationPlayer player = new EntityAnimationPlayer(animation,
-                    event.getPlayer(), true);
-            player.play();
-        }
     }
     
     @EventHandler
@@ -328,12 +310,16 @@ public class EventProcessor implements Listener {
     
     @EventHandler
     private void onPlayerLeave(final PlayerQuitEvent event) {
-        //Leave party
+        // Leave party.
         if (StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParty() != null) {
             StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParty().removePlayer(
                     event.getPlayer());
             StorageEngine.getProfile(event.getPlayer().getUniqueId()).setParty(null);
         }
+        
+        // Leave chat channels.
+        ChatManager.CHANNEL_GLOBAL.unsubscribe(event.getPlayer());
+        ChatManager.CHANNEL_LOBBY.unsubscribe(event.getPlayer());
         
         StorageEngine.__redirectEvent("PlayerQuitEvent", event);
         
