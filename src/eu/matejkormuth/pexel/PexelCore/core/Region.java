@@ -300,11 +300,20 @@ public class Region {
      * @return random location in bounds of this region
      */
     public Location getRandomLocation() {
-        int a = Pexel.getRandom().nextInt((int) (this.getMaxX() - this.getMinX()));
-        int b = Pexel.getRandom().nextInt((int) (this.getMaxY() - this.getMinY()));
-        int c = Pexel.getRandom().nextInt((int) (this.getMaxZ() - this.getMinZ()));
+        int a = this.rnd((int) (this.getMaxX() - this.getMinX()));
+        int b = this.rnd((int) (this.getMaxY() - this.getMinY()));
+        int c = this.rnd((int) (this.getMaxZ() - this.getMinZ()));
         return new Location(this.w, this.getMinX() + a, this.getMinY() + b,
                 this.getMinZ() + c);
+    }
+    
+    private int rnd(final int max) {
+        if (max == 0) {
+            return 0;
+        }
+        else {
+            return Pexel.getRandom().nextInt(max);
+        }
     }
     
     /**
