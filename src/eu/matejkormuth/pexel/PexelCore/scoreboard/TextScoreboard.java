@@ -59,8 +59,10 @@ public class TextScoreboard implements ScoreboardView {
     /**
      * Sets player's score to specified amount.
      * 
-     * @param player
+     * @param key
+     *            string key
      * @param amount
+     *            amount to set
      */
     public void setScore(final String key, final int amount) {
         if (this.scores.containsKey(key))
@@ -74,8 +76,8 @@ public class TextScoreboard implements ScoreboardView {
     /**
      * Increments score for specified player with specified amount.
      * 
-     * @param player
-     *            player
+     * @param key
+     *            string key
      * @param amount
      *            amount to incerement
      */

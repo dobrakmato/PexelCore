@@ -42,7 +42,7 @@ public class BlockChange {
      * 
      * @param oldMaterial
      *            old material
-     * @param oldData
+     * @param oldMaterialData
      *            old data
      * @param blockLocation
      *            location of block.

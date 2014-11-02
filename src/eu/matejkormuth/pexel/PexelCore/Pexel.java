@@ -213,7 +213,7 @@ public final class Pexel {
     }
     
     /**
-     * @return
+     * @return Ban storage
      */
     public final static BanStorage getBans() {
         return Pexel.instance.banStorage;

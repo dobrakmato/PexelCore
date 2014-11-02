@@ -139,7 +139,7 @@ public class Log {
     /**
      * Returns list of all problems.
      * 
-     * @return
+     * @return list of problems
      */
     protected final static List<String> getProblems() {
         return Log.problems;

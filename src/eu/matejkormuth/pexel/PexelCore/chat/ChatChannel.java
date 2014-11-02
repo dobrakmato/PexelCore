@@ -279,7 +279,6 @@ public class ChatChannel {
     
     /**
      * @param player
-     * @return
      */
     public boolean isSubscribed(final Player player) {
         for (ChannelSubscriber subscriber : this.subscribers)
@@ -291,8 +290,6 @@ public class ChatChannel {
     
     /**
      * Returns whether this channel is public.
-     * 
-     * @return
      */
     public boolean isPublic() {
         return this.isPublic;

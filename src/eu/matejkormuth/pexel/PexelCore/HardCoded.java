@@ -67,15 +67,16 @@ public class HardCoded {
         
         Pexel.getBans().addBan(
                 new PlayerBan("nemam sa rad", new NamedBanAuthor("dobrakmato"),
-                        Bukkit.getPlayer("test"), Server.THIS_SERVER));
+                        (Player) Bukkit.getOfflinePlayer("test"), Server.THIS_SERVER));
         
         Pexel.getBans().addBan(
                 new PlayerBan(100000, "dementy dvodod", new NamedBanAuthor("dement"),
-                        Bukkit.getPlayer("test2"), Server.THIS_SERVER));
+                        (Player) Bukkit.getOfflinePlayer("test2"), Server.THIS_SERVER));
         
         Pexel.getBans().addBan(
                 new PlayerBan(45000, "test", new NamedBanAuthor("dobrakmato"),
-                        Bukkit.getPlayer("DeathlNom"), Server.THIS_SERVER));
+                        (Player) Bukkit.getOfflinePlayer("DeathlNom"),
+                        Server.THIS_SERVER));
         
         // Test XML
         class SampleArenaMap extends MapData {

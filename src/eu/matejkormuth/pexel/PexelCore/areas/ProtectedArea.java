@@ -84,7 +84,6 @@ public class ProtectedArea {
      * Returns value of global flag. If not specified uses parent's flag (default).
      * 
      * @param flag
-     * @return
      */
     public boolean getGlobalFlag(final AreaFlag flag) {
         if (this.globalFlags.get(flag) == null)
@@ -102,7 +101,6 @@ public class ProtectedArea {
      * 
      * @param flag
      * @param player
-     * @return
      */
     public boolean getPlayerFlag(final AreaFlag flag, final UUID player) {
         if (this.playerFlags.containsKey(player))
@@ -158,7 +156,7 @@ public class ProtectedArea {
     /**
      * Returns area region.
      * 
-     * @return
+     * @return region
      */
     public Region getRegion() {
         return this.region;

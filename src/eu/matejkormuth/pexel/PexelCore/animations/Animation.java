@@ -27,11 +27,21 @@ public interface Animation {
      * 
      * @param number
      *            id of frame
-     * @return
+     * @return frame
      */
     public Frame getFrame(int number);
     
+    /**
+     * Number of frames per second.
+     * 
+     * @return fps
+     */
     public int getFramerate();
     
+    /**
+     * Returns total amount of frames in this animation.
+     * 
+     * @return num of frames
+     */
     public int getFrameCount();
 }

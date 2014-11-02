@@ -16,8 +16,8 @@ public class Achievements {
     /**
      * Registers achievement in pexel to enable its synchronization over network.
      * 
-     * @see Achievement#buildMinigame(Minigame, String, String)
-     * @see Achievement#buildGlobal(String, String)
+     * @see Achievement#minigame(Minigame, String, String)
+     * @see Achievement#global(String, String)
      * 
      * @param achievement
      *            achievement to register.

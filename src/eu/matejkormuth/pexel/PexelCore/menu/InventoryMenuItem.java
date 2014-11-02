@@ -97,8 +97,6 @@ public class InventoryMenuItem {
     
     /**
      * Returns if the menu should close after click.
-     * 
-     * @return
      */
     public boolean isCloseAfterClick() {
         return this.closeAfterClick;

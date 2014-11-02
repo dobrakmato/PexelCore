@@ -63,7 +63,6 @@ public class MatchmakingRequest {
      * 
      * @param player
      *            player
-     * @return
      */
     public static MatchmakingRequest create(final Player player) {
         return new MatchmakingRequest(Arrays.asList(player), null, null);
@@ -74,7 +73,6 @@ public class MatchmakingRequest {
      * 
      * @param player
      *            players
-     * @return
      */
     public static MatchmakingRequest create(final Player... player) {
         return new MatchmakingRequest(Arrays.asList(player), null, null);
@@ -85,7 +83,6 @@ public class MatchmakingRequest {
      * 
      * @param player
      *            player
-     * @return
      */
     public static MatchmakingRequest create(final Player player, final Minigame minigame) {
         return new MatchmakingRequest(Arrays.asList(player), minigame, null);
@@ -96,7 +93,6 @@ public class MatchmakingRequest {
      * 
      * @param player
      *            players
-     * @return
      */
     public static MatchmakingRequest create(final Minigame minigame,
             final Player... player) {
@@ -117,8 +113,6 @@ public class MatchmakingRequest {
     
     /**
      * Returns list of players in this request.
-     * 
-     * @return
      */
     public List<Player> getPlayers() {
         return this.players;
@@ -126,8 +120,6 @@ public class MatchmakingRequest {
     
     /**
      * Returns minigame of this request.
-     * 
-     * @return
      */
     public Minigame getMinigame() {
         return this.minigame;
@@ -135,8 +127,6 @@ public class MatchmakingRequest {
     
     /**
      * Returns arena of this request.
-     * 
-     * @return
      */
     public MatchmakingGame getGame() {
         return this.game;
@@ -144,8 +134,6 @@ public class MatchmakingRequest {
     
     /**
      * Returns player count in this request.
-     * 
-     * @return
      */
     public int playerCount() {
         return this.players.size();

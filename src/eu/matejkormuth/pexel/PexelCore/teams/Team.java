@@ -171,6 +171,7 @@ public class Team implements PlayerHolder {
      * 
      * @return list of players in this team
      */
+    @Override
     public List<Player> getPlayers() {
         return this.players;
     }
@@ -182,6 +183,7 @@ public class Team implements PlayerHolder {
      *            specified player
      * @return true or false
      */
+    @Override
     public boolean contains(final Player p) {
         return this.players.contains(p);
     }
@@ -191,6 +193,7 @@ public class Team implements PlayerHolder {
      * 
      * @return amount of players
      */
+    @Override
     public int getPlayerCount() {
         return this.players.size();
     }
@@ -227,7 +230,7 @@ public class Team implements PlayerHolder {
     /**
      * Retrun's this team color.
      * 
-     * @return
+     * @return color of team
      */
     public Color getColor() {
         return this.color;
