@@ -20,18 +20,30 @@ package eu.matejkormuth.pexel.PexelCore.bans;
 
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
  * Basic Ban implementation.
  */
-public class BanBase implements Ban {
+@XmlType(name = "playerBan")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class PlayerBan implements Ban {
+    // Lenght of ban in miliseconds, -1 means permanent.
     protected long      length = -1;
+    /**
+     * Reason of ban.
+     */
     protected String    reason;
     protected BanAuthor author;
     protected long      creationTime;
     protected UUID      uuid;
+    // Just for caching name.
+    protected String    playerName;
     protected Bannable  bannable;
     
     /**
@@ -46,34 +58,33 @@ public class BanBase implements Ban {
      * @param bannable
      *            banned part
      */
-    public BanBase(final String reason, final BanAuthor author, final Player player,
+    public PlayerBan(final String reason, final BanAuthor author, final Player player,
             final Bannable bannable) {
         this(-1, reason, author, System.currentTimeMillis(), player.getUniqueId(),
-                bannable);
+                player.getName(), bannable);
     }
     
     /**
      * Creates TEMPORARY ban.
      * 
      * @param length
-     * @param reason
-     * @param author
-     * @param player
-     * @param bannable
+     *            length of ban in miliseconds.
      */
-    public BanBase(final long length, final String reason, final BanAuthor author,
+    public PlayerBan(final long length, final String reason, final BanAuthor author,
             final Player player, final Bannable bannable) {
         this(length, reason, author, System.currentTimeMillis(), player.getUniqueId(),
-                bannable);
+                player.getName(), bannable);
     }
     
-    public BanBase(final long length, final String reason, final BanAuthor author,
-            final long creationTime, final UUID uuid, final Bannable bannable) {
+    public PlayerBan(final long length, final String reason, final BanAuthor author,
+            final long creationTime, final UUID uuid, final String playerName,
+            final Bannable bannable) {
         this.length = length;
         this.reason = reason;
         this.author = author;
         this.creationTime = creationTime;
         this.uuid = uuid;
+        this.playerName = playerName;
         this.bannable = bannable;
     }
     
@@ -93,7 +104,7 @@ public class BanBase implements Ban {
     }
     
     @Override
-    public Bannable getBanned() {
+    public Bannable getPart() {
         return this.bannable;
     }
     
@@ -119,9 +130,13 @@ public class BanBase implements Ban {
     
     @Override
     public String toString() {
-        return "BanBase{creationTime:" + this.creationTime + ", legth:" + this.length
+        return "BanBase{creationTime:" + this.creationTime + ", length:" + this.length
                 + ", reason:" + this.reason + ", author:" + this.author.getName()
                 + ", BID:" + this.bannable.getBannableName() + ", BN:"
                 + this.bannable.getBannableName() + ", uuid:" + this.uuid + "}";
+    }
+    
+    public String getPlayerName() {
+        return this.playerName;
     }
 }

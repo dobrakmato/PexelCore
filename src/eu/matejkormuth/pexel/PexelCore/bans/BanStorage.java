@@ -30,15 +30,15 @@ import org.bukkit.entity.Player;
  * Class used as ban storage.
  */
 public class BanStorage {
-    private final HashMap<UUID, List<BanBase>> activeBans  = new HashMap<UUID, List<BanBase>>();
-    private final HashMap<UUID, List<BanBase>> historyBans = new HashMap<UUID, List<BanBase>>();
+    private final HashMap<UUID, List<PlayerBan>> activeBans  = new HashMap<UUID, List<PlayerBan>>();
+    private final HashMap<UUID, List<PlayerBan>> historyBans = new HashMap<UUID, List<PlayerBan>>();
     
-    public void addBan(final BanBase ban) {
+    public void addBan(final PlayerBan ban) {
         if (this.activeBans.containsKey(ban.uuid)) {
             this.activeBans.get(ban.uuid).add(ban);
         }
         else {
-            this.activeBans.put(ban.uuid, new ArrayList<BanBase>());
+            this.activeBans.put(ban.uuid, new ArrayList<PlayerBan>());
             this.activeBans.get(ban.uuid).add(ban);
         }
     }
@@ -57,9 +57,9 @@ public class BanStorage {
             return false;
         }
         else {
-            for (Iterator<BanBase> iterator = this.activeBans.get(player.getUniqueId()).iterator(); iterator.hasNext();) {
-                BanBase ban = iterator.next();
-                if (ban.getBanned() == part)
+            for (Iterator<PlayerBan> iterator = this.activeBans.get(player.getUniqueId()).iterator(); iterator.hasNext();) {
+                PlayerBan ban = iterator.next();
+                if (ban.getPart() == part)
                     if (ban.isPermanent()) {
                         return true;
                     }
@@ -70,7 +70,7 @@ public class BanStorage {
                             }
                             else {
                                 this.historyBans.put(player.getUniqueId(),
-                                        new ArrayList<BanBase>());
+                                        new ArrayList<PlayerBan>());
                                 this.historyBans.get(player.getUniqueId()).add(ban);
                             }
                             iterator.remove();
@@ -94,13 +94,13 @@ public class BanStorage {
      *            specified part
      * @return ban or null
      */
-    public BanBase getBan(final Player player, final Bannable part) {
+    public PlayerBan getBan(final Player player, final Bannable part) {
         if (!this.activeBans.containsKey(player.getUniqueId())) {
             return null;
         }
         else {
-            for (BanBase ban : this.activeBans.get(player.getUniqueId())) {
-                if (ban.getBanned() == part)
+            for (PlayerBan ban : this.activeBans.get(player.getUniqueId())) {
+                if (ban.getPart() == part)
                     return ban;
             }
             return null;
@@ -108,14 +108,25 @@ public class BanStorage {
     }
     
     /**
-     * Retruns list of bans by specified player.
+     * Retruns list of active bans by specified player.
      * 
      * @param player
      *            specififed player.
-     * @return
+     * @return list of player's bans
      */
-    public List<BanBase> getBans(final Player player) {
+    public List<PlayerBan> getActiveBans(final Player player) {
         return this.activeBans.get(player.getUniqueId());
+    }
+    
+    /**
+     * Retruns list of past bans by specified player.
+     * 
+     * @param player
+     *            specififed player.
+     * @return list of player's bans
+     */
+    public List<PlayerBan> getPastBans(final Player player) {
+        return this.historyBans.get(player.getUniqueId());
     }
     
     public void save() {
@@ -126,9 +137,9 @@ public class BanStorage {
         
     }
     
-    public List<BanBase> getBans() {
-        List<BanBase> fullbans = new ArrayList<BanBase>();
-        for (List<BanBase> bans : this.activeBans.values())
+    public List<PlayerBan> getBans() {
+        List<PlayerBan> fullbans = new ArrayList<PlayerBan>();
+        for (List<PlayerBan> bans : this.activeBans.values())
             fullbans.addAll(bans);
         return fullbans;
     }

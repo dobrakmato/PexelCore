@@ -34,6 +34,8 @@ import eu.matejkormuth.pexel.PexelCore.actions.TeleportAction;
 import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.Lobby;
 import eu.matejkormuth.pexel.PexelCore.arenas.MapData;
+import eu.matejkormuth.pexel.PexelCore.bans.NamedBanAuthor;
+import eu.matejkormuth.pexel.PexelCore.bans.PlayerBan;
 import eu.matejkormuth.pexel.PexelCore.core.Achievement;
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
@@ -53,6 +55,7 @@ public class HardCoded {
     /**
      * Main method called from Plugin.onEnable()
      */
+    @SuppressWarnings("deprecation")
     public static final void main() {
         //Initialize color war mingiame
         //new ColorWarMinigame();
@@ -62,16 +65,17 @@ public class HardCoded {
         
         //new KingdomWarsMingame();
         
-        /*
-         * Pexel.getBans().addBan( new BanBase("nemam sa rad", new NamedBanAuthor("dobrakmato"),
-         * Bukkit.getPlayer("dobrakmato"), Server.THIS_SERVER));
-         * 
-         * Pexel.getBans().addBan( new BanBase(100000, "dementy dvodod", new NamedBanAuthor("dement"),
-         * Bukkit.getPlayer("pitkes22"), Server.THIS_SERVER));
-         * 
-         * Pexel.getBans().addBan( new BanBase(45000, "test", new NamedBanAuthor("dobrakmato"),
-         * Bukkit.getPlayer("test"), Server.THIS_SERVER));
-         */
+        Pexel.getBans().addBan(
+                new PlayerBan("nemam sa rad", new NamedBanAuthor("dobrakmato"),
+                        Bukkit.getPlayer("test"), Server.THIS_SERVER));
+        
+        Pexel.getBans().addBan(
+                new PlayerBan(100000, "dementy dvodod", new NamedBanAuthor("dement"),
+                        Bukkit.getPlayer("test2"), Server.THIS_SERVER));
+        
+        Pexel.getBans().addBan(
+                new PlayerBan(45000, "test", new NamedBanAuthor("dobrakmato"),
+                        Bukkit.getPlayer("DeathlNom"), Server.THIS_SERVER));
         
         // Test XML
         class SampleArenaMap extends MapData {
@@ -90,8 +94,13 @@ public class HardCoded {
                 this.options_string.put("option2", "yes");
                 this.options_string.put("option3", "no");
                 
+                this.options_int.put("option4", 225);
+                
                 this.regions.put("region_one", new Region(new Vector(5, 10, 88),
                         new Vector(50, 50, 70), Bukkit.getWorld("world")));
+                
+                this.init(16, 4, 60, new Location(Bukkit.getWorld("world"), 11, 22, 33),
+                        this.regions.get("region_one"));
             }
         }
         

@@ -50,7 +50,7 @@ public interface Ban {
      * 
      * @return part of network.
      */
-    public Bannable getBanned();
+    public Bannable getPart();
     
     /**
      * Returns reason of this ban.

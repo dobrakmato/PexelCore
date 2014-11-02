@@ -47,7 +47,7 @@ public class BanListServer {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.info("Koniec!");
+                Log.info("Stopping BAN-Server!");
             }
         }).start();
         
@@ -61,11 +61,16 @@ public class BanListServer {
     public class BanListHandler implements HttpHandler {
         @Override
         public void handle(final HttpExchange t) throws IOException {
-            String response = "<h1>Banlist</h1>";
-            for (BanBase ban : Pexel.getBans().getBans()) {
-                response += "<pre style=\"background:#ccc;margin:16px;font-size:9px;\">"
-                        + ban.toString() + "</pre>";
+            String response = "<html><body><h1>Banlist</h1>";
+            response += "<table><thead><tr><th>Player name</th><th>Created at</th><th>Expire at</th><th>Reason</th><th>Admin's name</th><th>Part</th></tr></thead><tbody>";
+            for (PlayerBan ban : Pexel.getBans().getBans()) {
+                response += "<td>" + ban.getPlayerName() + "</td><td>"
+                        + ban.getCreated() + "</td><td>" + ban.getExpirationTime()
+                        + "</td><td>" + ban.getReason() + "</td><td>"
+                        + ban.getAuthor().getName() + "</td><td>"
+                        + ban.getPart().getBannableName() + "</pre>";
             }
+            response += "</tbody></table></body></html>";
             
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();

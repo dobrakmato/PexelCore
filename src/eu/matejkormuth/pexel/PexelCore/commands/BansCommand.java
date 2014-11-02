@@ -5,7 +5,7 @@ import org.bukkit.craftbukkit.libs.joptsimple.internal.Strings;
 import org.bukkit.entity.Player;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
-import eu.matejkormuth.pexel.PexelCore.bans.BanBase;
+import eu.matejkormuth.pexel.PexelCore.bans.PlayerBan;
 import eu.matejkormuth.pexel.PexelCore.bans.BanUtils;
 import eu.matejkormuth.pexel.PexelCore.bans.NamedBanAuthor;
 import eu.matejkormuth.pexel.PexelNetworking.Server;
@@ -20,7 +20,7 @@ public class BansCommand {
     @SuppressWarnings("deprecation")
     @SubCommand(description = "Adds ban")
     public void add(final Player sender, final String playerName, final String... reason) {
-        BanBase ban = new BanBase(Strings.join(reason, " "), new NamedBanAuthor(
+        PlayerBan ban = new PlayerBan(Strings.join(reason, " "), new NamedBanAuthor(
                 sender.getName()), Bukkit.getPlayer(playerName), Server.THIS_SERVER);
         Pexel.getBans().addBan(ban);
         Bukkit.getPlayer(playerName).kickPlayer(BanUtils.formatBannedMessage(ban));
@@ -32,7 +32,7 @@ public class BansCommand {
     @SubCommand(description = "Adds ban")
     public void add(final Player sender, final String playerName, final String lenght,
             final String... reason) {
-        BanBase ban = new BanBase(Integer.parseInt(lenght), Strings.join(reason, " "),
+        PlayerBan ban = new PlayerBan(Integer.parseInt(lenght), Strings.join(reason, " "),
                 new NamedBanAuthor(sender.getName()), Bukkit.getPlayer(playerName),
                 Server.THIS_SERVER);
         Pexel.getBans().addBan(ban);

@@ -18,15 +18,21 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore.bans;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BanUtils {
-    public static final String formatBannedMessage(final BanBase ban) {
+    private static final SimpleDateFormat format = new SimpleDateFormat(
+                                                         "yyyy 'years', MM 'moths', dd 'days' 'and' HH 'hours', mm 'minutes', ss 'seconds'");
+    
+    public static final String formatBannedMessage(final PlayerBan ban) {
         if (ban.isPermanent()) {
-            return "You have been banned from " + ban.getBanned().getBannableName()
+            return "You have been banned from " + ban.getPart().getBannableName()
                     + " permanently!";
         }
         else {
-            return "You have been banned from " + ban.getBanned().getBannableName()
-                    + " for " + ban.getLength() / 1000 + " seconds!";
+            return "You have been banned from " + ban.getPart().getBannableName()
+                    + " for " + format.format(new Date(ban.getLength())) + "!";
         }
     }
 }
