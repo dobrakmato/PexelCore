@@ -36,14 +36,9 @@ import org.bukkit.entity.Player;
 import com.google.common.collect.ImmutableList;
 
 import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect2;
-import eu.matejkormuth.pexel.PexelCore.util.ServerLocation;
-import eu.matejkormuth.pexel.PexelCore.util.ServerLocationType;
 
 /**
  * Object for storing player's friends and unfriends.
- * 
- * @author Mato Kormuth
- * 
  */
 @XmlRootElement
 public class PlayerProfile {
@@ -52,33 +47,28 @@ public class PlayerProfile {
      */
     @XmlID
     @XmlAttribute
-    protected final UUID                   player;
+    protected final UUID                   uuid;
     /**
      * Player's friends.
      */
     @XmlAttribute
-    protected final List<UUID>             friends        = new ArrayList<UUID>();
+    protected final List<UUID>             friends       = new ArrayList<UUID>();
     /**
      * Player's foes.
      */
     @XmlAttribute
-    protected final List<UUID>             foes           = new ArrayList<UUID>();
+    protected final List<UUID>             foes          = new ArrayList<UUID>();
     /**
      * Player's settings.
      */
     @XmlAttribute
-    protected final Map<Settings, Boolean> settings       = new HashMap<Settings, Boolean>();
+    protected final Map<Settings, Boolean> settings      = new HashMap<Settings, Boolean>();
     
     /**
      * Spectating status.
      */
-    protected boolean                      spectating     = false;
-    /**
-     * Player's location.
-     */
-    protected ServerLocation               serverLocation = new ServerLocation(
-                                                                  "Main Lobby",
-                                                                  ServerLocationType.LOBBY);
+    protected transient boolean            spectating    = false;
+    
     //Dont mind this one...
     private ParticleEffect2                particleType;
     
@@ -86,19 +76,19 @@ public class PlayerProfile {
      * Last known name of this player.
      */
     @XmlAttribute
-    protected String                       lastKnownName  = "";
+    protected String                       lastKnownName = "";
     /**
      * Amount of player's points (probably in-game currency or whatever).
      */
     @XmlAttribute
-    protected int                          points          = 0;
+    protected int                          points        = 0;
     @XmlAttribute
-    protected int                          warnCount      = 0;
+    protected int                          warnCount     = 0;
     
     /**
      * Represents party, that player is currently in. If is player not in any party, it is null.
      */
-    protected Party                        party;
+    protected transient Party              party;
     
     /**
      * Creates player profile from Player object.
@@ -106,7 +96,7 @@ public class PlayerProfile {
      * @param player
      */
     public PlayerProfile(final Player player) {
-        this.player = player.getUniqueId();
+        this.uuid = player.getUniqueId();
     }
     
     /**
@@ -115,7 +105,7 @@ public class PlayerProfile {
      * @param player
      */
     public PlayerProfile(final UUID player) {
-        this.player = player;
+        this.uuid = player;
     }
     
     /**
@@ -150,7 +140,7 @@ public class PlayerProfile {
      * @return
      */
     public UUID getUniqueId() {
-        return this.player;
+        return this.uuid;
     }
     
     /**
@@ -164,24 +154,6 @@ public class PlayerProfile {
     
     public List<UUID> getFoes() {
         return ImmutableList.copyOf(this.foes);
-    }
-    
-    /**
-     * Sets player's server location.
-     * 
-     * @param location
-     */
-    public void setServerLocation(final ServerLocation location) {
-        this.serverLocation = location;
-    }
-    
-    /**
-     * Returns current player's server location.
-     * 
-     * @return
-     */
-    public ServerLocation getServerLocation() {
-        return this.serverLocation;
     }
     
     /**
@@ -248,7 +220,7 @@ public class PlayerProfile {
     public void save(final String path) {
         YamlConfiguration yaml = new YamlConfiguration();
         
-        yaml.set("player.uuid", this.player.toString());
+        yaml.set("player.uuid", this.uuid.toString());
         yaml.set("player.points", this.points);
         yaml.set("player.warnCount", this.warnCount);
         yaml.set("player.lastKnownName", this.lastKnownName);
@@ -289,10 +261,12 @@ public class PlayerProfile {
         return profile;
     }
     
+    // Will be removed
     public void setParticleType(final ParticleEffect2 effect) {
         this.particleType = effect;
     }
     
+    // Will be removed
     public ParticleEffect2 getParticleType() {
         return this.particleType;
     }
@@ -318,12 +292,12 @@ public class PlayerProfile {
     public void saveXML(final String profilePath) {
         //TODO: Not yet implemented
     }
-
+    
     public Party getParty() {
         return this.party;
     }
-
-    public void setParty(Party party) {
+    
+    public void setParty(final Party party) {
         this.party = party;
     }
 }

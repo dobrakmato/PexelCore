@@ -22,17 +22,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import eu.matejkormuth.pexel.PexelCore.core.Log;
-import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
-import eu.matejkormuth.pexel.PexelCore.util.ServerLocation;
 
 /**
  * Union chat formatter and manager for pexel.
@@ -100,18 +96,6 @@ public class ChatManager {
         return ChatColor.BLUE
                 + ChatManager.chatDefaultFormat.replace("%player%",
                         player.getDisplayName()).replace("%msg%", msg);
-    }
-    
-    public static final String onlinefriends(final List<UUID> players) {
-        String string = ChatColor.GOLD + "Online players: ";
-        for (UUID uuid : players) {
-            if (Bukkit.getPlayer(uuid).isOnline()) {
-                ServerLocation location = StorageEngine.getProfile(uuid).getServerLocation();
-                string += Bukkit.getPlayer(uuid).getDisplayName() + " ("
-                        + location.toString() + ")";
-            }
-        }
-        return string;
     }
     
     /**

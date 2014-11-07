@@ -23,9 +23,7 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 
-import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
-import eu.matejkormuth.pexel.PexelCore.util.ServerLocation;
 
 /**
  * Request for matchmaking.
@@ -97,18 +95,6 @@ public class MatchmakingRequest {
     public static MatchmakingRequest create(final Minigame minigame,
             final Player... player) {
         return new MatchmakingRequest(Arrays.asList(player), minigame, null);
-    }
-    
-    /**
-     * Updates server server location ({@link ServerLocation}) of players in request. Does not teleport players.
-     * 
-     * @param location
-     * @deprecated
-     */
-    @Deprecated
-    public void updateServerLocation(final ServerLocation location) {
-        for (Player p : this.players)
-            StorageEngine.getProfile(p.getUniqueId()).setServerLocation(location);
     }
     
     /**

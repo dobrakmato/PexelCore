@@ -326,8 +326,6 @@ public class StorageEngine {
             yaml_gates.set("gates.gate" + i_gates + ".name", key);
             yaml_gates.set("gates.gate" + i_gates + ".action.type",
                     tg.getAction().getClass().getSimpleName());
-            yaml_gates.set("gates.gate" + i_gates + ".action.content",
-                    tg.getAction().save());
             if (tg.getRegion() != null)
                 tg.getRegion().serialize(yaml_gates, "gates.gate" + i_gates + ".region");
             i_gates++;

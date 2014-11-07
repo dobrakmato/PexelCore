@@ -178,7 +178,7 @@ public class ChatChannel {
     /**
      * Returns whether subscriber can read messages from this channel.
      * 
-     * @param player
+     * @param uuid
      *            player to check
      * @return true if player can read
      */
