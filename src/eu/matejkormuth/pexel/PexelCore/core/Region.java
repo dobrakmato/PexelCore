@@ -350,4 +350,19 @@ public class Region {
                 center.toVector().subtract(new Vector(size, size, size)),
                 center.getWorld());
     }
+    
+    /**
+     * @return
+     */
+    public double getWidth() {
+        return this.getMaxX() - this.getMinX();
+    }
+    
+    public double getHeight() {
+        return this.getMaxY() - this.getMinY();
+    }
+    
+    public double getLength() {
+        return this.getMaxZ() - this.getMinZ();
+    }
 }
