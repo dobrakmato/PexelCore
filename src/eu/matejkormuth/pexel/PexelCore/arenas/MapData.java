@@ -42,15 +42,13 @@ import eu.matejkormuth.pexel.PexelCore.core.RegionTransformer;
 import eu.matejkormuth.pexel.PexelCore.util.SerializableLocation;
 
 /**
- * Class that represents playable map.
- * 
- * @author Mato Kormuth
- * 
+ * Class that represents data of playable map (not block data).
  */
 @XmlType(name = "arenamap")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class MapData {
+    // Keys
     /**
      * Minimum number of players required to start arena.
      */
@@ -80,8 +78,8 @@ public class MapData {
     @XmlElementWrapper(name = "regions")
     protected final Map<String, Region>               regions              = new HashMap<String, Region>();
     
-    @XmlAttribute(name = "locationType")
-    protected LocationType                            locationsType        = LocationType.ABSOLUTE;
+    @XmlAttribute(name = "locationsType")
+    protected LocationsType                           locationsType        = LocationsType.ABSOLUTE;
     
     @XmlAttribute(name = "maxPlayers")
     protected int                                     maxPlayers           = 16;                                         // Default value of 16.
@@ -137,6 +135,13 @@ public class MapData {
         m.marshal(this, file);
     }
     
+    /**
+     * Returns boolean whether this mapData is usable in specified arena.
+     * 
+     * @param arena
+     *            arena to check
+     * @return true or false
+     */
     public boolean validate(final AbstractArena arena) {
         return arena.getMinigame().getName().equals(this.minigameName);
     }
@@ -162,7 +167,7 @@ public class MapData {
     }
     
     public Location getLocation(final String key) {
-        if (this.locationsType == LocationType.ABSOLUTE) {
+        if (this.locationsType == LocationsType.ABSOLUTE) {
             return this.locations.get(key).getLocation();
         }
         else {
@@ -178,7 +183,7 @@ public class MapData {
     }
     
     public Region getRegion(final String key) {
-        if (this.locationsType == LocationType.ABSOLUTE) {
+        if (this.locationsType == LocationsType.ABSOLUTE) {
             return this.regions.get(key);
         }
         else {

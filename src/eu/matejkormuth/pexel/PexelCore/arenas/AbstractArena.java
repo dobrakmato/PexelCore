@@ -61,10 +61,8 @@ import eu.matejkormuth.pexel.PexelCore.util.ServerLocation;
 import eu.matejkormuth.pexel.PexelCore.util.ServerLocationType;
 
 /**
- * Minigame arena.
- * 
- * @author Mato Kormuth
- * 
+ * Abstract minigame arena - {@link ProtectedArea} that implements {@link MatchmakingGame}, {@link PlayerHolder},
+ * {@link Bannable}. Contains some useful functions and basic strucutre of minigame.
  */
 public abstract class AbstractArena extends ProtectedArea implements MatchmakingGame,
         PlayerHolder, Bannable {
@@ -105,7 +103,7 @@ public abstract class AbstractArena extends ProtectedArea implements Matchmaking
         this.slots = mapData.getMaxPlayers();
         this.mapData = mapData;
         
-        // Check MapData
+        // Check MapData validity.
         ValidityChecker.checkMapData(mapData);
     }
     

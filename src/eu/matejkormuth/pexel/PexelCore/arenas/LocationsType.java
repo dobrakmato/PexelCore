@@ -20,8 +20,17 @@ package eu.matejkormuth.pexel.PexelCore.arenas;
 
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ * Type of locations in {@link MapData}.
+ */
 @XmlType(name = "locationtype")
-public enum LocationType {
+public enum LocationsType {
+    /**
+     * Co-ordinates are in absolute values.
+     */
     ABSOLUTE,
+    /**
+     * Co-ordinates are in relative values. Absolute values are evaulated using {@link MapData#anchor}.
+     */
     RELATIVE;
 }

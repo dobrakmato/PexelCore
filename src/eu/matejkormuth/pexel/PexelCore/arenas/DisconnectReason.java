@@ -20,7 +20,6 @@ package eu.matejkormuth.pexel.PexelCore.arenas;
 
 /**
  * Reasons for disconnecting from arena.
- * 
  */
 public enum DisconnectReason {
     /**

@@ -18,11 +18,13 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore.arenas;
 
+/**
+ * Base exception for invalid {@link MapData}.
+ */
 public class InvalidMapDataException extends RuntimeException {
+    private static final long serialVersionUID = -4753376360641192951L;
+    
     public InvalidMapDataException(final String string) {
         super(string);
     }
-    
-    private static final long serialVersionUID = -4753376360641192951L;
-    
 }
