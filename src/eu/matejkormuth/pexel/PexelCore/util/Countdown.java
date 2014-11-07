@@ -77,7 +77,7 @@ public class Countdown {
             this.onTick.run();
         
         if (this.timeLeft < 1) {
-            Pexel.cancelTask(this.taskId);
+            Pexel.getScheduler().cancelTask(this.taskId);
             if (this.onEnd != null)
                 this.onEnd.run();
         }
@@ -87,7 +87,7 @@ public class Countdown {
      * Pauses countdown. Resume with {@link Countdown#start()}.
      */
     public void pause() {
-        Pexel.cancelTask(this.taskId);
+        Pexel.getScheduler().cancelTask(this.taskId);
     }
     
     /**

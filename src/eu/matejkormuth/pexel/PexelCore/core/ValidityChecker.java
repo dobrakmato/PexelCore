@@ -1,4 +1,4 @@
-package eu.matejkormuth.pexel.PexelCore;
+package eu.matejkormuth.pexel.PexelCore.core;
 
 import org.apache.commons.lang.StringUtils;
 

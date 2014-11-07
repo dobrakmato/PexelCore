@@ -73,7 +73,7 @@ public abstract class Voting {
      */
     protected void timeout() {
         if (this.lastInteraction + this.timeout < System.currentTimeMillis()) {
-            Pexel.cancelTask(this.taskId);
+            Pexel.getScheduler().cancelTask(this.taskId);
             this.onVoteFailed();
         }
     }

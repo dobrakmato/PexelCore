@@ -45,7 +45,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
-import eu.matejkormuth.pexel.PexelCore.ValidityChecker;
 import eu.matejkormuth.pexel.PexelCore.areas.ProtectedArea;
 import eu.matejkormuth.pexel.PexelCore.bans.BanUtils;
 import eu.matejkormuth.pexel.PexelCore.bans.Bannable;
@@ -53,12 +52,11 @@ import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.PlayerHolder;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
+import eu.matejkormuth.pexel.PexelCore.core.ValidityChecker;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.GameState;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.MatchmakingGame;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
 import eu.matejkormuth.pexel.PexelCore.util.ItemUtils;
-import eu.matejkormuth.pexel.PexelCore.util.ServerLocation;
-import eu.matejkormuth.pexel.PexelCore.util.ServerLocationType;
 
 /**
  * Abstract minigame arena - {@link ProtectedArea} that implements {@link MatchmakingGame}, {@link PlayerHolder},
@@ -357,12 +355,6 @@ public abstract class AbstractArena extends ProtectedArea implements Matchmaking
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-    }
-    
-    @Override
-    @Deprecated
-    public ServerLocation getServerLocation() {
-        return new ServerLocation("DEPRECATED", ServerLocationType.UNKNOWN);
     }
     
     /**

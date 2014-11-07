@@ -71,10 +71,7 @@ import eu.matejkormuth.pexel.PexelNetworking.PexelMasterServer;
 import eu.matejkormuth.pexel.PexelNetworking.PexelServerClient;
 
 /**
- * Hlavna trieda Pexel.
- * 
- * @author Mato Kormuth
- * 
+ * Bukkit plugin class.
  */
 public class PexelCore extends JavaPlugin implements PluginMessageListener {
     /**

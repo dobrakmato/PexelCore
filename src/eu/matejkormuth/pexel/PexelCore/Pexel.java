@@ -32,6 +32,7 @@ import eu.matejkormuth.pexel.PexelCore.core.MagicClock;
 import eu.matejkormuth.pexel.PexelCore.core.PlayerProfile;
 import eu.matejkormuth.pexel.PexelCore.core.Scheduler;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
+import eu.matejkormuth.pexel.PexelCore.core.ValidityChecker;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.Matchmaking;
 import eu.matejkormuth.pexel.PexelCore.matchmaking.MatchmakingSignUpdater;
 import eu.matejkormuth.pexel.PexelCore.minigame.Minigame;
@@ -39,10 +40,7 @@ import eu.matejkormuth.pexel.PexelCore.util.AsyncWorker;
 import eu.matejkormuth.pexel.PexelCore.util.PlayerFreezer;
 
 /**
- * Class for static calls.
- * 
- * @author Mato Kormuth
- * 
+ * Class used for API calls.
  */
 public final class Pexel {
     //Pexel plugin.
@@ -63,15 +61,6 @@ public final class Pexel {
      * @return core
      */
     public static final PexelCore getCore() {
-        return Pexel.instance;
-    }
-    
-    /**
-     * Returns the main plugin instance.
-     * 
-     * @return core
-     */
-    public static final PexelCore getInstance() {
         return Pexel.instance;
     }
     
@@ -98,35 +87,8 @@ public final class Pexel {
      * 
      * @return player freezer
      */
-    public static final PlayerFreezer getFreezer() {
+    public static final PlayerFreezer getPlayerFreezer() {
         return Pexel.instance.freezer;
-    }
-    
-    /**
-     * Schedules periodic task. Returns task id.
-     * 
-     * @param runnable
-     *            runnable, that will be executed periodically.
-     * @param delay
-     *            delay before first execution in server ticks.
-     * @param period
-     *            period in server ticks.
-     * @return task id
-     */
-    public static final int schedule(final Runnable runnable, final long delay,
-            final long period) {
-        return Pexel.instance.scheduler.scheduleSyncRepeatingTask(runnable, delay,
-                period);
-    }
-    
-    /**
-     * Cancles task.
-     * 
-     * @param taskId
-     *            task id
-     */
-    public static final void cancelTask(final int taskId) {
-        Pexel.instance.scheduler.cancelTask(taskId);
     }
     
     /**

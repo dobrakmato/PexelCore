@@ -29,7 +29,9 @@ import eu.matejkormuth.pexel.PexelCore.util.BukkitTimer;
  * Sign updater.
  */
 public class MatchmakingSignUpdater implements Runnable {
+    // Listo of cached signs.
     private final List<Block> cachedSigns = new ArrayList<Block>();
+    // Timer for updates.
     private final BukkitTimer timer       = new BukkitTimer(20, this);
     
     public MatchmakingSignUpdater() {

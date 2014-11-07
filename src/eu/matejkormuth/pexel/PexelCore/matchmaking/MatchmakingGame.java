@@ -23,7 +23,6 @@ import java.util.List;
 import org.bukkit.entity.Player;
 
 import eu.matejkormuth.pexel.PexelCore.arenas.DisconnectReason;
-import eu.matejkormuth.pexel.PexelCore.util.ServerLocation;
 
 /**
  * Specifies that the object is game participating in matchmaking.
@@ -54,15 +53,6 @@ public interface MatchmakingGame {
     public GameState getState();
     
     /**
-     * Returns game server locetion.
-     * 
-     * @return server location of this arena
-     * @deprecated
-     */
-    @Deprecated
-    public ServerLocation getServerLocation();
-    
-    /**
      * Returns list of players in game.
      * 
      * @return
@@ -70,7 +60,7 @@ public interface MatchmakingGame {
     public List<Player> getPlayers();
     
     /**
-     * Returns number of player in game. Same as calling {@link MatchmakingRequest#getPlayers()}.size().
+     * Returns number of player in game.
      * 
      * @return number of players in arena
      */

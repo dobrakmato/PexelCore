@@ -31,7 +31,7 @@ public class Auth {
         // TODO:  PHP or MYSQL Implementation to integrate with unified login system.
         
         // Unfreeze player.
-        Pexel.getFreezer().unfreeze(player);
+        Pexel.getPlayerFreezer().unfreeze(player);
         
         player.sendMessage(ChatManager.success("Successfully logged in!"));
     }

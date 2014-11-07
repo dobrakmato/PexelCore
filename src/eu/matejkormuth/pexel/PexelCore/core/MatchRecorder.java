@@ -85,7 +85,7 @@ public class MatchRecorder {
             this.playerids.put(p.getUniqueId(), p.getEntityId());
         }
         
-        this.taskId = Pexel.schedule(new Runnable() {
+        this.taskId = Pexel.getScheduler().scheduleSyncRepeatingTask(new Runnable() {
             @Override
             public void run() {
                 MatchRecorder.this.captureFrame();
@@ -111,7 +111,7 @@ public class MatchRecorder {
     public void stopCapturing() {
         this.arena.chatAll(ChatColor.RED + "[Record] " + ChatColor.GOLD
                 + "Recording stopped!");
-        Pexel.cancelTask(this.taskId);
+        Pexel.getScheduler().cancelTask(this.taskId);
     }
     
     /**
@@ -222,6 +222,6 @@ public class MatchRecorder {
         this.playerids.clear();
         this.playernames.clear();
         
-        Pexel.cancelTask(this.taskId);
+        Pexel.getScheduler().cancelTask(this.taskId);
     }
 }
