@@ -24,8 +24,8 @@ import java.io.IOException;
 
 import org.bukkit.Bukkit;
 
-import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelNetworking.AbstractPacket;
+import eu.matejkormuth.pexel.slave.Pexel;
 
 public class CrossServerChatMessage extends AbstractPacket {
     public String message;
