@@ -22,9 +22,6 @@ import org.bukkit.entity.Player;
 
 /**
  * Basic sudo command player action.
- * 
- * @author Mato Kormuth
- * 
  */
 public class CommandAction implements Action {
     private String command = "";
@@ -43,15 +40,5 @@ public class CommandAction implements Action {
     @Override
     public void execute(final Player player) {
         player.performCommand(this.command.replace("%player%", player.getName()));
-    }
-    
-    @Override
-    public void load(final String string) {
-        this.command = string;
-    }
-    
-    @Override
-    public String save() {
-        return this.command;
     }
 }

@@ -24,9 +24,6 @@ import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenu;
 
 /**
  * Inventory menu action that opens another inventory menu.
- * 
- * @author Mato Kormuth
- * 
  */
 public class OpenInventoryMenuAction implements Action {
     private final InventoryMenu inventoryMenu;
@@ -39,16 +36,6 @@ public class OpenInventoryMenuAction implements Action {
      */
     public OpenInventoryMenuAction(final InventoryMenu im) {
         this.inventoryMenu = im;
-    }
-    
-    @Override
-    public void load(final String string) {
-        
-    }
-    
-    @Override
-    public String save() {
-        return null;
     }
     
     @Override

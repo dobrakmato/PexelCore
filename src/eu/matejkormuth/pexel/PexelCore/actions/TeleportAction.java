@@ -18,7 +18,6 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore.actions;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -26,7 +25,6 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
 import eu.matejkormuth.pexel.PexelCore.Pexel;
-import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelNetworking.Server;
 
 /**
@@ -39,11 +37,11 @@ public class TeleportAction implements Action {
     /**
      * Target location.
      */
-    private Location location;
+    private final Location location;
     /**
      * Target server.
      */
-    private Server   server;
+    private Server         server;
     
     /**
      * Creates a new action.
@@ -65,36 +63,6 @@ public class TeleportAction implements Action {
     }
     
     @Override
-    public void load(final String string) {
-        try {
-            // Split string to elements.
-            String[] elements = string.split("\\|");
-            double x = Double.parseDouble(elements[0]);
-            double y = Double.parseDouble(elements[1]);
-            double z = Double.parseDouble(elements[2]);
-            float pitch = Float.parseFloat(elements[3]);
-            float yaw = Float.parseFloat(elements[4]);
-            String name = elements[5];
-            // Build location from elements.
-            this.location = new Location(Bukkit.getWorld(name), x, y, z, yaw, pitch);
-        } catch (Exception ex) {
-            Log.warn("Can't deserialize string '" + string + "' as TeleportAction!");
-        }
-    }
-    
-    @Override
-    public String save() {
-        // Serialize location data to string.
-        try {
-            return this.location.getX() + "|" + this.location.getY() + "|"
-                    + this.location.getZ() + "|" + this.location.getPitch() + "|"
-                    + this.location.getYaw() + "|" + this.location.getWorld().getName();
-        } catch (Exception ex) {
-            return "ERROR_WHILE_SERIALIZING";
-        }
-    }
-    
-    @Override
     public void execute(final Player player) {
         if (this.server.isLocalServer()) {
             // Just teleport player to target location.
@@ -103,7 +71,7 @@ public class TeleportAction implements Action {
         else {
             // TODO: Add teleport to location. Perform server-wide teleport
             
-            // Teleport to other server using bungee
+            // Teleport to other server when using Bungee.
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("Connect");
             out.writeUTF(this.server.getBungeeName());
