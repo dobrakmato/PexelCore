@@ -16,16 +16,26 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.master.bans;
+package eu.matejkormuth.pexel.master.minigame;
 
 /**
- * Interface that specifies ban author.
+ * All categories of minigames.
+ * 
+ * @author Mato Kormuth
+ * 
  */
-public interface BanAuthor {
+public enum MinigameCategory {
     /**
-     * Returns name of author of ban.
-     * 
-     * @return name of author
+     * Aracade minigame (ex. Tnt Tag).
      */
-    public String getName();
+    ARCADE,
+    /**
+     * Minigame that is about to survive (ex. Survival Games).
+     */
+    SURVIVAL,
+    /**
+     * Mingiame that is ready for tournaments (ex. Kingdom Wars, Annihilation). Minigames in this category have enabled
+     * negative points for leaving match before match ends.
+     */
+    TOURNAMENT;
 }

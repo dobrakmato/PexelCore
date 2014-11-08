@@ -16,17 +16,33 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.master.bans;
+package eu.matejkormuth.pexel.master.areas;
 
-public class NamedBanAuthor implements BanAuthor {
-    private final String name;
+import org.bukkit.entity.Player;
+
+/**
+ * Player area owner.
+ * 
+ * @author Mato Kormuth
+ * 
+ */
+public class PlayerAreaOwner implements AreaOwner {
+    /**
+     * Player who is owner.
+     */
+    private final Player owner;
     
-    public NamedBanAuthor(final String authorName) {
-        this.name = authorName;
+    /**
+     * Initializes new instance of area owner with specified player.
+     * 
+     * @param player
+     */
+    public PlayerAreaOwner(final Player player) {
+        this.owner = player;
     }
     
     @Override
     public String getName() {
-        return this.name;
+        return this.owner.getName();
     }
 }

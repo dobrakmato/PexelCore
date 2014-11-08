@@ -16,24 +16,23 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.slave.util;
+package eu.matejkormuth.pexel.master.minigame;
 
-public class Watcher<T> {
-    private T        lastState;
-    private Runnable onChanged;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * All minigame types / tags.
+ * 
+ * @author Mato Kormuth
+ * 
+ */
+public enum MinigameType {
+    TNT,
+    CREEPER,
+    PVP;
     
-    public void check(final T value) {
-        if (this.changed(value)) {
-            this.lastState = value;
-            this.onChanged.run();
-        }
-    }
-    
-    public boolean changed(final T value) {
-        return this.lastState == value;
-    }
-    
-    public void setOnChanged(final Runnable onChanged) {
-        this.onChanged = onChanged;
+    public static final List<MinigameType> makeTypes(final MinigameType... types) {
+        return Arrays.asList(types);
     }
 }

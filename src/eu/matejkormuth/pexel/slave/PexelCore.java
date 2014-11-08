@@ -36,8 +36,10 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import com.sun.net.httpserver.HttpServer;
 
+import eu.matejkormuth.pexel.PexelNetworking.PexelMasterServer;
+import eu.matejkormuth.pexel.PexelNetworking.PexelServerClient;
+import eu.matejkormuth.pexel.master.shit.PNBroadcastServer;
 import eu.matejkormuth.pexel.slave.areas.Areas;
-import eu.matejkormuth.pexel.slave.bans.BanListServer;
 import eu.matejkormuth.pexel.slave.bans.BanStorage;
 import eu.matejkormuth.pexel.slave.commands.AlternativeCommands;
 import eu.matejkormuth.pexel.slave.commands.ArenaCommand;
@@ -67,8 +69,6 @@ import eu.matejkormuth.pexel.slave.matchmaking.Matchmaking;
 import eu.matejkormuth.pexel.slave.matchmaking.MatchmakingSignUpdater;
 import eu.matejkormuth.pexel.slave.util.AsyncWorker;
 import eu.matejkormuth.pexel.slave.util.PlayerFreezer;
-import eu.matejkormuth.pexel.PexelNetworking.PexelMasterServer;
-import eu.matejkormuth.pexel.PexelNetworking.PexelServerClient;
 
 /**
  * Bukkit plugin class.
@@ -122,7 +122,6 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
      * Pexel Ban storage.
      */
     public BanStorage             banStorage;
-    public BanListServer          banListServer;
     public HttpServer             serv;
     public Achievements           achievementsClient;
     
@@ -139,7 +138,6 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         UpdatedParts.shutdown();
         
         this.pexelserver.close();
-        this.banListServer.stop();
         this.banStorage.save();
         this.serv.stop(0);
         
@@ -177,11 +175,6 @@ public class PexelCore extends JavaPlugin implements PluginMessageListener {
         this.scheduler = new Scheduler();
         
         try {
-            this.pexelserver = new PexelMasterServer(30789);
-            this.pexelserver.listen();
-            
-            this.banListServer = new BanListServer();
-            
             this.serv = HttpServer.create(new InetSocketAddress(35000), 50);
             this.serv.createContext("/games", new Matchmaking.Handler());
             this.serv.setExecutor(null);

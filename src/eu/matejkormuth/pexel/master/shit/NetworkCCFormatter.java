@@ -16,7 +16,7 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.slave.util;
+package eu.matejkormuth.pexel.master.shit;
 
 import org.bukkit.entity.Player;
 

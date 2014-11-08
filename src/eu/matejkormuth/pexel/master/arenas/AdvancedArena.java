@@ -16,7 +16,7 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.slave.arenas;
+package eu.matejkormuth.pexel.master.arenas;
 
 import java.util.ArrayList;
 

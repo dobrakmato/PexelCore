@@ -1,4 +1,4 @@
-package eu.matejkormuth.pexel.slave;
+package eu.matejkormuth.pexel.master.shit;
 
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
