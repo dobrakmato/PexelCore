@@ -18,26 +18,36 @@
 // @formatter:on
 package eu.matejkormuth.pexel.master;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Main class of master server.
  */
-public class MasterServer {
+public class MasterServer extends ServerInfo implements Requestable {
     /**
      * Message channel used for messaging between servers.
      */
-    public static final String               MESSAGE_CHANNEL = "Pexel|Main";
+    public static final String             MESSAGE_CHANNEL = "Pexel|Main";
     
-    private final Platform                   platform;
-    private final Proxy                      proxy;
-    private final Map<String, ServerInfo> slaves          = new HashMap<String, ServerInfo>();
-    private final Logger                     log;
+    private final Platform                 platform;
+    private final Proxy                    proxy;
+    private final Logger                   log;
+    private final Protocol                 protocol;
+    private final Messenger                messenger;
+    private final RequestResponder         responder;                                           // May be replaced with array of responders.
+    private final CallbackHandler          listener;                                            // May be replaced with array of listeners.
+    private final PluginMessageComunicator comunicator;
     
-    protected MessageDecoder                 decoder;
+    private final AtomicLong               lastRequestID   = new AtomicLong();
+    private final Map<Long, Callback<?>>   callbacks       = new HashMap<Long, Callback<?>>(
+                                                                   255);
+    private final Map<String, SlaveServer> slaves          = new HashMap<String, SlaveServer>();
     
-    public MasterServer() {
+    public MasterServer(final String name) {
+        super(name);
         // Currently we support only proxy and only bungee.
         this.platform = Platform.MINECRAFT_PROXY;
         this.proxy = new BungeeProxy();
@@ -45,17 +55,79 @@ public class MasterServer {
         // Logger.
         this.log = new Logger("PexelMaster");
         
-        // Start message listener base on proxy brand.
-        if (this.getProxy().getBrand() == ProxyBrand.BUNGEE_CORD) {
-            new BungeeMessageComunicator();
-        }
+        // Protocol - PexelProtocol has registered all packets.
+        this.protocol = new PexelProtocol();
+        
+        // Reponder and listener.
+        this.responder = new RequestResponder();
+        this.listener = new CallbackHandler(this);
         
         // Create message decoder.
-        this.decoder = new MessageDecoder(processors, listeners);
+        this.messenger = new Messenger(this.listener, this.protocol);
+        this.messenger.addResponder(this.responder);
+        
+        // Start message listener based on proxy brand.
+        if (this.getProxy().getBrand() == ProxyBrand.BUNGEE_CORD) {
+            this.comunicator = new BungeePluginMessageComunicator(this.messenger);
+        }
+        else {
+            throw new RuntimeException("Can't find any supported proxy! Can't run.");
+        }
+        
+        // Update instance in ServerInfo
+        ServerInfo.setLocalServer(this);
+        this.side = ServerSide.LOCAL;
     }
     
+    /**
+     * Broadcasts (sends to all slaves) specified message.
+     * 
+     * @param message
+     *            message to be broadcasted
+     */
+    public void broadcast(final Message message) {
+        for (SlaveServer server : this.slaves.values()) {
+            this.send(message, server);
+        }
+    }
+    
+    /**
+     * Returns {@link Logger}.
+     * 
+     * @return the logger
+     */
     protected Logger getLogger() {
         return this.log;
+    }
+    
+    /**
+     * Sends Message to specified server.
+     * 
+     * @param message
+     *            message to be send
+     * @param target
+     *            target server
+     */
+    public void send(final Message message, final ServerInfo target) {
+        this.comunicator.send(target, this.protocol.getPayload(message));
+    }
+    
+    /**
+     * Returns collection of all connected slave servers.
+     * 
+     * @return collection of connected slave servers
+     */
+    public Collection<SlaveServer> getServers() {
+        return this.slaves.values();
+    }
+    
+    /**
+     * Returns messanger object.
+     * 
+     * @return current messanger
+     */
+    public Messenger getMessenger() {
+        return this.messenger;
     }
     
     /**
@@ -65,6 +137,15 @@ public class MasterServer {
      */
     public Platform getPlatform() {
         return this.platform;
+    }
+    
+    /**
+     * Returns currently used protocol.
+     * 
+     * @return currently used protocol
+     */
+    public Protocol getProtocol() {
+        return this.protocol;
     }
     
     /**
@@ -81,9 +162,29 @@ public class MasterServer {
      * 
      * @param name
      *            name of the server
-     * @return networkserver object
+     * @return slave server or null
      */
     public ServerInfo getServer(final String name) {
         return this.slaves.get(name);
+    }
+    
+    @Override
+    public long nextRequestID() {
+        return this.lastRequestID.getAndIncrement();
+    }
+    
+    @Override
+    public void registerCallback(final long requestID, final Callback<?> callback) {
+        this.callbacks.put(requestID, callback);
+    }
+    
+    @Override
+    public Callback<?> getCallback(final long requestID) {
+        return this.callbacks.get(requestID);
+    }
+    
+    @Override
+    public void removeCallback(final long requestID) {
+        this.callbacks.get(requestID);
     }
 }

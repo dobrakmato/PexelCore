@@ -11,7 +11,7 @@ public class BungeePlugin extends Plugin {
     }
     
     public void createMaster() {
-        PexelMaster.setInstnace(new MasterServer());
+        PexelMaster.setInstnace(new MasterServer("master"));
     }
     
     public static Plugin getInstance() {

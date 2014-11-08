@@ -5,7 +5,6 @@ import java.util.UUID;
 /**
  * Class that represents network player.
  */
-@DataStructure
 public class PlayerInfo {
     public final UUID   uuid;
     public final String lastName;

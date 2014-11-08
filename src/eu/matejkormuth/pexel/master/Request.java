@@ -3,8 +3,10 @@ package eu.matejkormuth.pexel.master;
 /**
  * Class that specifies request.
  */
-public abstract class Request {
-    protected final long requestID;
+public abstract class Request extends Message {
+    protected long       requestID;
+    // Null when sending, hold sender object when processing.
+    protected ServerInfo sender;
     
     public Request() {
         this.requestID = 0;

@@ -1,18 +1,70 @@
 package eu.matejkormuth.pexel.master;
 
-public class SlaveServer extends ServerInfo {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+
+public class SlaveServer extends ServerInfo implements Requestable {
+    
+    // Requestable interface
+    protected AtomicLong             lastRequestID = new AtomicLong();
+    protected Map<Long, Callback<?>> callbacks     = new HashMap<Long, Callback<?>>(255);
     
     public SlaveServer(final String name) {
         super(name);
         // TODO Auto-generated constructor stub
+        
+        this.side = ServerSide.LOCAL;
+        
+        ServerInfo.setLocalServer(this);
     }
     
-    /**
-     * @return
-     */
-    public ServerInfo getMasterServer() {
-        // TODO Auto-generated method stub
-        return null;
+    protected SlaveServer(final boolean fromMaster, final String name) {
+        super(name);
+        
+        // Does not register this as local server.
+        this.side = ServerSide.REMOTE;
     }
     
+    @Override
+    public void sendRequest(final Request request) {
+        if (this.side == ServerSide.REMOTE) {
+            // Sending from master
+            PexelMaster.getInstance().send(request, this);
+        }
+        else {
+            throw new RuntimeException("Can't send request to local server.");
+        }
+    }
+    
+    @Override
+    public void sendResponse(final Response response) {
+        if (this.side == ServerSide.REMOTE) {
+            // Sending from master
+            PexelMaster.getInstance().send(response, this);
+        }
+        else {
+            throw new RuntimeException("Can't send response to local server.");
+        }
+    }
+    
+    @Override
+    public long nextRequestID() {
+        return this.lastRequestID.getAndIncrement();
+    }
+    
+    @Override
+    public void registerCallback(final long requestID, final Callback<?> callback) {
+        this.callbacks.put(requestID, callback);
+    }
+    
+    @Override
+    public Callback<?> getCallback(final long requestID) {
+        return this.callbacks.get(requestID);
+    }
+    
+    @Override
+    public void removeCallback(final long requestID) {
+        this.callbacks.remove(requestID);
+    }
 }
