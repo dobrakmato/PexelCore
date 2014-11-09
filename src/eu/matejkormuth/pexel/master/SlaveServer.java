@@ -10,11 +10,14 @@ public class SlaveServer extends ServerInfo implements Requestable {
     protected AtomicLong             lastRequestID = new AtomicLong();
     protected Map<Long, Callback<?>> callbacks     = new HashMap<Long, Callback<?>>(255);
     
+    protected MessageComunicator     comunicator;
+    
     public SlaveServer(final String name) {
         super(name);
-        // TODO Auto-generated constructor stub
         
         this.side = ServerSide.LOCAL;
+        
+        this.comunicator =
         
         ServerInfo.setLocalServer(this);
     }
@@ -24,6 +27,10 @@ public class SlaveServer extends ServerInfo implements Requestable {
         
         // Does not register this as local server.
         this.side = ServerSide.REMOTE;
+    }
+    
+    public void sendToMaster(final Message message) {
+        
     }
     
     @Override

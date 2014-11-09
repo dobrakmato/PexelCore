@@ -2,12 +2,11 @@ package eu.matejkormuth.pexel.master;
 
 import net.md_5.bungee.api.plugin.Plugin;
 
-public class BungeePlugin extends Plugin {
-    private static BungeePlugin instance;
+public class PexelMasterBungeePlugin extends Plugin {
+    private static PexelMasterBungeePlugin instance;
     
-    public BungeePlugin() {
-        
-        BungeePlugin.instance = this;
+    public PexelMasterBungeePlugin() {
+        PexelMasterBungeePlugin.instance = this;
     }
     
     public void createMaster() {
@@ -15,6 +14,6 @@ public class BungeePlugin extends Plugin {
     }
     
     public static Plugin getInstance() {
-        return BungeePlugin.instance;
+        return PexelMasterBungeePlugin.instance;
     }
 }

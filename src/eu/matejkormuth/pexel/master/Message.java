@@ -1,5 +1,7 @@
 package eu.matejkormuth.pexel.master;
 
+import java.nio.ByteBuffer;
+
 /**
  * Class that represents message over network.
  */
@@ -14,13 +16,13 @@ public abstract class Message {
      * 
      * @return
      */
-    public abstract byte[] toByteArray();
+    public abstract ByteBuffer toByteBuffer();
     
     /**
      * Should constrct Message ({@link Request}, {@link Response}, ...) from byte array.
      * 
-     * @param array
+     * @param buffer
      *            array containing data
      */
-    public abstract void fromByteArray(byte[] array);
+    public abstract void fromByteBuffer(ByteBuffer buffer);
 }

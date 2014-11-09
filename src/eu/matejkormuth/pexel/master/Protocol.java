@@ -54,7 +54,7 @@ public abstract class Protocol {
      * @return byte array of payload
      */
     public byte[] getPayload(final Message message) {
-        byte[] data = message.toByteArray();
+        byte[] data = message.toByteBuffer().array();
         byte[] newarray = new byte[data.length + 13];
         System.arraycopy(data, 0, newarray, 13, data.length);
         
@@ -90,12 +90,22 @@ public abstract class Protocol {
     }
     
     /**
-     * Returns request by specified type or null if the type is not registered.
+     * Returns request type by specified type or null if the type is not registered.
      * 
      * @param requestType
      *            network id - type of request
      */
     public Class<? extends Request> getRequest(final int requestType) {
         return this.requestmapping.inverse().get(requestType);
+    }
+    
+    /**
+     * Returns response type by specified type or null if the type is not registered.
+     * 
+     * @param responseType
+     *            network id - type of response
+     */
+    public Class<? extends Response> getResponse(final int responseType) {
+        return this.responsemapping.inverse().get(responseType);
     }
 }

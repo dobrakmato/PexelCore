@@ -3,10 +3,10 @@ package eu.matejkormuth.pexel.master;
 /**
  * Interface that represents plugin message comunicator.
  */
-public abstract class PluginMessageComunicator {
+public abstract class MessageComunicator {
     private final PayloadHandler handler;
     
-    public PluginMessageComunicator(final PayloadHandler handler) {
+    public MessageComunicator(final PayloadHandler handler) {
         this.handler = handler;
     }
     
@@ -31,4 +31,9 @@ public abstract class PluginMessageComunicator {
      *            data
      */
     public abstract void send(ServerInfo target, byte[] payload);
+    
+    /**
+     * Stops all connections.
+     */
+    public abstract void stop();
 }

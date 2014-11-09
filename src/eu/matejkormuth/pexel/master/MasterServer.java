@@ -18,6 +18,7 @@
 // @formatter:on
 package eu.matejkormuth.pexel.master;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,56 +28,72 @@ import java.util.concurrent.atomic.AtomicLong;
  * Main class of master server.
  */
 public class MasterServer extends ServerInfo implements Requestable {
-    /**
-     * Message channel used for messaging between servers.
-     */
-    public static final String             MESSAGE_CHANNEL = "Pexel|Main";
-    
     private final Platform                 platform;
     private final Proxy                    proxy;
     private final Logger                   log;
     private final Protocol                 protocol;
     private final Messenger                messenger;
-    private final RequestResponder         responder;                                           // May be replaced with array of responders.
-    private final CallbackHandler          listener;                                            // May be replaced with array of listeners.
-    private final PluginMessageComunicator comunicator;
+    private final CallbackHandler          callbackHandler;                                   // May be replaced with array of listeners.
+    private final MessageComunicator       comunicator;
+    private final Configuration            config;
     
-    private final AtomicLong               lastRequestID   = new AtomicLong();
-    private final Map<Long, Callback<?>>   callbacks       = new HashMap<Long, Callback<?>>(
-                                                                   255);
-    private final Map<String, SlaveServer> slaves          = new HashMap<String, SlaveServer>();
+    private final AtomicLong               lastRequestID = new AtomicLong();
+    private final Map<Long, Callback<?>>   callbacks     = new HashMap<Long, Callback<?>>(
+                                                                 255);
+    private final Map<String, SlaveServer> slaves        = new HashMap<String, SlaveServer>();
     
     public MasterServer(final String name) {
         super(name);
-        // Currently we support only proxy and only bungee.
-        this.platform = Platform.MINECRAFT_PROXY;
-        this.proxy = new BungeeProxy();
         
         // Logger.
         this.log = new Logger("PexelMaster");
         
+        this.log.info("Starting MasterServer...");
+        
+        // Load configuration.
+        File f = new File("./config.xml");
+        if (!f.exists()) {
+            this.log.info("Configuration file not found, generating default one!");
+            Configuration.createDefault(f);
+        }
+        this.log.info("Loading configuration...");
+        this.config = Configuration.load(f);
+        
+        // Currently we support only proxy and only bungee.
+        this.platform = Platform.MINECRAFT_PROXY;
+        this.proxy = new BungeeProxy();
+        
         // Protocol - PexelProtocol has registered all packets.
         this.protocol = new PexelProtocol();
         
-        // Reponder and listener.
-        this.responder = new RequestResponder();
-        this.listener = new CallbackHandler(this);
+        // Callback handler.
+        this.callbackHandler = new CallbackHandler(this);
         
         // Create message decoder.
-        this.messenger = new Messenger(this.listener, this.protocol);
-        this.messenger.addResponder(this.responder);
+        this.messenger = new Messenger(this.callbackHandler, this.protocol);
+        this.messenger.addResponder(new DefaultRequestResponder());
         
-        // Start message listener based on proxy brand.
-        if (this.getProxy().getBrand() == ProxyBrand.BUNGEE_CORD) {
-            this.comunicator = new BungeePluginMessageComunicator(this.messenger);
-        }
-        else {
-            throw new RuntimeException("Can't find any supported proxy! Can't run.");
-        }
+        // Start netty comunicator.
+        this.comunicator = new NettyServerComunicator(this.messenger,
+                this.config.getAsInt("port"), this.config.getAsString("authKey"), this);
         
         // Update instance in ServerInfo
         ServerInfo.setLocalServer(this);
         this.side = ServerSide.LOCAL;
+    }
+    
+    // Adds a slave server.
+    protected void addSlave(final SlaveServer server) {
+        this.slaves.put(server.getName(), server);
+    }
+    
+    /**
+     * Shutsdown all workers and closes all connections.
+     */
+    public void shutdown() {
+        this.log.info("Shutting down...");
+        this.comunicator.stop();
+        this.log.info("Saving config...");
     }
     
     /**
@@ -89,6 +106,15 @@ public class MasterServer extends ServerInfo implements Requestable {
         for (SlaveServer server : this.slaves.values()) {
             this.send(message, server);
         }
+    }
+    
+    /**
+     * Returns configuration.
+     * 
+     * @return configuration object of master server
+     */
+    public Configuration getConfiguration() {
+        return this.config;
     }
     
     /**

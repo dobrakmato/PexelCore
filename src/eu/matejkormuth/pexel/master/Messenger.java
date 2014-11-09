@@ -2,17 +2,17 @@ package eu.matejkormuth.pexel.master;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Messenger implements PayloadHandler {
     private final Map<Class<? extends Request>, Handle> methods = new HashMap<Class<? extends Request>, Handle>();
-    private final CallbackHandler                       listener;
+    private final CallbackHandler                       callbackHandler;
     private final Protocol                              protocol;
     
-    public Messenger(final CallbackHandler listener, final Protocol protocol,
-            final PluginMessageComunicator comunicator) {
-        this.listener = listener;
+    public Messenger(final CallbackHandler listener, final Protocol protocol) {
+        this.callbackHandler = listener;
         this.protocol = protocol;
     }
     
@@ -41,12 +41,12 @@ public class Messenger implements PayloadHandler {
         }
     }
     
-    private void invokeHandler(final Request request) {
+    private void invokeHandler(final ServerInfo sender, final Request request) {
         try {
             Object response = this.methods.get(request.getClass()).invoke(
                     new Object[] { request });
             if (response instanceof Response) {
-                ServerInfo.localServer().sendResponse((Response) response);
+                sender.sendResponse((Response) response);
             }
         } catch (IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
@@ -74,17 +74,14 @@ public class Messenger implements PayloadHandler {
         long requestID = ByteUtils.readLong(payload, 1);
         int responseType = ByteUtils.readInt(payload, 9);
         
-        byte[] data = new byte[payload.length - 13];
-        System.arraycopy(payload, 13, data, 0, payload.length - 13);
-        
         try {
             // Create request object.
-            Response request = this.protocol.getRequest(requestType).newInstance();
-            request.requestID = requestID;
-            request.fromByteArray(data);
+            Response response = this.protocol.getResponse(responseType).newInstance();
+            response.requestID = requestID;
+            response.fromByteBuffer(ByteBuffer.wrap(payload, 13, payload.length - 13));
             
-            // Find and invoke handler.
-            this.invokeHandler(request);
+            // Redirect to callback handler.
+            this.callbackHandler.onResponse(response);
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -94,17 +91,14 @@ public class Messenger implements PayloadHandler {
         long requestID = ByteUtils.readLong(payload, 1);
         int requestType = ByteUtils.readInt(payload, 9);
         
-        byte[] data = new byte[payload.length - 13];
-        System.arraycopy(payload, 13, data, 0, payload.length - 13);
-        
         try {
             // Create request object.
             Request request = this.protocol.getRequest(requestType).newInstance();
             request.requestID = requestID;
-            request.fromByteArray(data);
+            request.fromByteBuffer(ByteBuffer.wrap(payload, 13, payload.length - 13));
             
             // Find and invoke handler.
-            this.invokeHandler(request);
+            this.invokeHandler(sender, request);
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
