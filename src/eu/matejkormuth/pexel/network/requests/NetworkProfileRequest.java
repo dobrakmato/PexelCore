@@ -1,4 +1,4 @@
-package eu.matejkormuth.pexel.master.requests;
+package eu.matejkormuth.pexel.network.requests;
 
 import java.util.UUID;
 

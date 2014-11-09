@@ -1,26 +1,11 @@
-package eu.matejkormuth.pexel.slave;
+package eu.matejkormuth.pexel.network;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-import eu.matejkormuth.pexel.network.Callback;
-import eu.matejkormuth.pexel.network.CallbackHandler;
-import eu.matejkormuth.pexel.network.Configuration;
-import eu.matejkormuth.pexel.network.Logger;
-import eu.matejkormuth.pexel.network.Message;
-import eu.matejkormuth.pexel.network.MessageComunicator;
-import eu.matejkormuth.pexel.network.Messenger;
-import eu.matejkormuth.pexel.network.NettyClientComunicator;
-import eu.matejkormuth.pexel.network.PexelMaster;
-import eu.matejkormuth.pexel.network.PexelProtocol;
-import eu.matejkormuth.pexel.network.Protocol;
-import eu.matejkormuth.pexel.network.Request;
-import eu.matejkormuth.pexel.network.Requestable;
-import eu.matejkormuth.pexel.network.Response;
-import eu.matejkormuth.pexel.network.ServerInfo;
-import eu.matejkormuth.pexel.network.ServerSide;
+import eu.matejkormuth.pexel.master.PexelMaster;
 
 public class SlaveServer extends ServerInfo implements Requestable {
     
@@ -132,5 +117,9 @@ public class SlaveServer extends ServerInfo implements Requestable {
     
     public ServerInfo getMasterServerInfo() {
         return this.masterServerInfo;
+    }
+    
+    public Logger getLogger() {
+        return this.log;
     }
 }

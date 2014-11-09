@@ -33,8 +33,6 @@ import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 
 import javax.net.ssl.SSLException;
 
-import eu.matejkormuth.pexel.slave.SlaveServer;
-
 public class NettyClientComunicator extends MessageComunicator {
     private Bootstrap        b;
     private Channel          channelToMaster;
@@ -46,7 +44,7 @@ public class NettyClientComunicator extends MessageComunicator {
         super(handler);
         
         this.master = server.getMasterServerInfo();
-        this.log = server.log.getChild("Netty");
+        this.log = server.getLogger().getChild("Netty");
         
         try {
             this.init(port, host, server.getName(), authKey);

@@ -1,4 +1,4 @@
-package eu.matejkormuth.pexel.master.responses;
+package eu.matejkormuth.pexel.network.responses;
 
 import eu.matejkormuth.pexel.network.PlayerInfo;
 import eu.matejkormuth.pexel.network.Response;

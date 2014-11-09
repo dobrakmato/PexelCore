@@ -18,8 +18,8 @@
 // @formatter:on
 package eu.matejkormuth.pexel.network;
 
-import eu.matejkormuth.pexel.master.requests.ServerResourcesRequest;
-import eu.matejkormuth.pexel.master.responses.ServerResourcesResponse;
+import eu.matejkormuth.pexel.network.requests.ServerResourcesRequest;
+import eu.matejkormuth.pexel.network.responses.ServerResourcesResponse;
 
 /**
  * Protocol that supports all pexel request and responses.

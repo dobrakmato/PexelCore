@@ -16,18 +16,18 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.network;
+package eu.matejkormuth.pexel.master;
 
-import eu.matejkormuth.pexel.slave.SlaveServer;
+import eu.matejkormuth.pexel.network.MasterServer;
 
-public class PexelSlave {
-    private static SlaveServer instance;
+public final class PexelMaster {
+    private static MasterServer instance;
     
-    public static final void setInstnace(final SlaveServer instance) {
-        PexelSlave.instance = instance;
+    public static final void setInstnace(final MasterServer instance) {
+        PexelMaster.instance = instance;
     }
     
-    public static final SlaveServer getInstance() {
-        return PexelSlave.instance;
+    public static final MasterServer getInstance() {
+        return PexelMaster.instance;
     }
 }

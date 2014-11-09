@@ -20,7 +20,6 @@ package eu.matejkormuth.pexel.master;
 
 import net.md_5.bungee.api.plugin.Plugin;
 import eu.matejkormuth.pexel.network.MasterServer;
-import eu.matejkormuth.pexel.network.PexelMaster;
 
 public class PexelMasterBungeePlugin extends Plugin {
     private static PexelMasterBungeePlugin instance;
