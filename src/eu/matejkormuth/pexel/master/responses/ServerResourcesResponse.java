@@ -2,7 +2,7 @@ package eu.matejkormuth.pexel.master.responses;
 
 import java.nio.ByteBuffer;
 
-import eu.matejkormuth.pexel.master.Response;
+import eu.matejkormuth.pexel.network.Response;
 
 public class ServerResourcesResponse extends Response {
     long maxMem;

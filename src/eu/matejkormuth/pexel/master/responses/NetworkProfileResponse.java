@@ -1,7 +1,7 @@
 package eu.matejkormuth.pexel.master.responses;
 
-import eu.matejkormuth.pexel.master.PlayerInfo;
-import eu.matejkormuth.pexel.master.Response;
+import eu.matejkormuth.pexel.network.PlayerInfo;
+import eu.matejkormuth.pexel.network.Response;
 
 public class NetworkProfileResponse extends Response {
     protected PlayerInfo profile;

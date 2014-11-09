@@ -2,7 +2,7 @@ package eu.matejkormuth.pexel.master.requests;
 
 import java.nio.ByteBuffer;
 
-import eu.matejkormuth.pexel.master.Request;
+import eu.matejkormuth.pexel.network.Request;
 
 public class SlaveServerMaintenanceModeRequest extends Request {
     byte modeEnabled;
