@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
+import eu.matejkormuth.pexel.slave.SlaveServer;
+
 /**
  * Main class of master server.
  */

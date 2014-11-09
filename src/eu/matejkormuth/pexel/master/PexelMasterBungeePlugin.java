@@ -16,31 +16,24 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.network;
+package eu.matejkormuth.pexel.master;
 
-import java.nio.ByteBuffer;
+import net.md_5.bungee.api.plugin.Plugin;
+import eu.matejkormuth.pexel.network.MasterServer;
+import eu.matejkormuth.pexel.network.PexelMaster;
 
-/**
- * Class that represents message over network.
- */
-public abstract class Message {
-    /**
-     * ID of request that involved creation of this message.
-     */
-    protected long requestID;
+public class PexelMasterBungeePlugin extends Plugin {
+    private static PexelMasterBungeePlugin instance;
     
-    /**
-     * Returns byte array representation of this message.
-     * 
-     * @return
-     */
-    public abstract ByteBuffer toByteBuffer();
+    public PexelMasterBungeePlugin() {
+        PexelMasterBungeePlugin.instance = this;
+    }
     
-    /**
-     * Should constrct Message ({@link Request}, {@link Response}, ...) from byte array.
-     * 
-     * @param buffer
-     *            array containing data
-     */
-    public abstract void fromByteBuffer(ByteBuffer buffer);
+    public void createMaster() {
+        PexelMaster.setInstnace(new MasterServer("master"));
+    }
+    
+    public static Plugin getInstance() {
+        return PexelMasterBungeePlugin.instance;
+    }
 }
