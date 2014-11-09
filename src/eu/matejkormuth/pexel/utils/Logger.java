@@ -16,7 +16,7 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.network;
+package eu.matejkormuth.pexel.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

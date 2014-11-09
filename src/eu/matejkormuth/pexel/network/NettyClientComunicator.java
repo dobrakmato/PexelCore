@@ -33,6 +33,8 @@ import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 
 import javax.net.ssl.SSLException;
 
+import eu.matejkormuth.pexel.utils.Logger;
+
 public class NettyClientComunicator extends MessageComunicator {
     private Bootstrap        b;
     private Channel          channelToMaster;

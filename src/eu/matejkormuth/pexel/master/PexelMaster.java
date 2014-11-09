@@ -18,16 +18,81 @@
 // @formatter:on
 package eu.matejkormuth.pexel.master;
 
-import eu.matejkormuth.pexel.network.MasterServer;
+import java.io.File;
+import java.util.concurrent.TimeUnit;
 
+import eu.matejkormuth.pexel.network.Callback;
+import eu.matejkormuth.pexel.network.MasterServer;
+import eu.matejkormuth.pexel.network.ServerType;
+import eu.matejkormuth.pexel.network.SlaveServer;
+import eu.matejkormuth.pexel.network.requests.ServerStatusRequest;
+import eu.matejkormuth.pexel.network.responses.ServerStatusResponse;
+import eu.matejkormuth.pexel.utils.Configuration;
+import eu.matejkormuth.pexel.utils.Logger;
+
+/**
+ * Pexel master server singleton object.
+ */
 public final class PexelMaster {
-    private static MasterServer instance;
+    private static PexelMaster instance = null;
     
-    public static final void setInstnace(final MasterServer instance) {
-        PexelMaster.instance = instance;
+    public static final PexelMaster getInstance() {
+        return PexelMaster.instance;
     }
     
-    public static final MasterServer getInstance() {
-        return PexelMaster.instance;
+    protected MasterServer    master;
+    protected Logger          log;
+    protected Configuration   config;
+    protected final Scheduler scheduler;
+    
+    private PexelMaster(final File dataFolder) {
+        this.log = new Logger("PexelMaster");
+        
+        this.log.info("Booting PexelMaster...");
+        
+        // Load configuration.
+        File f = new File("./config.xml");
+        if (!f.exists()) {
+            this.log.info("Configuration file not found, generating default one!");
+            Configuration.createDefault(ServerType.MASTER, f);
+        }
+        this.log.info("Loading configuration...");
+        this.config = Configuration.load(f);
+        
+        // Set up scheduler.
+        this.scheduler = new Scheduler();
+        
+        // Sheduler basic tasks.
+        this.scheduler.schedule(new Runnable() {
+            @Override
+            public void run() {
+                PexelMaster.this.requestSlavesStatus();
+            }
+        }, 2, TimeUnit.SECONDS);
+        
+        // Set up network.
+        this.master = new MasterServer("master", this.config, this.log);
+        
+    }
+    
+    protected void requestSlavesStatus() {
+        for (final SlaveServer slave : this.master.getSlaveServers()) {
+            slave.sendRequest(new ServerStatusRequest(
+                    new Callback<ServerStatusResponse>() {
+                        @Override
+                        public void onResponse(final ServerStatusResponse response) {
+                            slave.setCustom("maxMem", Long.toString(response.maxMem));
+                            slave.setCustom("usedMem", Long.toString(response.usedMem));
+                        }
+                    }));
+        }
+    }
+    
+    public MasterServer getServer() {
+        return this.master;
+    }
+    
+    public static void init(final File dataFolder) {
+        PexelMaster.instance = new PexelMaster(dataFolder);
     }
 }

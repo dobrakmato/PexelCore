@@ -16,7 +16,7 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.network;
+package eu.matejkormuth.pexel.utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,6 +31,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import eu.matejkormuth.pexel.network.ServerType;
 
 /**
  * Class that provides configuration.
@@ -126,11 +128,18 @@ public class Configuration {
         public final String value;
     }
     
-    public static void createDefault(final File f) {
+    public static void createDefault(final ServerType type, final File f) {
         Configuration c = new Configuration();
-        c.set("authKey", "{insert 128 chars long auth key here}");
-        c.set("port", "29631");
-        c.set("masterIp", "0.0.0.0");
+        if (type == ServerType.MASTER) {
+            c.set("authKey", "{insert 128 chars long auth key here}");
+            c.set("port", "29631");
+        }
+        else {
+            c.set("authKey", "{insert 128 chars long auth key here}");
+            c.set("port", "29631");
+            c.set("masterIp", "0.0.0.0");
+        }
+        
         c.save(f);
     }
 }

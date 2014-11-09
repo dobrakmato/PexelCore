@@ -4,11 +4,11 @@ import java.nio.ByteBuffer;
 
 import eu.matejkormuth.pexel.network.Response;
 
-public class ServerResourcesResponse extends Response {
-    long maxMem;
-    long usedMem;
+public class ServerStatusResponse extends Response {
+    public long maxMem;
+    public long  usedMem;
     
-    public ServerResourcesResponse(final long maxMem, final long usedMem) {
+    public ServerStatusResponse(final long maxMem, final long usedMem) {
         this.maxMem = maxMem;
         this.usedMem = usedMem;
     }

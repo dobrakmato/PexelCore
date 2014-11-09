@@ -18,15 +18,7 @@
 // @formatter:on
 package eu.matejkormuth.pexel.network;
 
-import eu.matejkormuth.pexel.network.requests.ServerResourcesRequest;
-import eu.matejkormuth.pexel.network.responses.ServerResourcesResponse;
-
-/**
- * Responder that creates respones to requests.
- */
-public class DefaultRequestResponder {
-    public ServerResourcesResponse onRequest(final ServerResourcesRequest request) {
-        return new ServerResourcesResponse(Runtime.getRuntime().maxMemory(),
-                Runtime.getRuntime().freeMemory());
-    }
+public enum ServerType {
+    MASTER,
+    SLAVE;
 }

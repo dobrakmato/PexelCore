@@ -18,16 +18,16 @@
 // @formatter:on
 package eu.matejkormuth.pexel.network;
 
-import eu.matejkormuth.pexel.network.requests.ServerResourcesRequest;
-import eu.matejkormuth.pexel.network.responses.ServerResourcesResponse;
+import eu.matejkormuth.pexel.network.requests.ServerStatusRequest;
+import eu.matejkormuth.pexel.network.responses.ServerStatusResponse;
 
 /**
  * Protocol that supports all pexel request and responses.
  */
 public class PexelProtocol extends Protocol {
     public PexelProtocol() {
-        this.registerRequest(1, ServerResourcesRequest.class);
+        this.registerRequest(1, ServerStatusRequest.class);
         
-        this.registerResponse(1, ServerResourcesResponse.class);
+        this.registerResponse(1, ServerStatusResponse.class);
     }
 }

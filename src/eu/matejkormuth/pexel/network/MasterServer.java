@@ -18,11 +18,13 @@
 // @formatter:on
 package eu.matejkormuth.pexel.network;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
+
+import eu.matejkormuth.pexel.utils.Configuration;
+import eu.matejkormuth.pexel.utils.Logger;
 
 /**
  * Main class of master server.
@@ -42,22 +44,16 @@ public class MasterServer extends ServerInfo implements Requestable {
                                                                  255);
     private final Map<String, SlaveServer> slaves        = new HashMap<String, SlaveServer>();
     
-    public MasterServer(final String name) {
+    public MasterServer(final String name, final Configuration config,
+            final Logger logger) {
         super(name);
         
         // Logger.
-        this.log = new Logger("MasterServer");
+        this.log = logger.getChild("Net");
         
         this.log.info("Starting MasterServer...");
         
-        // Load configuration.
-        File f = new File("./config.xml");
-        if (!f.exists()) {
-            this.log.info("Configuration file not found, generating default one!");
-            Configuration.createDefault(f);
-        }
-        this.log.info("Loading configuration...");
-        this.config = Configuration.load(f);
+        this.config = config;
         
         // Currently we support only proxy and only bungee.
         this.platform = Platform.MINECRAFT_PROXY;
@@ -71,7 +67,6 @@ public class MasterServer extends ServerInfo implements Requestable {
         
         // Create message decoder.
         this.messenger = new Messenger(this.callbackHandler, this.protocol);
-        this.messenger.addResponder(new DefaultRequestResponder());
         
         // Start netty comunicator.
         this.comunicator = new NettyServerComunicator(this.messenger,
@@ -94,18 +89,6 @@ public class MasterServer extends ServerInfo implements Requestable {
         this.log.info("Shutting down...");
         this.comunicator.stop();
         this.log.info("Saving config...");
-    }
-    
-    /**
-     * Broadcasts (sends to all slaves) specified message.
-     * 
-     * @param message
-     *            message to be broadcasted
-     */
-    public void broadcast(final Message message) {
-        for (SlaveServer server : this.slaves.values()) {
-            this.send(message, server);
-        }
     }
     
     /**
@@ -143,7 +126,7 @@ public class MasterServer extends ServerInfo implements Requestable {
      * 
      * @return collection of connected slave servers
      */
-    public Collection<SlaveServer> getServers() {
+    public Collection<SlaveServer> getSlaveServers() {
         return this.slaves.values();
     }
     

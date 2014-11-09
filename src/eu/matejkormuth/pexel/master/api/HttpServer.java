@@ -16,19 +16,11 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.network;
+package eu.matejkormuth.pexel.master.api;
 
-import java.nio.ByteBuffer;
-
-public class NoArgRequest extends Request {
+public class HttpServer {
     
-    @Override
-    public ByteBuffer toByteBuffer() {
-        return ByteBuffer.allocate(1).put((byte) 1);
-    }
-    
-    @Override
-    public void fromByteBuffer(final ByteBuffer buffer) {
+    public void registerHandler(final Object o) {
         
     }
 }

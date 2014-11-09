@@ -18,14 +18,18 @@
 // @formatter:on
 package eu.matejkormuth.pexel.network;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Class that represents server on network.
  */
 public class ServerInfo {
-    private static ServerInfo local;
+    private static ServerInfo     local;
     
-    protected final String    name;
-    protected ServerSide      side;
+    protected final String        name;
+    protected ServerSide          side;
+    protected Map<String, String> custom;
     
     public ServerInfo(final String name) {
         this.name = name;
@@ -55,6 +59,22 @@ public class ServerInfo {
     
     public static ServerInfo localServer() {
         return ServerInfo.local;
+    }
+    
+    public void setCustom(final String key, final String value) {
+        if (this.custom == null) {
+            this.custom = new HashMap<String, String>();
+        }
+        this.custom.put(key, value);
+    }
+    
+    public String getCustom(final String key) {
+        if (this.custom == null) {
+            return null;
+        }
+        else {
+            return this.custom.get(key);
+        }
     }
     
     protected static void setLocalServer(final ServerInfo server) {

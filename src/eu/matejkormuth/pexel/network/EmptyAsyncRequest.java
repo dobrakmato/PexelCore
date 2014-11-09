@@ -16,28 +16,23 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.master;
+package eu.matejkormuth.pexel.network;
 
-import net.md_5.bungee.api.plugin.Plugin;
-import eu.matejkormuth.util.Classpath;
+import java.nio.ByteBuffer;
 
-public class PexelMasterBungeePlugin extends Plugin {
-    private static PexelMasterBungeePlugin instance;
-    
-    public PexelMasterBungeePlugin() {
-        PexelMasterBungeePlugin.instance = this;
-    }
-    
-    public void createMaster() {
-        // Add libraries to classpath.
-        Classpath.addJars(folder);
+public class EmptyAsyncRequest extends AsyncRequest {
+    public EmptyAsyncRequest(final Callback<?> callback) {
+        super(callback);
         
-        // Get instance for first time - create PexelMaster.
-        PexelMaster.init();
-        PexelMaster.getInstance();
     }
     
-    public static Plugin getInstance() {
-        return PexelMasterBungeePlugin.instance;
+    @Override
+    public ByteBuffer toByteBuffer() {
+        return ByteBuffer.allocate(1).put((byte) 1);
+    }
+    
+    @Override
+    public void fromByteBuffer(final ByteBuffer buffer) {
+        
     }
 }

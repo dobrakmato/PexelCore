@@ -107,10 +107,10 @@ public class Matchmaking implements Updatable {
             Log.info("Matchmaking found a new arena: " + arena.getName() + "-"
                     + arena.getMinigame().getName());
             if (this.arenas.containsKey(arena.getMinigame()))
-                this.arenas.get(arena.getMinigame()).add(arena);
+                this.arenas.get(arena.getMinigame()).addJars(arena);
             else {
                 List<AbstractArena> list = new ArrayList<AbstractArena>();
-                list.add(arena);
+                list.addJars(arena);
                 this.arenas.put(arena.getMinigame(), list);
             }
             StorageEngine.addArena(arena);

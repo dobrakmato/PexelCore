@@ -16,28 +16,14 @@
  *
  */
 // @formatter:on
-package eu.matejkormuth.pexel.master;
+package eu.matejkormuth.pexel.master.api;
 
-import net.md_5.bungee.api.plugin.Plugin;
-import eu.matejkormuth.util.Classpath;
+import eu.matejkormuth.pexel.master.PexelMaster;
 
-public class PexelMasterBungeePlugin extends Plugin {
-    private static PexelMasterBungeePlugin instance;
+public class APIRequestHandler {
     
-    public PexelMasterBungeePlugin() {
-        PexelMasterBungeePlugin.instance = this;
-    }
-    
-    public void createMaster() {
-        // Add libraries to classpath.
-        Classpath.addJars(folder);
-        
-        // Get instance for first time - create PexelMaster.
-        PexelMaster.init();
-        PexelMaster.getInstance();
-    }
-    
-    public static Plugin getInstance() {
-        return PexelMasterBungeePlugin.instance;
+    @RequestMapping(url = "/slaves")
+    public String serverStatus() {
+        return Helpers.toJson(PexelMaster.getInstance().getServer().getSlaveServers());
     }
 }

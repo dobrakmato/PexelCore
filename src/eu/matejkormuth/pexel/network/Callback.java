@@ -28,10 +28,10 @@ public abstract class Callback<T> {
         return this.requestID;
     }
     
-    public abstract void response(T response);
+    public abstract void onResponse(T response);
     
     @SuppressWarnings("unchecked")
     protected void call(final Response response) {
-        this.response((T) response);
+        this.onResponse((T) response);
     }
 }
