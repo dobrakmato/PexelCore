@@ -21,6 +21,7 @@ package eu.matejkormuth.pexel.master;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import eu.matejkormuth.pexel.master.api.APIServer;
 import eu.matejkormuth.pexel.network.Callback;
 import eu.matejkormuth.pexel.network.MasterServer;
 import eu.matejkormuth.pexel.network.ServerType;
@@ -47,11 +48,12 @@ public final class PexelMaster {
     
     private PexelMaster(final File dataFolder) {
         this.log = new Logger("PexelMaster");
+        this.log.timestamp = false;
         
         this.log.info("Booting PexelMaster...");
         
         // Load configuration.
-        File f = new File("./config.xml");
+        File f = new File(dataFolder.getAbsolutePath() + "/config.xml");
         if (!f.exists()) {
             this.log.info("Configuration file not found, generating default one!");
             Configuration.createDefault(ServerType.MASTER, f);
@@ -66,16 +68,24 @@ public final class PexelMaster {
         this.scheduler.schedule(new Runnable() {
             @Override
             public void run() {
-                PexelMaster.this.requestSlavesStatus();
+                PexelMaster.this.periodic();
             }
         }, 2, TimeUnit.SECONDS);
         
         // Set up network.
         this.master = new MasterServer("master", this.config, this.log);
         
+        // Set up API server.
+        new APIServer(); // "mock"
     }
     
-    protected void requestSlavesStatus() {
+    // Each 2 seconds sends ServerStatusRequest to all servers.
+    protected void periodic() {
+        this.updateSlaves();
+    }
+    
+    protected void updateSlaves() {
+        // Updates slaves.
         for (final SlaveServer slave : this.master.getSlaveServers()) {
             slave.sendRequest(new ServerStatusRequest(
                     new Callback<ServerStatusResponse>() {

@@ -142,4 +142,10 @@ public class NettyClientComunicator extends MessageComunicator {
         }
     }
     
+    @Override
+    public void start() {
+        // TODO Auto-generated method stub
+        
+    }
+    
 }

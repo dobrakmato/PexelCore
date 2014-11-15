@@ -40,10 +40,10 @@ import eu.matejkormuth.pexel.network.ServerType;
 @XmlRootElement(name = "configuration")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Configuration {
-    protected transient Map<String, String> data    = new HashMap<String, String>();
-    protected List<ConfigurationEntry>      entries = new ArrayList<ConfigurationEntry>();
+    protected transient Map<String, String> data  = new HashMap<String, String>();
+    protected List<ConfigurationEntry>      entry = new ArrayList<ConfigurationEntry>();
     
-    private Configuration() {
+    public Configuration() {
         
     }
     
@@ -86,15 +86,17 @@ public class Configuration {
      */
     public void save(final File file) {
         for (String key : this.data.keySet()) {
-            this.entries.add(new ConfigurationEntry(key, this.data.get(key)));
+            this.entry.add(new ConfigurationEntry(key, this.data.get(key)));
         }
         try {
             JAXBContext cont = JAXBContext.newInstance(Configuration.class);
-            cont.createMarshaller().marshal(this, file);
+            javax.xml.bind.Marshaller m = cont.createMarshaller();
+            m.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            m.marshal(this, file);
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-        this.entries.clear();
+        this.entry.clear();
     }
     
     /**
@@ -109,6 +111,11 @@ public class Configuration {
         try {
             JAXBContext cont = JAXBContext.newInstance(Configuration.class);
             conf = (Configuration) cont.createUnmarshaller().unmarshal(file);
+            
+            for (ConfigurationEntry entry : conf.entry) {
+                conf.data.put(entry.key, entry.value);
+            }
+            
             return conf;
         } catch (JAXBException e) {
             throw new RuntimeException(e);
@@ -117,15 +124,19 @@ public class Configuration {
     
     @XmlType(name = "entry")
     protected static class ConfigurationEntry {
+        public ConfigurationEntry() {
+            
+        }
+        
         public ConfigurationEntry(final String key, final String value) {
             this.key = key;
             this.value = value;
         }
         
         @XmlAttribute(name = "key")
-        public final String key;
+        public String key;
         @XmlAttribute(name = "value")
-        public final String value;
+        public String value;
     }
     
     public static void createDefault(final ServerType type, final File f) {

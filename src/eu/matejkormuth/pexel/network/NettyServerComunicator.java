@@ -57,6 +57,7 @@ public class NettyServerComunicator extends MessageComunicator {
     
     protected Logger                                 log;
     protected ServerBootstrap                        b;
+    protected int                                    port;
     
     static final boolean                             SSL             = System.getProperty("ssl") != null;
     
@@ -67,12 +68,22 @@ public class NettyServerComunicator extends MessageComunicator {
         this.authKey = authKey;
         this.log = server.getLogger().getChild("Netty");
         this.server = server;
-        
-        try {
-            this.init(port);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.port = port;
+    }
+    
+    @Override
+    public void start() {
+        // Use separated thread for netty, to not block main thread.
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    NettyServerComunicator.this.init(NettyServerComunicator.this.port);
+                } catch (SSLException | CertificateException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "Netty-ListenThread").start();;
     }
     
     @Override
@@ -94,7 +105,7 @@ public class NettyServerComunicator extends MessageComunicator {
             this.b = new ServerBootstrap();
             this.b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .handler(new LoggingHandler(LogLevel.INFO))
+                    .handler(new LoggingHandler(LogLevel.ERROR))
                     .childHandler(new NettyServerComunicatorInitializer(sslCtx));
             
             this.b.bind(port).sync().channel().closeFuture().sync();

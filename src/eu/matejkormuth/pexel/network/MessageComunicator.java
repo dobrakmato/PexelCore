@@ -54,4 +54,9 @@ public abstract class MessageComunicator {
      * Stops all connections.
      */
     public abstract void stop();
+    
+    /**
+     * Start connection.
+     */
+    public abstract void start();
 }

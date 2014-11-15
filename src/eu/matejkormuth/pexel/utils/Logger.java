@@ -28,6 +28,7 @@ public class Logger {
     private SimpleDateFormat format;
     private final Logger     parent;
     private final String     name;
+    public boolean           timestamp;
     
     public Logger(final String name) {
         this.name = name;
@@ -80,7 +81,12 @@ public class Logger {
     }
     
     protected void log(final String msg) {
-        System.out.println(this.timeStamp() + " [" + this.name + "] " + msg);
+        if (this.timestamp) {
+            System.out.println(this.timeStamp() + " [" + this.name + "] " + msg);
+        }
+        else {
+            System.out.println("[" + this.name + "] " + msg);
+        }
     }
     
     private String timeStamp() {

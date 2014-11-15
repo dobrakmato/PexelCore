@@ -71,6 +71,7 @@ public class MasterServer extends ServerInfo implements Requestable {
         // Start netty comunicator.
         this.comunicator = new NettyServerComunicator(this.messenger,
                 this.config.getAsInt("port"), this.config.getAsString("authKey"), this);
+        this.comunicator.start();
         
         // Update instance in ServerInfo
         ServerInfo.setLocalServer(this);
