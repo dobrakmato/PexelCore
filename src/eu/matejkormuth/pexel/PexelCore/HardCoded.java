@@ -34,8 +34,6 @@ import eu.matejkormuth.pexel.PexelCore.actions.TeleportAction;
 import eu.matejkormuth.pexel.PexelCore.areas.AreaFlag;
 import eu.matejkormuth.pexel.PexelCore.areas.Lobby;
 import eu.matejkormuth.pexel.PexelCore.arenas.MapData;
-import eu.matejkormuth.pexel.PexelCore.bans.NamedBanAuthor;
-import eu.matejkormuth.pexel.PexelCore.bans.PlayerBan;
 import eu.matejkormuth.pexel.PexelCore.core.Achievement;
 import eu.matejkormuth.pexel.PexelCore.core.Region;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
@@ -65,18 +63,16 @@ public class HardCoded {
         
         //new KingdomWarsMingame();
         
-        Pexel.getBans().addBan(
-                new PlayerBan("nemam sa rad", new NamedBanAuthor("dobrakmato"),
-                        (Player) Bukkit.getOfflinePlayer("test"), Server.THIS_SERVER));
-        
-        Pexel.getBans().addBan(
-                new PlayerBan(100000, "dementy dvodod", new NamedBanAuthor("dement"),
-                        (Player) Bukkit.getOfflinePlayer("test2"), Server.THIS_SERVER));
-        
-        Pexel.getBans().addBan(
-                new PlayerBan(45000, "test", new NamedBanAuthor("dobrakmato"),
-                        (Player) Bukkit.getOfflinePlayer("DeathlNom"),
-                        Server.THIS_SERVER));
+        /*
+         * Pexel.getBans().addBan( new PlayerBan("nemam sa rad", new NamedBanAuthor("dobrakmato"), (Player)
+         * Bukkit.getOfflinePlayer("test"), Server.THIS_SERVER));
+         * 
+         * Pexel.getBans().addBan( new PlayerBan(100000, "dementy dvodod", new NamedBanAuthor("dement"), (Player)
+         * Bukkit.getOfflinePlayer("test2"), Server.THIS_SERVER));
+         * 
+         * Pexel.getBans().addBan( new PlayerBan(45000, "test", new NamedBanAuthor("dobrakmato"), (Player)
+         * Bukkit.getOfflinePlayer("DeathlNom"), Server.THIS_SERVER));
+         */
         
         // Test XML
         class SampleArenaMap extends MapData {
@@ -106,8 +102,10 @@ public class HardCoded {
         }
         
         try {
-            new SampleArenaMap().save(new File(
-                    Pexel.getCore().getDataFolder().getAbsolutePath() + "/sampleMap.xml"));
+            new SampleArenaMap().save(new File(Pexel.getCore()
+                    .getDataFolder()
+                    .getAbsolutePath()
+                    + "/sampleMap.xml"));
         } catch (JAXBException e) {
             e.printStackTrace();
         }
