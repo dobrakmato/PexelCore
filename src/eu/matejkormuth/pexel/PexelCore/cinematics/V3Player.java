@@ -24,14 +24,13 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 
-import net.minecraft.server.v1_7_R3.EntityPlayer;
-import net.minecraft.server.v1_7_R3.PacketPlayOutPosition;
-import net.minecraft.server.v1_7_R3.PacketPlayOutRelEntityMove;
+import net.minecraft.server.v1_8_R1.EntityPlayer;
+import net.minecraft.server.v1_8_R1.PacketPlayOutPosition;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
@@ -45,7 +44,6 @@ import org.bukkit.util.Vector;
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaEntityDamage;
 import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaEntityInventory;
-import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaEntityMove;
 import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaEntityRemove;
 import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaEntitySpawn;
 import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaEntityTeleport;
@@ -53,7 +51,6 @@ import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaEntityVelocity;
 import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaFallingSand;
 import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaParticleEffect;
 import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaSoundEffect;
-import eu.matejkormuth.pexel.PexelCore.util.NMS;
 import eu.matejkormuth.pexel.PexelCore.util.PacketHelper;
 import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect;
 import eu.matejkormuth.pexel.PexelCore.util.SoundUtility;
@@ -129,7 +126,8 @@ public class V3Player {
                 // Hracovi posli paketu o teleportacii. Server aktualizuje
                 // hracovu polohu v synUpdate, aby sa necrashoval.
                 PacketHelper.send(this.player, new PacketPlayOutPosition(frame.camX,
-                        frame.camY, frame.camZ, frame.yaw, frame.pitch, true));
+                        frame.camY, frame.camZ, frame.yaw, frame.pitch,
+                        com.google.common.collect.Sets.newLinkedHashSet()));
                 
                 // Spracuj zoom.
                 
@@ -160,34 +158,39 @@ public class V3Player {
                                     
                                     switch (v3MetaEntityInventory.getSlot()) {
                                         case 0:
-                                            le.getEquipment().setBoots(
-                                                    new ItemStack(
-                                                            v3MetaEntityInventory.getItemType(),
-                                                            1));
+                                            le.getEquipment()
+                                                    .setBoots(
+                                                            new ItemStack(
+                                                                    v3MetaEntityInventory.getItemType(),
+                                                                    1));
                                             break;
                                         case 1:
-                                            le.getEquipment().setLeggings(
-                                                    new ItemStack(
-                                                            v3MetaEntityInventory.getItemType(),
-                                                            1));
+                                            le.getEquipment()
+                                                    .setLeggings(
+                                                            new ItemStack(
+                                                                    v3MetaEntityInventory.getItemType(),
+                                                                    1));
                                             break;
                                         case 2:
-                                            le.getEquipment().setChestplate(
-                                                    new ItemStack(
-                                                            v3MetaEntityInventory.getItemType(),
-                                                            1));
+                                            le.getEquipment()
+                                                    .setChestplate(
+                                                            new ItemStack(
+                                                                    v3MetaEntityInventory.getItemType(),
+                                                                    1));
                                             break;
                                         case 3:
-                                            le.getEquipment().setHelmet(
-                                                    new ItemStack(
-                                                            v3MetaEntityInventory.getItemType(),
-                                                            1));
+                                            le.getEquipment()
+                                                    .setHelmet(
+                                                            new ItemStack(
+                                                                    v3MetaEntityInventory.getItemType(),
+                                                                    1));
                                             break;
                                         case 4:
-                                            le.getEquipment().setItemInHand(
-                                                    new ItemStack(
-                                                            v3MetaEntityInventory.getItemType(),
-                                                            1));
+                                            le.getEquipment()
+                                                    .setItemInHand(
+                                                            new ItemStack(
+                                                                    v3MetaEntityInventory.getItemType(),
+                                                                    1));
                                             break;
                                     }
                                 }
@@ -211,15 +214,16 @@ public class V3Player {
                             this.syncTasks.add(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Entity e = V3Player.this.player.getWorld().spawnEntity(
-                                            new Location(
-                                                    V3Player.this.player.getWorld(),
-                                                    v3MetaEntitySpawn.getPosX(),
-                                                    v3MetaEntitySpawn.getPosY(),
-                                                    v3MetaEntitySpawn.getPosZ(),
-                                                    v3MetaEntitySpawn.getYaw(),
-                                                    v3MetaEntitySpawn.getPitch()),
-                                            v3MetaEntitySpawn.getEntityType());
+                                    Entity e = V3Player.this.player.getWorld()
+                                            .spawnEntity(
+                                                    new Location(
+                                                            V3Player.this.player.getWorld(),
+                                                            v3MetaEntitySpawn.getPosX(),
+                                                            v3MetaEntitySpawn.getPosY(),
+                                                            v3MetaEntitySpawn.getPosZ(),
+                                                            v3MetaEntitySpawn.getYaw(),
+                                                            v3MetaEntitySpawn.getPitch()),
+                                                    v3MetaEntitySpawn.getEntityType());
                                     if (e instanceof LivingEntity) {
                                         V3Player.this.addEntity(
                                                 v3MetaEntitySpawn.getInternalId(),
@@ -237,12 +241,13 @@ public class V3Player {
                                 @Override
                                 public void run() {
                                     V3Player.this.getEntity(
-                                            v3MetaEntityTeleport.getInternalId()).teleport(
-                                            new Location(
-                                                    V3Player.this.player.getWorld(),
-                                                    v3MetaEntityTeleport.getPosX(),
-                                                    v3MetaEntityTeleport.getPosY(),
-                                                    v3MetaEntityTeleport.getPosZ()));
+                                            v3MetaEntityTeleport.getInternalId())
+                                            .teleport(
+                                                    new Location(
+                                                            V3Player.this.player.getWorld(),
+                                                            v3MetaEntityTeleport.getPosX(),
+                                                            v3MetaEntityTeleport.getPosY(),
+                                                            v3MetaEntityTeleport.getPosZ()));
                                 }
                             });
                             
@@ -255,10 +260,12 @@ public class V3Player {
                                 @Override
                                 public void run() {
                                     V3Player.this.getEntity(
-                                            v3MetaEntityVelocity.getInternalId()).setVelocity(
-                                            new Vector(v3MetaEntityVelocity.getVelX(),
-                                                    v3MetaEntityVelocity.getVelY(),
-                                                    v3MetaEntityVelocity.getVelZ()));
+                                            v3MetaEntityVelocity.getInternalId())
+                                            .setVelocity(
+                                                    new Vector(
+                                                            v3MetaEntityVelocity.getVelX(),
+                                                            v3MetaEntityVelocity.getVelY(),
+                                                            v3MetaEntityVelocity.getVelZ()));
                                 }
                             });
                             ;
@@ -291,13 +298,15 @@ public class V3Player {
                             this.syncTasks.add(new Runnable() {
                                 @Override
                                 public void run() {
-                                    FallingBlock fb = V3Player.this.player.getWorld().spawnFallingBlock(
-                                            new Location(
-                                                    V3Player.this.player.getWorld(),
-                                                    v3MetaFallingSand.getPosX(),
-                                                    v3MetaFallingSand.getPosY(),
-                                                    v3MetaFallingSand.getPosZ()),
-                                            v3MetaFallingSand.getMaterial(), (byte) 0);
+                                    FallingBlock fb = V3Player.this.player.getWorld()
+                                            .spawnFallingBlock(
+                                                    new Location(
+                                                            V3Player.this.player.getWorld(),
+                                                            v3MetaFallingSand.getPosX(),
+                                                            v3MetaFallingSand.getPosY(),
+                                                            v3MetaFallingSand.getPosZ()),
+                                                    v3MetaFallingSand.getMaterial(),
+                                                    (byte) 0);
                                     fb.setVelocity(new Vector(
                                             v3MetaFallingSand.getVelX(),
                                             v3MetaFallingSand.getVelY(),
@@ -313,16 +322,17 @@ public class V3Player {
                         case V3MetaParticleEffect:
                             V3MetaParticleEffect v3MetaParticleEffect = (V3MetaParticleEffect) meta;
                             
-                            ParticleEffect.fromId(v3MetaParticleEffect.getParticle()).display(
-                                    new Location(this.player.getWorld(),
-                                            v3MetaParticleEffect.getPosX(),
-                                            v3MetaParticleEffect.getPosY(),
-                                            v3MetaParticleEffect.getPosZ()),
-                                    v3MetaParticleEffect.getOffsetX(),
-                                    v3MetaParticleEffect.getOffsetY(),
-                                    v3MetaParticleEffect.getOffsetZ(),
-                                    v3MetaParticleEffect.getSpeed(),
-                                    v3MetaParticleEffect.getAmount());
+                            ParticleEffect.fromId(v3MetaParticleEffect.getParticle())
+                                    .display(
+                                            new Location(this.player.getWorld(),
+                                                    v3MetaParticleEffect.getPosX(),
+                                                    v3MetaParticleEffect.getPosY(),
+                                                    v3MetaParticleEffect.getPosZ()),
+                                            v3MetaParticleEffect.getOffsetX(),
+                                            v3MetaParticleEffect.getOffsetY(),
+                                            v3MetaParticleEffect.getOffsetZ(),
+                                            v3MetaParticleEffect.getSpeed(),
+                                            v3MetaParticleEffect.getAmount());
                             break;
                         case V3MetaSoundEffect:
                             V3MetaSoundEffect v3MetaSoundEffect = (V3MetaSoundEffect) meta;
@@ -336,16 +346,17 @@ public class V3Player {
                             
                             break;
                         case V3MetaEntityMove:
-                            final V3MetaEntityMove v3MetaEntityMove = (V3MetaEntityMove) meta;
+                            //final V3MetaEntityMove v3MetaEntityMove = (V3MetaEntityMove) meta;
                             
-                            PacketHelper.send(
-                                    this.player,
-                                    new PacketPlayOutRelEntityMove(
-                                            V3Player.this.getEntity(
-                                                    v3MetaEntityMove.getInternalId()).getEntityId(),
-                                            NMS.fixedPointNumByte(v3MetaEntityMove.getMovX()),
-                                            NMS.fixedPointNumByte(v3MetaEntityMove.getMovY()),
-                                            NMS.fixedPointNumByte(v3MetaEntityMove.getMovZ())));
+                            //PacketHelper.send(
+                            //        this.player,
+                            //       new PacketPlayOutRelEntityMove(
+                            //               V3Player.this.getEntity(
+                            ///                        v3MetaEntityMove.getInternalId())
+                            //                       .getEntityId(),
+                            //               NMS.fixedPointNumByte(v3MetaEntityMove.getMovX()),
+                            //               NMS.fixedPointNumByte(v3MetaEntityMove.getMovY()),
+                            //               NMS.fixedPointNumByte(v3MetaEntityMove.getMovZ())));
                             
                             /*
                              * NMS.relMoveEntity( V3Player.this.getEntity(v3MetaEntityMove.getInternalId()),

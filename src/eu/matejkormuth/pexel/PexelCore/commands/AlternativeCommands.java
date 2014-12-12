@@ -18,11 +18,8 @@
 // @formatter:on
 package eu.matejkormuth.pexel.PexelCore.commands;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.util.org.apache.commons.io.IOUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,9 +40,9 @@ import eu.matejkormuth.pexel.PexelCore.HardCoded;
 import eu.matejkormuth.pexel.PexelCore.Pexel;
 import eu.matejkormuth.pexel.PexelCore.actions.JavaArbitraryAction;
 import eu.matejkormuth.pexel.PexelCore.actions.OpenInventoryMenuAction;
+import eu.matejkormuth.pexel.PexelCore.arenas.AbstractArena;
 import eu.matejkormuth.pexel.PexelCore.arenas.AdvancedArena;
 import eu.matejkormuth.pexel.PexelCore.arenas.DisconnectReason;
-import eu.matejkormuth.pexel.PexelCore.arenas.AbstractArena;
 import eu.matejkormuth.pexel.PexelCore.chat.ChatManager;
 import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
@@ -84,8 +81,8 @@ public class AlternativeCommands implements Listener {
                     new JavaArbitraryAction(new ParametrizedRunnable() {
                         @Override
                         public void run(final Object... args) {
-                            StorageEngine.getProfile((((Player) args[0]).getUniqueId())).setParticleType(
-                                    effect);
+                            StorageEngine.getProfile((((Player) args[0]).getUniqueId()))
+                                    .setParticleType(effect);
                         }
                     }), i, true));
         }
@@ -208,11 +205,11 @@ public class AlternativeCommands implements Listener {
         }
         else if (command.contains("/version") || command.contains("/pcversion")) {
             try {
-                String version = IOUtils.toString(this.getClass().getResourceAsStream(
-                        "../versionFile.txt"));
-                sender.sendMessage(ChatColor.DARK_RED
-                        + "This server is running Pexel-Core version " + version);
-            } catch (IOException e) {
+                //String version = IOUtils.toString(this.getClass().getResourceAsStream(
+                //        "../versionFile.txt"));
+                //sender.sendMessage(ChatColor.DARK_RED
+                //        + "This server is running Pexel-Core version " + version);
+            } catch (Exception e) {
                 e.printStackTrace();
                 sender.sendMessage(ChatColor.RED
                         + "Error while trying to get version! Check your build!");

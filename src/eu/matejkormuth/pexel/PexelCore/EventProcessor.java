@@ -20,8 +20,6 @@ package eu.matejkormuth.pexel.PexelCore;
 
 import java.util.Arrays;
 
-import net.minecraft.server.v1_7_R3.PacketPlayOutBlockBreakAnimation;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -67,7 +65,6 @@ import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenu;
 import eu.matejkormuth.pexel.PexelCore.util.Lang;
-import eu.matejkormuth.pexel.PexelCore.util.PacketHelper;
 import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect;
 import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect2;
 import eu.matejkormuth.pexel.PexelNetworking.Server;
@@ -88,13 +85,17 @@ public class EventProcessor implements Listener {
         // FIXME: Temporarly removed.
         
         if (event.getPlayer().isSprinting()) {
-            if (StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParticleType() != null) {
+            if (StorageEngine.getProfile(event.getPlayer().getUniqueId())
+                    .getParticleType() != null) {
                 for (double i = 0; i < 1.5; i += 0.20D) {
-                    Location diff = event.getTo().subtract(event.getFrom()).multiply(
-                            1.2F);
-                    StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParticleType().display(
-                            event.getFrom().subtract(diff).clone().add(0, i, 0), 0.50F,
-                            0.20F, 0.50F, 1, 8);
+                    Location diff = event.getTo()
+                            .subtract(event.getFrom())
+                            .multiply(1.2F);
+                    StorageEngine.getProfile(event.getPlayer().getUniqueId())
+                            .getParticleType()
+                            .display(
+                                    event.getFrom().subtract(diff).clone().add(0, i, 0),
+                                    0.50F, 0.20F, 0.50F, 1, 8);
                 }
             }
         }
@@ -187,8 +188,9 @@ public class EventProcessor implements Listener {
                         else if (command.equalsIgnoreCase("[World]")) {
                             World w = Bukkit.getWorld(lines[1]);
                             if (w == null)
-                                event.getPlayer().sendMessage(
-                                        ChatManager.error(Lang.getTranslation("worldnotfound")));
+                                event.getPlayer()
+                                        .sendMessage(
+                                                ChatManager.error(Lang.getTranslation("worldnotfound")));
                             else
                                 event.getPlayer().teleport(w.getSpawnLocation());
                         }
@@ -199,32 +201,43 @@ public class EventProcessor implements Listener {
         
         if (event.getItem() != null) {
             if (event.getItem().hasItemMeta()
-                    && event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(
-                            "gun")) {
-                event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(),
-                        Sound.IRONGOLEM_HIT, 0.5F, 3F);
-                Vector smer = event.getPlayer().getEyeLocation().getDirection().normalize();
-                Snowball projectile = (Snowball) event.getPlayer().getWorld().spawnEntity(
-                        event.getPlayer().getEyeLocation().add(smer.multiply(2)),
-                        EntityType.SNOWBALL);
+                    && event.getItem()
+                            .getItemMeta()
+                            .getDisplayName()
+                            .equalsIgnoreCase("gun")) {
+                event.getPlayer()
+                        .getWorld()
+                        .playSound(event.getPlayer().getLocation(), Sound.IRONGOLEM_HIT,
+                                0.5F, 3F);
+                Vector smer = event.getPlayer()
+                        .getEyeLocation()
+                        .getDirection()
+                        .normalize();
+                Snowball projectile = (Snowball) event.getPlayer()
+                        .getWorld()
+                        .spawnEntity(
+                                event.getPlayer().getEyeLocation().add(smer.multiply(2)),
+                                EntityType.SNOWBALL);
                 projectile.setVelocity(smer.multiply(2));
                 projectile.remove();
-                Vector pos = event.getPlayer().getLocation().toVector().add(
-                        new Vector(0, 1.62, 0));
+                Vector pos = event.getPlayer()
+                        .getLocation()
+                        .toVector()
+                        .add(new Vector(0, 1.62, 0));
                 smer.multiply(1.1F);
                 Location loc = pos.add(smer).toLocation(event.getPlayer().getWorld());
                 for (int i = 0; i < 500; i++) {
                     loc = pos.add(smer).toLocation(event.getPlayer().getWorld());
                     if (loc.getBlock() != null && loc.getBlock().getType().isSolid()) {
                         
-                        PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
-                                1000 + Pexel.getRandom().nextInt(100), loc.getBlockX(),
-                                loc.getBlockY(), loc.getBlockZ(),
-                                1 + Pexel.getRandom().nextInt(5));
+                        //PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
+                        ///         1000 + Pexel.getRandom().nextInt(100), loc.getBlockX(),
+                        ///        loc.getBlockY(), loc.getBlockZ(),
+                        ///        1 + Pexel.getRandom().nextInt(5));
                         
                         for (Player p : Bukkit.getOnlinePlayers()) {
-                            PacketHelper.send(p, packet);
-                        }
+                            //PacketHelper.send(p, packet);
+                        }//
                         ParticleEffect.displayBlockCrack(loc,
                                 loc.getBlock().getTypeId(), loc.getBlock().getData(),
                                 0.3F, 0.3F, 0.3F, 1, 50);
@@ -312,8 +325,9 @@ public class EventProcessor implements Listener {
     private void onPlayerLeave(final PlayerQuitEvent event) {
         // Leave party.
         if (StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParty() != null) {
-            StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParty().removePlayer(
-                    event.getPlayer());
+            StorageEngine.getProfile(event.getPlayer().getUniqueId())
+                    .getParty()
+                    .removePlayer(event.getPlayer());
             StorageEngine.getProfile(event.getPlayer().getUniqueId()).setParty(null);
         }
         

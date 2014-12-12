@@ -5,9 +5,9 @@
  */
 package eu.matejkormuth.pexel.PexelCore.util;
 
-import net.minecraft.server.v1_7_R3.PacketPlayOutNamedSoundEffect;
+import net.minecraft.server.v1_8_R1.PacketPlayOutNamedSoundEffect;
 
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -59,9 +59,8 @@ public class SoundUtility {
     public static void playCustomSound(final Player player_loc, final String soundName,
             final float volume, final float pitch) {
         PacketPlayOutNamedSoundEffect packet2 = new PacketPlayOutNamedSoundEffect(
-                soundName, player_loc.getLocation().getX(),
-                player_loc.getLocation().getY(), player_loc.getLocation().getZ(),
-                volume, pitch);
+                soundName, player_loc.getLocation().getX(), player_loc.getLocation()
+                        .getY(), player_loc.getLocation().getZ(), volume, pitch);
         ((CraftPlayer) player_loc).getHandle().playerConnection.sendPacket(packet2);
         
         for (Entity e : player_loc.getNearbyEntities(100, 100, 100)) {

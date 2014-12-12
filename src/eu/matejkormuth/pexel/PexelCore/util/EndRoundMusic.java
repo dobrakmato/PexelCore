@@ -23,9 +23,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.server.v1_7_R3.PacketPlayOutNamedSoundEffect;
+import net.minecraft.server.v1_8_R1.PacketPlayOutNamedSoundEffect;
 
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 /**

@@ -25,11 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.util.com.google.gson.Gson;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -55,7 +54,7 @@ public class Matchmaking implements Updatable {
     /**
      * List of registered minigames.
      */
-    protected final Map<String, Minigame>            minigames           = new HashMap<String, Minigame>();
+    protected final Map<String, Minigame>              minigames           = new HashMap<String, Minigame>();
     /**
      * List of registered arenas.
      */
@@ -63,26 +62,26 @@ public class Matchmaking implements Updatable {
     /**
      * List of players in matchmaking.
      */
-    protected final List<Player>                     players             = new ArrayList<Player>();
-    protected int                                    taskId              = 0;
+    protected final List<Player>                       players             = new ArrayList<Player>();
+    protected int                                      taskId              = 0;
     /**
      * Matchmaking server location.
      */
-    public static final ServerLocation               QUICKJOIN_LOCATION  = new ServerLocation(
-                                                                                 "QuickJoin",
-                                                                                 ServerLocationType.QUICKJOIN);
+    public static final ServerLocation                 QUICKJOIN_LOCATION  = new ServerLocation(
+                                                                                   "QuickJoin",
+                                                                                   ServerLocationType.QUICKJOIN);
     /**
      * How often should server try to find match.
      */
-    protected final long                             matchMakingInterval = 40L;                                       //40 ticks = 2 second
+    protected final long                               matchMakingInterval = 40L;                                         //40 ticks = 2 second
     /**
      * Pending matchmaking request.
      */
-    protected final List<MatchmakingRequest>         requests            = new ArrayList<MatchmakingRequest>();
+    protected final List<MatchmakingRequest>           requests            = new ArrayList<MatchmakingRequest>();
     /**
      * List of request being removed in this iteration.
      */
-    protected final List<MatchmakingRequest>         removing            = new ArrayList<MatchmakingRequest>();
+    protected final List<MatchmakingRequest>           removing            = new ArrayList<MatchmakingRequest>();
     
     /**
      * Registers minigame to Pexel matchmaking.
