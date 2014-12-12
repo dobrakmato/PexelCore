@@ -28,7 +28,6 @@ import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -337,7 +336,7 @@ public class Matchmaking implements Updatable {
                 }
                 arenas.add(a);
             }
-            String response = new Gson().toJson(arenas);
+            String response = "no gson";
             
             conn.sendResponseHeaders(200, response.length());
             conn.getResponseBody().write(response.getBytes());
