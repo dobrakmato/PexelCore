@@ -90,11 +90,11 @@ public class EventProcessor implements Listener {
                     Location diff = event.getTo()
                             .subtract(event.getFrom())
                             .multiply(1.2F);
-                    StorageEngine.getProfile(event.getPlayer().getUniqueId())
-                            .getParticleType()
-                            .display(
-                                    event.getFrom().subtract(diff).clone().add(0, i, 0),
-                                    0.50F, 0.20F, 0.50F, 1, 8);
+                    //StorageEngine.getProfile(event.getPlayer().getUniqueId())
+                    //        .getParticleType()
+                    //        .display(
+                    //                event.getFrom().subtract(diff).clone().add(0, i, 0),
+                    //                0.50F, 0.20F, 0.50F, 1, 8);
                 }
             }
         }

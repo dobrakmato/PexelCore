@@ -1,4 +1,4 @@
-package com.darkblade12.particleeffect;
+package eu.matejkormuth.pexel.PexelCore.util;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -15,7 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import com.darkblade12.particleeffect.ReflectionUtils.PackageType;
+import eu.matejkormuth.pexel.PexelCore.util.ReflectionUtil.PackageType;
 
 /**
  * <b>ParticleEffect Library</b>
@@ -379,8 +379,8 @@ public enum ParticleEffect2 {
      */
     MOB_APPEARANCE("mobappearance", 41, 8);
     
-    private static final Map<String, ParticleEffect>  NAME_MAP = new HashMap<String, ParticleEffect>();
-    private static final Map<Integer, ParticleEffect> ID_MAP   = new HashMap<Integer, ParticleEffect>();
+    private static final Map<String, ParticleEffect2>  NAME_MAP = new HashMap<String, ParticleEffect2>();
+    private static final Map<Integer, ParticleEffect2> ID_MAP   = new HashMap<Integer, ParticleEffect2>();
     private final String                              name;
     private final int                                 id;
     private final int                                 requiredVersion;
@@ -389,7 +389,7 @@ public enum ParticleEffect2 {
     
     // Initialize map for quick name and id lookup
     static {
-        for (ParticleEffect effect : values()) {
+        for (ParticleEffect2 effect : values()) {
             NAME_MAP.put(effect.name, effect);
             ID_MAP.put(effect.id, effect);
         }
@@ -409,7 +409,7 @@ public enum ParticleEffect2 {
      * @param requiresWater
      *            Indicates whether water is required for this particle effect to display properly
      */
-    private ParticleEffect(final String name, final int id, final int requiredVersion,
+    private ParticleEffect2(final String name, final int id, final int requiredVersion,
             final boolean requiresData, final boolean requiresWater) {
         this.name = name;
         this.id = id;
@@ -431,7 +431,7 @@ public enum ParticleEffect2 {
      *            Indicates whether additional data is required for this particle effect
      * @see #ParticleEffect(String, int, boolean, boolean)
      */
-    private ParticleEffect(final String name, final int id, final int requiredVersion,
+    private ParticleEffect2(final String name, final int id, final int requiredVersion,
             final boolean requiresData) {
         this(name, id, requiredVersion, requiresData, false);
     }
@@ -449,7 +449,7 @@ public enum ParticleEffect2 {
      *            Indicates whether additional data is required for this particle effect
      * @see #ParticleEffect(String, int, boolean)
      */
-    private ParticleEffect(final String name, final int id, final int requiredVersion) {
+    private ParticleEffect2(final String name, final int id, final int requiredVersion) {
         this(name, id, requiredVersion, false);
     }
     
@@ -515,8 +515,8 @@ public enum ParticleEffect2 {
      *            Name of the particle effect
      * @return The particle effect
      */
-    public static ParticleEffect fromName(final String name) {
-        for (Entry<String, ParticleEffect> entry : NAME_MAP.entrySet()) {
+    public static ParticleEffect2 fromName(final String name) {
+        for (Entry<String, ParticleEffect2> entry : NAME_MAP.entrySet()) {
             if (!entry.getKey().equalsIgnoreCase(name)) {
                 continue;
             }
@@ -532,8 +532,8 @@ public enum ParticleEffect2 {
      *            Id of the particle effect
      * @return The particle effect
      */
-    public static ParticleEffect fromId(final int id) {
-        for (Entry<Integer, ParticleEffect> entry : ID_MAP.entrySet()) {
+    public static ParticleEffect2 fromId(final int id) {
+        for (Entry<Integer, ParticleEffect2> entry : ID_MAP.entrySet()) {
             if (entry.getKey() != id) {
                 continue;
             }
@@ -581,7 +581,7 @@ public enum ParticleEffect2 {
      *            Particle data
      * @return Whether the data type is correct or not
      */
-    private static boolean isDataCorrect(final ParticleEffect effect,
+    private static boolean isDataCorrect(final ParticleEffect2 effect,
             final ParticleData data) {
         return ((effect == BLOCK_CRACK || effect == BLOCK_DUST) && data instanceof BlockData)
                 || effect == ITEM_CRACK && data instanceof ItemData;
@@ -1004,8 +1004,8 @@ public enum ParticleEffect2 {
     }
     
     /**
-     * Represents the particle data for effects like {@link ParticleEffect#ITEM_CRACK},
-     * {@link ParticleEffect#BLOCK_CRACK} and {@link ParticleEffect#BLOCK_DUST}
+     * Represents the particle data for effects like {@link ParticleEffect2#ITEM_CRACK},
+     * {@link ParticleEffect2#BLOCK_CRACK} and {@link ParticleEffect2#BLOCK_DUST}
      * <p>
      * This class is part of the <b>ParticleEffect Library</b> and follows the same usage conditions
      * 
@@ -1070,7 +1070,7 @@ public enum ParticleEffect2 {
     }
     
     /**
-     * Represents the item data for the {@link ParticleEffect#ITEM_CRACK} effect
+     * Represents the item data for the {@link ParticleEffect2#ITEM_CRACK} effect
      * <p>
      * This class is part of the <b>ParticleEffect Library</b> and follows the same usage conditions
      * 
@@ -1093,7 +1093,7 @@ public enum ParticleEffect2 {
     }
     
     /**
-     * Represents the block data for the {@link ParticleEffect#BLOCK_CRACK} and {@link ParticleEffect#BLOCK_DUST}
+     * Represents the block data for the {@link ParticleEffect2#BLOCK_CRACK} and {@link ParticleEffect2#BLOCK_DUST}
      * effects
      * <p>
      * This class is part of the <b>ParticleEffect Library</b> and follows the same usage conditions
@@ -1186,7 +1186,7 @@ public enum ParticleEffect2 {
         private static Field          playerConnection;
         private static Method         sendPacket;
         private static boolean        initialized;
-        private final ParticleEffect  effect;
+        private final ParticleEffect2  effect;
         private final float           offsetX;
         private final float           offsetY;
         private final float           offsetZ;
@@ -1219,7 +1219,7 @@ public enum ParticleEffect2 {
          *             If the speed is lower than 0 or the amount is lower than 1
          * @see #initialize()
          */
-        public ParticlePacket(final ParticleEffect effect, final float offsetX,
+        public ParticlePacket(final ParticleEffect2 effect, final float offsetX,
                 final float offsetY, final float offsetZ, final float speed,
                 final int amount, final boolean longDistance, final ParticleData data)
                 throws IllegalArgumentException {
@@ -1255,7 +1255,7 @@ public enum ParticleEffect2 {
          *             If the speed is lower than 0
          * @see #initialize()
          */
-        public ParticlePacket(final ParticleEffect effect, final Vector direction,
+        public ParticlePacket(final ParticleEffect2 effect, final Vector direction,
                 final float speed, final boolean longDistance, final ParticleData data)
                 throws IllegalArgumentException {
             initialize();
