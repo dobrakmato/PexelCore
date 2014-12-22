@@ -52,7 +52,6 @@ import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaFallingSand;
 import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaParticleEffect;
 import eu.matejkormuth.pexel.PexelCore.cinematics.v3meta.V3MetaSoundEffect;
 import eu.matejkormuth.pexel.PexelCore.util.PacketHelper;
-import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect;
 import eu.matejkormuth.pexel.PexelCore.util.SoundUtility;
 
 /**
@@ -322,17 +321,14 @@ public class V3Player {
                         case V3MetaParticleEffect:
                             V3MetaParticleEffect v3MetaParticleEffect = (V3MetaParticleEffect) meta;
                             
-                            ParticleEffect.fromId(v3MetaParticleEffect.getParticle())
-                                    .display(
-                                            new Location(this.player.getWorld(),
-                                                    v3MetaParticleEffect.getPosX(),
-                                                    v3MetaParticleEffect.getPosY(),
-                                                    v3MetaParticleEffect.getPosZ()),
-                                            v3MetaParticleEffect.getOffsetX(),
-                                            v3MetaParticleEffect.getOffsetY(),
-                                            v3MetaParticleEffect.getOffsetZ(),
-                                            v3MetaParticleEffect.getSpeed(),
-                                            v3MetaParticleEffect.getAmount());
+                            /*
+                             * ParticleEffect2.fromId(v3MetaParticleEffect.getParticle()) .display( new
+                             * Location(this.player.getWorld(), v3MetaParticleEffect.getPosX(),
+                             * v3MetaParticleEffect.getPosY(), v3MetaParticleEffect.getPosZ()),
+                             * v3MetaParticleEffect.getOffsetX(), v3MetaParticleEffect.getOffsetY(),
+                             * v3MetaParticleEffect.getOffsetZ(), v3MetaParticleEffect.getSpeed(),
+                             * v3MetaParticleEffect.getAmount());
+                             */
                             break;
                         case V3MetaSoundEffect:
                             V3MetaSoundEffect v3MetaSoundEffect = (V3MetaSoundEffect) meta;

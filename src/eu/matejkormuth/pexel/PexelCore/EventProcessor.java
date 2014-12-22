@@ -65,7 +65,6 @@ import eu.matejkormuth.pexel.PexelCore.core.Log;
 import eu.matejkormuth.pexel.PexelCore.core.StorageEngine;
 import eu.matejkormuth.pexel.PexelCore.menu.InventoryMenu;
 import eu.matejkormuth.pexel.PexelCore.util.Lang;
-import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect;
 import eu.matejkormuth.pexel.PexelCore.util.ParticleEffect2;
 import eu.matejkormuth.pexel.PexelNetworking.Server;
 
@@ -238,14 +237,14 @@ public class EventProcessor implements Listener {
                         for (Player p : Bukkit.getOnlinePlayers()) {
                             //PacketHelper.send(p, packet);
                         }//
-                        ParticleEffect.displayBlockCrack(loc,
-                                loc.getBlock().getTypeId(), loc.getBlock().getData(),
-                                0.3F, 0.3F, 0.3F, 1, 50);
-                        ParticleEffect.FIREWORKS_SPARK.display(loc, 0, 0, 0, 1, 1);
+                         //ParticleEffect.displayBlockCrack(loc,
+                         //       loc.getBlock().getTypeId(), loc.getBlock().getData(),
+                         //        0.3F, 0.3F, 0.3F, 1, 50);
+                         //ParticleEffect.FIREWORKS_SPARK.display(loc, 0, 0, 0, 1, 1);
                         
                         break;
                     }
-                    ParticleEffect.FIREWORKS_SPARK.display(loc, 0, 0, 0, 0, 1);
+                    //ParticleEffect.FIREWORKS_SPARK.display(loc, 0, 0, 0, 0, 1);
                 }
             }
         }
