@@ -153,7 +153,7 @@ public final class Pexel {
      * @return hub lcoation
      */
     public final static Location getHubLocation() {
-        return new Location(Bukkit.getWorld("world"), 9.5, 47.5, 262.5);
+        return new Location(Bukkit.getWorld("Minigame"), -1983, 50.5, 489.5);
     }
     
     /**

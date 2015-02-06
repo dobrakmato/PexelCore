@@ -1,16 +1,16 @@
 // @formatter:off
 /*
- * Pexel Project - Minecraft minigame server platform. 
+ * Pexel Project - Minecraft minigame server platform.
  * Copyright (C) 2014 Matej Kormuth <http://www.matejkormuth.eu>
- * 
+ *
  * This file is part of Pexel.
- * 
+ *
  * Pexel is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * Pexel is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
  * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  *
@@ -27,11 +27,13 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -47,6 +49,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.util.Vector;
 
 import com.google.common.io.ByteArrayDataOutput;
@@ -70,19 +73,19 @@ import eu.matejkormuth.pexel.PexelNetworking.Server;
 
 /**
  * Event processor for pexel.
- * 
+ *
  * @author Mato Kormuth
- * 
+ *
  */
 public class EventProcessor implements Listener {
     public EventProcessor() {
         Bukkit.getPluginManager().registerEvents(this, Pexel.getCore());
     }
-    
+
     @EventHandler
     private void onPlayerMove(final PlayerMoveEvent event) {
         // FIXME: Temporarly removed.
-        
+
         if (event.getPlayer().isSprinting()) {
             if (StorageEngine.getProfile(event.getPlayer().getUniqueId())
                     .getParticleType() != null) {
@@ -98,48 +101,78 @@ public class EventProcessor implements Listener {
                 }
             }
         }
-        
+
     }
-    
+
+    @EventHandler
+    private void onVehicleDestroyed(final EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Minecart) {
+            ProtectedArea area = Areas.findArea(event.getEntity().getLocation());
+            if (area != null) {
+                if (event.getDamager() instanceof Player) {
+                    if (!((Player) event.getDamager()).isOp()) {
+                        event.setCancelled(true);
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    private void onVehicleMove(final VehicleMoveEvent event) {
+        if (event.getVehicle() instanceof Minecart) {
+            //ProtectedArea area = Areas.findArea(event.getVehicle().getLocation());
+
+        }
+    }
+
+    @EventHandler
+    private void onGrow(final BlockGrowEvent event) {
+        ProtectedArea area = Areas.findArea(event.getBlock().getLocation());
+        if (area != null) {
+            event.setCancelled(true);
+        }
+    }
+
     @EventHandler
     private void onBlockBreak(final BlockBreakEvent event) {
         if (!this.hasPermission(event.getBlock().getLocation(), event.getPlayer(),
                 AreaFlag.BLOCK_BREAK))
             event.setCancelled(true);
     }
-    
+
     @EventHandler
     private void onPlayerRespawn(final PlayerRespawnEvent event) {
         event.getPlayer().teleport(Pexel.getHubLocation());
     }
-    
+
     @EventHandler
     private void onBlockPlace(final BlockPlaceEvent event) {
         if (!this.hasPermission(event.getBlock().getLocation(), event.getPlayer(),
                 AreaFlag.BLOCK_PLACE))
             event.setCancelled(true);
     }
-    
+
     @EventHandler
     private void onPlayerDropItem(final PlayerDropItemEvent event) {
         if (!this.hasPermission(event.getPlayer().getLocation(), event.getPlayer(),
                 AreaFlag.PLAYER_DROPITEM))
             event.setCancelled(true);
     }
-    
+
     @EventHandler
     private void onPlayerDamageByEntity(final EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player)
             if (!this.hasPermission(event.getEntity().getLocation(),
                     (Player) event.getEntity(), AreaFlag.PLAYER_GETDAMAGE))
                 event.setCancelled(true);
-        
+
         if (event.getDamager() instanceof Player)
             if (!this.hasPermission(event.getDamager().getLocation(),
                     (Player) event.getDamager(), AreaFlag.PLAYER_DODAMAGE))
                 event.setCancelled(true);
     }
-    
+
     @EventHandler
     private void onPlayerDamageByBlock(final EntityDamageByBlockEvent event) {
         if (event.getEntity() instanceof Player)
@@ -147,7 +180,7 @@ public class EventProcessor implements Listener {
                     (Player) event.getEntity(), AreaFlag.PLAYER_GETDAMAGE))
                 event.setCancelled(true);
     }
-    
+
     @EventHandler
     private void onPlayerDamage(final EntityDamageEvent event) {
         if (event.getEntity() instanceof Player)
@@ -155,7 +188,7 @@ public class EventProcessor implements Listener {
                     (Player) event.getEntity(), AreaFlag.PLAYER_GETDAMAGE))
                 event.setCancelled(true);
     }
-    
+
     @SuppressWarnings("deprecation")
     @EventHandler
     private void onPlayerInteract(final PlayerInteractEvent event) {
@@ -188,8 +221,8 @@ public class EventProcessor implements Listener {
                             World w = Bukkit.getWorld(lines[1]);
                             if (w == null)
                                 event.getPlayer()
-                                        .sendMessage(
-                                                ChatManager.error(Lang.getTranslation("worldnotfound")));
+                                .sendMessage(
+                                        ChatManager.error(Lang.getTranslation("worldnotfound")));
                             else
                                 event.getPlayer().teleport(w.getSpawnLocation());
                         }
@@ -197,17 +230,17 @@ public class EventProcessor implements Listener {
                 }
             }
         }
-        
+
         if (event.getItem() != null) {
             if (event.getItem().hasItemMeta()
                     && event.getItem()
-                            .getItemMeta()
-                            .getDisplayName()
-                            .equalsIgnoreCase("gun")) {
+                    .getItemMeta()
+                    .getDisplayName()
+                    .equalsIgnoreCase("gun")) {
                 event.getPlayer()
-                        .getWorld()
-                        .playSound(event.getPlayer().getLocation(), Sound.IRONGOLEM_HIT,
-                                0.5F, 3F);
+                .getWorld()
+                .playSound(event.getPlayer().getLocation(), Sound.IRONGOLEM_HIT,
+                        0.5F, 3F);
                 Vector smer = event.getPlayer()
                         .getEyeLocation()
                         .getDirection()
@@ -228,20 +261,20 @@ public class EventProcessor implements Listener {
                 for (int i = 0; i < 500; i++) {
                     loc = pos.add(smer).toLocation(event.getPlayer().getWorld());
                     if (loc.getBlock() != null && loc.getBlock().getType().isSolid()) {
-                        
+
                         //PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
                         ///         1000 + Pexel.getRandom().nextInt(100), loc.getBlockX(),
                         ///        loc.getBlockY(), loc.getBlockZ(),
                         ///        1 + Pexel.getRandom().nextInt(5));
-                        
+
                         for (Player p : Bukkit.getOnlinePlayers()) {
                             //PacketHelper.send(p, packet);
                         }//
-                         //ParticleEffect.displayBlockCrack(loc,
-                         //       loc.getBlock().getTypeId(), loc.getBlock().getData(),
-                         //        0.3F, 0.3F, 0.3F, 1, 50);
-                         //ParticleEffect.FIREWORKS_SPARK.display(loc, 0, 0, 0, 1, 1);
-                        
+                        //ParticleEffect.displayBlockCrack(loc,
+                        //       loc.getBlock().getTypeId(), loc.getBlock().getData(),
+                        //        0.3F, 0.3F, 0.3F, 1, 50);
+                        //ParticleEffect.FIREWORKS_SPARK.display(loc, 0, 0, 0, 1, 1);
+
                         break;
                     }
                     //ParticleEffect.FIREWORKS_SPARK.display(loc, 0, 0, 0, 0, 1);
@@ -249,13 +282,13 @@ public class EventProcessor implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     private void onPlayerPortal(final PlayerPortalEvent event) {
         // Pass the event further...
         StorageEngine.gateEnter(event.getPlayer(), event.getPlayer().getLocation());
     }
-    
+
     @EventHandler
     private void onChat(final AsyncPlayerChatEvent event) {
         ChatManager.__processChatEvent(event);
@@ -264,7 +297,7 @@ public class EventProcessor implements Listener {
          * event.getPlayer())); else event.setFormat(ChatManager.chatPlayer(event.getMessage(), event.getPlayer()));
          */
     }
-    
+
     @EventHandler
     private void onInventoryClick(final InventoryClickEvent event) {
         if (event.getInventory().getHolder() instanceof InventoryMenu) {
@@ -278,7 +311,7 @@ public class EventProcessor implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     private void onPlayerLogin(final PlayerLoginEvent event) {
         // Check for ban
@@ -288,10 +321,10 @@ public class EventProcessor implements Listener {
                     BanUtils.formatBannedMessage(Pexel.getBans().getBan(
                             event.getPlayer(), Server.THIS_SERVER)));
         }
-        
+
         if (event.getHostname().contains("login"))
             Pexel.getAuth().authenticateIp(event.getPlayer(), event.getHostname());
-        
+
         if (event.getPlayer().getName().equalsIgnoreCase("dobrakmato")) {
             ParticleAnimation animation = new ParticleAnimation();
             double x = 0;
@@ -304,13 +337,13 @@ public class EventProcessor implements Listener {
                         Arrays.asList(new ParticleFrame.Particle(x, 2.5, y,
                                 ParticleEffect2.HEART))));
             }
-            
+
             EntityAnimationPlayer player = new EntityAnimationPlayer(animation,
                     event.getPlayer(), true);
             player.play();
         }
     }
-    
+
     @EventHandler
     private void onPlayerJoin(final PlayerJoinEvent event) {
         // Load profile to memory or create empty profile.
@@ -319,27 +352,27 @@ public class EventProcessor implements Listener {
         ChatManager.CHANNEL_GLOBAL.subscribe(event.getPlayer(), SubscribeMode.READ);
         ChatManager.CHANNEL_LOBBY.subscribe(event.getPlayer(), SubscribeMode.READ_WRITE);
     }
-    
+
     @EventHandler
     private void onPlayerLeave(final PlayerQuitEvent event) {
         // Leave party.
         if (StorageEngine.getProfile(event.getPlayer().getUniqueId()).getParty() != null) {
             StorageEngine.getProfile(event.getPlayer().getUniqueId())
-                    .getParty()
-                    .removePlayer(event.getPlayer());
+            .getParty()
+            .removePlayer(event.getPlayer());
             StorageEngine.getProfile(event.getPlayer().getUniqueId()).setParty(null);
         }
-        
+
         // Leave chat channels.
         ChatManager.CHANNEL_GLOBAL.unsubscribe(event.getPlayer());
         ChatManager.CHANNEL_LOBBY.unsubscribe(event.getPlayer());
-        
+
         StorageEngine.__redirectEvent("PlayerQuitEvent", event);
-        
+
         // Force save of player's profile.
         StorageEngine.saveProfile(event.getPlayer().getUniqueId());
     }
-    
+
     private boolean hasPermission(final Location location, final Player player,
             final AreaFlag flag) {
         ProtectedArea area = Areas.findArea(location);
